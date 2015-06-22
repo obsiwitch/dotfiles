@@ -9,8 +9,9 @@ rm $HOME/.bashrc.d
 rm $HOME/.profile.d
 rm $HOME/.profile
 rm $HOME/.screenlayout
-
-rm $HOME/.gitconfig
 rm $HOME/.inputrc
 rm $HOME/.xinitrc
 rm $HOME/.xmodmaprc
+rm $HOME/.xsessionrc
+
+rm $HOME/.gitconfig

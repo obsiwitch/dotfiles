@@ -1,0 +1,9 @@
+# Avoid inputting non-breakable spaces (Alt Gr + Space)
+setxkbmap -option "nbsp:none"
+
+# Remap keyboard keys (custom numpad keys)
+xmodmap ~/.xmodmaprc
+
+# Remap mouse buttons (Logitech M705 id=10|11) : thumb button (10) -> middle click (2)
+xinput set-button-map 10 1 2 3 4 5 6 7 8 9 2 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+xinput set-button-map 11 1 2 3 4 5 6 7 8 9 2 11 12 13 14 15 16 17 18 19 20 21 22 23 24
