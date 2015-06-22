@@ -15,3 +15,5 @@ rm $HOME/.xmodmaprc
 rm $HOME/.xsessionrc
 
 rm $HOME/.gitconfig
+
+rm  $HOME/.config/sakura/sakura.conf

@@ -17,3 +17,5 @@ ln -s $DOTFILES_ROOT/system/.xmodmaprc $HOME/.xmodmaprc
 ln -s $DOTFILES_ROOT/system/.xsessionrc $HOME/.xsessionrc
 
 ln -s $DOTFILES_ROOT/git/.gitconfig $HOME/.gitconfig
+
+ln -s $DOTFILES_ROOT/terminal/sakura.conf $HOME/.config/sakura/sakura.conf
