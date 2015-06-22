@@ -11,3 +11,4 @@ rm $HOME/.profile
 rm $HOME/.screenlayout
 
 rm $HOME/.gitconfig
+rm $HOME/.inputrc
