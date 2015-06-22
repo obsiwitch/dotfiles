@@ -44,13 +44,18 @@ set $alt Mod1
 
 #---
 
-# Startup application
+# Applications autostart
 
 ## Compositor
 exec --no-startup-id compton --backend glx --paint-on-overlay --vsync opengl-swc
 
 ## Network Manager applet
 exec --no-startup-id nm-applet
+
+## Wallpaper
+exec --no-startup-id nitrogen --restore
+
+#---
 
 ## Power Manager
 exec --no-startup-id xfce4-power-manager
