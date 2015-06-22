@@ -18,4 +18,5 @@ ln -s $DOTFILES_ROOT/system/.xsessionrc $HOME/.xsessionrc
 
 ln -s $DOTFILES_ROOT/git/.gitconfig $HOME/.gitconfig
 
-ln -s $DOTFILES_ROOT/terminal/sakura.conf $HOME/.config/sakura/sakura.conf
+#ln -s $DOTFILES_ROOT/terminal/sakura.conf $HOME/.config/sakura/sakura.conf
+cp $DOTFILES_ROOT/terminal/xfce4.terminalrc $HOME/.config/xfce4/terminal/terminalrc
