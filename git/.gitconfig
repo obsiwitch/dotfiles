@@ -1,0 +1,15 @@
+[user]
+	name = Obside\n
+	email = obsiagae@gmail.com
+[credential]
+	helper = cache
+[core]
+	autocrlf = input
+	page = less -S
+	pager = less -r
+[alias]
+	tree = log --graph --oneline --all --decorate
+[push]
+	default = simple
+[merge]
+	tool = meld

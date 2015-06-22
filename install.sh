@@ -11,3 +11,5 @@ ln -s $DOTFILES_ROOT/shell/.bashrc.d $HOME/.bashrc.d
 ln -s $DOTFILES_ROOT/system/.profile.d $HOME/.profile.d
 ln -s $DOTFILES_ROOT/system/.profile $HOME/.profile
 ln -s $DOTFILES_ROOT/system/.screenlayout $HOME/.screenlayout
+
+ln -s $DOTFILES_ROOT/git/.gitconfig $HOME/.gitconfig

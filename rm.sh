@@ -9,3 +9,5 @@ rm $HOME/.bashrc.d
 rm $HOME/.profile.d
 rm $HOME/.profile
 rm $HOME/.screenlayout
+
+rm $HOME/.gitconfig
