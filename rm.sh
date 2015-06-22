@@ -13,3 +13,4 @@ rm $HOME/.screenlayout
 rm $HOME/.gitconfig
 rm $HOME/.inputrc
 rm $HOME/.xinitrc
+rm $HOME/.xmodmaprc

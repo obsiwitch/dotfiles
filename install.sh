@@ -13,5 +13,6 @@ ln -s $DOTFILES_ROOT/system/.profile $HOME/.profile
 ln -s $DOTFILES_ROOT/system/.screenlayout $HOME/.screenlayout
 ln -s $DOTFILES_ROOT/system/.inputrc $HOME/.inputrc
 ln -s $DOTFILES_ROOT/system/.xinitrc $HOME/.xinitrc
+ln -s $DOTFILES_ROOT/system/.xmodmaprc $HOME/.xmodmaprc
 
 ln -s $DOTFILES_ROOT/git/.gitconfig $HOME/.gitconfig
