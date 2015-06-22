@@ -46,9 +46,6 @@ set $alt Mod1
 
 # Applications autostart
 
-## Compositor
-exec --no-startup-id compton --backend glx --paint-on-overlay --vsync opengl-swc
-
 ## Network Manager applet
 exec --no-startup-id nm-applet
 
@@ -66,7 +63,7 @@ exec --no-startup-id xfce4-power-manager
 bindsym $mod+Return exec nemo
 
 ## terminal
-bindsym $alt+Return exec sakura
+bindsym $alt+Return exec xfce4-terminal
 
 ## lock screen
 bindsym $mod+l exec slock
