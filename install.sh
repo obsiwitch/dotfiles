@@ -1,3 +1,5 @@
 #!/bin/sh
 
-ln -s gui/.i3 ~/.i3
+DOTFILES_ROOT=$(pwd)
+
+ln -s $DOTFILES_ROOT/gui/.i3 $HOME/.i3
