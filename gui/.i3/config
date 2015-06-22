@@ -1,0 +1,205 @@
+# i3 configuration
+#
+# Should you change your keyboard layout some time, delete this file and
+# re-run i3-config-wizard(1).
+#
+# Doc: http://i3wm.org/docs/userguide.html
+
+# General
+
+## Font
+font pango:DejaVu Sans Mono 10
+
+## Client colors
+## class                border  backgr. text    indicator
+client.focused          #282828 #282828 #F8F8F2 #4777D7
+client.focused_inactive #d6d6d6 #d6d6d6 #858585 #484e50
+client.unfocused        #d6d6d6 #d6d6d6 #858585 #292d2e
+client.placeholder      #0c0c0c #0c0c0c #ffffff #000000
+client.urgent           #900000 #900000 #ffffff #900000
+
+## status bar
+bar {
+    tray_output LVDS1 # system tray area on the laptop's screen
+    status_command i3blocks -c .i3/i3blocks.conf
+
+    colors {
+        background #d6d6d6
+        statusline #282828
+        separator  #282828
+
+        # class            border  bg      text
+        focused_workspace  #282828 #282828 #F8F8F2
+        active_workspace   #777777 #777777 #ffffff
+        inactive_workspace #d6d6d6 #d6d6d6 #282828
+        urgent_workspace   #2f343a #900000 #ffffff
+    }
+}
+
+#---
+
+# modifier keys variables
+set $mod Mod4
+set $alt Mod1
+
+#---
+
+# Startup application
+
+## Compositor
+exec --no-startup-id compton --backend glx --paint-on-overlay --vsync opengl-swc
+
+## Network Manager applet
+exec --no-startup-id nm-applet
+
+## Power Manager
+exec --no-startup-id xfce4-power-manager
+
+# Applications shortcuts
+
+## file manager
+bindsym $mod+Return exec nemo
+
+## terminal
+bindsym $alt+Return exec sakura
+
+## lock screen
+bindsym $mod+l exec slock
+
+## launcher
+bindsym $alt+F2 exec dmenu_run
+
+## screenshots
+bindsym Print exec xfce4-screenshooter
+
+## music
+
+### play/pause
+bindsym control+oe exec rhythmbox-client --play-pause
+
+### next
+bindsym control+eacute exec rhythmbox-client --next
+
+### previous
+bindsym control+ampersand exec rhythmbox-client --previous
+
+## volume
+
+### mute
+bindsym XF86AudioMute exec .i3/scripts/volume-mute.sh
+
+### volume inc
+bindsym XF86AudioLowerVolume exec .i3/scripts/volume-dec.sh
+
+### volume dec
+bindsym XF86AudioRaiseVolume exec .i3/scripts/volume-inc.sh
+
+#---
+
+# Windows shortcuts
+
+## kill focused window
+bindsym $alt+F4 kill
+
+## change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+## move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+## split in horizontal orientation
+bindsym $mod+h split h
+
+## split in vertical orientation
+bindsym $mod+v split v
+
+## enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+## change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+z layout tabbed
+bindsym $mod+e layout toggle split
+
+## floating windows shortcuts
+
+### toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+### change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+### drag floating windows (mouse + $mod)
+floating_modifier $mod
+
+### resize floating window
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym m resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+### toggle resize mode
+bindsym $mod+r mode "resize"
+
+## workspaces
+
+### switch to workspace
+bindsym $mod+ampersand workspace 1
+bindsym $mod+eacute workspace 2
+bindsym $mod+quotedbl workspace 3
+bindsym $mod+apostrophe workspace 4
+bindsym $mod+parenleft workspace 5
+bindsym $mod+minus workspace 6
+bindsym $mod+egrave workspace 7
+bindsym $mod+underscore workspace 8
+bindsym $mod+ccedilla workspace 9
+bindsym $mod+agrave workspace 10
+
+bindsym control+$alt+Left workspace prev_on_output
+bindsym control+$alt+Right workspace next_on_output
+
+### move focused container to workspace
+bindsym $mod+Shift+ampersand move container to workspace 1
+bindsym $mod+Shift+eacute move container to workspace 2
+bindsym $mod+Shift+quotedbl move container to workspace 3
+bindsym $mod+Shift+apostrophe move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+minus move container to workspace 6
+bindsym $mod+Shift+egrave move container to workspace 7
+bindsym $mod+Shift+underscore move container to workspace 8
+bindsym $mod+Shift+ccedilla move container to workspace 9
+bindsym $mod+Shift+agrave move container to workspace 10
+
+bindsym control+$alt+Shift+Left move container to workspace prev_on_output
+bindsym control+$alt++ShiftRight move container to workspace next_on_output
+
+# reload configuration
+bindsym $mod+Shift+c reload
+# restart i3
+bindsym $mod+Shift+r restart
+# exit i3
+bindsym $mod+Shift+e exit
