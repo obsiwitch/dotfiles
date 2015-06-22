@@ -1,5 +1,6 @@
-alias rm='rm --preserve-root'
 alias ls='ls --group-directories-first --color=auto'
+alias grep='grep --color=auto'
+alias rm='rm --preserve-root'
 alias ifconfig='/sbin/ifconfig'
 alias syslog='sudo tail -f /var/log/syslog'
 alias cb='xclip -selection c'
