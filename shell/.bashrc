@@ -53,15 +53,8 @@ for config in "$HOME"/.bashrc.d/*.bash ; do
 done
 unset -v config
 
-# promptline.vim
-# Only if the terminal is not a virtual terminal and is not an xterm terminal.
-case $(tty) in
-	/dev/pts*)
-		if [ -z "$XTERM_VERSION" ]; then
-			source ~/.shell_prompt.sh
-		fi
-	;;
-esac
+# promptline & shell title
+source ~/.shell_prompt.sh
 
 # Handle **
 shopt -s globstar
