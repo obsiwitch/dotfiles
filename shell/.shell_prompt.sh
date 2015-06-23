@@ -37,14 +37,14 @@ function __promptline_block() {
 }
 
 function __promptline_username {
-    local c_username="${c_wrap}${c_fg}${dark_green}${end_c_wrap}"
+    local c_username="${c_wrap}${c_fg}${dark_red}${end_c_wrap}"
     local username="${c_username}\u"
     
     echo `__promptline_block $username`
 }
 
 function __prompline_hostname {
-    local c_hostname="${c_wrap}${c_fg}${dark_green}${end_c_wrap}"
+    local c_hostname="${c_wrap}${c_fg}${dark_red}${end_c_wrap}"
     local hostname="${c_hostname}\h"
     
     echo `__promptline_block $hostname`
