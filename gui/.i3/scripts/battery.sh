@@ -1,6 +1,6 @@
 #!/bin/sh
 
-/usr/share/i3blocks/battery
+.i3/scripts/battery.perl
 
 # left click, xfce4-power-manager-settings
 case $BLOCK_BUTTON in
