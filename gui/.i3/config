@@ -69,7 +69,7 @@ bindsym $alt+Return exec xfce4-terminal
 bindsym $mod+l exec slock
 
 ## launcher
-bindsym $alt+F2 exec dmenu_run
+bindsym $alt+F2 exec .i3/scripts/dmenu.sh
 
 ## screenshots
 bindsym Print exec xfce4-screenshooter
