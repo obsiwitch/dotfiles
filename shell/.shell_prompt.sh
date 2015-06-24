@@ -75,9 +75,9 @@ function __promptline {
     local hostname=`__prompline_hostname`
     local directory=`__prompline_directory`
     local git=`__promptline_git`
-    local prompt="\n> "
+    local prompt="\n└> "
     
-    PS1="${username}${hostname}${directory}${git}${prompt}"
+    PS1="┌${username}${hostname}${directory}${git}${prompt}"
 }
 
 # shelltitle constants
