@@ -8,13 +8,13 @@ ln -s $DOTFILES_ROOT/shell/.bashrc $HOME/.bashrc
 ln -s $DOTFILES_ROOT/shell/.shell_prompt.sh $HOME/.shell_prompt.sh
 ln -s $DOTFILES_ROOT/shell/.bashrc.d $HOME/.bashrc.d
 
-ln -s $DOTFILES_ROOT/system/.profile.d $HOME/.profile.d
-ln -s $DOTFILES_ROOT/system/.profile $HOME/.profile
-ln -s $DOTFILES_ROOT/system/.screenlayout $HOME/.screenlayout
-ln -s $DOTFILES_ROOT/system/.inputrc $HOME/.inputrc
-ln -s $DOTFILES_ROOT/system/.xinitrc $HOME/.xinitrc
-ln -s $DOTFILES_ROOT/system/.xmodmaprc $HOME/.xmodmaprc
-ln -s $DOTFILES_ROOT/system/.xsessionrc $HOME/.xsessionrc
+ln -s $DOTFILES_ROOT/user/.profile.d $HOME/.profile.d
+ln -s $DOTFILES_ROOT/user/.profile $HOME/.profile
+ln -s $DOTFILES_ROOT/user/.screenlayout $HOME/.screenlayout
+ln -s $DOTFILES_ROOT/user/.inputrc $HOME/.inputrc
+ln -s $DOTFILES_ROOT/user/.xinitrc $HOME/.xinitrc
+ln -s $DOTFILES_ROOT/user/.xmodmaprc $HOME/.xmodmaprc
+ln -s $DOTFILES_ROOT/user/.xsessionrc $HOME/.xsessionrc
 
 ln -s $DOTFILES_ROOT/git/.gitconfig $HOME/.gitconfig
 
