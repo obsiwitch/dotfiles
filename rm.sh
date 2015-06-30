@@ -1,6 +1,7 @@
 #!/bin/sh
 
 rm $HOME/.i3
+rm $HOME/.config/gtk-3.0/settings.ini
 
 rm $HOME/.bashrc
 rm $HOME/.shell_prompt.sh

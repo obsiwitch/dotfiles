@@ -3,6 +3,7 @@
 DOTFILES_ROOT=$(pwd)
 
 ln -s $DOTFILES_ROOT/gui/.i3 $HOME/.i3
+ln -s $DOTFILES_ROOT/gui/gtk-3.0/settings.ini $HOME/.config/gtk-3.0/settings.ini
 
 ln -s $DOTFILES_ROOT/shell/.bashrc $HOME/.bashrc
 ln -s $DOTFILES_ROOT/shell/.shell_prompt.sh $HOME/.shell_prompt.sh
