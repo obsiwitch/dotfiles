@@ -64,7 +64,7 @@ format() {
 STEP="5%"
 
 case $BLOCK_BUTTON in
-  1) xfce4-mixer ;; # left click, xfce4-mixer
+  1) pavucontrol ;; # left click, xfce4-mixer
   3) amixer -q -D $MIXER sset $SCONTROL $(capability) toggle ;;  # right click, mute/unmute
   4) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}+ ;; # scroll up, increase
   5) amixer -q -D $MIXER sset $SCONTROL $(capability) ${STEP}- ;; # scroll down, decrease
