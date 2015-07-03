@@ -1,10 +1,5 @@
 #!/usr/bin/lua
 
-normal_background_color="#282828"
-normal_foreground_color="#F8F8F2"
-selected_background_color="#d6d6d6"
-selected_foreground_color="#282828"
-
 local conf = {
     normal_bg = "#282828",
     normal_fg = "#F8F8F2",
@@ -44,7 +39,7 @@ function get_menu_cmd()
 end
 
 -- Display the dialog
-function display_menu()    
+function display_menu()
     local cmd = io.popen("echo '" .. get_menu_choices() .. "'|" .. get_menu_cmd())
     local choice = cmd:read("*l")
     

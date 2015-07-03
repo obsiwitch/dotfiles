@@ -213,4 +213,4 @@ bindsym control+$alt+Shift+Left move container to workspace prev_on_output
 bindsym control+$alt++ShiftRight move container to workspace next_on_output
 
 # exit i3
-bindsym $mod+Shift+e exec --no-startup-id .i3/scripts/exit_dialog.lua
+bindsym $mod+Shift+e exec .i3/scripts/exit_dialog.lua
