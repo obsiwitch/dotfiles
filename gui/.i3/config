@@ -80,7 +80,7 @@ bindsym $alt+Return exec xfce4-terminal
 bindsym $mod+l exec i3lock -d -u -c 000000
 
 ## launcher
-bindsym $alt+F2 exec .i3/scripts/dmenu.sh
+bindsym $alt+F2 exec --no-startup-id .i3/scripts/dmenu.sh
 
 ## screenshots
 bindsym Print exec xfce4-screenshooter
