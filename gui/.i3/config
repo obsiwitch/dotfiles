@@ -49,11 +49,14 @@ set $alt Mod1
 ## Network Manager applet
 exec --no-startup-id nm-applet
 
+## Power Manager
+exec --no-startup-id xfce4-power-manager
+
 ## Wallpaper
 exec --no-startup-id ./.fehbg
 
-## Power Manager
-exec --no-startup-id xfce4-power-manager
+## Compositor
+exec --no-startup-id compton
 
 #---
 

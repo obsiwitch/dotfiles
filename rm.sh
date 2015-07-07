@@ -2,6 +2,7 @@
 
 rm $HOME/.i3
 rm $HOME/.config/gtk-3.0/settings.ini
+rm $HOME/.config/compton.conf
 
 rm $HOME/.bashrc
 rm $HOME/.shell_prompt.sh
