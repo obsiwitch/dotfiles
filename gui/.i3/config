@@ -55,17 +55,6 @@ exec --no-startup-id xfce4-power-manager
 ## Wallpaper
 exec --no-startup-id ./.fehbg
 
-## Compositor
-exec --no-startup-id compton
-
-# Real transparency does not seem well supported by i3 when using vertical
-# splitting. xfce4-terminal provides pseudo-transparency, which works well.
-# However, when compton is running, xfce4-terminal seems to use the compositor
-# for transparency. By trying to launch compton a second time, the problem seems
-# to disappear, xfce4-terminal switches back to pseudo-transparency (N.B. only
-# one instance of compton will be running).
-exec --no-startup-id compton
-
 #---
 
 # Applications shortcuts
