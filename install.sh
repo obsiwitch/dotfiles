@@ -17,6 +17,7 @@ ln -s $DOTFILES_ROOT/user/.inputrc $HOME/.inputrc
 ln -s $DOTFILES_ROOT/user/.xinitrc $HOME/.xinitrc
 ln -s $DOTFILES_ROOT/user/.xmodmaprc $HOME/.xmodmaprc
 ln -s $DOTFILES_ROOT/user/.xsessionrc $HOME/.xsessionrc
+ln -s $DOTFILES_ROOT/user/.config/freshwrapper.conf $HOME/.config/freshwrapper.conf
 
 ln -s $DOTFILES_ROOT/git/.gitconfig $HOME/.gitconfig
 

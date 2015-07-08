@@ -15,6 +15,7 @@ rm $HOME/.inputrc
 rm $HOME/.xinitrc
 rm $HOME/.xmodmaprc
 rm $HOME/.xsessionrc
+rm $HOME/.config/freshwrapper.conf
 
 rm $HOME/.gitconfig
 
