@@ -16,6 +16,7 @@ rm $HOME/.xinitrc
 rm $HOME/.xmodmaprc
 rm $HOME/.xsessionrc
 rm $HOME/.config/freshwrapper.conf
+rm $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
 
 rm $HOME/.gitconfig
 

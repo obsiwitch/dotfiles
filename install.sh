@@ -17,9 +17,13 @@ ln -s $DOTFILES_ROOT/user/.inputrc $HOME/.inputrc
 ln -s $DOTFILES_ROOT/user/.xinitrc $HOME/.xinitrc
 ln -s $DOTFILES_ROOT/user/.xmodmaprc $HOME/.xmodmaprc
 ln -s $DOTFILES_ROOT/user/.xsessionrc $HOME/.xsessionrc
-ln -s $DOTFILES_ROOT/user/.config/freshwrapper.conf $HOME/.config/freshwrapper.conf
+ln -s $DOTFILES_ROOT/user/.config/freshwrapper.conf \
+      $HOME/.config/freshwrapper.conf
+cp $DOTFILES_ROOT/user/xfce4-power-manager.xml \
+   $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
 
 ln -s $DOTFILES_ROOT/git/.gitconfig $HOME/.gitconfig
 
 #ln -s $DOTFILES_ROOT/terminal/sakura.conf $HOME/.config/sakura/sakura.conf
-cp $DOTFILES_ROOT/terminal/xfce4.terminalrc $HOME/.config/xfce4/terminal/terminalrc
+cp $DOTFILES_ROOT/terminal/xfce4.terminalrc \
+   $HOME/.config/xfce4/terminal/terminalrc
