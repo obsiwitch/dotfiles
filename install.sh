@@ -19,8 +19,10 @@ ln -s $DOTFILES_ROOT/user/.xmodmaprc $HOME/.xmodmaprc
 ln -s $DOTFILES_ROOT/user/.xsessionrc $HOME/.xsessionrc
 ln -s $DOTFILES_ROOT/user/.config/freshwrapper.conf \
       $HOME/.config/freshwrapper.conf
-cp $DOTFILES_ROOT/user/xfce4-power-manager.xml \
+cp $DOTFILES_ROOT/user/.config/xfce4-power-manager.xml \
    $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
+ln -s $DOTFILES_ROOT/user/.config/dunst/dunstrc \
+     $HOME/.config/dunst/dunstrc
 
 ln -s $DOTFILES_ROOT/git/.gitconfig $HOME/.gitconfig
 
