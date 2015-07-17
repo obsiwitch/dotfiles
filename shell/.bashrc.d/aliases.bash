@@ -1,7 +1,5 @@
 alias ls='ls --group-directories-first --color=auto'
 alias grep='grep --color=auto'
 alias rm='rm --preserve-root'
-alias ifconfig='/sbin/ifconfig'
-alias syslog='sudo tail -f /var/log/syslog'
 alias cb='xclip -selection c'
 alias flactomp3='for f in *.flac; do flac -cd "$f" | lame -b 320 - "${f%.*}".mp3; done'
