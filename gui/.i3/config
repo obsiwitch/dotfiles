@@ -60,13 +60,13 @@ exec --no-startup-id ./.fehbg
 # Applications shortcuts
 
 ## file manager
-bindsym $mod+Return exec nemo
+bindsym $mod+Return exec --no-startup-id nemo
 
 ## terminal
 bindsym $alt+Return exec xfce4-terminal
 
 ## lock screen
-bindsym $mod+l exec xflock4
+bindsym $mod+l exec --no-startup-id xflock4
 
 ## launcher
 bindsym $alt+F2 exec --no-startup-id .i3/scripts/dmenu.sh
@@ -77,24 +77,24 @@ bindsym Print exec xfce4-screenshooter
 ## music
 
 ### play/pause
-bindsym control+oe exec rhythmbox-client --play-pause
+bindsym control+oe exec --no-startup-id rhythmbox-client --play-pause
 
 ### next
-bindsym control+eacute exec rhythmbox-client --next
+bindsym control+eacute exec --no-startup-id rhythmbox-client --next
 
 ### previous
-bindsym control+ampersand exec rhythmbox-client --previous
+bindsym control+ampersand exec --no-startup-id rhythmbox-client --previous
 
 ## volume
 
 ### mute
-bindsym XF86AudioMute exec .i3/scripts/volume-mute.sh
+bindsym XF86AudioMute exec --no-startup-id .i3/scripts/volume-mute.sh
 
 ### volume inc
-bindsym XF86AudioLowerVolume exec .i3/scripts/volume-dec.sh
+bindsym XF86AudioLowerVolume exec --no-startup-id .i3/scripts/volume-dec.sh
 
 ### volume dec
-bindsym XF86AudioRaiseVolume exec .i3/scripts/volume-inc.sh
+bindsym XF86AudioRaiseVolume exec --no-startup-id .i3/scripts/volume-inc.sh
 
 #---
 
@@ -213,4 +213,4 @@ bindsym control+$alt+Shift+Left move container to workspace prev_on_output
 bindsym control+$alt++ShiftRight move container to workspace next_on_output
 
 # exit i3
-bindsym $mod+Shift+e exec .i3/scripts/exit_dialog.lua
+bindsym $mod+Shift+e exec --no-startup-id .i3/scripts/exit_dialog.lua
