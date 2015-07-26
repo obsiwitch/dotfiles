@@ -52,6 +52,9 @@ exec --no-startup-id nm-applet
 ## Power Manager
 exec --no-startup-id xfce4-power-manager
 
+## Volume Manager
+exec --no-startup-id pasystray
+
 ## Wallpaper
 exec --no-startup-id ./.fehbg
 
