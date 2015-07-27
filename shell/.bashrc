@@ -49,12 +49,12 @@ fi
 
 # Load other configuration files related to bash (e.g. aliases, functions).
 for config in "$HOME"/.bashrc.d/*.bash ; do
-    source "$config"
+    . "$config"
 done
 unset -v config
 
 # promptline & shell title
-source ~/.shell_prompt.sh
+. ~/.shell_prompt.sh
 
 # Handle **
 shopt -s globstar

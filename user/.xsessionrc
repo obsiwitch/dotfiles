@@ -2,7 +2,7 @@
 # when it is invoked as a login shell. Some display managers source this file
 # (e.g. slim), and some do not (e.g. lightdm). The file is sourced here in case
 # the display manager do not do it itself.
-source ~/.profile
+. ~/.profile
 
 # Avoid inputting non-breakable spaces (Alt Gr + Space)
 setxkbmap -option "nbsp:none"
