@@ -2,5 +2,4 @@
 if [ -d "$HOME/Bin/adt-bundle-linux-x86_64-20140702" ] ; then
 	PATH="$HOME/Bin/adt-bundle-linux-x86_64-20140702/sdk/platform-tools/:$PATH"
 	PATH="$HOME/Bin/adt-bundle-linux-x86_64-20140702/sdk/tools:$PATH"
-	export PATH
 fi
