@@ -2,6 +2,10 @@
 
 DOTFILES_ROOT=$(pwd)
 
+ln -s $DOTFILES_ROOT/bin/crunchix-disable $HOME/Bin/crunchix-disable
+ln -s $DOTFILES_ROOT/bin/crunchix-enable $HOME/Bin/crunchix-enable
+ln -s $DOTFILES_ROOT/bin/flactomp3 $HOME/Bin/flactomp3
+
 ln -s $DOTFILES_ROOT/gui/.i3 $HOME/.i3
 ln -s $DOTFILES_ROOT/gui/gtk-3.0/settings.ini $HOME/.config/gtk-3.0/settings.ini
 ln -s $DOTFILES_ROOT/gui/compton.conf $HOME/.config/compton.conf
