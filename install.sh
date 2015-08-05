@@ -23,7 +23,7 @@ ln -s $DOTFILES_ROOT/user/.config/freshwrapper.conf \
 cp $DOTFILES_ROOT/user/.config/xfce4-power-manager.xml \
    $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
 
-ln -s $DOTFILES_ROOT/git/.gitconfig $HOME/.gitconfig
+ln -s $DOTFILES_ROOT/user/.gitconfig $HOME/.gitconfig
 
 #ln -s $DOTFILES_ROOT/terminal/sakura.conf $HOME/.config/sakura/sakura.conf
 cp $DOTFILES_ROOT/terminal/xfce4.terminalrc \
