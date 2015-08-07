@@ -5,7 +5,8 @@ rm $HOME/Bin/crunchix-enable
 rm $HOME/Bin/flactomp3
 
 rm $HOME/.i3
-rm $HOME/.config/gtk-3.0/settings.ini
+rm $HOME/.gtkrc-2.0
+rm $HOME/.config/gtk-3.0
 rm $HOME/.config/compton.conf
 
 rm $HOME/.bashrc
