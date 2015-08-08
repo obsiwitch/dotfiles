@@ -11,3 +11,5 @@ gtk-xft-antialias=1
 gtk-xft-hinting=1
 gtk-xft-hintstyle="hintfull"
 gtk-xft-rgba="rgb"
+
+include "/usr/share/themes/Adwaita-i3-tweaks/gtk-2.0/gtkrc"

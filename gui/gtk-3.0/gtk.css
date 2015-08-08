@@ -1,5 +1,1 @@
-.window-frame {
-    border-style: solid;
-    border-width: 2px;
-    border-color: #282828;
-}
+@import url("/usr/share/themes/Adwaita-i3-tweaks/gtk-3.0/gtk.css");
