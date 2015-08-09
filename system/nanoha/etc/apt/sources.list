@@ -9,4 +9,4 @@ deb http://security.debian.org/ stretch/updates main contrib non-free
 # deb http://ftp.au.debian.org/debian unstable main contrib non-free
 
 # Debian experimental
-#deb http://ftp.fr.debian.org/debian experimental main contrib non-free
+# deb http://ftp.fr.debian.org/debian experimental main contrib non-free
