@@ -1,6 +1,9 @@
 #!/usr/bin/lua
 
-local ALL_TAGS = { "obside", "cli", "gui" }
+local ALL_TAGS = {
+    "obside", "cli", "gui",
+    "system/nanoha"
+}
 
 -- Prints the help message.
 function printHelp()
@@ -8,7 +11,7 @@ function printHelp()
         "usage: " .. arg[0] .. " <command> [<tags>]\n\n" ..
         "The available commands are:\n" ..
         "install\t\t" .. "Install configuration files related to <tags>\n" ..
-        "Remove\t\t" .. "Remove configuration files related to <tags>\n\n" ..
+        "remove\t\t" .. "Remove configuration files related to <tags>\n\n" ..
         "Tags are categories of configuration files. The available tags " ..
         "are:\n"
     
