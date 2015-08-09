@@ -4,10 +4,10 @@
 ln -s $PWD/gui/i3 $HOME/.i3
 
 # GTK
-ln -s $PWD/gui/gtkrc-2.0 $HOME/.gtkrc-2.0
+ln -s $PWD/gui/gtk/gtk-2.0/gtkrc-2.0 $HOME/.gtkrc-2.0
 mkdir -p $HOME/.config/gtk-3.0
-ln -s $PWD/gui/gtk-3.0/gtk.css $HOME/.config/gtk-3.0/gtk.css
-ln -s $PWD/gui/gtk-3.0/settings.ini $HOME/.config/gtk-3.0/settings.ini
+ln -s $PWD/gui/gtk/gtk-3.0/gtk.css $HOME/.config/gtk-3.0/gtk.css
+ln -s $PWD/gui/gtk/gtk-3.0/settings.ini $HOME/.config/gtk-3.0/settings.ini
 
 # X
 ln -s $PWD/gui/X/xinitrc $HOME/.xinitrc
