@@ -16,10 +16,10 @@ ln -s $PWD/gui/X/xsessionrc $HOME/.xsessionrc
 
 # Xfce
 mkdir -p $HOME/.config/xfce4/xfconf/xfce-perchannel-xml
-cp $PWD/user/config/xfce4-power-manager.xml \
+cp $PWD/gui/Xfce/xfce4-power-manager.xml \
    $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
 mkdir -p $HOME/.config/xfce4/terminal
-cp $PWD/terminal/xfce4.terminalrc \
+cp $PWD/gui/Xfce/xfce4.terminalrc \
    $HOME/.config/xfce4/terminal/terminalrc
 
 # Compositing
