@@ -31,6 +31,5 @@ cp $DOTFILES_ROOT/user/config/xfce4-power-manager.xml \
 
 ln -s $DOTFILES_ROOT/user/gitconfig $HOME/.gitconfig
 
-#ln -s $DOTFILES_ROOT/terminal/sakura.conf $HOME/.config/sakura/sakura.conf
 cp $DOTFILES_ROOT/terminal/xfce4.terminalrc \
    $HOME/.config/xfce4/terminal/terminalrc

@@ -27,5 +27,4 @@ rm $HOME/.config/dunst/dunstrc
 
 rm $HOME/.gitconfig
 
-#rm  $HOME/.config/sakura/sakura.conf
 rm $HOME/.config/xfce4/terminal/terminalrc
