@@ -2,7 +2,7 @@
 
 local ALL_TAGS = {
     "obside", "cli", "gui",
-    "system/nanoha"
+    "system/common", "system/nanoha"
 }
 
 -- Prints the help message.
