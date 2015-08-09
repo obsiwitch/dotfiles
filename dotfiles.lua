@@ -33,9 +33,9 @@ function parseTags()
 end
 
 -- Executes a script related to the given `tags`.
-function exec(prefix, tags)
+function exec(cmd, tags)
     for _,tag in ipairs(tags) do
-        os.execute("./" .. prefix .. "_" .. tag .. ".sh")
+        os.execute(tag .. "/" .. cmd .. ".sh")
     end
 end
 
