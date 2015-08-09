@@ -30,7 +30,7 @@ mkdir -p $HOME/.config/dunst
 ln -s $PWD/gui/dunstrc $HOME/.config/dunst/dunstrc
 
 # Screen layouts
-ln -s $PWD/user/screenlayout $HOME/.screenlayout
+ln -s $PWD/gui/screenlayout $HOME/.screenlayout
 
 # Flash (Firefox)
 ln -s $PWD/user/config/freshwrapper.conf \
