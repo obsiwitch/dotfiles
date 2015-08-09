@@ -33,5 +33,5 @@ ln -s $PWD/gui/dunstrc $HOME/.config/dunst/dunstrc
 ln -s $PWD/gui/screenlayout $HOME/.screenlayout
 
 # Flash (Firefox)
-ln -s $PWD/user/config/freshwrapper.conf \
+ln -s $PWD/gui/freshwrapper.conf \
       $HOME/.config/freshwrapper.conf
