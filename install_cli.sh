@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # Bin
+mkdir -p $HOME/Bin
 ln -s $PWD/bin/crunchix-disable $HOME/Bin/crunchix-disable
 ln -s $PWD/bin/crunchix-enable $HOME/Bin/crunchix-enable
 ln -s $PWD/bin/flactomp3 $HOME/Bin/flactomp3

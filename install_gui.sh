@@ -5,6 +5,7 @@ ln -s $PWD/gui/i3 $HOME/.i3
 
 # GTK
 ln -s $PWD/gui/gtkrc-2.0 $HOME/.gtkrc-2.0
+mkdir -p $HOME/.config/gtk-3.0
 ln -s $PWD/gui/gtk-3.0/gtk.css $HOME/.config/gtk-3.0/gtk.css
 ln -s $PWD/gui/gtk-3.0/settings.ini $HOME/.config/gtk-3.0/settings.ini
 
@@ -14,8 +15,10 @@ ln -s $PWD/user/xmodmaprc $HOME/.xmodmaprc
 ln -s $PWD/user/xsessionrc $HOME/.xsessionrc
 
 # Xfce
+mkdir -p $HOME/.config/xfce4/xfconf/xfce-perchannel-xml
 cp $PWD/user/config/xfce4-power-manager.xml \
    $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
+mkdir -p $HOME/.config/xfce4/terminal
 cp $PWD/terminal/xfce4.terminalrc \
    $HOME/.config/xfce4/terminal/terminalrc
 
@@ -23,6 +26,7 @@ cp $PWD/terminal/xfce4.terminalrc \
 ln -s $PWD/gui/compton.conf $HOME/.config/compton.conf
 
 # Notifications
+mkdir -p $HOME/.config/dunst
 ln -s $PWD/gui/dunstrc $HOME/.config/dunst/dunstrc
 
 # Screen layouts
