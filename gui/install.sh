@@ -22,6 +22,10 @@ mkdir -p $HOME/.config/xfce4/terminal
 cp $PWD/gui/Xfce/xfce4.terminalrc \
    $HOME/.config/xfce4/terminal/terminalrc
 
+# Nemo - do not manage the desktop
+# requirement: libglib2.0-bin (gsettings)
+gsettings set org.nemo.desktop show-desktop-icons false
+
 # Compositing
 ln -s $PWD/gui/compton.conf $HOME/.config/compton.conf
 

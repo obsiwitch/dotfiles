@@ -17,6 +17,10 @@ rm $HOME/.xsessionrc
 rm $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
 rm $HOME/.config/xfce4/terminal/terminalrc
 
+# Nemo - restore desktop management
+# requirement: libglib2.0-bin (contains gsettings)
+gsettings set org.nemo.desktop show-desktop-icons true
+
 # Compositing
 rm $HOME/.config/compton.conf
 
