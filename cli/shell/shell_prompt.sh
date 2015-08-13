@@ -51,14 +51,14 @@ function __prompline_hostname {
 }
 
 function __prompline_directory {
-    local c_directory="${c_wrap}${c_fg}${dark_cyan}${end_c_wrap}"
+    local c_directory="${c_wrap}${c_fg}${dark_blue}${end_c_wrap}"
     local directory="${c_directory}\w"
     
     echo `__promptline_block $directory`
 }
 
 function __promptline_git {
-    local c_git="${c_wrap}${c_fg}${cyan}${end_c_wrap}"
+    local c_git="${c_wrap}${c_fg}${blue}${end_c_wrap}"
     local is_git_tree=`git rev-parse --git-dir > /dev/null 2>&1`
     
     if $is_git_tree; then
