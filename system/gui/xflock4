@@ -1,4 +1,4 @@
 #!/bin/sh
 
-/usr/bin/i3lock -d -u -n -c 000000 >/dev/null 2>&1
+/usr/bin/i3lock -u -c 000000 >/dev/null 2>&1
 exit
