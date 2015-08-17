@@ -1,3 +1,3 @@
 #!/bin/sh
 amixer sset Master toggle
-pkill i3blocks --signal SIGRTMIN+10
+.i3/scripts/volume-notify.sh
