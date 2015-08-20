@@ -1,6 +1,6 @@
 # Obside's dotfiles
 
-![screenshot bash prompt](http://i.imgur.com/hTE9CWa.png)
+![screenshot GUI](http://i.imgur.com/5Fs4quY.png)
 
 ## Install
 
