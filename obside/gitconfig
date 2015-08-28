@@ -5,6 +5,7 @@
 	helper = cache
 [core]
 	autocrlf = input
+	editor = textadept-curses
 [alias]
 	tree = log --graph --oneline --all --decorate
 [push]
