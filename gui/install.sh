@@ -3,6 +3,10 @@
 # i3
 ln -s $PWD/gui/i3 $HOME/.i3
 
+# Nemo
+ln -s $PWD/gui/nemo/actions/bulk_rename.nemo_action \
+      $HOME/.local/share/nemo/actions/bulk_rename.nemo_action
+
 # GTK
 ln -s $PWD/gui/gtk/gtk-2.0/gtkrc-2.0 $HOME/.gtkrc-2.0
 mkdir -p $HOME/.config/gtk-3.0

@@ -3,6 +3,9 @@
 # i3
 rm $HOME/.i3
 
+# Nemo
+rm $HOME/.local/share/nemo/actions/bulk_rename.nemo_action
+
 # GTK
 rm $HOME/.gtkrc-2.0
 rm $HOME/.config/gtk-3.0/gtk.css
