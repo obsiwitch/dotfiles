@@ -88,6 +88,9 @@ bindsym control+eacute exec --no-startup-id rhythmbox-client --next
 ### previous
 bindsym control+ampersand exec --no-startup-id rhythmbox-client --previous
 
+### information
+bindsym control+quotedbl exec --no-startup-id .i3/scripts/music.sh
+
 ## volume
 
 ### mute
