@@ -1,4 +1,4 @@
 #!/bin/sh
 
-xrandr --output Virtual-0 --mode 1680x1050 --pos 0x0 --rotate normal
+xrandr --output qxl-0 --mode 1920x1080 --pos 0x0 --rotate normal
 ~/.fehbg
