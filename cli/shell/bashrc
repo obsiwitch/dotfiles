@@ -46,8 +46,6 @@ if ! shopt -oq posix; then
         . /etc/bash_completion
     fi
 fi
-bind 'set show-all-if-ambiguous on'
-bind 'TAB:menu-complete'
 
 # Load other configuration files related to bash (e.g. aliases, functions).
 for config in "$HOME"/.bashrc.d/*.bash ; do
