@@ -9,8 +9,8 @@ local conf = {
 
 local actions = {
     ["1. reload"] = "i3-msg restart",
-    ["2. sleep"] = "xflock4;systemctl suspend",
-    ["3. hibernate"] = "xflock4;systemctl hibernate",
+    ["2. sleep"] = "systemctl suspend;xflock4",
+    ["3. hibernate"] = "systemctl hibernate;xflock4",
     ["4. logout"] = "i3-msg exit",
     ["5. restart"] = "systemctl reboot",
     ["6. shutdown"] = "systemctl poweroff",
