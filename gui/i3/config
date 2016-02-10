@@ -77,6 +77,9 @@ bindsym $alt+F2 exec --no-startup-id .i3/scripts/dmenu.sh
 ## screenshots
 bindsym Print exec xfce4-screenshooter
 
+## calculator
+bindsym XF86Calculator exec --no-startup-id gnome-calculator
+
 ## music
 
 ### play/pause
