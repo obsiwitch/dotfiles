@@ -23,8 +23,8 @@ mkdir -p $HOME/.config/xfce4/xfconf/xfce-perchannel-xml
 cp $PWD/gui/Xfce/xfce4-power-manager.xml \
    $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
 mkdir -p $HOME/.config/xfce4/terminal
-cp $PWD/gui/Xfce/xfce4.terminalrc \
-   $HOME/.config/xfce4/terminal/terminalrc
+cp $PWD/gui/Xfce/terminal/* \
+   $HOME/.config/xfce4/terminal/
 
 # Nemo - do not manage the desktop
 # requirement: libglib2.0-bin (contains gsettings)
