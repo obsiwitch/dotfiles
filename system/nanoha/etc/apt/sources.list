@@ -6,7 +6,11 @@ deb-src http://ftp.fr.debian.org/debian/ stretch-updates main contrib non-free
 deb http://security.debian.org/ stretch/updates main contrib non-free
 
 # Debian Sid
-# deb http://ftp.au.debian.org/debian unstable main contrib non-free
+# deb http://ftp.fr.debian.org/debian unstable main contrib non-free
 
 # Debian experimental
 # deb http://ftp.fr.debian.org/debian experimental main contrib non-free
+
+# WebUpd8
+deb http://ppa.launchpad.net/nilarimogard/webupd8/ubuntu wily main
+deb http://ppa.launchpad.net/webupd8team/java/ubuntu wily main

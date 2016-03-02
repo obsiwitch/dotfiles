@@ -3,8 +3,6 @@
 # apt
 sudo cp $PWD/system/nanoha/etc/apt/sources.list \
         /etc/apt/sources.list
-sudo cp -r $PWD/system/nanoha/etc/apt/sources.list.d \
-           /etc/apt/sources.list.d
 
 # systemd
 sudo cp $PWD/system/nanoha/etc/systemd/logind.conf \
