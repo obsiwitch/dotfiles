@@ -10,6 +10,6 @@
 today=`date +%e`
 highlight_today="<b>$today<\/b>" # escape '/' for sed to work correctly
 
-calendar=`cal -h | sed "s/$today /$highlight_today /g"`
+calendar=`ncal -h | sed "s/$today /$highlight_today /g"`
 
 notify-send Calendar "$calendar"
