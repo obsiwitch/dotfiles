@@ -1,4 +1,0 @@
-#!/bin/sh
-
-pax11publish -e -r && pkill pasystray && pasystray
-

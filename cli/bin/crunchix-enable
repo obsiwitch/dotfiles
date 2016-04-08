@@ -1,3 +1,0 @@
-#!/bin/sh
-
-pax11publish -e -S crunchix && pkill pasystray && pasystray
