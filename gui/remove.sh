@@ -32,6 +32,3 @@ rm $HOME/.config/dunst/dunstrc
 
 # Screen layouts
 rm $HOME/.screenlayout
-
-# Flash (Firefox)
-rm $HOME/.config/freshwrapper.conf
