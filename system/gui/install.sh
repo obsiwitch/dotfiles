@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Adwaita-i3-tweaks
-sudo git clone --depth 1 https://gitlab.com/Obside/Adwaita-i3-tweaks.git \
+sudo git clone --depth 1 https://github.com/Obside/Adwaita-i3-tweaks.git \
     /usr/share/themes/Adwaita-i3-tweaks
 
 # chromium default flags
