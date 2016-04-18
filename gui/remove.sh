@@ -32,3 +32,6 @@ rm $HOME/.config/dunst/dunstrc
 
 # Screen layouts
 rm $HOME/.screenlayout
+
+# MPlayer
+rm $HOME/.mplayer
