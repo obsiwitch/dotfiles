@@ -1,1 +1,20 @@
-@import url("/usr/share/themes/Adwaita-i3-tweaks/gtk-3.0/gtk.css");
+/* All elements are now squared. */
+* {
+    border-radius: 0px;
+}
+
+/* Fix scale slider radius */
+scale slider {
+     border-radius: 100%;
+}
+
+/* Reduce far left and far right tab gaps */
+notebook > header tabs {
+    margin: -1px -7px;
+}
+
+/* Smaller tabs & remove tab gaps */
+notebook > header tab {
+    padding: 1px 6px;
+    margin: 0px 0px;
+}
