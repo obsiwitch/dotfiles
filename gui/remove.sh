@@ -4,7 +4,7 @@
 rm $HOME/.i3
 
 # Nemo
-rm $HOME/.local/share/nemo/actions/bulk_rename.nemo_action
+rm $HOME/.local/share/nemo/actions
 
 # GTK
 rm $HOME/.gtkrc-2.0
