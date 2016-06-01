@@ -83,16 +83,14 @@ bindsym XF86Calculator exec --no-startup-id gnome-calculator
 ## music
 
 ### play/pause
-bindsym control+oe exec --no-startup-id rhythmbox-client --play-pause
+bindsym control+oe exec --no-startup-id audacious --pause
+bindsym XF86AudioPlay exec --no-startup-id audacious --pause
 
 ### next
-bindsym control+eacute exec --no-startup-id rhythmbox-client --next
+bindsym control+eacute exec --no-startup-id audacious --fwd
 
 ### previous
-bindsym control+ampersand exec --no-startup-id rhythmbox-client --previous
-
-### information
-bindsym control+quotedbl exec --no-startup-id .i3/scripts/music.sh
+bindsym control+ampersand exec --no-startup-id audacious --rew
 
 ## volume
 
