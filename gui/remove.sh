@@ -37,4 +37,4 @@ rm $HOME/.screenlayout
 rm $HOME/.mplayer
 
 # Cura Discovery200
-rm $HOME/.cura/profiles
+rm $HOME/.local/share/cura

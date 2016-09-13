@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>3Dmoniak</brand>
+      <material>PLA</material>
+      <color>Blue</color>
+      <label>Blue PLA</label>
+    </name>
+    <adhesion_info />
+    <description />
+    <version>1</version>
+    <color_code>#0000ff</color_code>
+    <GUID>506c9f0d-e3aa-4bd4-b2d2-23e2425b1aa9</GUID>
+  </metadata>
+  <properties>
+    <density>1.24</density>
+    <diameter>1.75</diameter>
+  </properties>
+  <settings>
+    <setting key="heated bed temperature">0.0</setting>
+    <setting key="retraction amount">4.0</setting>
+    <setting key="retraction speed">50.0</setting>
+    <setting key="print temperature">225.0</setting>
+    <setting key="standby temperature">175</setting>
+    <machine>
+      <machine_identifier manufacturer="Ultimaker" product="Ultimaker 2 Extended" />
+      <setting key="heated bed temperature">60</setting>
+      <setting key="processing temperature graph">
+                </setting>
+      <setting key="print temperature">200</setting>
+      <setting key="standby temperature">150</setting>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Ultimaker" product="Ultimaker 2 Extended+" />
+      <setting key="heated bed temperature">60</setting>
+      <setting key="print temperature">200</setting>
+      <hotend id="0.6 mm" />
+      <hotend id="0.25 mm" />
+      <hotend id="0.8 mm" />
+      <hotend id="0.4 mm" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Ultimaker" product="Ultimaker 2+" />
+      <setting key="heated bed temperature">60</setting>
+      <setting key="print temperature">200</setting>
+      <hotend id="0.6 mm" />
+      <hotend id="0.8 mm" />
+      <hotend id="0.25 mm" />
+      <hotend id="0.4 mm" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Ultimaker" product="Ultimaker 2" />
+      <setting key="heated bed temperature">60</setting>
+      <setting key="processing temperature graph">
+                </setting>
+      <setting key="print temperature">200</setting>
+      <setting key="standby temperature">150</setting>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Ultimaker" product="Ultimaker Original" />
+      <setting key="heated bed temperature">60</setting>
+      <setting key="print temperature">200</setting>
+      <setting key="standby temperature">150</setting>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Ultimaker" product="Ultimaker 2 Go" />
+      <setting key="heated bed temperature">60</setting>
+      <setting key="processing temperature graph">
+                </setting>
+      <setting key="print temperature">200</setting>
+      <setting key="standby temperature">150</setting>
+    </machine>
+  </settings>
+</fdmmaterial>

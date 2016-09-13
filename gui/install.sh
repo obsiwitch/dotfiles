@@ -44,4 +44,4 @@ ln -s $PWD/gui/screenlayout $HOME/.screenlayout
 ln -s $PWD/gui/mplayer $HOME/.mplayer
 
 # Cura Discovery200
-ln -s $PWD/gui/cura/profiles $HOME/.cura/profiles
+ln -s $PWD/gui/cura $HOME/.local/share/cura
