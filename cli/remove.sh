@@ -1,9 +1,8 @@
 #!/bin/sh
 
 # Bin
-rm $HOME/Bin/crunchix-disable
-rm $HOME/Bin/crunchix-enable
 rm $HOME/Bin/flactomp3
+rm $HOME/Bin/hashrename
 
 # Bash
 rm $HOME/.bashrc

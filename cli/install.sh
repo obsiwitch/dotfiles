@@ -2,9 +2,7 @@
 
 # Bin
 mkdir -p $HOME/Bin
-ln -s $PWD/cli/bin/crunchix-disable $HOME/Bin/crunchix-disable
-ln -s $PWD/cli/bin/crunchix-enable $HOME/Bin/crunchix-enable
-ln -s $PWD/cli/bin/flactomp3 $HOME/Bin/flactomp3
+ln -s $PWD/cli/bin/* $HOME/Bin/
 
 # Bash
 ln -s $PWD/cli/shell/bashrc $HOME/.bashrc
