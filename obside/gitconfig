@@ -5,7 +5,7 @@
 	helper = cache
 [core]
 	autocrlf = input
-	editor = textadept-curses
+	editor = vim
 [alias]
 	tree = log --graph --oneline --all --decorate
 [push]
