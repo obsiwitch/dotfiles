@@ -11,5 +11,4 @@ ln -s $PWD/cli/shell/bashrc.d $HOME/.bashrc.d
 ln -s $PWD/cli/shell/inputrc $HOME/.inputrc
 
 # Profile
-ln -s $PWD/cli/profile.d $HOME/.profile.d
-ln -s $PWD/cli/profile $HOME/.profile
+ln -s $PWD/cli/shell/profile $HOME/.profile

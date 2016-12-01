@@ -12,8 +12,10 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# Load any supplementary scripts
-for config in "$HOME"/.profile.d/*.sh ; do
-    . "$config"
-done
-unset -v config
+# PATH: user's Bin if it exists
+if [ -d "$HOME/Bin" ] ; then
+    PATH="$HOME/Bin:$PATH"
+fi
+
+# PATH: sbin
+PATH="/sbin:$PATH"

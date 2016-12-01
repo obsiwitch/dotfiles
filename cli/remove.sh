@@ -13,5 +13,4 @@ rm $HOME/.bashrc.d
 rm $HOME/.inputrc
 
 # Profile
-rm $HOME/.profile.d
 rm $HOME/.profile
