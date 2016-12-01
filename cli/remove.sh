@@ -3,6 +3,8 @@
 # Bin
 rm $HOME/Bin/flactomp3
 rm $HOME/Bin/hashrename
+rm $HOME/Bin/encrypt
+rm $HOME/Bin/decrypt
 
 # Bash
 rm $HOME/.bashrc

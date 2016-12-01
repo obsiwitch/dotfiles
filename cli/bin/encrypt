@@ -1,0 +1,15 @@
+#!/bin/bash
+
+for filePath in $@; do
+    archivePath="$filePath.tar.gz"
+    encPath="$filePath.aes"
+    
+    apack "$archivePath" "$filePath" \
+    && \
+    openssl aes-256-cbc -in "$archivePath" \
+                        -out "$encPath" \
+    && \
+    rm -rf "$filePath"
+    
+    rm "$archivePath"
+done
