@@ -1,0 +1,23 @@
+# Filter table rules
+*filter
+
+## Default rules
+-P INPUT DROP
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+
+## Rules
+
+### Accept packets from the loopback interface
+-A INPUT -i lo -j ACCEPT
+
+### Accept already established connections
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+### ICMP (e.g. ping, traceroute)
+-A INPUT -p ipv6-icmp -j ACCEPT
+
+### SSH
+-A INPUT -p tcp --dport ssh -j ACCEPT
+
+COMMIT
