@@ -17,8 +17,4 @@
 ### ICMP (e.g. ping, traceroute)
 -A INPUT -p ipv6-icmp -j ACCEPT
 
-### Torrent (transmission)
--A INPUT -p udp -m udp --dport 51413 -j ACCEPT
--A INPUT -p tcp -m tcp --dport 51413 -j ACCEPT
-
 COMMIT
