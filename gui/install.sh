@@ -42,6 +42,3 @@ ln -s $PWD/gui/screenlayout $HOME/.screenlayout
 
 # MPlayer
 ln -s $PWD/gui/mplayer $HOME/.mplayer
-
-# Cura Discovery200
-ln -s $PWD/gui/cura $HOME/.local/share/cura
