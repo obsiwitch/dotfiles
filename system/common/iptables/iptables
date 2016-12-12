@@ -1,3 +1,0 @@
-#!/bin/bash
-/sbin/iptables-restore < /etc/iptables.up.rules
-/sbin/ip6tables-restore < /etc/ip6tables.up.rules
