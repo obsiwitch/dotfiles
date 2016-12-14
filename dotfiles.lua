@@ -1,8 +1,7 @@
 #!/usr/bin/lua
 
 local ALL_TAGS = {
-    "obside", "cli", "gui",
-    "system/common", "system/gui", "system/nanoha"
+    "obside", "cli", "gui", "system/gui"
 }
 
 -- Prints the help message.
