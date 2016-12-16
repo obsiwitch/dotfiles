@@ -35,3 +35,7 @@ rm $HOME/.screenlayout
 
 # MPlayer
 rm $HOME/.mplayer
+
+# Atom
+rm $HOME/.atom/keymap.cson
+rm $HOME/.atom/styles.less

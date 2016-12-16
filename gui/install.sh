@@ -42,3 +42,7 @@ ln -s $PWD/gui/screenlayout $HOME/.screenlayout
 
 # MPlayer
 ln -s $PWD/gui/mplayer $HOME/.mplayer
+
+# Atom
+mkdir -p $HOME/.atom
+ln -s $PWD/gui/atom/* $HOME/.atom/
