@@ -7,6 +7,10 @@ ln -s $PWD/gui/i3 $HOME/.i3
 ln -s $PWD/gui/nemo/actions \
       $HOME/.local/share/nemo/actions
 
+# Nemo - do not manage the desktop
+# requirement: libglib2.0-bin (contains gsettings)
+gsettings set org.nemo.desktop show-desktop-icons false
+
 # GTK
 ln -s $PWD/gui/gtk/gtk-2.0/gtkrc-2.0 $HOME/.gtkrc-2.0
 mkdir -p $HOME/.config/gtk-3.0
@@ -25,13 +29,6 @@ cp $PWD/gui/Xfce/xfce4-power-manager.xml \
 mkdir -p $HOME/.config/xfce4/terminal
 cp $PWD/gui/Xfce/terminal/* \
    $HOME/.config/xfce4/terminal/
-
-# Nemo - do not manage the desktop
-# requirement: libglib2.0-bin (contains gsettings)
-gsettings set org.nemo.desktop show-desktop-icons false
-
-# Compositing
-ln -s $PWD/gui/compton.conf $HOME/.config/compton.conf
 
 # Notifications
 mkdir -p $HOME/.config/dunst
