@@ -1,0 +1,17 @@
+#!/bin/bash
+
+backup() {
+    local dest='obside@rin.local:Backup/'
+    local flags='--progress --rsh=ssh
+                 --recursive --times --delete --protect-args'
+    
+    rsync $flags \
+        /home/obside/Books \
+        /home/obside/Documents \
+        /home/obside/Modelisation \
+        /home/obside/Music \
+        /home/obside/Pictures \
+        $dest
+}
+
+backup
