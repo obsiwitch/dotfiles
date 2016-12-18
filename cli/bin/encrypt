@@ -6,8 +6,9 @@ for filePath in $@; do
     
     apack "$archivePath" "$filePath" \
     && \
-    openssl aes-256-cbc -in "$archivePath" \
-                        -out "$encPath" \
+    gpg --symmetric --cipher-algo AES256 \
+        --output "$encPath" \
+        "$archivePath" \
     && \
     rm -rf "$filePath"
     
