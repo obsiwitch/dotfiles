@@ -3,5 +3,11 @@
 # Do not hide any extensions in the about:extensions dialog
 export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --show-component-extension-options"
 
-# Gnome Keyring
-export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --password-store=gnome"
+# Don't use the GPU blacklist (bug #802933)
+export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --ignore-gpu-blacklist"
+
+# Disable background networking
+export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --disable-background-networking"
+
+# Disable the builtin media router (bug #833477)
+export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --media-router=0"
