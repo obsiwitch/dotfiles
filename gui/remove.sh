@@ -36,3 +36,6 @@ rm $HOME/.mplayer
 # Atom
 rm $HOME/.atom/keymap.cson
 rm $HOME/.atom/styles.less
+
+# Chromium
+rm $HOME/.config/chromium-flags.conf

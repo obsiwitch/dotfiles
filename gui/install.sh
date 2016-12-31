@@ -43,3 +43,6 @@ ln -s $PWD/gui/mplayer $HOME/.mplayer
 # Atom
 mkdir -p $HOME/.atom
 ln -s $PWD/gui/atom/* $HOME/.atom/
+
+# Chromium
+ln -s $PWD/gui/chromium-flags.conf $HOME/.config/
