@@ -65,16 +65,16 @@ exec --no-startup-id ./.fehbg
 bindsym $mod+Shift+Return exec --no-startup-id nemo
 
 ## terminal
-bindsym $mod+Return exec xfce4-terminal
+bindsym $mod+Return exec --no-startup-id xfce4-terminal
 
 ## lock screen
-bindsym $mod+l exec --no-startup-id xflock4
+bindsym --release $mod+l exec --no-startup-id xflock4
 
 ## launcher
 bindsym $mod+F2 exec --no-startup-id .i3/scripts/dmenu.sh
 
 ## screenshots
-bindsym Print exec xfce4-screenshooter
+bindsym Print exec --no-startup-id xfce4-screenshooter
 
 ## calculator
 bindsym XF86Calculator exec --no-startup-id qalculate-gtk
