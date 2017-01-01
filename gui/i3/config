@@ -39,8 +39,7 @@ bar {
 #---
 
 # modifier keys variables
-set $mod Mod4
-set $alt Mod1
+set $mod Mod1
 
 #---
 
@@ -63,22 +62,22 @@ exec --no-startup-id ./.fehbg
 # Applications shortcuts
 
 ## file manager
-bindsym $mod+Return exec --no-startup-id nemo
+bindsym $mod+Shift+Return exec --no-startup-id nemo
 
 ## terminal
-bindsym $alt+Return exec xfce4-terminal
+bindsym $mod+Return exec xfce4-terminal
 
 ## lock screen
 bindsym $mod+l exec --no-startup-id xflock4
 
 ## launcher
-bindsym $alt+F2 exec --no-startup-id .i3/scripts/dmenu.sh
+bindsym $mod+F2 exec --no-startup-id .i3/scripts/dmenu.sh
 
 ## screenshots
 bindsym Print exec xfce4-screenshooter
 
 ## calculator
-bindsym XF86Calculator exec --no-startup-id gnome-calculator
+bindsym XF86Calculator exec --no-startup-id qalculate-gtk
 
 ## music
 
@@ -108,7 +107,7 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id .i3/scripts/volume-inc.sh
 # Windows shortcuts
 
 ## kill focused window
-bindsym $alt+F4 kill
+bindsym $mod+F4 kill
 
 ## change focus
 bindsym $mod+Left focus left
@@ -201,8 +200,8 @@ bindsym $mod+underscore workspace 8
 bindsym $mod+ccedilla workspace 9
 bindsym $mod+agrave workspace 10
 
-bindsym control+$alt+Left workspace prev_on_output
-bindsym control+$alt+Right workspace next_on_output
+bindsym control+$mod+Left workspace prev_on_output
+bindsym control+$mod+Right workspace next_on_output
 
 ### move focused container to workspace
 bindsym $mod+Shift+ampersand move container to workspace 1
@@ -216,8 +215,8 @@ bindsym $mod+Shift+underscore move container to workspace 8
 bindsym $mod+Shift+ccedilla move container to workspace 9
 bindsym $mod+Shift+agrave move container to workspace 10
 
-bindsym control+$alt+Shift+Left move container to workspace prev_on_output
-bindsym control+$alt++ShiftRight move container to workspace next_on_output
+bindsym control+$mod+Shift+Left move container to workspace prev_on_output
+bindsym control+$mod+ShiftRight move container to workspace next_on_output
 
 # exit i3
 bindsym $mod+Shift+e exec --no-startup-id .i3/scripts/exit_dialog.lua
