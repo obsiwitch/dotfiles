@@ -82,14 +82,14 @@ bindsym XF86Calculator exec --no-startup-id qalculate-gtk
 ## music
 
 ### play/pause
-bindsym control+oe exec --no-startup-id audacious --pause
-bindsym XF86AudioPlay exec --no-startup-id audacious --pause
+bindsym control+twosuperior exec --no-startup-id cmus-remote --pause
+bindsym XF86AudioPlay exec --no-startup-id cmus-remote --pause
 
 ### next
-bindsym control+eacute exec --no-startup-id audacious --fwd
+bindsym control+eacute exec --no-startup-id cmus-remote --next
 
 ### previous
-bindsym control+ampersand exec --no-startup-id audacious --rew
+bindsym control+ampersand exec --no-startup-id cmus-remote --prev
 
 ## volume
 
