@@ -18,7 +18,6 @@ rm $HOME/.xsessionrc
 
 # Xfce
 rm $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
-rm $HOME/.config/xfce4/terminal/terminalrc
 
 # Notifications
 rm $HOME/.config/dunst/dunstrc
@@ -32,3 +31,6 @@ rm $HOME/.atom/styles.less
 
 # Chromium
 rm $HOME/.config/chromium-flags.conf
+
+# Terminator
+rm $HOME/.config/terminator/config

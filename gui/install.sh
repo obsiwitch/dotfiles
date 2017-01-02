@@ -6,7 +6,7 @@ ln -s $PWD/gui/i3 $HOME/.i3
 # Nemo
 ln -s $PWD/gui/nemo/actions \
       $HOME/.local/share/nemo/actions
-gsettings set org.cinnamon.desktop.default-applications.terminal exec xfce4-terminal
+gsettings set org.cinnamon.desktop.default-applications.terminal exec terminator
 # do not manage desktop
 gsettings set org.nemo.desktop show-desktop-icons false
 
@@ -25,9 +25,6 @@ ln -s $PWD/gui/X/xsessionrc $HOME/.xsessionrc
 mkdir -p $HOME/.config/xfce4/xfconf/xfce-perchannel-xml
 cp $PWD/gui/Xfce/xfce4-power-manager.xml \
    $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
-mkdir -p $HOME/.config/xfce4/terminal
-cp $PWD/gui/Xfce/terminal/* \
-   $HOME/.config/xfce4/terminal/
 
 # Notifications
 mkdir -p $HOME/.config/dunst
@@ -42,3 +39,7 @@ ln -s $PWD/gui/atom/* $HOME/.atom/
 
 # Chromium
 ln -s $PWD/gui/chromium-flags.conf $HOME/.config/
+
+# Terminator
+mkdir -p $HOME/.config/terminator
+ln -s $PWD/gui/terminator/config $HOME/.config/terminator/config
