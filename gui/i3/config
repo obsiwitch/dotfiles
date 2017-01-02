@@ -94,13 +94,13 @@ bindsym control+ampersand exec --no-startup-id cmus-remote --prev
 ## volume
 
 ### mute
-bindsym XF86AudioMute exec --no-startup-id .i3/scripts/volume-mute.sh
+bindsym XF86AudioMute exec --no-startup-id .i3/scripts/volume.sh mute
 
 ### volume inc
-bindsym XF86AudioLowerVolume exec --no-startup-id .i3/scripts/volume-dec.sh
+bindsym XF86AudioLowerVolume exec --no-startup-id .i3/scripts/volume.sh dec
 
 ### volume dec
-bindsym XF86AudioRaiseVolume exec --no-startup-id .i3/scripts/volume-inc.sh
+bindsym XF86AudioRaiseVolume exec --no-startup-id .i3/scripts/volume.sh inc
 
 #---
 
