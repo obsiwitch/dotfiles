@@ -1,5 +1,0 @@
-# Scale audio tempo without altering pitch
-af = scaletempo
-
-# Screenshot filter
-vf = screenshot=Pictures/shot
