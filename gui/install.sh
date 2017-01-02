@@ -6,9 +6,8 @@ ln -s $PWD/gui/i3 $HOME/.i3
 # Nemo
 ln -s $PWD/gui/nemo/actions \
       $HOME/.local/share/nemo/actions
-
-# Nemo - do not manage the desktop
-# requirement: libglib2.0-bin (contains gsettings)
+gsettings set org.cinnamon.desktop.default-applications.terminal exec xfce4-terminal
+# do not manage desktop
 gsettings set org.nemo.desktop show-desktop-icons false
 
 # GTK

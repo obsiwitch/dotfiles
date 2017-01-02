@@ -6,10 +6,6 @@ rm $HOME/.i3
 # Nemo
 rm $HOME/.local/share/nemo/actions
 
-# Nemo - restore desktop management
-# requirement: libglib2.0-bin (contains gsettings)
-gsettings set org.nemo.desktop show-desktop-icons true
-
 # GTK
 rm $HOME/.gtkrc-2.0
 rm $HOME/.config/gtk-3.0/gtk.css
