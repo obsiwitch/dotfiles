@@ -8,7 +8,7 @@ rm $HOME/Bin/decrypt
 
 # Bash
 rm $HOME/.bashrc
-rm $HOME/.shell_prompt.sh
+rm $HOME/.prompt.sh
 rm $HOME/.bashrc.d
 rm $HOME/.inputrc
 
