@@ -24,9 +24,6 @@ rm $HOME/.screenlayout
 rm $HOME/.atom/keymap.cson
 rm $HOME/.atom/styles.less
 
-# Chromium
-rm $HOME/.config/chromium-flags.conf
-
 # Terminator
 rm $HOME/.config/terminator/config
 

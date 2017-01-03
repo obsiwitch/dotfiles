@@ -32,9 +32,6 @@ ln -s $PWD/gui/screenlayout $HOME/.screenlayout
 mkdir -p $HOME/.atom
 ln -s $PWD/gui/atom/* $HOME/.atom/
 
-# Chromium
-ln -s $PWD/gui/chromium-flags.conf $HOME/.config/
-
 # Terminator
 mkdir -p $HOME/.config/terminator
 ln -s $PWD/gui/terminator/config $HOME/.config/terminator/config
