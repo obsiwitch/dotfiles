@@ -29,3 +29,6 @@ rm $HOME/.config/chromium-flags.conf
 
 # Terminator
 rm $HOME/.config/terminator/config
+
+# Qt
+rm $HOME/.config/Trolltech.conf

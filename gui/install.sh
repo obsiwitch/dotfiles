@@ -38,3 +38,6 @@ ln -s $PWD/gui/chromium-flags.conf $HOME/.config/
 # Terminator
 mkdir -p $HOME/.config/terminator
 ln -s $PWD/gui/terminator/config $HOME/.config/terminator/config
+
+# Qt
+cp $PWD/gui/Qt/Trolltech.conf $HOME/.config/Trolltech.conf
