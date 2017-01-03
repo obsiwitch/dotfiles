@@ -17,7 +17,6 @@ ln -s $PWD/gui/gtk/gtk-3.0/gtk.css $HOME/.config/gtk-3.0/gtk.css
 ln -s $PWD/gui/gtk/gtk-3.0/settings.ini $HOME/.config/gtk-3.0/settings.ini
 
 # X
-ln -s $PWD/gui/X/xinitrc $HOME/.xinitrc
 ln -s $PWD/gui/X/xmodmaprc $HOME/.xmodmaprc
 ln -s $PWD/gui/X/xsessionrc $HOME/.xsessionrc
 

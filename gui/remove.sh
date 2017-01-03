@@ -12,7 +12,6 @@ rm $HOME/.config/gtk-3.0/gtk.css
 rm $HOME/.config/gtk-3.0/settings.ini
 
 # X
-rm $HOME/.xinitrc
 rm $HOME/.xmodmaprc
 rm $HOME/.xsessionrc
 
