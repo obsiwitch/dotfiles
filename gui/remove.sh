@@ -11,10 +11,6 @@ rm $HOME/.gtkrc-2.0
 rm $HOME/.config/gtk-3.0/gtk.css
 rm $HOME/.config/gtk-3.0/settings.ini
 
-# X
-rm $HOME/.xmodmaprc
-rm $HOME/.xsessionrc
-
 # Xfce
 rm $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
 
