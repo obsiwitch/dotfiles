@@ -50,3 +50,6 @@
 * VNDB !vndb
 * VGMdb !vgmdb
 * TV Tropes !tvt
+* Arch packages !archp
+* Arch wiki !archw
+* Arch aur !aur
