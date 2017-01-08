@@ -25,7 +25,7 @@ rm $HOME/.atom/keymap.cson
 rm $HOME/.atom/styles.less
 
 # Terminator
-rm $HOME/.config/terminator/config
+rm $HOME/.Xresources
 
 # Qt
 rm $HOME/.config/Trolltech.conf

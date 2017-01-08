@@ -6,8 +6,9 @@ ln -s $PWD/gui/i3 $HOME/.i3
 # Nemo
 ln -s $PWD/gui/nemo/actions \
       $HOME/.local/share/nemo/actions
-gsettings set org.cinnamon.desktop.default-applications.terminal exec terminator
-# do not manage desktop
+## Open in terminal action
+gsettings set org.cinnamon.desktop.default-applications.terminal exec urxvt
+## do not manage desktop
 gsettings set org.nemo.desktop show-desktop-icons false
 
 # GTK
@@ -33,8 +34,7 @@ mkdir -p $HOME/.atom
 ln -s $PWD/gui/atom/* $HOME/.atom/
 
 # Terminator
-mkdir -p $HOME/.config/terminator
-ln -s $PWD/gui/terminator/config $HOME/.config/terminator/config
+ln -s $PWD/gui/X/Xresources $HOME/.Xresources
 
 # Qt
 cp $PWD/gui/Qt/Trolltech.conf $HOME/.config/Trolltech.conf

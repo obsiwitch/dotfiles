@@ -65,7 +65,7 @@ exec --no-startup-id ./.fehbg
 bindsym $mod+Shift+Return exec --no-startup-id nemo
 
 ## terminal
-bindsym $mod+Return exec --no-startup-id terminator
+bindsym $mod+Return exec --no-startup-id urxvt
 
 ## lock screen
 bindsym --release $mod+l exec --no-startup-id xflock4
