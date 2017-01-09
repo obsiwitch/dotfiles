@@ -1,36 +1,28 @@
 #!/usr/bin/lua
 
-local ALL_TAGS = {
-    "obside", "cli", "gui", "system/gui"
-}
-
 -- Prints the help message.
 function printHelp()
     local help =
-        "usage: " .. arg[0] .. " <command> [<tags>]\n\n" ..
+        "usage: " .. arg[0] .. " <command> <tags>\n\n" ..
         "The available commands are:\n" ..
         "install\t\t" .. "Install configuration files related to <tags>\n" ..
         "remove\t\t" .. "Remove configuration files related to <tags>\n\n" ..
-        "Tags are categories of configuration files. The available tags " ..
-        "are:\n"
-    
-    for _,tag in ipairs(ALL_TAGS) do
-        help = help .. tag .. " "
-    end
-    
+        "Tags are categories of configuration files. Directories containing " ..
+        "an `install.sh` and a `remove.sh` script are valid tags."
+
     print(help)
 end
 
 -- Retrieves tags from the cli.
 function parseTags()
     tags = {}
-    
+
     for k,tag in ipairs(arg) do
         if (k ~= 1) then
             table.insert(tags, tag)
         end
     end
-    
+
     return tags
 end
 
@@ -42,18 +34,13 @@ function exec(cmd, tags)
 end
 
 -- Main
-if (#arg < 1) then
+if (#arg < 2) then
     printHelp()
     os.exit(1)
 end
 
--- Parse tags. If no tags are specified, retrieve all tags.
-local tags
-if (#arg < 2) then
-    tags = ALL_TAGS
-else
-    tags = parseTags()
-end
+-- Parse tags
+local tags = parseTags()
 
 -- Execute command
 if (arg[1] == "install") then
