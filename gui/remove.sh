@@ -24,7 +24,7 @@ rm $HOME/.screenlayout
 rm $HOME/.atom/keymap.cson
 rm $HOME/.atom/styles.less
 
-# Terminator
+# Terminal
 rm $HOME/.Xresources
 
 # Qt

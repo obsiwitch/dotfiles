@@ -33,7 +33,7 @@ ln -s $PWD/gui/screenlayout $HOME/.screenlayout
 mkdir -p $HOME/.atom
 ln -s $PWD/gui/atom/* $HOME/.atom/
 
-# Terminator
+# Terminal
 ln -s $PWD/gui/X/Xresources $HOME/.Xresources
 
 # Qt
