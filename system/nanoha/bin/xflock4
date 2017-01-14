@@ -1,0 +1,9 @@
+#!/bin/sh
+
+i3lock
+
+# Unmount encrypted home when the screen is locked
+fusermount -zu /home/$USER
+
+# Prevent dotfiles being written in empty home
+chmod u-w /home/$USER
