@@ -1,6 +1,8 @@
 #!/bin/sh
 
-i3lock
+i3lock --image=/etc/i3lock/background.png --tiling \
+       --ignore-empty-password \
+       --no-unlock-indicator
 
 # Unmount encrypted home when the screen is locked
 fusermount -zu /home/$USER/plaintext
