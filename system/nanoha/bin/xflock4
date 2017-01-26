@@ -3,7 +3,7 @@
 i3lock
 
 # Unmount encrypted home when the screen is locked
-fusermount -zu /home/$USER
+fusermount -zu /home/$USER/plaintext
 
 # Prevent dotfiles being written in empty home
-chmod u-w /home/$USER
+chmod u-w /home/$USER/main

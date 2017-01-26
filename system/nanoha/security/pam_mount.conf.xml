@@ -6,9 +6,15 @@
 
     <!-- Volume definitions -->
     <volume user="obside" fstype="fuse"
-            options="nodev,nosuid,quiet,allow_other"
-            path="/usr/bin/gocryptfs#/home/%(USER).encrypted"
-            mountpoint="/home/%(USER)"
+            options="nodev,nosuid,quiet"
+            path="gocryptfs#/home/%(USER)/encrypted"
+            mountpoint="/home/%(USER)/plaintext"
+    />
+
+    <volume user="obside" fstype="fuse"
+            options="nodev,nosuid,allow_root"
+            path="unionfs#/home/%(USER)/plaintext=RW:/home/%(USER)/public=RW"
+            mountpoint="/home/%(USER)/main"
     />
 
     <!-- mount options -->
