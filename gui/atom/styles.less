@@ -1,19 +1,19 @@
 // URL folding
-atom-text-editor::shadow {
+atom-text-editor {
     .cursor-line,
     .has-selection {
-        span.markup.underline.link {
+        span.syntax--markup.syntax--underline.syntax--link {
             max-width: initial;
         }
     }
-    
-    span.markup.underline.link {
+
+    span.syntax--markup.syntax--underline.syntax--link {
         max-width: 25ch;
         overflow: hidden;
         text-overflow: ellipsis;
         display: inline-block;
         vertical-align: middle;
-        
+
         &:hover,
         &:active {
             max-width: initial;
