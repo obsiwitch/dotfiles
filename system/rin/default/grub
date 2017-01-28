@@ -1,9 +1,6 @@
-# Run `update-grub`after modifying this file.
-# Doc: `info grub`
-
 GRUB_DEFAULT=0
-GRUB_TIMEOUT=1
-GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_TIMEOUT=0
+GRUB_DISTRIBUTOR="Arch"
 GRUB_CMDLINE_LINUX_DEFAULT="quiet"
 GRUB_CMDLINE_LINUX=""
 

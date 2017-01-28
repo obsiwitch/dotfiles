@@ -10,7 +10,7 @@ MaxStartups 5:30:10
 PubkeyAuthentication yes
 PasswordAuthentication no
 ChallengeResponseAuthentication no
-AuthorizedKeysFile %h.main/public/.ssh/authorized_keys
+AuthorizedKeysFile /home/%u/public/.ssh/authorized_keys
 
 # Security
 PermitRootLogin no
