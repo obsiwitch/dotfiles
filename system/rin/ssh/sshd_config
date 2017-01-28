@@ -15,3 +15,8 @@ AuthorizedKeysFile /home/%u/public/.ssh/authorized_keys
 # Security
 PermitRootLogin no
 UsePrivilegeSeparation yes
+
+# Allow Password authentication in LAN
+Match Address 192.168.1.0/24
+    PubkeyAuthentication no
+    PasswordAuthentication yes
