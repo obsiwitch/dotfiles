@@ -1,0 +1,5 @@
+#%PAM-1.0
+
+auth optional pam_mount.so
+
+session optional pam_mount.so
