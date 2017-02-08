@@ -4,11 +4,8 @@
 # promptline & shell title
 . ~/.prompt.sh
 
-# append to the history file, don't overwrite it
-shopt -s histappend
-HISTCONTROL=ignoreboth
-HISTSIZE=1000
-HISTFILESIZE=2000
+# Disable bash history persistence (RAM history still works)
+HISTFILE=/dev/null
 
 # check the window size after each command and, if necessary, update the values
 # of LINES and COLUMNS.
@@ -18,7 +15,7 @@ shopt -s checkwinsize
 shopt -s globstar
 
 # Aliases
-alias ls='ls --group-directories-first --color=auto'
+alias ls='ls --group-directories-first --color=auto --human-readable'
 alias grep='grep --color=auto'
 alias rm='rm --preserve-root'
 alias cb='xclip -selection c'

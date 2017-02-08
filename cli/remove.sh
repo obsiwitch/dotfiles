@@ -9,7 +9,6 @@ rm $HOME/Bin/decrypt
 # Bash
 rm $HOME/.bashrc
 rm $HOME/.prompt.sh
-rm $HOME/.bashrc.d
 rm $HOME/.inputrc
 
 # Profile
