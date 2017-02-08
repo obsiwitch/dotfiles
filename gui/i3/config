@@ -65,7 +65,7 @@ exec --no-startup-id .screenlayout/home.sh
 # Applications shortcuts
 
 ## file manager
-bindsym $mod+Shift+Return exec --no-startup-id nemo
+bindsym $mod+Shift+Return exec --no-startup-id thunar
 
 ## terminal
 bindsym $mod+Return exec --no-startup-id urxvt

@@ -18,8 +18,3 @@ notebook > header tab {
     padding: 1px 6px;
     margin: 0px 0px;
 }
-
-/* Fix Nemo sidebar light gray bg */
-.nemo-places-sidebar {
-	background-color: #FFFFFF;
-}

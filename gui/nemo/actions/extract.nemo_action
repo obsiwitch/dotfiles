@@ -1,9 +1,0 @@
-[Nemo Action]
-
-Name=Extract
-Comment=Extract selected files in subdirectories
-Exec=xfce4-terminal --working-directory=%P --command="aunpack -eD %F"
-Selection=notnone
-Extensions=zip;rar;7z;tar.gz;tar;gz;
-Quote=single
-Dependencies=aunpack;xfce4-terminal;

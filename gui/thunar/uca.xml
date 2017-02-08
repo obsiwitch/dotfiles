@@ -1,0 +1,34 @@
+<?xml encoding="UTF-8" version="1.0"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal</name>
+	<unique-id>1484017581632983-11</unique-id>
+	<command>urxvt -cd %f</command>
+	<description>Open Terminal in the selected directory.</description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal</name>
+	<unique-id>1484017599812678-12</unique-id>
+	<command>urxvt -cd %d</command>
+	<description>Open Terminal in the directory containing the selected file.</description>
+	<patterns>*</patterns>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>extract-archive</icon>
+	<name>Extract</name>
+	<unique-id>1485609280096774-1</unique-id>
+	<command>urxvt -cd %D -e aunpack -eD %F</command>
+	<description>Extract selected files in subdirectories.</description>
+	<patterns>*.zip;*.rar;*.7z;*.7z.001;*.tar.gz;*.tar;*.gz</patterns>
+	<other-files/>
+</action>
+</actions>
