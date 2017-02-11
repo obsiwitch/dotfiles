@@ -71,7 +71,10 @@ bindsym $mod+Shift+Return exec --no-startup-id thunar
 bindsym $mod+Return exec --no-startup-id urxvt
 
 ## lock screen
-bindsym --release $mod+l exec --no-startup-id xflock4
+bindsym --release $mod+l exec --no-startup-id slock
+
+## lock screen + unmount encrypted home
+bindsym --release $mod+Shift+l exec --no-startup-id xflock4
 
 ## launcher
 bindsym $mod+F2 exec --no-startup-id .i3/scripts/dmenu.sh
