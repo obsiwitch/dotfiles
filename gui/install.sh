@@ -1,5 +1,7 @@
 #!/bin/sh
 
+$PWD/gui/remove.sh
+
 # i3
 ln -s $PWD/gui/i3 $HOME/.i3
 

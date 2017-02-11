@@ -1,5 +1,7 @@
 #!/bin/sh
 
+$PWD/cli/remove.sh
+
 # Bin
 mkdir -p $HOME/Bin
 ln -s $PWD/cli/bin/* $HOME/Bin/
