@@ -7,6 +7,9 @@
 # Disable bash history persistence (RAM history still works)
 HISTFILE=/dev/null
 
+# Pager
+export PAGER=most
+
 # check the window size after each command and, if necessary, update the values
 # of LINES and COLUMNS.
 shopt -s checkwinsize
