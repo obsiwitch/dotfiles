@@ -21,5 +21,5 @@ shopt -s globstar
 alias ls='ls --group-directories-first --color=auto --human-readable'
 alias grep='grep --color=auto'
 alias rm='rm --preserve-root'
-alias cb='xclip -selection c'
+alias cb='xclip -rmlastnl -selection c'
 alias ip='ip -c'
