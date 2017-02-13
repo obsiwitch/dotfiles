@@ -21,10 +21,6 @@ rm $HOME/.config/dunst/dunstrc
 # Screen layouts
 rm $HOME/.screenlayout
 
-# Atom
-rm $HOME/.atom/keymap.cson
-rm $HOME/.atom/styles.less
-
 # Terminal
 rm $HOME/.Xresources
 

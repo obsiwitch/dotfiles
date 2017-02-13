@@ -29,10 +29,6 @@ ln -s $PWD/gui/dunstrc $HOME/.config/dunst/dunstrc
 # Screen layouts
 ln -s $PWD/gui/screenlayout $HOME/.screenlayout
 
-# Atom
-mkdir -p $HOME/.atom
-ln -s $PWD/gui/atom/* $HOME/.atom/
-
 # Terminal
 ln -s $PWD/gui/X/Xresources $HOME/.Xresources
 
