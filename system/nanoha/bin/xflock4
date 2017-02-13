@@ -4,8 +4,8 @@ i3lock --image=/etc/i3lock/background.png --tiling \
        --ignore-empty-password \
        --no-unlock-indicator
 
-# Unmount encrypted home when the screen is locked
-fusermount -zu /home/$USER/plaintext
+# Unmount Private directory when the screen is locked
+fusermount -zu $HOME/Private
 
-# Prevent dotfiles being written in empty home
-chmod u-w /home/$USER/main
+# Prevent files being written in empty Private directory
+chmod u-w $HOME/Private

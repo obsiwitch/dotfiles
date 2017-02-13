@@ -7,14 +7,8 @@
     <!-- Volume definitions -->
     <volume user="obside" fstype="fuse"
             options="nodev,nosuid,quiet"
-            path="gocryptfs#/home/%(USER)/encrypted"
-            mountpoint="/home/%(USER)/plaintext"
-    />
-
-    <volume user="obside" fstype="fuse"
-            options="nodev,nosuid,allow_root"
-            path="unionfs#/home/%(USER)/plaintext=RW:/home/%(USER)/public=RW"
-            mountpoint="/home/%(USER)/main"
+            path="gocryptfs#/home/%(USER)/.private"
+            mountpoint="/home/%(USER)/Private"
     />
 
     <!-- mount options -->

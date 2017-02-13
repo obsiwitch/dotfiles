@@ -4,9 +4,9 @@ case "$PAM_TYPE" in
     "auth")
         read passphrase
 
-        chmod u+w /home/$PAM_USER/main
+        chmod u+w /home/$PAM_USER/Private
         echo $passphrase | /usr/bin/gocryptfs \
-                                /home/$PAM_USER/encrypted \
-                                /home/$PAM_USER/plaintext
+                                /home/$PAM_USER/.private \
+                                /home/$PAM_USER/Private
     ;;
 esac
