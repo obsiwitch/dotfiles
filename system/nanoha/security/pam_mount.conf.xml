@@ -7,8 +7,8 @@
     <!-- Volume definitions -->
     <volume user="obside" fstype="fuse"
             options="nodev,nosuid,quiet"
-            path="gocryptfs#/home/%(USER)/.private"
-            mountpoint="/home/%(USER)/Private"
+            path="gocryptfs#/home/%(USER)/Private/encrypted"
+            mountpoint="/home/%(USER)/Private/plaintext"
     />
 
     <!-- mount options -->

@@ -4,8 +4,8 @@ i3lock --image=/etc/i3lock/background.png --tiling \
        --ignore-empty-password \
        --no-unlock-indicator
 
-# Unmount Private directory when the screen is locked
-fusermount -zu $HOME/Private
+# Unmount plaintext directory when the screen is locked
+fusermount -zu $HOME/Private/plaintext
 
-# Prevent files being written in empty Private directory
-chmod u-w $HOME/Private
+# Prevent files being written in empty plaintext directory
+chmod u-w $HOME/Private/plaintext
