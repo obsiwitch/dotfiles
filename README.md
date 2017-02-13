@@ -8,5 +8,5 @@
 $ cd ~
 $ git clone https://gitlab.com/Obside/Dotfiles.git .dotfiles
 $ cd .dotfiles
-$ ./dotfiles.lua install <tags>
+$ <dir>/install.sh # e.g. cli/install.sh
 ~~~
