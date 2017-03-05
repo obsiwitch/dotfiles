@@ -1,4 +1,4 @@
-# Obside's dotfiles
+# Obsidienne's dotfiles
 
 ![screenshot GUI](http://i.imgur.com/5Fs4quY.png)
 
@@ -6,7 +6,7 @@
 
 ~~~bash
 $ cd ~
-$ git clone https://gitlab.com/Obside/Dotfiles.git .dotfiles
+$ git clone https://gitlab.com/Obsidienne/Dotfiles.git .dotfiles
 $ cd .dotfiles
 $ <dir>/install.sh # e.g. cli/install.sh
 ~~~
