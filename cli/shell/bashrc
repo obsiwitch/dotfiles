@@ -32,4 +32,4 @@ alias ip='ip -c'
 ## recognized as a git repository anymore.
 ## To fix the situation, I must change the directory to the current location,
 ## which is what this alias does.
-alias cdc='cd $(pwd)'
+alias cdc='cd "$(pwd)"'
