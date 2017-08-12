@@ -3,6 +3,7 @@
 # Bin
 rm $HOME/Bin/flactomp3
 rm $HOME/Bin/hashrename
+rm $HOME/Bin/rubyenv
 
 # Bash
 rm $HOME/.bashrc
