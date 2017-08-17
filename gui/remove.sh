@@ -29,6 +29,3 @@ rm $HOME/.Xresources
 
 # Qt
 rm $HOME/.config/Trolltech.conf
-
-# eom
-rm $HOME/.config/mate/accels/eom

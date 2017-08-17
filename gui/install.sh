@@ -38,7 +38,3 @@ ln -s $PWD/gui/X/Xresources $HOME/.Xresources
 
 # Qt
 cp $PWD/gui/Qt/Trolltech.conf $HOME/.config/Trolltech.conf
-
-# eom
-mkdir -p $HOME/.config/mate/accels
-ln -s $PWD/gui/eom/accels $HOME/.config/mate/accels/eom
