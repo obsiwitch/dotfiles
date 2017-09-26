@@ -6,10 +6,11 @@ $PWD/cli/remove.sh
 mkdir -p $HOME/Bin
 ln -s $PWD/cli/bin/* $HOME/Bin/
 
-# Bash
+# shell
 ln -s $PWD/cli/shell/bashrc $HOME/.bashrc
 ln -s $PWD/cli/shell/prompt.sh $HOME/.prompt.sh
 ln -s $PWD/cli/shell/inputrc $HOME/.inputrc
-
-# Profile
 ln -s $PWD/cli/shell/profile $HOME/.profile
+
+# git
+ln -s $PWD/cli/git/gitconfig $HOME/.gitconfig

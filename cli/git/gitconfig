@@ -1,0 +1,14 @@
+[user]
+	name = Obsidienne
+	email = obsidienne@protonmail.com
+[credential]
+	helper = cache
+[core]
+	autocrlf = input
+	editor = nvim
+[alias]
+	tree = log --graph --oneline --all --decorate
+[push]
+	default = simple
+[merge]
+	tool = meld
