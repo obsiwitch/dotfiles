@@ -29,3 +29,6 @@ rm $HOME/.Xresources
 
 # Qt
 rm $HOME/.config/Trolltech.conf
+
+# xdg
+rm $HOME/.config/user-dirs.conf
