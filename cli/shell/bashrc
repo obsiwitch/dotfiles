@@ -24,12 +24,6 @@ alias rm='rm --preserve-root'
 alias cb='xclip -rmlastnl -selection c'
 alias ip='ip -c'
 
-## cdc - Change directory to current one.
-## When locking my screen, I unmount ~/Private/plaintext. It allows me to not
-## have sensitive data be mounted when my screen is locked. Though, when I
-## unlock my session problems appear in already opened shells.
-## For example, a shell opened in a git directory before locking is not
-## recognized as a git repository anymore.
-## To fix the situation, I must change the directory to the current location,
-## which is what this alias does.
+## cdc - Change directory to current one. Fix "unreachable" directory problems
+## after unmounting and remounting a filesystem.
 alias cdc='cd "$(pwd)"'
