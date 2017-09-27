@@ -1,0 +1,22 @@
+#!/bin/bash
+
+backup_local() {
+    local dest='obside@rin.local:Backup'
+    local flags='--progress --rsh=ssh
+                 --recursive --times --delete --protect-args'
+
+    rsync $flags \
+        $HOME/Private/encrypted \
+        $HOME/Modelisation \
+        $HOME/Music \
+        $HOME/Pictures \
+        $dest
+}
+
+backup_remote() {
+    rclone sync -v "$HOME/Private/encrypted" "gd:encrypted"
+}
+
+if [ "$1" == "local" ]; then backup_local
+elif [ "$1" == "remote" ]; then backup_remote
+else echo 'usage: backup <local | remote>'; fi

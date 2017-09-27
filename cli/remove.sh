@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # Bin
+rm $HOME/Bin/backup
 rm $HOME/Bin/flactomp3
 rm $HOME/Bin/hashrename
 rm $HOME/Bin/rubyenv

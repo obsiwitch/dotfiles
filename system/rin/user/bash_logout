@@ -1,2 +1,0 @@
-# Unmount encrypted directory on logout
-fusermount -uz "$HOME/Private"
