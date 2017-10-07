@@ -1,0 +1,13 @@
+#!/bin/bash
+
+private_mount() {
+    gocryptfs $HOME/Private/encrypted $HOME/Private/plaintext
+}
+
+private_umount() {
+    fusermount -zu $HOME/Private/plaintext
+}
+
+if [ "$1" == "mount" ]; then private_mount
+elif [ "$1" == "umount" ]; then private_umount
+else echo 'usage: private <mount | umount>'; fi

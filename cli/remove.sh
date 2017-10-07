@@ -5,6 +5,7 @@ rm $HOME/Bin/backup
 rm $HOME/Bin/flactomp3
 rm $HOME/Bin/hashrename
 rm $HOME/Bin/rubyenv
+rm $HOME/Bin/private
 
 # shell
 rm $HOME/.bashrc
