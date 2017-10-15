@@ -1,0 +1,11 @@
+#!/bin/sh
+# [Pluma Tool]
+# Name=wrap
+# Shortcut=<Primary><Shift>r
+# Applicability=all
+# Output=replace-selection
+# Input=selection
+# Save-files=nothing
+
+
+wrap

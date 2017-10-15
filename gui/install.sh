@@ -11,9 +11,11 @@ mkdir -p $HOME/.config/gtk-3.0
 ln -s $PWD/gui/gtk/gtk-3.0/gtk.css $HOME/.config/gtk-3.0/gtk.css
 ln -s $PWD/gui/gtk/gtk-3.0/settings.ini $HOME/.config/gtk-3.0/settings.ini
 
-# gtksourceview (pluma, gedit)
+# pluma
 mkdir -p $HOME/.local/share
 ln -s $PWD/gui/gtksourceview $HOME/.local/share/gtksourceview-3.0
+mkdir -p $HOME/.config/pluma
+ln -s $PWD/gui/pluma/tools $HOME/.config/pluma/tools
 
 # Xfce
 mkdir -p $HOME/.config/xfce4/xfconf/xfce-perchannel-xml
