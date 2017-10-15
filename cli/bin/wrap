@@ -1,0 +1,63 @@
+#!/usr/bin/ruby
+
+require 'optparse'
+
+def arguments()
+    # default arguments
+    args = {
+        :width   => 80,
+        :newline => false
+    }
+
+    # set command line arguments
+    op = OptionParser.new do |this|
+        this.banner = "usage: wrap [options]"
+
+        this.on(
+            "-w", "--width <width>", Integer,
+            "maximum line width (default: 80 characters)"
+        ) do |w|
+            args[:width] = w
+        end
+
+        this.on("-n", "--newline", "output trailing newline") do |n|
+            args[:newline] = n
+        end
+
+        this.on('-h', '--help', 'displays help') do
+            puts(this)
+            exit
+        end
+    end
+
+    # parse & error handling
+    begin op.parse!()
+    rescue Exception => e
+        puts(op)
+        exit
+    end
+
+    return args
+end
+
+def wrap(width)
+    result = ""
+    linelength = 0
+
+    ARGF.read.split(" ").each do |word|
+        if (linelength + word.length > width)
+            result = result.chomp(" ").concat("\n")
+            linelength = 0
+        end
+
+        result += "#{word} "
+        linelength += word.length + 1
+    end
+    result = result.chomp(" ")
+
+    return result
+end
+
+args = arguments()
+result = wrap(args[:width])
+args[:newline] ? puts(result) : print(result)

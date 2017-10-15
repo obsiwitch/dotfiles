@@ -6,6 +6,7 @@ rm $HOME/Bin/flactomp3
 rm $HOME/Bin/hashrename
 rm $HOME/Bin/rubyenv
 rm $HOME/Bin/private
+rm $HOME/Bin/wrap
 
 # shell
 rm $HOME/.bashrc
