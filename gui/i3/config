@@ -114,7 +114,7 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id .i3/scripts/volume.sh inc
 
 ## kill focused window
 bindsym $mod+q kill
-bindsym control+q exec --no-startup-id true
+bindsym control+q nop
 
 ## change focus
 bindsym $mod+Left focus left
