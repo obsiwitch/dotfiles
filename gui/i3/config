@@ -39,7 +39,7 @@ bar {
 #---
 
 # modifier keys variables
-set $mod Mod1
+set $mod Mod4
 
 #---
 
@@ -113,7 +113,8 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id .i3/scripts/volume.sh inc
 # Windows shortcuts
 
 ## kill focused window
-bindsym $mod+F4 kill
+bindsym $mod+q kill
+bindsym control+q exec --no-startup-id true
 
 ## change focus
 bindsym $mod+Left focus left
