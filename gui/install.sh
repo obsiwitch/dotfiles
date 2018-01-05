@@ -30,7 +30,7 @@ cp $PWD/gui/thunar/thunar.xml \
 
 # Notifications
 mkdir -p $HOME/.config/dunst
-ln -s $PWD/gui/dunstrc $HOME/.config/dunst/dunstrc
+ln -s $PWD/gui/dunst/dunstrc $HOME/.config/dunst/dunstrc
 
 # Screen layouts
 ln -s $PWD/gui/screenlayout $HOME/.screenlayout
