@@ -1,22 +1,46 @@
 #!/bin/bash
 
-backup_local() {
-    local dest='obside@rin.local:Backup'
-    local flags='--progress --rsh=ssh
-                 --recursive --times --delete --protect-args'
+local_storage="/run/media/$USER/yayaka_storage"
 
-    rsync $flags \
+rsync_flags='--archive --delete --protect-args --progress'
+tar_flags='--create --verbose --preserve-permissions --file'
+
+backup_local_obside() {
+    local in="\
         $HOME/Private/encrypted \
         $HOME/Modelisation \
         $HOME/Music \
         $HOME/Pictures \
-        $dest
+    "
+    local out="$local_storage/$USER"
+
+    rsync $rsync_flags $in $out
 }
 
-backup_remote() {
-    rclone sync -v "$HOME/Private/encrypted" "gd:encrypted"
+backup_local_home() {
+    local in="$HOME"
+    local out="$local_storage"
+
+    rsync $rsync_flags $in $out
 }
 
-if [ "$1" == "local" ]; then backup_local
-elif [ "$1" == "remote" ]; then backup_remote
-else echo 'usage: backup <local | remote>'; fi
+backup_archive_obside() {
+    local in="$HOME/Private/encrypted"
+    local out=`date +'b%y%m%d.tar'`
+    tar $tar_flags $out $in
+}
+
+backup_archive_home() {
+    local in="$HOME"
+    local out=`date +'b%y%m%d.tar'`
+    tar $tar_flags $out $in
+}
+
+if [ "$1" == "lo" ]; then backup_local_obside
+elif [ "$1" == "lh" ]; then backup_local_home
+elif [ "$1" == "ao" ]; then backup_archive_obside
+elif [ "$1" == "ah" ]; then backup_archive_home
+else
+    echo -n 'usage: backup <lo (local_obside) | ao (archive_obside)'
+    echo    ' | lh (local_home) | ah (archive_home)>'
+fi
