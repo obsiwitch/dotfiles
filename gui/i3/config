@@ -40,6 +40,7 @@ bar {
 
 # modifier keys variables
 set $mod Mod4
+set $alt Mod1
 
 #---
 
@@ -209,6 +210,8 @@ bindsym $mod+agrave workspace 10
 
 bindsym control+$mod+Left workspace prev_on_output
 bindsym control+$mod+Right workspace next_on_output
+bindsym control+$alt+Left workspace prev_on_output
+bindsym control+$alt+Right workspace next_on_output
 
 ### move focused container to workspace
 bindsym $mod+Shift+ampersand move container to workspace 1
@@ -224,6 +227,8 @@ bindsym $mod+Shift+agrave move container to workspace 10
 
 bindsym control+$mod+Shift+Left move container to workspace prev_on_output
 bindsym control+$mod+ShiftRight move container to workspace next_on_output
+bindsym control+$alt+Shift+Left move container to workspace prev_on_output
+bindsym control+$alt+ShiftRight move container to workspace next_on_output
 
 # exit i3
 bindsym $mod+Shift+e exec --no-startup-id .i3/scripts/exit_dialog.lua
