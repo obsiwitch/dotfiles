@@ -48,3 +48,9 @@ URxvt.keysym.Control-Shift-V: perl:clipboard:paste
 
 URxvt.transparent: true
 URxvt.shading:     20
+
+!! Scroll on output and on key press.
+!! Do not scroll when going back in the buffer.
+URxvt.scrollTtyOutput:   false
+URxvt.scrollWithBuffer:  true
+URxvt.scrollTtyKeypress: true
