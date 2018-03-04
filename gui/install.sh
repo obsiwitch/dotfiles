@@ -35,8 +35,9 @@ ln -s $PWD/gui/dunst/dunstrc $HOME/.config/dunst/dunstrc
 # Screen layouts
 ln -s $PWD/gui/screenlayout $HOME/.screenlayout
 
-# Terminal
+# X
 ln -s $PWD/gui/X/Xresources $HOME/.Xresources
+ln -s $PWD/gui/X/xinitrc $HOME/.xinitrc
 
 # Qt
 cp $PWD/gui/Qt/Trolltech.conf $HOME/.config/Trolltech.conf

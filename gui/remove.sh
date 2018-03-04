@@ -25,8 +25,9 @@ rm $HOME/.config/dunst/dunstrc
 # Screen layouts
 rm $HOME/.screenlayout
 
-# Terminal
+# X
 rm $HOME/.Xresources
+rm $HOME/.xinitrc
 
 # Qt
 rm $HOME/.config/Trolltech.conf
