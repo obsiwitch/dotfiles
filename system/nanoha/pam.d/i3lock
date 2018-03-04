@@ -1,4 +1,0 @@
-#%PAM-1.0
-
-auth include  login
-auth optional pam_exec.so seteuid expose_authtok /etc/pam.d/pam_gocryptfs.sh
