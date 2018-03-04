@@ -1,8 +1,4 @@
 # i3 configuration
-#
-# Should you change your keyboard layout some time, delete this file and
-# re-run i3-config-wizard(1).
-#
 # Doc: http://i3wm.org/docs/userguide.html
 
 # General
@@ -20,7 +16,7 @@ client.urgent           #900000 #900000 #ffffff #900000
 
 ## status bar
 bar {
-    tray_output LVDS1 # system tray area on the laptop's screen
+    tray_output primary
     status_command i3blocks -c .i3/i3blocks.conf
 
     colors {
