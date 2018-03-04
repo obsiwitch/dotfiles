@@ -3,8 +3,8 @@
 $PWD/cli/remove.sh
 
 # Bin
-mkdir -p $HOME/Bin
-ln -s $PWD/cli/bin/* $HOME/Bin/
+mkdir -p $HOME/Applications
+ln -s $PWD/cli/bin/* $HOME/Applications/
 
 # shell
 ln -s $PWD/cli/shell/bashrc $HOME/.bashrc

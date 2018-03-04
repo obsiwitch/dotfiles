@@ -5,4 +5,4 @@ umask 077
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
 # PATH: user Bin directory
-PATH="$HOME/Bin:$PATH"
+PATH="$HOME/Applications:$PATH"

@@ -1,12 +1,11 @@
 #!/bin/sh
 
 # Bin
-rm $HOME/Bin/backup
-rm $HOME/Bin/flactomp3
-rm $HOME/Bin/hashrename
-rm $HOME/Bin/rubyenv
-rm $HOME/Bin/private
-rm $HOME/Bin/wrap
+rm $HOME/Applications/backup
+rm $HOME/Applications/hashrename
+rm $HOME/Applications/rubyenv
+rm $HOME/Applications/private
+rm $HOME/Applications/wrap
 
 # shell
 rm $HOME/.bashrc
