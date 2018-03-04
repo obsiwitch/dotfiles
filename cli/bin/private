@@ -1,11 +1,19 @@
 #!/bin/bash
 
+encdir="$HOME/Private/encrypted"
+plaindir="$HOME/Private/plaintext"
+
+# Mount encrypted directory in plaintext directory.
 private_mount() {
-    gocryptfs $HOME/Private/encrypted $HOME/Private/plaintext
+    chmod u+w $plaindir
+    gocryptfs $encdir $plaindir
 }
 
+# Unmount encrypted directory and prevent files being written in the now empty
+# plaintext directory (mountpoint).
 private_umount() {
-    fusermount -zu $HOME/Private/plaintext
+    fusermount -zu $plaindir
+    chmod u-w $plaindir
 }
 
 if [ "$1" == "mount" ]; then private_mount
