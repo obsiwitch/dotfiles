@@ -5,33 +5,33 @@ volume_notify() {
     # when pressing multiple times the volume keys to adjust the volume.
     pkill dunst
 
-    mute=`pactl list sinks | grep 'Mute:' | tr -d '\t'`
-    volume=`pactl list sinks | grep -P '^\tVolume:' | cut -d'/' -f2 | tr -d ' '`
+    mute=`pamixer --get-mute`
+    volume=`pamixer --get-volume`
 
-    if [ "$mute" == "Mute: yes" ]; then
-        notify-send Volume "mute ($volume)"
+    if [ "$mute" == "true" ]; then
+        notify-send Volume "mute ($volume%)"
     else
-        notify-send Volume "$volume"
+        notify-send Volume "$volume%"
     fi
 }
 
 volume_inc() {
-    pactl set-sink-volume 0 +5%
+    pamixer --increase 5
     volume_notify
 }
 
 volume_dec() {
-    pactl set-sink-volume 0 -5%
+    pamixer --decrease 5
     volume_notify
 }
 
 volume_mute() {
-    pactl set-sink-mute 0 toggle
+    pamixer --toggle-mute
     volume_notify
 }
 
 case $1 in
-    "inc") volume_inc ;;
-    "dec") volume_dec ;;
+    "inc")  volume_inc ;;
+    "dec")  volume_dec ;;
     "mute") volume_mute ;;
 esac
