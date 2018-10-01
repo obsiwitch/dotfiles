@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import os
-from lxml import html
-from urllib import request
+import lxml.html
+import requests
 
 class Downloader:
     def __init__(self, start_url, next_xpath, img_xpath):
@@ -14,12 +14,23 @@ class Downloader:
         for i, img_url in enumerate(self.iterate()):
             print(i, img_url)
             _, img_ext = os.path.splitext(img_url)
-            request.urlretrieve(img_url, f"{i}{img_ext}")
+            self.download(img_url, f"{i}{img_ext}")
+
+    def request(self, url): return requests.get(
+        url     = url,
+        headers = { "user-agent": "Mozilla/5.0" },
+    )
+
+    def download(self, url, filename):
+        with open(filename, "wb") as file:
+            data = self.request(url).content
+            file.write(data)
 
     def iterate(self):
         next_url = self.start_url
         while next_url:
-            tree = html.parse(request.urlopen(next_url))
+            html = self.request(next_url).content
+            tree = lxml.html.fromstring(html)
 
             next_url = tree.xpath(self.next_xpath)
             next_url = next_url[0] if next_url else None
@@ -30,11 +41,16 @@ class Downloader:
 Downloader(
     ## Sleepless Domain
     # start_url  = "http://www.sleeplessdomain.com/comic/chapter-1-cover",
-    # next_xpath = "//a[@rel='next']/@href",
-    # img_xpath  = "//img[@id='cc-comic']/@src",
+    # next_xpath = "//a[@rel = 'next']/@href",
+    # img_xpath  = "//img[@id = 'cc-comic']/@src",
 
     ## The Night Belongs to Us
-    start_url  = "https://tnbtu.com/post/173553103495/01-00",
-    next_xpath = "//a[@class='next-button']/@href",
-    img_xpath  = "//figure[@class='photo-hires-item correct']//img/@src",
+    # start_url  = "https://tnbtu.com/post/173553103495/01-00",
+    # next_xpath = "//a[@class = 'next-button']/@href",
+    # img_xpath  = "//figure[@class = 'photo-hires-item correct']//img/@src",
+
+    ## Windrose
+    start_url  = "https://sparklermonthly.com/wr/windrose-chapter-01-page-001/",
+    next_xpath = "//a[@rel = 'next' and not(contains(@class, 'current-webcomic'))]/@href",
+    img_xpath  = "//div[@class = 'webcomic-image']//img/@src",
 ).start()
