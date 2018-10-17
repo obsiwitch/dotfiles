@@ -49,7 +49,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 
 ## Volume Manager
-exec --no-startup-id pasystray
+exec --no-startup-id pasystray --notify=all
 
 ## Wallpaper
 exec --no-startup-id ~/.fehbg
@@ -97,13 +97,13 @@ bindsym control+quotedbl exec --no-startup-id .i3/scripts/music.sh
 ## volume
 
 ### mute
-bindsym XF86AudioMute exec --no-startup-id .i3/scripts/volume.sh mute
+bindsym XF86AudioMute exec --no-startup-id pamixer --toggle-mute
 
 ### volume inc
-bindsym XF86AudioLowerVolume exec --no-startup-id .i3/scripts/volume.sh dec
+bindsym XF86AudioLowerVolume exec --no-startup-id pamixer --decrease 5
 
 ### volume dec
-bindsym XF86AudioRaiseVolume exec --no-startup-id .i3/scripts/volume.sh inc
+bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer --increase 5
 
 #---
 
