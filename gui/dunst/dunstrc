@@ -182,3 +182,13 @@
     appname = "xfce4-power-manager"
     body    = "Brightness*"
     format  = "<b>%s</b>\nBrightness: %p"
+
+[sound_inputs]
+    appname = "pasystray"
+    summary = "input*"
+    format = ""
+
+[sound_sinks]
+    appname = "pasystray"
+    summary = "sink*"
+    format = "<b>Volume</b>\n%s"
