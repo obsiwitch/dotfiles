@@ -1,16 +1,17 @@
-# If not running interactively, don't do anything
+# If not running interactively, don't do anything.
 [[ $- != *i* ]] && return
 
-# promptline & shell title
+# Promptline & shell title
 . ~/.prompt.sh
 
-# Disable bash history persistence (RAM history still works)
+# Disable bash history persistence (RAM history still works).
 HISTFILE=/dev/null
 
 # Pager
-export PAGER=most
+export PAGER='less'
+export LESS='--quit-if-one-screen --RAW-CONTROL-CHARS'
 
-# check the window size after each command and, if necessary, update the values
+# Check the window size after each command and, if necessary, update the values
 # of LINES and COLUMNS.
 shopt -s checkwinsize
 
