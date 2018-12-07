@@ -1,6 +1,3 @@
-# umask
-umask 077
-
 # bashrc
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
