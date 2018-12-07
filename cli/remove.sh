@@ -3,8 +3,9 @@
 # Bin
 rm $HOME/Applications/backup
 rm $HOME/Applications/hashrename
-rm $HOME/Applications/rubyenv
 rm $HOME/Applications/private
+rm $HOME/Applications/rubyenv
+rm $HOME/Applications/webcomic
 rm $HOME/Applications/wrap
 
 # shell
