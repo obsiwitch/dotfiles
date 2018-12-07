@@ -168,11 +168,11 @@ mode "resize" {
 ## workspaces
 
 ### laptop screen
-workspace 1 output LVDS1
-workspace 2 output LVDS1
-workspace 3 output LVDS1
-workspace 4 output LVDS1
-workspace 5 output LVDS1
+workspace 1 output primary
+workspace 2 output primary
+workspace 3 output primary
+workspace 4 output primary
+workspace 5 output primary
 
 ### external screen
 workspace 6 output HDMI1
