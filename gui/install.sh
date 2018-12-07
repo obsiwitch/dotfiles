@@ -44,3 +44,6 @@ cp $PWD/gui/Qt/Trolltech.conf $HOME/.config/Trolltech.conf
 
 # xdg
 ln -s $PWD/gui/xdg/user-dirs.conf $HOME/.config/user-dirs.conf
+
+# background
+cp -n $PWD/gui/feh/fehbg $HOME/.fehbg
