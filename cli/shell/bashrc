@@ -10,6 +10,7 @@ HISTFILE=/dev/null
 # Pager
 export PAGER='less'
 export LESS='--quit-if-one-screen --RAW-CONTROL-CHARS'
+export LESSHISTFILE='-'
 
 # Check the window size after each command and, if necessary, update the values
 # of LINES and COLUMNS.
