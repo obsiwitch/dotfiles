@@ -65,7 +65,7 @@ exec --no-startup-id ~/.screenlayout/home.sh
 # Applications shortcuts
 
 ## exit i3
-bindsym $mod+Shift+e exec --no-startup-id .i3/scripts/exit_dialog.lua
+bindsym $mod+Shift+e exec --no-startup-id .i3/scripts/exit.py
 
 ## file manager
 bindsym $mod+Shift+Return exec --no-startup-id thunar
