@@ -18,4 +18,4 @@ case $BLOCK_BUTTON in
     1) calendar_notification ;; # left click: display calendar
 esac
 
-date '+%d/%m/%Y - %H:%M'
+date '+%d/%m/%Y'
