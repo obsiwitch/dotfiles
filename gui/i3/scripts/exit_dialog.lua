@@ -9,8 +9,8 @@ local conf = {
 
 local actions = {
     ["1. reload"] = "i3-msg restart",
-    ["2. sleep"] = "systemctl suspend;xflock4",
-    ["3. hibernate"] = "systemctl hibernate;xflock4",
+    ["2. sleep"] = "xflock4;systemctl suspend",
+    ["3. hibernate"] = "xflock4;systemctl hibernate",
     ["4. logout"] = "i3-msg exit",
     ["5. restart"] = "systemctl reboot",
     ["6. shutdown"] = "systemctl poweroff",
@@ -22,7 +22,7 @@ function get_menu_choices()
         table.insert(action_names, name)
     end
     table.sort(action_names)
-    
+
     return table.concat(action_names, "\n")
 end
 
@@ -34,7 +34,7 @@ function get_menu_cmd()
         "-sf '" .. conf.selected_fg .. "'"
     }
     local cmd_args_str = table.concat(cmd_args, " ")
-    
+
     return "dmenu " .. cmd_args_str
 end
 
@@ -42,7 +42,7 @@ end
 function display_menu()
     local cmd = io.popen("echo '" .. get_menu_choices() .. "'|" .. get_menu_cmd())
     local choice = cmd:read("*l")
-    
+
     os.execute(actions[choice])
 end
 
