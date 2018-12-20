@@ -82,9 +82,6 @@ bindsym $mod+F2 exec --no-startup-id dmenu_run
 ## screenshots
 bindsym Print exec --no-startup-id xfce4-screenshooter
 
-## calculator
-bindsym XF86Calculator exec --no-startup-id qalculate-gtk
-
 ## music
 
 ### play/pause
