@@ -35,8 +35,8 @@ class Downloader:
             next_url = tree.xpath(self.next_xpath)
             next_url = next_url[0] if next_url else None
 
-            img_url = tree.xpath(self.img_xpath)
-            if img_url: yield img_url[0]
+            img_urls = tree.xpath(self.img_xpath)
+            for img_url in img_urls: yield img_url
 
 Downloader(
     ## Sleepless Domain
@@ -50,7 +50,12 @@ Downloader(
     # img_xpath  = "//figure[@class = 'photo-hires-item correct']//img/@src",
 
     ## Windrose
-    start_url  = "https://sparklermonthly.com/wr/windrose-chapter-01-page-001/",
-    next_xpath = "//a[@rel = 'next' and not(contains(@class, 'current-webcomic'))]/@href",
-    img_xpath  = "//div[@class = 'webcomic-image']//img/@src",
+    # start_url  = "https://sparklermonthly.com/wr/windrose-chapter-01-page-001/",
+    # next_xpath = "//a[@rel = 'next' and not(contains(@class, 'current-webcomic'))]/@href",
+    # img_xpath  = "//div[@class = 'webcomic-image']//img/@src",
+
+    ## Only Sense Online
+    start_url  = "https://mangakakalot.com/chapter/only_sense_online_3/chapter_45",
+    next_xpath = "//a[@class = 'back']/@href",
+    img_xpath  = "//div[@id = 'vungdoc']//img/@src",
 ).start()
