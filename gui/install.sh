@@ -2,6 +2,10 @@
 
 $PWD/gui/remove.sh
 
+# Bin
+mkdir -p $HOME/Applications
+ln -s $PWD/gui/bin/* $HOME/Applications/
+
 # i3
 ln -s $PWD/gui/i3 $HOME/.i3
 
@@ -25,9 +29,6 @@ cp $PWD/gui/thunar/thunar.xml \
 # Notifications
 mkdir -p $HOME/.config/dunst
 ln -s $PWD/gui/dunst/dunstrc $HOME/.config/dunst/dunstrc
-
-# Screen layouts
-ln -s $PWD/gui/screenlayout $HOME/.screenlayout
 
 # X
 ln -s $PWD/gui/X/Xresources $HOME/.Xresources

@@ -55,10 +55,10 @@ exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pasystray --notify=all
 
 ## Wallpaper
-exec --no-startup-id feh --no-fehbg --bg-fill ~/Pictures/Wallpapers/background
+exec --no-startup-id wallpaper
 
 ## Screen layout
-exec --no-startup-id ~/.screenlayout/home.sh
+exec --no-startup-id screenlayout laptop
 
 #---
 

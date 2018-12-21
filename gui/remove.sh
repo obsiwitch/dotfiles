@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Bin
+rm $HOME/Applications/screenlayout
+rm $HOME/Applications/wallpaper
+
 # i3
 rm $HOME/.i3
 
@@ -17,9 +21,6 @@ rm $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
 
 # Notifications
 rm $HOME/.config/dunst/dunstrc
-
-# Screen layouts
-rm $HOME/.screenlayout
 
 # X
 rm $HOME/.Xresources
