@@ -3,6 +3,7 @@
 # Bin
 rm $HOME/Applications/screenlayout
 rm $HOME/Applications/dmenu
+rm $HOME/Applications/xflock4
 rm $HOME/Applications/wallpaper
 
 # i3

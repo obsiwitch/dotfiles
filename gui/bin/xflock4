@@ -1,7 +1,6 @@
 #!/bin/sh
 
-i3lock --c 000000 \
+i3lock --c 292961 \
        --ignore-empty-password \
        --no-unlock-indicator
-
-$HOME/Applications/private umount
+private umount
