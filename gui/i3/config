@@ -77,7 +77,7 @@ bindsym $mod+Return exec --no-startup-id urxvt
 bindsym --release $mod+l exec --no-startup-id xflock4
 
 ## launcher
-bindsym $mod+F2 exec --no-startup-id .i3/scripts/dmenu.sh
+bindsym $mod+F2 exec --no-startup-id dmenu_run
 
 ## screenshots
 bindsym Print exec --no-startup-id xfce4-screenshooter

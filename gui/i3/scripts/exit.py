@@ -14,13 +14,7 @@ actions = {
 choice = subprocess.run(
     text  = True,
     input = '\n'.join(actions.keys()),
-    args  = [
-        "dmenu",
-        "-nb", "#282828", # normal background
-        "-nf", "#F8F8F2", # normal foreground
-        "-sb", "#D6D6D6", # selected background
-        "-sf", "#282828", # selected foreground
-    ],
+    args  = "dmenu",
     capture_output = True,
 ).stdout.rstrip("\n")
 
