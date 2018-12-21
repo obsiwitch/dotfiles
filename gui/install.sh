@@ -2,7 +2,7 @@
 
 $PWD/gui/remove.sh
 
-# Bin
+# bin
 mkdir -p $HOME/Applications
 ln -s $PWD/gui/bin/* $HOME/Applications/
 

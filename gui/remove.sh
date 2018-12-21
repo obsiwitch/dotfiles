@@ -1,10 +1,9 @@
 #!/bin/sh
 
-# Bin
-rm $HOME/Applications/screenlayout
-rm $HOME/Applications/dmenu
-rm $HOME/Applications/xflock4
-rm $HOME/Applications/wallpaper
+# bin
+for bin in $PWD/gui/bin/*; do
+    rm $HOME/Applications/`basename $bin`
+done
 
 # i3
 rm $HOME/.i3

@@ -1,12 +1,9 @@
 #!/bin/sh
 
-# Bin
-rm $HOME/Applications/backup
-rm $HOME/Applications/hashrename
-rm $HOME/Applications/private
-rm $HOME/Applications/rubyenv
-rm $HOME/Applications/webcomic
-rm $HOME/Applications/wrap
+# bin
+for bin in $PWD/cli/bin/*; do
+    rm $HOME/Applications/`basename $bin`
+done
 
 # shell
 rm $HOME/.bashrc

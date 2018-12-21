@@ -2,7 +2,7 @@
 
 $PWD/cli/remove.sh
 
-# Bin
+# bin
 mkdir -p $HOME/Applications
 ln -s $PWD/cli/bin/* $HOME/Applications/
 
