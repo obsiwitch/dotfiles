@@ -37,20 +37,17 @@
 ! URxvt
 URxvt.font: xft:Monospace:pixelsize=12
 URxvt.letterSpace: -2
-
 URxvt.scrollBar: false
-
-URxvt.perl-ext-common: default,clipboard,url-select
-URxvt.url-select.underline: true
-URxvt.iso14755 : false
-URxvt.keysym.Control-Shift-C: perl:clipboard:copy
-URxvt.keysym.Control-Shift-V: perl:clipboard:paste
-
 URxvt.transparent: true
-URxvt.shading:     20
+URxvt.shading: 20
+
+URxvt.iso14755 : false
+
+URxvt.keysym.Control-Shift-C: eval:selection_to_clipboard
+URxvt.keysym.Control-Shift-V: eval:paste_clipboard
 
 !! Scroll on output and on key press.
 !! Do not scroll when going back in the buffer.
-URxvt.scrollTtyOutput:   false
-URxvt.scrollWithBuffer:  true
+URxvt.scrollTtyOutput: false
+URxvt.scrollWithBuffer: true
 URxvt.scrollTtyKeypress: true
