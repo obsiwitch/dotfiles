@@ -1,39 +1,25 @@
-# be 8 bit clean
-set input-meta on
-set output-meta on
+$include /etc/inputrc
 
-# no bell on tab-completion
+# Variables
+## no bell on completion
 set bell-style none
 
-# tab-completion on 1 tab (instead of 2)
+## completion ignore case
+set completion-ignore-case on
+
+## immediate completion
 set show-all-if-ambiguous on
 
-# cycle completion
+## completion color based on file type
+set colored-stats on
+
+## ellipsis on completion for common prefix
+set completion-prefix-display-length 2
+
+# Key bindings
+## cycle completion Shift+Tab
 "\e[Z": menu-complete
 
-# some defaults / modifications for the emacs mode
-$if mode=emacs
-
-    # allow the use of the Home/End keys
-    "\e[1~": beginning-of-line
-    "\e[4~": end-of-line
-
-    # allow the use of the Delete/Insert keys
-    "\e[3~": delete-char
-    "\e[2~": quoted-insert
-
-    # mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
-    "\e[1;5C": forward-word
-    "\e[1;5D": backward-word
-    "\e[5C": forward-word
-    "\e[5D": backward-word
-    "\e\e[C": forward-word
-    "\e\e[D": backward-word
-
-    $if term=rxvt
-        "\e[8~": end-of-line
-        "\eOc": forward-word
-        "\eOd": backward-word
-    $endif
-
-$endif
+## move backward/forward over a word with Ctrl+Left/Right
+"\eOd": backward-word
+"\eOc": forward-word
