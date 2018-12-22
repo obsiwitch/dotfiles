@@ -5,7 +5,7 @@
 . ~/.prompt.sh
 
 # Disable bash history persistence (RAM history still works).
-HISTFILE=/dev/null
+export HISTFILE=/dev/null
 
 # Pager
 export PAGER='less'
@@ -22,10 +22,9 @@ shopt -s globstar
 # Aliases
 alias ls='ls --group-directories-first --color=auto --human-readable'
 alias grep='grep --color=auto'
-alias rm='rm --preserve-root'
-alias cb='xclip -rmlastnl -selection c'
-alias ip='ip -c'
+alias cb='xclip -rmlastnl -selection clipboard'
+alias ip='ip -color'
 
 ## cdc - Change directory to current one. Fix "unreachable" directory problems
 ## after unmounting and remounting a filesystem.
-alias cdc='cd "$(pwd)"'
+alias cdc='cd "$PWD"'

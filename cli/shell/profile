@@ -1,5 +1,5 @@
 # bashrc
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+. ~/.bashrc
 
 # PATH: user Bin directory
 PATH="$HOME/Applications:$PATH"
