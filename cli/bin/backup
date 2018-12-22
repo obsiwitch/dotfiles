@@ -6,11 +6,11 @@ rsync_flags='--archive --delete --protect-args --progress'
 tar_flags='--create --verbose --preserve-permissions --file'
 
 backup_local_obside() {
-    local in="\
-        $HOME/Private/encrypted \
-        $HOME/Modelisation \
-        $HOME/Music \
-        $HOME/Pictures \
+    local in="
+        $HOME/Private/encrypted
+        $HOME/Models
+        $HOME/Music
+        $HOME/Pictures
     "
     local out="$local_storage/$USER"
 
@@ -36,7 +36,7 @@ backup_archive_home() {
     tar $tar_flags $out $in
 }
 
-if [ "$1" == "lo" ]; then backup_local_obside
+if   [ "$1" == "lo" ]; then backup_local_obside
 elif [ "$1" == "lh" ]; then backup_local_home
 elif [ "$1" == "ao" ]; then backup_archive_obside
 elif [ "$1" == "ah" ]; then backup_archive_home
