@@ -1,6 +1,0 @@
-#!/bin/sh
-
-export PATH="$(ruby -rubygems -e "puts Gem.user_dir")/bin:$PATH"
-
-# Runs a new shell in which $PATH is updated.
-exec /bin/bash
