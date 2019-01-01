@@ -5,16 +5,16 @@ import lxml.html
 import requests
 
 class Downloader:
-    def __init__(self, start_url, next_xpath, img_xpath):
+    def __init__(self, start_url, next_xpath, data_xpath):
         self.start_url  = start_url
         self.next_xpath = next_xpath
-        self.img_xpath  = img_xpath
+        self.data_xpath = data_xpath
 
     def start(self):
-        for i, img_url in enumerate(self.iterate()):
-            print(i, img_url)
-            _, img_ext = os.path.splitext(img_url)
-            self.download(img_url, f"{i}{img_ext}")
+        for i, data_url in enumerate(self.iterate()):
+            print(i, data_url)
+            _, data_ext = os.path.splitext(data_url)
+            self.download(data_url, f"{i}{data_ext}")
 
     def request(self, url): return requests.get(
         url     = url,
@@ -35,27 +35,22 @@ class Downloader:
             next_url = tree.xpath(self.next_xpath)
             next_url = next_url[0] if next_url else None
 
-            img_urls = tree.xpath(self.img_xpath)
-            for img_url in img_urls: yield img_url
+            data_urls = tree.xpath(self.data_xpath)
+            for data_url in data_urls: yield data_url
 
 Downloader(
     ## Sleepless Domain
     # start_url  = "http://www.sleeplessdomain.com/comic/chapter-1-cover",
     # next_xpath = "//a[@rel = 'next']/@href",
-    # img_xpath  = "//img[@id = 'cc-comic']/@src",
+    # data_xpath = "//img[@id = 'cc-comic']/@src",
 
     ## The Night Belongs to Us
     # start_url  = "https://tnbtu.com/post/173553103495/01-00",
     # next_xpath = "//a[@class = 'next-button']/@href",
-    # img_xpath  = "//figure[@class = 'photo-hires-item correct']//img/@src",
+    # data_xpath = "//figure[@class = 'photo-hires-item correct']//img/@src",
 
     ## Windrose
-    # start_url  = "https://sparklermonthly.com/wr/windrose-chapter-01-page-001/",
-    # next_xpath = "//a[@rel = 'next' and not(contains(@class, 'current-webcomic'))]/@href",
-    # img_xpath  = "//div[@class = 'webcomic-image']//img/@src",
-
-    ## Only Sense Online
-    start_url  = "https://mangakakalot.com/chapter/only_sense_online_3/chapter_45",
-    next_xpath = "//a[@class = 'back']/@href",
-    img_xpath  = "//div[@id = 'vungdoc']//img/@src",
+    start_url  = "https://sparklermonthly.com/wr/windrose-chapter-01-page-001/",
+    next_xpath = "//a[@rel = 'next' and not(contains(@class, 'current-webcomic'))]/@href",
+    data_xpath = "//div[@class = 'webcomic-image']//img/@src",
 ).start()
