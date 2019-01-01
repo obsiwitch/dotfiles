@@ -12,9 +12,10 @@ class Downloader:
 
     def start(self):
         for i, data_url in enumerate(self.iterate()):
-            print(i, data_url)
-            _, data_ext = os.path.splitext(data_url)
-            self.download(data_url, f"{i}{data_ext}")
+            self.download(
+                url      = data_url,
+                filename = f"{i}_{os.path.basename(data_url)}",
+            )
 
     def request(self, url): return requests.get(
         url     = url,
@@ -22,6 +23,7 @@ class Downloader:
     )
 
     def download(self, url, filename):
+        print(url)
         with open(filename, "wb") as file:
             data = self.request(url).content
             file.write(data)
