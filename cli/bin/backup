@@ -1,46 +1,20 @@
 #!/bin/bash
 
-local_storage="/run/media/$USER/yayaka_storage"
-
-rsync_flags='--archive --delete --protect-args --progress'
-tar_flags='--create --verbose --preserve-permissions --file'
-
-backup_local_obside() {
-    local in="
-        $HOME/Private/encrypted
-        $HOME/Models
-        $HOME/Music
-        $HOME/Pictures
-    "
-    local out="$local_storage/$USER"
-
-    rsync $rsync_flags $in $out
+backup_local() {
+    local in="$HOME/*" # exclude hidden files from $HOME
+    local out="/run/media/$USER/yayaka_storage/$USER"
+    local flags='--archive --delete --prune-empty-dirs --protect-args --progress'
+    private umount # do not backup plaintext private
+    rsync $flags $in $out
 }
 
-backup_local_home() {
-    local in="$HOME"
-    local out="$local_storage"
-
-    rsync $rsync_flags $in $out
-}
-
-backup_archive_obside() {
+backup_archive() {
     local in="$HOME/Private/encrypted"
     local out=`date +'b%y%m%d.tar'`
-    tar $tar_flags $out $in
+    local flags='--create --verbose --preserve-permissions --file'
+    tar $flags $out $in
 }
 
-backup_archive_home() {
-    local in="$HOME"
-    local out=`date +'b%y%m%d.tar'`
-    tar $tar_flags $out $in
-}
-
-if   [ "$1" == "lo" ]; then backup_local_obside
-elif [ "$1" == "lh" ]; then backup_local_home
-elif [ "$1" == "ao" ]; then backup_archive_obside
-elif [ "$1" == "ah" ]; then backup_archive_home
-else
-    echo -n 'usage: backup <lo (local_obside) | ao (archive_obside)'
-    echo    ' | lh (local_home) | ah (archive_home)>'
-fi
+if   [ "$1" == "local" ]; then backup_local
+elif [ "$1" == "archive" ]; then backup_archive
+else echo 'usage: backup <local | archive>'; fi
