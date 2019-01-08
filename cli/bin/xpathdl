@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
 import os
+import argparse
+import textwrap
 import lxml.html
 import requests
 
 class Downloader:
-    def __init__(self, start_url, next_xpath, data_xpath):
+    def __init__(self, start_url, data_xpath, next_xpath):
         self.start_url  = start_url
-        self.next_xpath = next_xpath
         self.data_xpath = data_xpath
+        self.next_xpath = next_xpath
 
     def start(self):
         for i, data_url in enumerate(self.iterate()):
@@ -34,25 +36,42 @@ class Downloader:
             html = self.request(next_url).content
             tree = lxml.html.fromstring(html)
 
-            next_url = tree.xpath(self.next_xpath)
+            next_url = tree.xpath(self.next_xpath) if self.next_xpath else None
             next_url = next_url[0] if next_url else None
 
             data_urls = tree.xpath(self.data_xpath)
             for data_url in data_urls: yield data_url
 
-Downloader(
-    ## Sleepless Domain
-    # start_url  = "http://www.sleeplessdomain.com/comic/chapter-1-cover",
-    # next_xpath = "//a[@rel = 'next']/@href",
-    # data_xpath = "//img[@id = 'cc-comic']/@src",
+parser = argparse.ArgumentParser(
+    formatter_class = argparse.RawDescriptionHelpFormatter,
+    description = "Download elements from a sequence of webpages.",
+    epilog = textwrap.dedent(f"""\
+        examples:
+            Sleepless Domain
+            xpathdl 'http://www.sleeplessdomain.com/comic/chapter-1-cover' \\
+                    "//img[@id = 'cc-comic']/@src" \\
+                    "//a[@rel = 'next']/@href"
 
-    ## The Night Belongs to Us
-    # start_url  = "https://tnbtu.com/post/173553103495/01-00",
-    # next_xpath = "//a[@class = 'next-button']/@href",
-    # data_xpath = "//figure[@class = 'photo-hires-item correct']//img/@src",
+            The Night Belongs to Us
+            xpathdl 'https://tnbtu.com/comic/01-00/' \\
+                    "//div[@id = 'comic']//img/@src" \\
+                    "//a[contains(@class, 'comic-nav-next')]/@href"
 
-    ## Windrose
-    start_url  = "https://sparklermonthly.com/wr/windrose-chapter-01-page-001/",
-    next_xpath = "//a[@rel = 'next' and not(contains(@class, 'current-webcomic'))]/@href",
-    data_xpath = "//div[@class = 'webcomic-image']//img/@src",
-).start()
+            Windrose
+            xpathdl 'https://sparklermonthly.com/wr/windrose-chapter-01-page-001/' \\
+                    "//div[@class = 'webcomic-image']//img/@src" \\
+                    "//a[@rel = 'next' and not(contains(@class, 'current-webcomic'))]/@href"
+    """),
+)
+parser.add_argument("start_url",
+    help = "first url to visit",
+)
+parser.add_argument("data_xpath",
+    help = "path expression to get the desired element(s)"
+)
+parser.add_argument("next_xpath",
+    help  = "(optional) path expression to get the next page in the sequence",
+    nargs = "?",
+)
+args = parser.parse_args()
+Downloader(args.start_url, args.data_xpath, args.next_xpath).start()

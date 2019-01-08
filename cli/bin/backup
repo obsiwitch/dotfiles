@@ -15,6 +15,6 @@ backup_archive() {
     tar $flags $out $in
 }
 
-if   [ "$1" == "local" ]; then backup_local
+if   [ "$1" == "local"   ]; then backup_local
 elif [ "$1" == "archive" ]; then backup_archive
 else echo 'usage: backup <local | archive>'; fi
