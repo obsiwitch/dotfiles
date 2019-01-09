@@ -64,20 +64,20 @@ exec --no-startup-id screenlayout laptop
 
 # Applications shortcuts
 
-## exit i3
-bindsym $mod+Shift+e exec --no-startup-id .i3/scripts/exit.py
-
-## file manager
-bindsym $mod+Shift+Return exec --no-startup-id thunar
+## launcher
+bindsym $mod+Return exec --no-startup-id dmenu_run
 
 ## terminal
-bindsym $mod+Return exec --no-startup-id urxvt
+bindsym $mod+Shift+Return exec --no-startup-id urxvt
+
+## file manager
+bindsym $mod+Ctrl+Return exec --no-startup-id thunar
 
 ## lock screen
 bindsym --release $mod+l exec --no-startup-id xflock4
 
-## launcher
-bindsym $mod+F2 exec --no-startup-id dmenu_run
+## exit i3
+bindsym $mod+e exec --no-startup-id .i3/scripts/exit.py
 
 ## screenshots
 bindsym Print exec --no-startup-id xfce4-screenshooter
@@ -128,20 +128,14 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-## split in horizontal orientation
-bindsym $mod+h split h
-
-## split in vertical orientation
-bindsym $mod+v split v
-
 ## enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
-## change container layout (stacked, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+e layout toggle split
+## Manipulate container layout
+bindsym $mod+Tab split toggle
+bindsym $mod+Shift+Tab layout toggle stacking split
 
-## floating windows shortcuts
+## floating windows
 
 ### toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -155,11 +149,11 @@ floating_modifier $mod
 ### resize floating window
 bindsym $mod+r mode "resize"
 mode "resize" {
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-        bindsym Escape mode "default"
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Escape mode "default"
 }
 
 ## workspaces
