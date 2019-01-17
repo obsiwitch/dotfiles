@@ -2,20 +2,12 @@
 <actions>
 <action>
 	<icon>utilities-terminal</icon>
-	<name>Open Terminal</name>
-	<unique-id>1484017581632983-11</unique-id>
-	<command>urxvt -cd %f</command>
-	<description>Open Terminal in the selected directory.</description>
+	<name>Terminal</name>
+	<unique-id>1484017599812678-12</unique-id>
+	<command>urxvt -cd "$PWD"</command>
+	<description>Open terminal in the current directory.</description>
 	<patterns>*</patterns>
 	<directories/>
-</action>
-<action>
-	<icon>utilities-terminal</icon>
-	<name>Open Terminal</name>
-	<unique-id>1484017599812678-12</unique-id>
-	<command>urxvt -cd %d</command>
-	<description>Open Terminal in the directory containing the selected file.</description>
-	<patterns>*</patterns>
 	<audio-files/>
 	<image-files/>
 	<other-files/>
