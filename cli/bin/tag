@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+
+import sys
+import os
+import argparse
+
+class Table(dict):
+    def __init__(self, *args, **kwargs):
+        dict.__init__(self, *args, **kwargs)
+        self.__dict__ = self
+
+    def __iter__(self): return iter(self.values())
+
+class Tag:
+    def __init__(self):
+        parser = argparse.ArgumentParser(
+            description = "Tagging tool using extended attributes (xattr)."
+        )
+        parser.add_argument("-d", "--debug",
+            action = "store_true",
+            help   = "display traceback"
+        )
+        subparsers = parser.add_subparsers(
+            required = True,
+            dest     = "command",
+            metavar  = "command",
+            help     = "{ls, add, rm, clean}",
+        )
+
+        # ls
+        parser_ls = subparsers.add_parser("ls",
+            help = "List tags for the given files.",
+        )
+        parser_ls.add_argument("paths", nargs = "+")
+
+        # add
+        parser_add = subparsers.add_parser("add",
+            help = "Add tag to the given files.",
+        )
+        parser_add.add_argument("-v", "--value",
+            default = "",
+            type    = self.str_nocolon,
+        )
+        parser_add.add_argument("tag", type = self.str_nocolon)
+        parser_add.add_argument("paths", nargs = "+")
+
+        # rm
+        parser_rm = subparsers.add_parser("rm",
+            help = "Remove tag from the given files.",
+        )
+        parser_rm.add_argument("tag")
+        parser_rm.add_argument("paths", nargs = "+")
+
+        # clean
+        parser_clean = subparsers.add_parser("clean",
+            help = "Remove all tags from the given files.",
+        )
+        parser_clean.add_argument("paths", nargs = "+")
+
+        # parse
+        args = parser.parse_args()
+        if not args.debug: sys.tracebacklimit = 0
+        getattr(self, args.command)(args)
+
+    @staticmethod
+    def str_nocolon(value):
+        if ":" in value: sys.exit(
+            f"error: string '{value}' cannot contain colons"
+        )
+        return value
+
+    @staticmethod
+    def iterxattr(path):
+        for attr in os.listxattr(path):
+            yield attr, os.getxattr(path, attr).decode()
+
+    @classmethod
+    def ls(cls, args):
+        shared = {}
+        for path in args.paths:
+            for attr, value in cls.iterxattr(path):
+                if attr not in shared:
+                    shared[attr] = Table(vals = set(), count = 0)
+                shared[attr].vals.add(value)
+                shared[attr].count += 1
+
+        for tag, (vals, count) in shared.items(): print(
+            f"{tag.replace('user.', '')}"
+            f":{min(vals) if len(vals) <= 1 else '≠'}"
+            f":{count}"
+        )
+
+    @classmethod
+    def add(cls, args):
+        for path in args.paths: os.setxattr(
+            path      = path,
+            attribute = f"user.{args.tag}",
+            value     = args.value.encode("utf-8"),
+        )
+
+    @classmethod
+    def rm(cls, args):
+        for path in args.paths: os.removexattr(
+            path      = path,
+            attribute = f"user.{args.tag}",
+        )
+
+    @classmethod
+    def clean(cls, args):
+        for path in args.paths:
+            for tag in os.listxattr(path):
+                os.removexattr(path, tag)
+
+Tag()
