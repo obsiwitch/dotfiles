@@ -42,3 +42,9 @@ ln -s $PWD/gui/xdg/user-dirs.conf $HOME/.config/user-dirs.conf
 
 # gnome-mpv
 gsettings set io.github.GnomeMpv csd-enable false
+
+# cache
+mkdir -p $HOME/.cache
+ln -s /dev/null $HOME/.cache/thumbnails
+ln -s /dev/null $HOME/.thumbnails
+ln -s /dev/null $HOME/.python_history

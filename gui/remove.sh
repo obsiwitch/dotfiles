@@ -32,3 +32,8 @@ rm $HOME/.config/Trolltech.conf
 
 # xdg
 rm $HOME/.config/user-dirs.conf
+
+# cache
+rm -rf $HOME/.cache/thumbnails
+rm -rf $HOME/.thumbnails
+rm $HOME/.python_history
