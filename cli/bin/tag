@@ -13,14 +13,12 @@ class Table(dict):
 
 class Xattr:
     @classmethod
-    def get(cls, path, attr): return os.getxattr(
-        path, "user." + attr
-    ).decode()
+    def list(cls, path): return [
+        attr[5:] for attr in os.listxattr(path)
+    ]
 
     @classmethod
-    def list(cls, path): return list(
-        attr[5:] for attr in os.listxattr(path)
-    )
+    def dict(cls, path): return dict(cls.iter(path))
 
     @classmethod
     def iter(cls, path):
@@ -31,6 +29,11 @@ class Xattr:
     def rm(cls, path, attr):
         try: os.removexattr(path, "user." + attr)
         except OSError: print(f"Xattr.rm: {path} does not contain {attr}")
+
+    @classmethod
+    def get(cls, path, attr): return os.getxattr(
+        path, "user." + attr
+    ).decode()
 
     @classmethod
     def set(cls, path, attr, val): os.setxattr(
@@ -57,6 +60,7 @@ class Tag:
         parser_ls = subparsers.add_parser("ls",
             help = "List tags for the given files.",
         )
+        parser_ls.add_argument("-s", "--shared", action = "store_true")
         parser_ls.add_argument("paths", nargs = "+")
 
         # search
@@ -105,19 +109,32 @@ class Tag:
 
     @classmethod
     def ls(cls, args):
-        shared = {}
-        for path in args.paths:
-            for attr, value in Xattr.iter(path):
-                if attr not in shared:
-                    shared[attr] = Table(vals = set(), count = 0)
-                shared[attr].vals.add(value)
-                shared[attr].count += 1
+        def default():
+            for path in args.paths:
+                xattrs = Xattr.dict(path)
+                if not xattrs: continue
+                strxattrs = str(xattrs) \
+                          .replace("'", "").replace(": ", ":") \
+                          .replace("{", "{ ").replace("}", " }")
+                print(f"{path}: {strxattrs}")
 
-        for tag, (vals, count) in shared.items(): print(
-            f"{tag}"
-            f":{min(vals) if len(vals) <= 1 else '≠'}"
-            f":{count}"
-        )
+        def shared():
+            result = {}
+            for path in args.paths:
+                for attr, value in Xattr.iter(path):
+                    if attr not in result:
+                        result[attr] = Table(vals = set(), count = 0)
+                    result[attr].vals.add(value)
+                    result[attr].count += 1
+
+            for tag, (vals, count) in result.items(): print(
+                f"{tag}"
+                f":{min(vals) if len(vals) <= 1 else '≠'}"
+                f":{count}"
+            )
+
+        if args.shared: shared()
+        else: default()
 
     @classmethod
     def search(cls, args):
