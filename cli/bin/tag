@@ -11,6 +11,32 @@ class Table(dict):
 
     def __iter__(self): return iter(self.values())
 
+class Xattr:
+    @classmethod
+    def get(cls, path, attr): return os.getxattr(
+        path, "user." + attr
+    ).decode()
+
+    @classmethod
+    def list(cls, path): return list(
+        attr[5:] for attr in os.listxattr(path)
+    )
+
+    @classmethod
+    def iter(cls, path):
+        for attr in cls.list(path):
+            yield attr, cls.get(path, attr)
+
+    @classmethod
+    def rm(cls, path, attr):
+        try: os.removexattr(path, "user." + attr)
+        except OSError: print(f"Xattr.rm: {path} does not contain {attr}")
+
+    @classmethod
+    def set(cls, path, attr, val): os.setxattr(
+        path, "user." + attr, val.encode("utf-8")
+    )
+
 class Tag:
     def __init__(self):
         parser = argparse.ArgumentParser(
@@ -24,7 +50,7 @@ class Tag:
             required = True,
             dest     = "command",
             metavar  = "command",
-            help     = "{ls, add, rm, clean}",
+            help     = "{ls, search, add, rm, clean}",
         )
 
         # ls
@@ -32,6 +58,14 @@ class Tag:
             help = "List tags for the given files.",
         )
         parser_ls.add_argument("paths", nargs = "+")
+
+        # search
+        parser_search = subparsers.add_parser("search",
+            help     = "Search files by evaluating the given expression.",
+            add_help = False,
+        )
+        parser_search.add_argument("expression")
+        parser_search.add_argument("directory", nargs = "?", default = ".")
 
         # add
         parser_add = subparsers.add_parser("add",
@@ -69,46 +103,64 @@ class Tag:
         )
         return value
 
-    @staticmethod
-    def iterxattr(path):
-        for attr in os.listxattr(path):
-            yield attr, os.getxattr(path, attr).decode()
-
     @classmethod
     def ls(cls, args):
         shared = {}
         for path in args.paths:
-            for attr, value in cls.iterxattr(path):
+            for attr, value in Xattr.iter(path):
                 if attr not in shared:
                     shared[attr] = Table(vals = set(), count = 0)
                 shared[attr].vals.add(value)
                 shared[attr].count += 1
 
         for tag, (vals, count) in shared.items(): print(
-            f"{tag.replace('user.', '')}"
+            f"{tag}"
             f":{min(vals) if len(vals) <= 1 else '≠'}"
             f":{count}"
         )
 
     @classmethod
+    def search(cls, args):
+        def walk(directory):
+            for dirpath, _, filenames in os.walk(directory):
+                filenames.sort()
+                yield dirpath
+                yield from ( os.path.join(dirpath, f) for f in filenames )
+
+        def satisfy_one(attrs, criterion):
+            include = (criterion in attrs)
+            exclude = (criterion[0] == "~") and (criterion[1:] not in attrs)
+            return include or exclude
+
+        def satisfy_all(filepath):
+            criteria = args.expression.split()
+            attrs = Xattr.list(filepath)
+            return all(
+                satisfy_one(attrs, criterion)
+                for criterion in criteria
+            )
+
+        print(*filter(
+            lambda filepath: satisfy_all(filepath),
+            walk(args.directory)
+        ))
+
+    @classmethod
     def add(cls, args):
-        for path in args.paths: os.setxattr(
-            path      = path,
-            attribute = f"user.{args.tag}",
-            value     = args.value.encode("utf-8"),
+        for path in args.paths: Xattr.set(
+            path, args.tag, args.value
         )
 
     @classmethod
     def rm(cls, args):
-        for path in args.paths: os.removexattr(
-            path      = path,
-            attribute = f"user.{args.tag}",
+        for path in args.paths: Xattr.rm(
+            path, args.tag
         )
 
     @classmethod
     def clean(cls, args):
         for path in args.paths:
-            for tag in os.listxattr(path):
-                os.removexattr(path, tag)
+            for tag in Xattr.list(path):
+                Xattr.rm(path, tag)
 
 Tag()
