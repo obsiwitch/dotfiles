@@ -77,7 +77,7 @@ bindsym $mod+Ctrl+Return exec --no-startup-id thunar
 bindsym --release $mod+l exec --no-startup-id xflock4
 
 ## exit i3
-bindsym $mod+e exec --no-startup-id .i3/scripts/exit.py
+bindsym $mod+e exec --no-startup-id .i3/scripts/exit.sh
 
 ## screenshots
 bindsym Print exec --no-startup-id xfce4-screenshooter
