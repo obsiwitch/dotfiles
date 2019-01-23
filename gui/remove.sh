@@ -33,6 +33,9 @@ rm $HOME/.config/Trolltech.conf
 # xdg
 rm $HOME/.config/user-dirs.conf
 
+# mpv
+rm $HOME/.config/mpv
+
 # cache
 rm -rf $HOME/.cache/thumbnails
 rm -rf $HOME/.thumbnails

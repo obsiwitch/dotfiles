@@ -40,8 +40,8 @@ cp $PWD/gui/Qt/Trolltech.conf $HOME/.config/Trolltech.conf
 # xdg
 ln -s $PWD/gui/xdg/user-dirs.conf $HOME/.config/user-dirs.conf
 
-# gnome-mpv
-gsettings set io.github.GnomeMpv csd-enable false
+# mpv
+ln -s $PWD/gui/mpv $HOME/.config/mpv
 
 # cache
 mkdir -p $HOME/.cache
