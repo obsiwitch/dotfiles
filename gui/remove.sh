@@ -2,7 +2,7 @@
 
 # bin
 for bin in $PWD/gui/bin/*; do
-    rm $HOME/Applications/`basename $bin`
+    rm $HOME/.local/bin/`basename $bin`
 done
 
 # i3

@@ -3,8 +3,8 @@
 $PWD/gui/remove.sh
 
 # bin
-mkdir -p $HOME/Applications
-ln -s $PWD/gui/bin/* $HOME/Applications/
+mkdir -p $HOME/.local/bin
+ln -s $PWD/gui/bin/* $HOME/.local/bin/
 
 # i3
 ln -s $PWD/gui/i3 $HOME/.i3

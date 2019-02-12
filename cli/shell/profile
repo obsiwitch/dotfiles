@@ -1,5 +1,3 @@
-# bashrc
 . ~/.bashrc
 
-# PATH: user Bin directory
-PATH="$HOME/Applications:$PATH"
+PATH="$HOME/.local/bin:$PATH"
