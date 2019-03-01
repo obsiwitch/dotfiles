@@ -1,6 +1,6 @@
 # Obsidienne's dotfiles
 
-![screenshot GUI](https://i.imgur.com/3H0wtpV.png)
+![screenshot GUI](https://framapic.org/5KsGsexI5PQ3/xN5GPrtk9c3v.png)
 
 ## Install
 
