@@ -61,7 +61,7 @@ class Tag:
             help = "List tags for the given files.",
         )
         parser_ls.add_argument("-s", "--shared", action = "store_true")
-        parser_ls.add_argument("paths", nargs = "+")
+        parser_ls.add_argument("paths", nargs = "*", default = [ "." ])
 
         # search
         parser_search = subparsers.add_parser("search",
@@ -109,8 +109,17 @@ class Tag:
 
     @classmethod
     def ls(cls, args):
-        def default():
+        def iterator():
             for path in args.paths:
+                if not os.path.isdir(path): yield path ; continue
+                dirpath, dirnames, filenames = next(os.walk(path))
+                filenames.sort()
+                yield dirpath
+                yield from ( os.path.join(dirpath, d) for d in dirnames )
+                yield from ( os.path.join(dirpath, f) for f in filenames )
+
+        def default():
+            for path in iterator():
                 xattrs = Xattr.dict(path)
                 if not xattrs: continue
                 strxattrs = str(xattrs) \
@@ -120,7 +129,7 @@ class Tag:
 
         def shared():
             result = {}
-            for path in args.paths:
+            for path in iterator():
                 for attr, value in Xattr.iter(path):
                     if attr not in result:
                         result[attr] = Table(vals = set(), count = 0)
