@@ -37,7 +37,7 @@ class Xattr:
 
     @classmethod
     def set(cls, path, attr, val): os.setxattr(
-        path, "user." + attr, val.encode("utf-8")
+        path, "user." + attr, val.encode()
     )
 
 class Tag:
