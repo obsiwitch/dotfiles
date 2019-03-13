@@ -61,6 +61,11 @@ parser = argparse.ArgumentParser(
             xpathdl 'https://sparklermonthly.com/wr/windrose-chapter-01-page-001/' \\
                     "//div[@class = 'webcomic-image']//img/@src" \\
                     "//a[@rel = 'next' and not(contains(@class, 'current-webcomic'))]/@href"
+
+            # Never Satisfied
+            xpathdl 'http://www.neversatisfiedcomic.com/comic/never-satisfied' \\
+                    "//div[@id='cc-comicbody']//img/@src" \\
+                    "//div[@id='cc-comicbody']/a/@href"
     """),
 )
 parser.add_argument("start_url",
