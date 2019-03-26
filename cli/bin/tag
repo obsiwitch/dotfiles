@@ -71,9 +71,9 @@ class Tag:
         parser_clean.add_argument("paths", nargs = "+")
 
         # parse
-        args = parser.parse_args()
-        if not args.debug: sys.tracebacklimit = 0
-        getattr(self, args.command)(args)
+        args = parser.parse_args().__dict__
+        if not args.pop("debug"): sys.tracebacklimit = 0
+        getattr(self, args.pop("command"))(**args)
 
     # Generator function returning the content of `path` if it is a directory,
     # or itself if it is a file. It can also return the content of
@@ -89,8 +89,8 @@ class Tag:
             if not recursive: break
 
     @classmethod
-    def ls(cls, args):
-        for path1 in args.paths:
+    def ls(cls, paths):
+        for path1 in paths:
             for path2 in cls.walk(path1, recursive = False):
                 xattrs = Xattr.list(path2)
                 if not xattrs: continue
@@ -98,7 +98,7 @@ class Tag:
                 print(f"{path2}: {strxattrs}")
 
     @classmethod
-    def search(cls, args):
+    def search(cls, expression, directory):
         def satisfy_one(attrs, criterion):
             include = (criterion in attrs)
             exclude = (criterion[0] == "-") and (criterion[1:] not in attrs)
@@ -112,24 +112,24 @@ class Tag:
         print(*filter(
             lambda filepath: satisfy_all(
                 attrs    = Xattr.list(filepath),
-                criteria = args.expression.split(),
+                criteria = expression.split(),
             ),
-            cls.walk(args.directory, recursive = True)
+            cls.walk(directory, recursive = True)
         ))
 
     @classmethod
-    def add(cls, args):
-        for path in args.paths:
-            Xattr.set(path, args.tag)
+    def add(cls, tag, paths):
+        for path in paths:
+            Xattr.set(path, tag)
 
     @classmethod
-    def rm(cls, args):
-        for path in args.paths:
-            Xattr.rm(path, args.tag)
+    def rm(cls, tag, paths):
+        for path in paths:
+            Xattr.rm(path, tag)
 
     @classmethod
-    def clean(cls, args):
-        for path in args.paths:
+    def clean(cls, paths):
+        for path in paths:
             for tag in Xattr.list(path):
                 Xattr.rm(path, tag)
 
