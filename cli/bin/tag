@@ -4,13 +4,6 @@ import sys
 import os
 import argparse
 
-class Table(dict):
-    def __init__(self, *args, **kwargs):
-        dict.__init__(self, *args, **kwargs)
-        self.__dict__ = self
-
-    def __iter__(self): return iter(self.values())
-
 class Xattr:
     @classmethod
     def list(cls, path): return [
