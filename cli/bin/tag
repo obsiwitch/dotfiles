@@ -75,48 +75,46 @@ class Tag:
         if not args.debug: sys.tracebacklimit = 0
         getattr(self, args.command)(args)
 
+    # Generator function returning the content of `path` if it is a directory,
+    # or itself if it is a file. It can also return the content of
+    # subdirectories recursively if `recursive` is `True`.
+    @classmethod
+    def walk(cls, path, recursive):
+        yield path
+        for dirpath, dirnames, filenames in os.walk(path):
+            if not recursive: yield from (
+                os.path.join(dirpath, d) for d in sorted(dirnames)
+            )
+            yield from ( os.path.join(dirpath, f) for f in sorted(filenames) )
+            if not recursive: break
+
     @classmethod
     def ls(cls, args):
-        def iterator():
-            for path in args.paths:
-                if not os.path.isdir(path): yield path ; continue
-                dirpath, dirnames, filenames = next(os.walk(path))
-                dirnames.sort()
-                filenames.sort()
-                yield dirpath
-                yield from ( os.path.join(dirpath, d) for d in dirnames )
-                yield from ( os.path.join(dirpath, f) for f in filenames )
-
-        for path in iterator():
-            xattrs = Xattr.list(path)
-            if not xattrs: continue
-            strxattrs = str(xattrs).replace("'", "")
-            print(f"{path}: {strxattrs}")
+        for path1 in args.paths:
+            for path2 in cls.walk(path1, recursive = False):
+                xattrs = Xattr.list(path2)
+                if not xattrs: continue
+                strxattrs = str(xattrs).replace("'", "")
+                print(f"{path2}: {strxattrs}")
 
     @classmethod
     def search(cls, args):
-        def walk(directory):
-            for dirpath, _, filenames in os.walk(directory):
-                filenames.sort()
-                yield dirpath
-                yield from ( os.path.join(dirpath, f) for f in filenames )
-
         def satisfy_one(attrs, criterion):
             include = (criterion in attrs)
-            exclude = (criterion[0] == "~") and (criterion[1:] not in attrs)
+            exclude = (criterion[0] == "-") and (criterion[1:] not in attrs)
             return include or exclude
 
-        def satisfy_all(filepath):
-            criteria = args.expression.split()
-            attrs = Xattr.list(filepath)
-            return all(
-                satisfy_one(attrs, criterion)
-                for criterion in criteria
-            )
+        def satisfy_all(attrs, criteria): return all(
+            satisfy_one(attrs, criterion)
+            for criterion in criteria
+        )
 
         print(*filter(
-            lambda filepath: satisfy_all(filepath),
-            walk(args.directory)
+            lambda filepath: satisfy_all(
+                attrs    = Xattr.list(filepath),
+                criteria = args.expression.split(),
+            ),
+            cls.walk(args.directory, recursive = True)
         ))
 
     @classmethod
