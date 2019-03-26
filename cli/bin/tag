@@ -18,25 +18,12 @@ class Xattr:
     ]
 
     @classmethod
-    def dict(cls, path): return dict(cls.iter(path))
-
-    @classmethod
-    def iter(cls, path):
-        for attr in cls.list(path):
-            yield attr, cls.get(path, attr)
-
-    @classmethod
     def rm(cls, path, attr):
         try: os.removexattr(path, "user." + attr)
         except OSError: print(f"Xattr.rm: {path} does not contain {attr}")
 
     @classmethod
-    def get(cls, path, attr): return os.getxattr(
-        path, "user." + attr
-    ).decode()
-
-    @classmethod
-    def set(cls, path, attr, val): os.setxattr(
+    def set(cls, path, attr, val = ""): os.setxattr(
         path, "user." + attr, val.encode()
     )
 
@@ -58,9 +45,8 @@ class Tag:
 
         # ls
         parser_ls = subparsers.add_parser("ls",
-            help = "List tags for the given files.",
+            help = "List tags for the given paths.",
         )
-        parser_ls.add_argument("-s", "--shared", action = "store_true")
         parser_ls.add_argument("paths", nargs = "*", default = [ "." ])
 
         # search
@@ -75,11 +61,7 @@ class Tag:
         parser_add = subparsers.add_parser("add",
             help = "Add tag to the given files.",
         )
-        parser_add.add_argument("-v", "--value",
-            default = "",
-            type    = self.str_nocolon,
-        )
-        parser_add.add_argument("tag", type = self.str_nocolon)
+        parser_add.add_argument("tag")
         parser_add.add_argument("paths", nargs = "+")
 
         # rm
@@ -100,50 +82,23 @@ class Tag:
         if not args.debug: sys.tracebacklimit = 0
         getattr(self, args.command)(args)
 
-    @staticmethod
-    def str_nocolon(value):
-        if ":" in value: sys.exit(
-            f"error: string '{value}' cannot contain colons"
-        )
-        return value
-
     @classmethod
     def ls(cls, args):
         def iterator():
             for path in args.paths:
                 if not os.path.isdir(path): yield path ; continue
                 dirpath, dirnames, filenames = next(os.walk(path))
+                dirnames.sort()
                 filenames.sort()
                 yield dirpath
                 yield from ( os.path.join(dirpath, d) for d in dirnames )
                 yield from ( os.path.join(dirpath, f) for f in filenames )
 
-        def default():
-            for path in iterator():
-                xattrs = Xattr.dict(path)
-                if not xattrs: continue
-                strxattrs = str(xattrs) \
-                          .replace("'", "").replace(": ", ":") \
-                          .replace("{", "{ ").replace("}", " }")
-                print(f"{path}: {strxattrs}")
-
-        def shared():
-            result = {}
-            for path in iterator():
-                for attr, value in Xattr.iter(path):
-                    if attr not in result:
-                        result[attr] = Table(vals = set(), count = 0)
-                    result[attr].vals.add(value)
-                    result[attr].count += 1
-
-            for tag, (vals, count) in result.items(): print(
-                f"{tag}"
-                f":{min(vals) if len(vals) <= 1 else '≠'}"
-                f":{count}"
-            )
-
-        if args.shared: shared()
-        else: default()
+        for path in iterator():
+            xattrs = Xattr.list(path)
+            if not xattrs: continue
+            strxattrs = str(xattrs).replace("'", "")
+            print(f"{path}: {strxattrs}")
 
     @classmethod
     def search(cls, args):
@@ -173,15 +128,13 @@ class Tag:
 
     @classmethod
     def add(cls, args):
-        for path in args.paths: Xattr.set(
-            path, args.tag, args.value
-        )
+        for path in args.paths:
+            Xattr.set(path, args.tag)
 
     @classmethod
     def rm(cls, args):
-        for path in args.paths: Xattr.rm(
-            path, args.tag
-        )
+        for path in args.paths:
+            Xattr.rm(path, args.tag)
 
     @classmethod
     def clean(cls, args):
