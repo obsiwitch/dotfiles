@@ -133,4 +133,4 @@ class Tag:
             for tag in Xattr.list(path):
                 Xattr.rm(path, tag)
 
-Tag()
+if __name__ == "__main__": Tag()
