@@ -4,7 +4,9 @@ $PWD/gui/remove.sh
 
 # bin
 mkdir -p $HOME/.local/bin
-ln -s $PWD/gui/bin/* $HOME/.local/bin/
+for bin in $PWD/gui/bin/*; do
+    ln -s $bin $HOME/.local/bin/`basename ${bin%.*}`
+done
 
 # i3
 ln -s $PWD/gui/i3 $HOME/.i3

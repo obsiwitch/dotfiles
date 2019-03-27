@@ -4,7 +4,10 @@ $PWD/cli/remove.sh
 
 # bin
 mkdir -p $HOME/.local/bin
-ln -s $PWD/cli/bin/* $HOME/.local/bin/
+for bin in $PWD/cli/bin/*; do
+    ln -s $bin $HOME/.local/bin/`basename ${bin%.*}`
+done
+
 
 # shell
 ln -s $PWD/cli/shell/bashrc $HOME/.bashrc

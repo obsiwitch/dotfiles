@@ -2,7 +2,7 @@
 
 # bin
 for bin in $PWD/cli/bin/*; do
-    rm $HOME/.local/bin/`basename $bin`
+    rm $HOME/.local/bin/`basename ${bin%.*}`
 done
 
 # shell
