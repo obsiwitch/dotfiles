@@ -2,6 +2,7 @@
 
 # bin
 for bin in $PWD/gui/bin/*; do
+    if [[ ! -f $bin ]]; then continue; fi
     rm $HOME/.local/bin/`basename ${bin%.*}`
 done
 

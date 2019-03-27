@@ -5,6 +5,7 @@ $PWD/gui/remove.sh
 # bin
 mkdir -p $HOME/.local/bin
 for bin in $PWD/gui/bin/*; do
+    if [[ ! -f $bin ]]; then continue; fi
     ln -s $bin $HOME/.local/bin/`basename ${bin%.*}`
 done
 
