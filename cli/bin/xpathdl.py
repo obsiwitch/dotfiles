@@ -42,41 +42,42 @@ class Downloader:
             elem_urls = tree.xpath(self.elem_xpath)
             for elem_url in elem_urls: yield elem_url
 
-parser = argparse.ArgumentParser(
-    formatter_class = argparse.RawDescriptionHelpFormatter,
-    description = "Download elements from a sequence of webpages.",
-    epilog = textwrap.dedent(f"""\
-        examples:
-            # Sleepless Domain
-            xpathdl 'http://www.sleeplessdomain.com/comic/chapter-1-cover' \\
-                    "//img[@id = 'cc-comic']/@src" \\
-                    "//a[@rel = 'next']/@href"
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        formatter_class = argparse.RawDescriptionHelpFormatter,
+        description = "Download elements from a sequence of webpages.",
+        epilog = textwrap.dedent(f"""\
+            examples:
+                # Sleepless Domain
+                xpathdl 'http://www.sleeplessdomain.com/comic/chapter-1-cover' \\
+                        "//img[@id = 'cc-comic']/@src" \\
+                        "//a[@rel = 'next']/@href"
 
-            # The Night Belongs to Us
-            xpathdl 'https://tnbtu.com/comic/01-00/' \\
-                    "//div[@id = 'comic']//img/@src" \\
-                    "//a[contains(@class, 'comic-nav-next')]/@href"
+                # The Night Belongs to Us
+                xpathdl 'https://tnbtu.com/comic/01-00/' \\
+                        "//div[@id = 'comic']//img/@src" \\
+                        "//a[contains(@class, 'comic-nav-next')]/@href"
 
-            # Windrose
-            xpathdl 'https://sparklermonthly.com/wr/windrose-chapter-01-page-001/' \\
-                    "//div[@class = 'webcomic-image']//img/@src" \\
-                    "//a[@rel = 'next' and not(contains(@class, 'current-webcomic'))]/@href"
+                # Windrose
+                xpathdl 'https://sparklermonthly.com/wr/windrose-chapter-01-page-001/' \\
+                        "//div[@class = 'webcomic-image']//img/@src" \\
+                        "//a[@rel = 'next' and not(contains(@class, 'current-webcomic'))]/@href"
 
-            # Never Satisfied
-            xpathdl 'http://www.neversatisfiedcomic.com/comic/never-satisfied' \\
-                    "//div[@id='cc-comicbody']//img/@src" \\
-                    "//div[@id='cc-comicbody']/a/@href"
-    """),
-)
-parser.add_argument("start_url",
-    help = "first url to visit",
-)
-parser.add_argument("elem_xpath",
-    help = "path expression to get the desired element(s)"
-)
-parser.add_argument("next_xpath",
-    help  = "(optional) path expression to get the next page in the sequence",
-    nargs = "?",
-)
-args = parser.parse_args()
-Downloader(args.start_url, args.elem_xpath, args.next_xpath).start()
+                # Never Satisfied
+                xpathdl 'http://www.neversatisfiedcomic.com/comic/never-satisfied' \\
+                        "//div[@id='cc-comicbody']//img/@src" \\
+                        "//div[@id='cc-comicbody']/a/@href"
+        """),
+    )
+    parser.add_argument("start_url",
+        help = "first url to visit",
+    )
+    parser.add_argument("elem_xpath",
+        help = "path expression to get the desired element(s)"
+    )
+    parser.add_argument("next_xpath",
+        help  = "(optional) path expression to get the next page in the sequence",
+        nargs = "?",
+    )
+    args = parser.parse_args()
+    Downloader(args.start_url, args.elem_xpath, args.next_xpath).start()
