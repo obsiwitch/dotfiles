@@ -16,7 +16,9 @@ class Xattr:
     @classmethod
     def rm(cls, path, attr):
         try: os.removexattr(path, "user." + attr)
-        except OSError: print(f"Xattr.rm: {path} does not contain {attr}")
+        except OSError: raise OSError(
+            f"Xattr.rm: {path} does not contain {attr}"
+        )
 
     @classmethod
     def set(cls, path, attr, val = ""): os.setxattr(
@@ -132,7 +134,8 @@ class Tag:
     @classmethod
     def rm(cls, tag, paths):
         for path in paths:
-            Xattr.rm(path, tag)
+            try: Xattr.rm(path, tag)
+            except OSError as e: print(e)
 
     @classmethod
     def clean(cls, paths):
