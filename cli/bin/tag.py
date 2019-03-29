@@ -40,7 +40,7 @@ class Tag:
         parser_ls = subparsers.add_parser("ls",
             help = "List tags for the given paths.",
         )
-        parser_ls.add_argument("paths", nargs = "*", default = [ "." ])
+        parser_ls.add_argument("paths", nargs = "*", default = ["."])
 
         # search
         parser_search = subparsers.add_parser("search",
@@ -89,7 +89,7 @@ class Tag:
             if not recursive: break
 
     @classmethod
-    def ls(cls, paths):
+    def ls(cls, paths = ["."]):
         for path1 in paths:
             for path2 in cls.walk(path1, recursive = False):
                 xattrs = Xattr.list(path2)
@@ -98,7 +98,7 @@ class Tag:
                 print(f"{path2}: {strxattrs}")
 
     @classmethod
-    def search(cls, expression, directory):
+    def search(cls, expression, directory = "."):
         def satisfy_one(attrs, criterion):
             include = (criterion in attrs)
             exclude = (criterion[0] == "-") and (criterion[1:] not in attrs)
