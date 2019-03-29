@@ -3,6 +3,9 @@
 import sys
 import os
 import argparse
+import glob
+
+def cwd(): return sorted(glob.glob("*"))
 
 class Xattr:
     @classmethod
@@ -40,7 +43,7 @@ class Tag:
         parser_ls = subparsers.add_parser("ls",
             help = "List tags for the given paths.",
         )
-        parser_ls.add_argument("paths", nargs = "*", default = ["."])
+        parser_ls.add_argument("paths", nargs = "*", default = cwd())
 
         # search
         parser_search = subparsers.add_parser("search",
@@ -75,31 +78,23 @@ class Tag:
         if not args.pop("debug"): sys.tracebacklimit = 0
         getattr(self, args.pop("command"))(**args)
 
-    # Generator function returning the content of `path` if it is a directory,
-    # or itself if it is a file. It can also return the content of
-    # subdirectories recursively if `recursive` is `True`.
     @classmethod
-    def walk(cls, path, recursive):
-        if not os.path.isdir(path): yield path
-        for dirpath, dirnames, filenames in os.walk(path):
-            yield dirpath
-            if not recursive: yield from (
-                os.path.join(dirpath, d) for d in sorted(dirnames)
-            )
-            yield from ( os.path.join(dirpath, f) for f in sorted(filenames) )
-            if not recursive: break
-
-    @classmethod
-    def ls(cls, paths = ["."]):
-        for path1 in paths:
-            for path2 in cls.walk(path1, recursive = False):
-                xattrs = Xattr.list(path2)
-                if not xattrs: continue
-                strxattrs = str(xattrs).replace("'", "")
-                print(f"{path2}: {strxattrs}")
+    def ls(cls, paths = cwd()):
+        for path in paths:
+            tags = Xattr.list(path)
+            if not tags: continue
+            strtags = str(tags).replace("'", "")
+            print(f"{path}: {strtags}")
 
     @classmethod
     def search(cls, expression, directory = "."):
+        def generator():
+            for dirpath, dirnames, filenames in os.walk(directory):
+                yield dirpath
+                yield from (
+                    os.path.join(dirpath, f) for f in sorted(filenames)
+                )
+
         def satisfy_one(attrs, criterion):
             include = (criterion in attrs)
             exclude = (criterion[0] == "-") and (criterion[1:] not in attrs)
@@ -110,12 +105,11 @@ class Tag:
             for criterion in criteria
         )
 
-        print(*filter(
-            lambda filepath: satisfy_all(
+        print(*(
+            filepath for filepath in generator() if satisfy_all(
                 attrs    = Xattr.list(filepath),
                 criteria = expression.split(),
-            ),
-            cls.walk(directory, recursive = True)
+            )
         ))
 
     @classmethod
