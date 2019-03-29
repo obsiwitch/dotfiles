@@ -80,8 +80,9 @@ class Tag:
     # subdirectories recursively if `recursive` is `True`.
     @classmethod
     def walk(cls, path, recursive):
-        yield path
+        if not os.path.isdir(path): yield path
         for dirpath, dirnames, filenames in os.walk(path):
+            yield dirpath
             if not recursive: yield from (
                 os.path.join(dirpath, d) for d in sorted(dirnames)
             )
