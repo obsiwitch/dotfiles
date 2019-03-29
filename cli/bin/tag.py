@@ -4,6 +4,7 @@ import sys
 import os
 import argparse
 import glob
+import collections
 
 def cwd(): return sorted(glob.glob("*"))
 
@@ -82,6 +83,13 @@ class Tag:
         getattr(self, args.pop("command"))(**args)
 
     @classmethod
+    def shared(cls, paths):
+        return collections.Counter(
+            tag for path in paths
+                for tag in Xattr.list(path)
+        ).most_common()
+
+    @classmethod
     def ls(cls, paths = cwd(), shared = False):
         def fndefault():
             for path in paths:
@@ -91,11 +99,10 @@ class Tag:
                 print(f"{path}: {strtags}")
 
         def fnshared():
-            tags = set(
-                tag for path in paths
-                    for tag in Xattr.list(path)
-            )
-            print("\n".join(tags))
+            print("\n".join(
+                f"{tag} ({count})"
+                for tag, count in cls.shared(paths)
+            ))
 
         if shared: fnshared()
         else: fndefault()
