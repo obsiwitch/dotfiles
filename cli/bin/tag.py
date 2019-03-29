@@ -43,6 +43,7 @@ class Tag:
         parser_ls = subparsers.add_parser("ls",
             help = "List tags for the given paths.",
         )
+        parser_ls.add_argument("--shared", action = "store_true")
         parser_ls.add_argument("paths", nargs = "*", default = cwd())
 
         # search
@@ -79,12 +80,23 @@ class Tag:
         getattr(self, args.pop("command"))(**args)
 
     @classmethod
-    def ls(cls, paths = cwd()):
-        for path in paths:
-            tags = Xattr.list(path)
-            if not tags: continue
-            strtags = str(tags).replace("'", "")
-            print(f"{path}: {strtags}")
+    def ls(cls, paths = cwd(), shared = False):
+        def fndefault():
+            for path in paths:
+                tags = Xattr.list(path)
+                if not tags: continue
+                strtags = str(tags).replace("'", "")
+                print(f"{path}: {strtags}")
+
+        def fnshared():
+            tags = set(
+                tag for path in paths
+                    for tag in Xattr.list(path)
+            )
+            print("\n".join(tags))
+
+        if shared: fnshared()
+        else: fndefault()
 
     @classmethod
     def search(cls, expression, directory = "."):
