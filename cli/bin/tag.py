@@ -100,7 +100,7 @@ class Tag:
     def ls(cls, paths = cwd(), shared = False):
         def fndefault():
             for path in paths:
-                tags = Xattr.list(path)
+                tags = sorted(Xattr.list(path))
                 if not tags: continue
                 strtags = str(tags).replace("'", "")
                 print(f"{path}: {strtags}")
