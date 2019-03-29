@@ -71,6 +71,13 @@ class Tag:
         parser_rm.add_argument("tag")
         parser_rm.add_argument("paths", nargs = "+")
 
+        # set
+        parser_set = subparsers.add_parser("set",
+            help = "Add/Remove tag from the given files.",
+        )
+        parser_set.add_argument("expression")
+        parser_set.add_argument("paths", nargs = "+")
+
         # clean
         parser_clean = subparsers.add_parser("clean",
             help = "Remove all tags from the given files.",
@@ -143,6 +150,12 @@ class Tag:
         for path in paths:
             try: Xattr.rm(path, tag)
             except OSError as e: print(e)
+
+    @classmethod
+    def set(cls, expression, paths):
+        for tag in expression.split():
+            if tag[0] == "-": cls.rm(tag[1:], paths)
+            else: cls.add(tag, paths)
 
     @classmethod
     def clean(cls, paths):
