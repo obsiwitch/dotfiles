@@ -4,23 +4,22 @@
 # Dependencies: [Pillow](https://pypi.org/project/Pillow/)
 # Example: [Grid w/ 64x32 tiles](https://i.imgur.com/BWADxdj.png)
 
-import collections
 from PIL import Image, ImageDraw
 
 class Edge:
-    def __init__(self, segw, segh, n):
+    def __init__(self, segw, segh, segn):
         self.segw = segw
         self.segh = segh
-        self.n = n
+        self.segn = segn
 
     def width(self):
-        return self.n * self.segw
+        return self.segn * self.segw
 
     def height(self):
-        return self.n * self.segh
+        return self.segn * self.segh
 
     def generator(self):
-        for i in range(self.n):
+        for i in range(self.segn):
             x = self.width() - (i + 1) * self.segw
             y = self.segh * i
             p1 = (x, y)
@@ -28,7 +27,7 @@ class Edge:
             yield (p1, p2)
 
     def __str__(self):
-        return f"e{self.segw}x{self.segh}x{self.n}"
+        return f"e{self.segw}x{self.segh}x{self.segn}"
 
 class Tile:
     def __init__(self, edge, fgcolor = (0, 0, 0), bgcolor = None):
@@ -65,15 +64,15 @@ class Tile:
         return f"t{self.width()}x{self.height()}_{self.edge}"
 
 class Grid:
-    def __init__(self, tile, n):
+    def __init__(self, tile, area):
         self.tile = tile
-        self.n = n
+        self.area = area
 
     def width(self):
-        return self.n[0] * self.tile.width()
+        return self.area[0] * self.tile.width()
 
     def height(self):
-        return self.n[1] * self.tile.height()
+        return self.area[1] * self.tile.height()
 
     def size(self):
         return [self.width(), self.height()]
@@ -95,9 +94,9 @@ class Grid:
 
 Grid(
     tile = Tile(
-        edge    = Edge(segw = 4, segh = 2, n = 8),
+        edge    = Edge(segw = 4, segh = 2, segn = 8),
         fgcolor = "#4B5263",
         bgcolor = "#ABB2BF",
     ),
-    n = [10, 10],
+    area = [10, 10],
 ).save()
