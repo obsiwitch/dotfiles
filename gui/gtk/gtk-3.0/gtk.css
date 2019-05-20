@@ -1,32 +1,13 @@
-/* Adwaita tweaks */
+/* Deepin tweaks */
 
-/* All elements are now squared. */
 * {
     border-radius: 0px;
 }
 
-/* Fix white border around windows */
-decoration {
-    padding: 0;
-}
-
-/* Smaller headerbar */
 headerbar, headerbar * {
     min-height: 0;
 }
 
-/* Fix scale slider radius */
-scale slider {
-     border-radius: 100%;
-}
-
-/* Reduce far left and far right tab gaps */
-notebook > header tabs {
-    margin: -1px -7px;
-}
-
-/* Smaller tabs & remove tab gaps */
-notebook > header tab {
-    padding: 1px 6px;
-    margin: 0px 0px;
+headerbar > button:not(.flat) {
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
