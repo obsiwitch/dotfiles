@@ -1,6 +1,18 @@
+/* Adwaita tweaks */
+
 /* All elements are now squared. */
 * {
     border-radius: 0px;
+}
+
+/* Fix white border around windows */
+decoration {
+    padding: 0;
+}
+
+/* Smaller headerbar */
+headerbar, headerbar * {
+    min-height: 0;
 }
 
 /* Fix scale slider radius */
