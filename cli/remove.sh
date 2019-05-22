@@ -13,4 +13,4 @@ rm $HOME/.inputrc
 rm $HOME/.profile
 
 # git
-rm $HOME/.gitconfig
+rm $HOME/.config/git

@@ -17,4 +17,5 @@ ln -s $PWD/cli/shell/inputrc $HOME/.inputrc
 ln -s $PWD/cli/shell/profile $HOME/.profile
 
 # git
-ln -s $PWD/cli/git/gitconfig $HOME/.gitconfig
+mkdir -p $HOME/.config
+ln -s $PWD/cli/git $HOME/.config/git
