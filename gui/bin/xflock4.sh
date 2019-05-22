@@ -1,6 +1,4 @@
 #!/bin/sh
 
-i3lock --c 292961 \
-       --ignore-empty-password \
-       --no-unlock-indicator
+i3lock --c 7A5E8F
 private umount
