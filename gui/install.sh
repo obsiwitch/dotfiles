@@ -34,7 +34,6 @@ mkdir -p $HOME/.config/dunst
 ln -s $PWD/gui/dunst/dunstrc $HOME/.config/dunst/dunstrc
 
 # X
-ln -s $PWD/gui/X/Xresources $HOME/.Xresources
 ln -s $PWD/gui/X/xinitrc $HOME/.xinitrc
 
 # Qt
@@ -45,6 +44,9 @@ ln -s $PWD/gui/xdg/user-dirs.conf $HOME/.config/user-dirs.conf
 
 # mpv
 ln -s $PWD/gui/mpv $HOME/.config/mpv
+
+# terminal
+ln -s $PWD/gui/kitty $HOME/.config/kitty
 
 # cache
 mkdir -p $HOME/.cache

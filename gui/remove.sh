@@ -25,7 +25,6 @@ rm $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
 rm $HOME/.config/dunst/dunstrc
 
 # X
-rm $HOME/.Xresources
 rm $HOME/.xinitrc
 
 # Qt
@@ -36,6 +35,9 @@ rm $HOME/.config/user-dirs.conf
 
 # mpv
 rm $HOME/.config/mpv
+
+# terminal
+rm $HOME/.config/kitty
 
 # cache
 rm -rf $HOME/.cache/thumbnails

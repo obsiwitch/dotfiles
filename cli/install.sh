@@ -9,7 +9,6 @@ for bin in $PWD/cli/bin/*; do
     ln -s $bin $HOME/.local/bin/`basename ${bin%.*}`
 done
 
-
 # shell
 ln -s $PWD/cli/shell/bashrc $HOME/.bashrc
 ln -s $PWD/cli/shell/prompt.sh $HOME/.prompt.sh

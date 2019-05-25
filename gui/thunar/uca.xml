@@ -4,7 +4,7 @@
 	<icon>utilities-terminal</icon>
 	<name>Terminal</name>
 	<unique-id>1484017599812678-12</unique-id>
-	<command>urxvt -cd "$PWD"</command>
+	<command>kitty -d "$PWD"</command>
 	<description>Open terminal in the current directory.</description>
 	<patterns>*</patterns>
 	<directories/>
@@ -18,7 +18,7 @@
 	<icon>extract-archive</icon>
 	<name>Extract</name>
 	<unique-id>1485609280096774-1</unique-id>
-	<command>urxvt -cd %D -e aunpack -eD %F</command>
+	<command>kitty -d "$PWD" aunpack -eD %F</command>
 	<description>Extract selected files in subdirectories.</description>
 	<patterns>*.zip;*.rar;*.7z;*.001;*.tar;*.gz;*.xz;*.bz2</patterns>
 	<other-files/>
