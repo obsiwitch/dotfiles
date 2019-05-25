@@ -1,7 +1,7 @@
 # https://developer.gnome.org/gtk2/stable/GtkSettings.html
 
 gtk-theme-name = "Adwaita"
-gtk-icon-theme-name = "ePapirus"
+gtk-icon-theme-name = "Papirus-Light"
 
 gtk-toolbar-style = GTK_TOOLBAR_ICONS
 gtk-toolbar-icon-size = GTK_ICON_SIZE_SMALL_TOOLBAR
