@@ -1,9 +1,6 @@
 # If not running interactively, don't do anything.
 [[ $- != *i* ]] && return
 
-# Promptline & shell title
-. ~/.prompt.sh
-
 # Disable bash history persistence (RAM history still works).
 export HISTFILE=/dev/null
 
@@ -28,3 +25,11 @@ alias ip='ip -color'
 ## cdc - Change directory to current one. Fix "unreachable" directory problems
 ## after unmounting and remounting a filesystem.
 alias cdc='cd "$PWD"'
+
+# Functions
+
+## cd w/ fuzzing finding
+. ~/.cdfzf.sh
+
+## promptline & shell title
+. ~/.prompt.sh

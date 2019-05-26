@@ -7,10 +7,11 @@ for bin in $PWD/cli/bin/*; do
 done
 
 # shell
-rm $HOME/.bashrc
-rm $HOME/.prompt.sh
-rm $HOME/.inputrc
 rm $HOME/.profile
+rm $HOME/.bashrc
+rm $HOME/.inputrc
+rm $HOME/.prompt.sh
+rm $HOME/.cdfzf.sh
 
 # git
 rm $HOME/.config/git
