@@ -9,10 +9,16 @@ function _rl_complete() {
     printf '\e[5n'
 }
 
-# Fuzzy completion on trigger sequence '@'. Bind this function to a keysequence
-# using Readline `bind -x`.
+# Fuzzy completion on trigger sequence '@', else use Readline default
+# completion. Bind this function to a keysequence using Readline `bind -x`.
 # @[opts][:path]<keyseq>
-# opts: d directories, a include hidden paths
+# opts:
+#   d - directories
+#   a - include hidden paths
+# examples:
+#   cd @d<keyseq>
+#   cd @da:..<keyseq>
+#   vim @<keyseq>
 function _fzf_complete() {
     local words=( ${READLINE_LINE:0:$READLINE_POINT} )
     local remainder=( ${READLINE_LINE:$READLINE_POINT} )
