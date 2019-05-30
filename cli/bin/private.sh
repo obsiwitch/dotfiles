@@ -5,15 +5,15 @@ plaindir="$HOME/Private/plaintext"
 
 # Mount encrypted directory in plaintext directory.
 private_mount() {
-    chmod u+w $plaindir
-    gocryptfs $encdir $plaindir
+    chmod u+w "$plaindir"
+    gocryptfs "$encdir" "$plaindir"
 }
 
 # Unmount encrypted directory and prevent files being written in the now empty
 # plaintext directory (mountpoint).
 private_umount() {
-    fusermount -zu $plaindir
-    chmod u-w $plaindir
+    fusermount -zu "$plaindir"
+    chmod u-w "$plaindir"
     pkill gocryptfs
 }
 

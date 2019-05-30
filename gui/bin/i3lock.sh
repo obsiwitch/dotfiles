@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 /bin/i3lock \
     --c D2A2F5 \

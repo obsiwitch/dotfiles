@@ -1,3 +1,5 @@
+#!/bin/bash
+
 __prompt() {
     # palette
     local black='0'   ; local grey='8'
@@ -27,7 +29,7 @@ __prompt() {
     }
 
     prompt.line() {
-        local bdate=$(prompt.block $(date +%H:%M) $purple1)
+        local bdate=$(prompt.block "$(date +%H:%M)" $purple1)
         local buser=$(prompt.block '\u' $red1)
         local bhost=$(prompt.block '\h' $red1)
         local bpwd=$(prompt.block '\w' $blue1)
