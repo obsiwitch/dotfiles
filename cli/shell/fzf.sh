@@ -33,7 +33,7 @@ function _fzf_complete() {
         return
     fi
 
-    local findcmd='fd .'
+    local findcmd='fd . --print0'
     [[ -n "$path" ]] && findcmd="$findcmd $path"
     [[ "$opts" == *d* ]] && findcmd="$findcmd --type d"
     [[ "$opts" == *a* ]] && findcmd="$findcmd
@@ -42,7 +42,10 @@ function _fzf_complete() {
         --exclude .cache
         --exclude __pycache__
     "
-    local selected=$($findcmd | fzf --reverse --multi --exit-0 | tr '\n' ' ')
+    local selected=$(
+        $findcmd | fzf --reverse --multi --read0 --print0 --exit-0 \
+                 | xargs -0 --no-run-if-empty printf '%q '
+    )
     [[ -z "$selected" ]] && return
     unset 'words[-1]'
 
