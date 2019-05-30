@@ -1,19 +1,23 @@
 # If not running interactively, don't do anything.
 [[ $- != *i* ]] && return
 
-# Disable bash history persistence (RAM history still works).
+# Variables
+
+## Disable bash history persistence (RAM history still works).
 export HISTFILE=/dev/null
 
-# Pager
+## Pager
 export PAGER='less'
 export LESS='--quit-if-one-screen --RAW-CONTROL-CHARS'
 export LESSHISTFILE='-'
 
-# Check the window size after each command and, if necessary, update the values
-# of LINES and COLUMNS.
+# Options
+
+## Check the window size after each command and, if necessary, update the values
+## of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# Handle **
+## Handle **
 shopt -s globstar
 
 # Aliases
@@ -26,10 +30,11 @@ alias ip='ip -color'
 ## after unmounting and remounting a filesystem.
 alias cdc='cd "$PWD"'
 
-# Functions
-
-## cd w/ fuzzing finding
-. ~/.cdfzf.sh
+# Includes
 
 ## promptline & shell title
 . ~/.prompt.sh
+
+## fuzzy completion
+. ~/.fzf.sh
+bind -x '"\C-i": "_fzf_complete"'

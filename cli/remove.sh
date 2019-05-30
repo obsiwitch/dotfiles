@@ -11,7 +11,7 @@ rm $HOME/.profile
 rm $HOME/.bashrc
 rm $HOME/.inputrc
 rm $HOME/.prompt.sh
-rm $HOME/.cdfzf.sh
+rm $HOME/.fzf.sh
 
 # git
 rm $HOME/.config/git
