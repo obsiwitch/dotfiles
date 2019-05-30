@@ -22,9 +22,11 @@ function _rl_complete() {
 function _fzf_complete() {
     local words=( ${READLINE_LINE:0:$READLINE_POINT} )
     local remainder=( ${READLINE_LINE:$READLINE_POINT} )
-    local trigger=( ${words[-1]/:/ } )
-    local opts=${trigger[0]}
-    local path=${trigger[1]}
+    [[ -n $words ]] && {
+        local trigger=( ${words[-1]/:/ } )
+        local opts=${trigger[0]}
+        local path=${trigger[1]}
+    }
 
     if [[ "${opts:0:1}" != '@' ]]; then
         _rl_complete
