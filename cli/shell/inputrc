@@ -20,6 +20,6 @@ set completion-prefix-display-length 2
 ## cycle completion Shift+Tab
 "\e[Z": menu-complete
 
-## move backward/forward over a word with Ctrl+Left/Right
-"\eOd": backward-word
-"\eOc": forward-word
+## move to the start/end of the current line with alt+left/right
+"\e[1;3D": beginning-of-line
+"\e[1;3C": end-of-line
