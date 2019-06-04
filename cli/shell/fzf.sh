@@ -2,15 +2,15 @@
 
 [[ $- != *i* ]] && return
 
-# Default Readline completion.
+# Readline completion.
 # https://unix.stackexchange.com/questions/213799/can-bash-write-to-its-own-input-stream
 function _rl_complete() {
     bind '"\e[0n": complete'
     printf '\e[5n'
 }
 
-# Fuzzy completion on trigger sequence '@', else use Readline default
-# completion. Bind this function to a keysequence using Readline `bind -x`.
+# Fuzzy completion on trigger sequence '@', else use readline's completion.
+# This function should be bound to a keysequence using `bind -x`.
 # @[opts][:path]<keyseq>
 # opts:
 #   d - directories
