@@ -37,7 +37,8 @@ ln -s "$PWD/gui/dunst/dunstrc" "$HOME/.config/dunst/dunstrc"
 ln -s "$PWD/gui/X/xinitrc" "$HOME/.xinitrc"
 
 # Qt
-cp "$PWD/gui/Qt/Trolltech.conf" "$HOME/.config/Trolltech.conf"
+mkdir -p "$HOME/.bashrc.d"
+ln -s "$PWD/gui/Qt/qt.sh" "$HOME/.bashrc.d/qt.sh"
 
 # xdg
 ln -s "$PWD/gui/xdg/user-dirs.conf" "$HOME/.config/user-dirs.conf"

@@ -28,7 +28,8 @@ rm "$HOME/.config/dunst/dunstrc"
 rm "$HOME/.xinitrc"
 
 # Qt
-rm "$HOME/.config/Trolltech.conf"
+rm "$HOME/.bashrc.d/qt.sh"
+rmdir "$HOME/.bashrc.d/"
 
 # xdg
 rm "$HOME/.config/user-dirs.conf"
