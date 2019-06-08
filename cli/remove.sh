@@ -10,8 +10,9 @@ done
 rm "$HOME/.profile"
 rm "$HOME/.bashrc"
 rm "$HOME/.inputrc"
-rm "$HOME/.prompt.sh"
-rm "$HOME/.fzf.sh"
+rm "$HOME/.bashrc.d/complete.sh"
+rm "$HOME/.bashrc.d/prompt.sh"
+rmdir "$HOME/.bashrc.d/"
 
 # git
 rm "$HOME/.config/git"

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[[ $- != *i* ]] && return
+
 __prompt() {
     # palette
     local black='0'   ; local grey='8'

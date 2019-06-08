@@ -9,8 +9,8 @@ function _rl_complete() {
     printf '\e[5n'
 }
 
-# Fuzzy completion on trigger sequence '@', else use readline's completion.
-# This function should be bound to a keysequence using `bind -x`.
+# Fuzzy completion on trigger sequence '@' using fzf, else use readline's
+# completion. This function should be bound to a keysequence using `bind -x`.
 # @[opts][:path]<keyseq>
 # opts:
 #   d - directories
@@ -52,3 +52,9 @@ function _fzf_complete() {
     READLINE_LINE="${words[*]} ${selected}${remainder[*]}"
     READLINE_POINT=$(( $READLINE_POINT + ${#selected} ))
 }
+bind -x '"\C-i": "_fzf_complete"'
+
+## Completion fallback for commands handled by bash-completion _longopt and _cd.
+## Restore glob completion. See unmerged pull-request [Handle ambiguous globs
+## gracefully #77](https://github.com/scop/bash-completion/pull/77).
+compopt -o bashdefault ls cd

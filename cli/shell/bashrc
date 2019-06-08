@@ -20,11 +20,6 @@ shopt -s checkwinsize
 ## Handle **
 shopt -s globstar
 
-## Completion fallback for commands handled by bash-completion _longopt and _cd.
-## Restore glob completion. See unmerged pull-request [Handle ambiguous globs
-## gracefully #77](https://github.com/scop/bash-completion/pull/77).
-compopt -o bashdefault ls cd
-
 # Aliases
 alias ls='ls --group-directories-first --color=auto --human-readable'
 alias grep='grep --color=auto'
@@ -36,10 +31,6 @@ alias ip='ip -color'
 alias cdc='cd "$PWD"'
 
 # Includes
-
-## promptline & shell title
-. ~/.prompt.sh
-
-## fuzzy completion
-. ~/.fzf.sh
-bind -x '"\C-i": "_fzf_complete"'
+for file in ~/.bashrc.d/*.sh; do
+    source "$file"
+done
