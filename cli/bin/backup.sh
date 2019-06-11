@@ -16,7 +16,7 @@ restore_local() {
 }
 
 backup_archive() {
-    local in="$HOME/Private/encrypted"
+    local in="$HOME/Private/encrypted $HOME/Documents"
     local out=$(date +'b%y%m%d.tar')
     local flags='--create --verbose --preserve-permissions --file'
     tar $flags $out $in
