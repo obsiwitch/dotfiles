@@ -12,6 +12,7 @@ rm "$HOME/.bashrc"
 rm "$HOME/.inputrc"
 rm "$HOME/.bashrc.d/complete.sh"
 rm "$HOME/.bashrc.d/prompt.sh"
+rm "$HOME/.bashrc.d/alias.sh"
 rmdir "$HOME/.bashrc.d/"
 
 # git
