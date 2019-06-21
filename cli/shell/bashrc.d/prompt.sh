@@ -45,8 +45,7 @@ __prompt() {
         local buser=$(prompt_block '\u' $red1)
         local bhost=$(prompt_block '\h' $red2)
         local bpwd=$(prompt_block '\w' $blue1)
-        local bvenv=$(prompt_block "$VIRTUAL_ENV" $cyan2)
-        PS1="┌${bdate}${buser}${bhost}${bpwd}$(prompt_git)${bvenv}\n"
+        PS1="┌${bdate}${buser}${bhost}${bpwd}$(prompt_git)\n"
         PS1="$PS1$(prompt_jobs)"
         PS1="$PS1└> "
     }
