@@ -15,37 +15,52 @@ __prompt() {
 
     # $1: content
     # $2: color
-    prompt.block() {
+    # $3: prefix (default: [)
+    # $4: suffix (default: ])
+    prompt_block() {
         test -z "$1" && return 1
+        local prefix="${3:-[}"
+        local suffix="${4:-]}"
         local color="\\033[38;5;$2m"
         local reset="\\033[0m"
-        echo -n "[${color}$1${reset}]"
+        echo -n "${prefix}${color}$1${reset}${suffix}"
     }
 
-    prompt.git() {
+    prompt_git() {
         local branch=$( ( \
             git symbolic-ref --short HEAD \
          || git rev-parse --short HEAD \
         ) 2>/dev/null )
-        prompt.block "$branch" $blue2
+        prompt_block "$branch" $blue2
     }
 
-    prompt.line() {
-        local bdate=$(prompt.block "$(date +%H:%M)" $purple1)
-        local buser=$(prompt.block '\u' $red1)
-        local bhost=$(prompt.block '\h' $red1)
-        local bpwd=$(prompt.block '\w' $blue1)
-        PS1="┌${bdate}${buser}${bhost}${bpwd}$(prompt.git)\n└> "
+    prompt_jobs() {
+        jobs -l | while read job; do
+            prompt_block "$job" $yellow2 '│ ' '\n'
+        done
     }
 
-    prompt.title() {
+    prompt_prompt() {
+        local bdate=$(prompt_block "$(date +%H:%M)" $purple1)
+        local buser=$(prompt_block '\u' $red1)
+        local bhost=$(prompt_block '\h' $red2)
+        local bpwd=$(prompt_block '\w' $blue1)
+        local bvenv=$(prompt_block "$VIRTUAL_ENV" $cyan2)
+        PS1="┌${bdate}${buser}${bhost}${bpwd}$(prompt_git)${bvenv}\n"
+        PS1="$PS1$(prompt_jobs)"
+        PS1="$PS1└> "
+    }
+
+    prompt_title() {
         local start_title="\033]0;"
         local end_title="\007"
         echo -ne "${start_title}${USER}@${HOSTNAME}: ${PWD}${end_title}"
     }
 
-    prompt.line
-    prompt.title
+    prompt_prompt
+    prompt_title
+
+    unset -f prompt_block prompt_git prompt_jobs prompt_prompt prompt_title
 }
 
 PROMPT_COMMAND='__prompt'
