@@ -36,6 +36,7 @@ rm "$HOME/.config/user-dirs.conf"
 
 # mpv
 rm "$HOME/.config/mpv"
+rm "$HOME/.local/share/applications/mpvg.desktop"
 
 # terminal
 rm "$HOME/.config/kitty"

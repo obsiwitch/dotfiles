@@ -45,6 +45,7 @@ ln -s "$PWD/gui/xdg/user-dirs.conf" "$HOME/.config/user-dirs.conf"
 
 # mpv
 ln -s "$PWD/gui/mpv" "$HOME/.config/mpv"
+cp "$PWD/gui/desktop/mpvg.desktop" "$HOME/.local/share/applications"
 
 # terminal
 ln -s "$PWD/gui/kitty" "$HOME/.config/kitty"
