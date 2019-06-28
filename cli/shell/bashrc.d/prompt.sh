@@ -35,7 +35,7 @@ __prompt() {
     }
 
     prompt_jobs() {
-        jobs -l | while read job; do
+        jobs -l | tr --squeeze-repeats ' ' | while read job; do
             prompt_block "$job" $yellow2 '│ ' '\n'
         done
     }
