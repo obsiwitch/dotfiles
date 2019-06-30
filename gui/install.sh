@@ -10,7 +10,7 @@ for bin in "$PWD/gui/bin/"*; do
 done
 
 # i3
-ln -s "$PWD/gui/i3" "$HOME/.i3"
+ln -s "$PWD/gui/i3" "$HOME/.config/i3"
 
 # GTK
 ln -s "$PWD/gui/gtk/gtk-2.0/gtkrc-2.0" "$HOME/.gtkrc-2.0"

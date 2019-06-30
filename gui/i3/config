@@ -20,7 +20,7 @@ for_window [class=".*"] border normal
 ## status bar
 bar {
     tray_output primary
-    status_command i3blocks -c .i3/i3blocks.conf
+    status_command i3blocks -c .config/i3/i3blocks.conf
 
     colors {
         background #d6d6d6
@@ -77,7 +77,7 @@ bindsym $mod+Ctrl+Return exec --no-startup-id thunar
 bindsym --release $mod+l exec --no-startup-id xflock4
 
 ## exit i3
-bindsym $mod+e exec --no-startup-id .i3/scripts/exit.sh
+bindsym $mod+e exec --no-startup-id .config/i3/scripts/exit.sh
 
 ## screenshots
 bindsym Print exec --no-startup-id xfce4-screenshooter
@@ -95,7 +95,7 @@ bindsym control+eacute exec --no-startup-id quodlibet --next
 bindsym control+ampersand exec --no-startup-id quodlibet --previous
 
 ### status
-bindsym control+quotedbl exec --no-startup-id .i3/scripts/music.sh
+bindsym control+quotedbl exec --no-startup-id .config/i3/scripts/music.sh
 
 ## volume
 

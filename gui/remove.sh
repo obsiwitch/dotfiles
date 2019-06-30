@@ -7,7 +7,7 @@ for bin in "$PWD/gui/bin/"*; do
 done
 
 # i3
-rm "$HOME/.i3"
+rm "$HOME/.config/i3"
 
 # GTK
 rm "$HOME/.gtkrc-2.0"
