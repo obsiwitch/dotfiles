@@ -28,10 +28,10 @@ bar {
         separator  #282828
 
         # class            border  bg      text
-        focused_workspace  #282828 #282828 #F8F8F2
-        active_workspace   #777777 #777777 #ffffff
+        urgent_workspace   #A23351 #A23351 #d6d6d6
+        focused_workspace  #282828 #282828 #d6d6d6
+        active_workspace   #777777 #777777 #d6d6d6
         inactive_workspace #d6d6d6 #d6d6d6 #282828
-        urgent_workspace   #2f343a #900000 #ffffff
     }
 }
 
