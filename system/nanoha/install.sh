@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# grub
-mkdir -p /etc/default
-cp "$PWD/system/nanoha/boot/grub" /etc/default/grub
-
 # kernel modules
 mkdir -p /etc/modprobe.d
 cp "$PWD/system/nanoha/kernel/blacklist.conf" /etc/modprobe.d/blacklist.conf
