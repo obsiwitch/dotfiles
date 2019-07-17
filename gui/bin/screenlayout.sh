@@ -10,6 +10,8 @@ layout_home() {
            --output eDP1  --auto
 }
 
-if   [ "$1" == "laptop" ]; then layout_laptop
-elif [ "$1" == "home" ]; then layout_home
-else echo "usage: $(basename "$0") <laptop | home>"; fi
+if xrandr | grep -q 'HDMI1 disconnected'; then
+    layout_laptop
+else
+    layout_home
+fi
