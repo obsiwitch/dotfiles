@@ -3,6 +3,8 @@
 [[ $- != *i* ]] && return
 
 __prompt() {
+    local exit="$?"
+
     # palette
     local black='0'   ; local grey='8'
     local red1='1'    ; local red2='9'
@@ -19,8 +21,8 @@ __prompt() {
     # $4: suffix (default: ])
     prompt_block() {
         test -z "$1" && return 1
-        local prefix="${3:-[}"
-        local suffix="${4:-]}"
+        local prefix="${3}"
+        local suffix="${4}"
         local color="\\033[38;5;$2m"
         local reset="\\033[0m"
         echo -n "${prefix}${color}$1${reset}${suffix}"
@@ -31,7 +33,7 @@ __prompt() {
             git symbolic-ref --short HEAD \
          || git rev-parse --short HEAD \
         ) 2>/dev/null )
-        prompt_block "$branch" $blue2
+        prompt_block "$branch" $blue2 '[' ']'
     }
 
     prompt_jobs() {
@@ -40,14 +42,23 @@ __prompt() {
         done
     }
 
+    # $1: content
+    prompt_status() {
+        if [[ $exit -eq 0 ]]; then
+            echo "$1"
+        else
+            prompt_block "$1" "$red2"
+        fi
+    }
+
     prompt_prompt() {
-        local bdate=$(prompt_block "$(date +%H:%M)" $purple1)
-        local buser=$(prompt_block '\u' $red1)
-        local bhost=$(prompt_block '\h' $red2)
-        local bpwd=$(prompt_block '\w' $blue1)
-        PS1="┌${bdate}${buser}${bhost}${bpwd}$(prompt_git)\n"
+        local bdate=$(prompt_block "$(date +%H:%M)" $purple1 '[' ']')
+        local buser=$(prompt_block '\u' $red1 '[' ']')
+        local bhost=$(prompt_block '\h' $red2 '[' ']')
+        local bpwd=$(prompt_block '\w' $blue1 '[' ']')
+        PS1="$(prompt_status '┌')${bdate}${buser}${bhost}${bpwd}$(prompt_git)\n"
         PS1="$PS1$(prompt_jobs)"
-        PS1="$PS1└> "
+        PS1="$PS1$(prompt_status '└❯ ')"
     }
 
     prompt_title() {
@@ -59,7 +70,8 @@ __prompt() {
     prompt_prompt
     prompt_title
 
-    unset -f prompt_block prompt_git prompt_jobs prompt_prompt prompt_title
+    unset -f prompt_block prompt_git prompt_jobs prompt_status \
+        prompt_prompt prompt_title
 }
 
 PROMPT_COMMAND='__prompt'
