@@ -23,8 +23,8 @@ __prompt() {
         test -z "$1" && return 1
         local prefix="${3}"
         local suffix="${4}"
-        local color="\\033[38;5;$2m"
-        local reset="\\033[0m"
+        local color="\[\\033[38;5;$2m\]"
+        local reset="\[\\033[0m\]"
         echo -n "${prefix}${color}$1${reset}${suffix}"
     }
 
