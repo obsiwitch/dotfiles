@@ -45,18 +45,18 @@ __prompt() {
     # $1: content
     prompt_status() {
         if [[ $exit -eq 0 ]]; then
-            echo "$1"
+            echo -n "$1"
         else
             prompt_block "$1" "$red2"
         fi
     }
 
     prompt_prompt() {
-        local bdate=$(prompt_block "$(date +%H:%M)" $purple1 '[' ']')
+        local btime=$(prompt_block '\A' $purple1 '[' ']')
         local buser=$(prompt_block '\u' $red1 '[' ']')
         local bhost=$(prompt_block '\h' $red2 '[' ']')
         local bpwd=$(prompt_block '\w' $blue1 '[' ']')
-        PS1="$(prompt_status '┌')${bdate}${buser}${bhost}${bpwd}$(prompt_git)\n"
+        PS1="$(prompt_status '┌')${btime}${buser}${bhost}${bpwd}$(prompt_git)\n"
         PS1="$PS1$(prompt_jobs)"
         PS1="$PS1$(prompt_status '└❯ ')"
     }
