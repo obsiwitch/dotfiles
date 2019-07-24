@@ -19,12 +19,13 @@ __prompt() {
     # $2: color
     # $3: prefix (default: [)
     # $4: suffix (default: ])
+    # see tput(1), terminfo(5) and infocmp(1M)
     prompt_block() {
         test -z "$1" && return 1
         local prefix="${3}"
         local suffix="${4}"
-        local color="\[\\033[38;5;$2m\]"
-        local reset="\[\\033[0m\]"
+        local color="\[$(tput setaf "$2")\]"
+        local reset="\[$(tput sgr0)\]"
         echo -n "${prefix}${color}$1${reset}${suffix}"
     }
 
