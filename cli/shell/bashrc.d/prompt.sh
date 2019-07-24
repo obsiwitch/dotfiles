@@ -63,9 +63,7 @@ __prompt() {
     }
 
     prompt_title() {
-        local start_title="\033]0;"
-        local end_title="\007"
-        echo -ne "${start_title}${USER}@${HOSTNAME}: ${PWD}${end_title}"
+        echo -n "$(tput tsl)${USER}@${HOSTNAME}: ${PWD}$(tput fsl)"
     }
 
     prompt_prompt
