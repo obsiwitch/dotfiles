@@ -1,16 +1,14 @@
 #!/bin/bash
 
 # Display the calendar for the current month in a notification. The current
-# day is highlighted.
-#
-# Note: The `cal` command has highlighting by default, but the format is not
-# supported by notifications. Instead, we turn off the default highlighting
-# and highlight the current day with Pango Text Attribute Markup Language
-# (<https://developer.gnome.org/pango/stable/PangoMarkupFormat.html>).
+# day is highlighted. The default highlighting (ANSI escape sequence) from
+# `cal` is replaced by the equivalent in Pango Text Attribute Markup Language.
 calendar_notification() {
-    today=$(date +%e)
-    highlight_today="<b><span foreground='#F92672'>$today<\/span><\/b>"
-    calendar=$(cal | sed "s/$today/$highlight_today/g")
+    calendar="$(
+        cal --color='always' \
+            | dotreplace - "$(tput rev)"  "<b><span foreground='#F92672'>" \
+            | dotreplace - "$(tput rmso)" "</span></b>"
+    )"
     notify-send 'Calendar' "$calendar"
 }
 
