@@ -3,12 +3,15 @@
 
 # Variables
 
+# 256 colors in virtual console
+[[ "$TERM" == "linux" ]] && export TERM='xterm-256color'
+
 ## Disable bash history persistence (RAM history still works).
 export HISTFILE=/dev/null
 
 ## Pager
 export PAGER='less'
-export LESS='--quit-if-one-screen --RAW-CONTROL-CHARS'
+export LESS='--RAW-CONTROL-CHARS'
 export LESSHISTFILE='-'
 
 # Options

@@ -59,11 +59,11 @@ __prompt() {
         local bpwd=$(prompt_block '\w' $blue1 '[' ']')
         PS1="$(prompt_status '┌')${btime}${buser}${bhost}${bpwd}$(prompt_git)\n"
         PS1="$PS1$(prompt_jobs)"
-        PS1="$PS1$(prompt_status '└❯ ')"
+        PS1="$PS1$(prompt_status '└> ')"
     }
 
     prompt_title() {
-        echo -n "$(tput tsl)${USER}@${HOSTNAME}: ${PWD}$(tput fsl)"
+        tput hs && echo -n "$(tput tsl)${USER}@${HOSTNAME}: ${PWD}$(tput fsl)"
     }
 
     prompt_prompt
