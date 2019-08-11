@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# dotmkdir - make directories
+#
+# Synopsis
+#   dotmkdir dest[/]...
+#
+# Description
+#   Create all directory components of a path as needed, no error if existing.
+#   If `dest` doesn't have a trailing slash, the last component will be treated
+#   as a file. If `dest` has a trailing slash, the last component will be
+#   treated as a directory.
+#
+# Examples
+#   mkdir path/to/file
+#   --> created directories `path/` and `path/to/`
+#
+#   mkdir path/to/dir/
+#   --> created directories `path/`, `path/to/` and `path/to/dir/`
+dotmkdir() {
+    local path; for path in "$@"; do
+        [[ "$path" != */ ]] && path=$(dirname "$path")
+        mkdir --parents "$path"
+    done
+}
+
+dotmkdir "$@"
