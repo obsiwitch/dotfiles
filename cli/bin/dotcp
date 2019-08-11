@@ -1,0 +1,19 @@
+#!/bin/bash
+
+source dotfail
+
+# dotcp - copy files/dirs and create parent directories
+#
+# Synopsis
+#   dotcp src... dest[/]`
+#
+# Description
+#   Copy files/dirs and create intermediate destination subdirectories if
+#   necessary.
+dotcp() {
+    [[ "$#" -ge 2 ]] || dotfail 'missing file operand'
+    dotmkdir "${*: -1}"
+    cp --no-dereference --recursive "$@"
+}
+
+dotcp "$@"
