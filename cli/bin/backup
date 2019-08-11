@@ -8,15 +8,15 @@ backup_local() {
         "$HOME/.dotprivate"
     )
     local out="/run/media/$USER/yayaka_storage/$USER"
-    local flags='--archive --delete --prune-empty-dirs --protect-args --progress'
-    rsync $flags -- "${in[@]}" "$out"
+    rsync --archive --delete --prune-empty-dirs --protect-args --progress \
+          -- "${in[@]}" "$out"
 }
 
 restore_local() {
     local in="/run/media/$USER/yayaka_storage/$USER/"
     local out="$HOME"
-    local flags='--archive --protect-args --progress'
-    rsync $flags -- "$in" "$out"
+    rsync --archive --protect-args --progress \
+          -- "$in" "$out"
 }
 
 backup_archive() {
@@ -27,8 +27,8 @@ backup_archive() {
         "$HOME/.dotprivate"
     )
     local out=$(date +'b%y%m%d.tar')
-    local flags='--create --verbose --preserve-permissions --file'
-    tar $flags "$out" "${in[@]}"
+    tar --create --verbose --preserve-permissions --file \
+        "$out" "${in[@]}"
 }
 
 sync_phone() {
@@ -38,9 +38,9 @@ sync_phone() {
         "$HOME/.dotprivate/keepass"
     )
     local out="/run/media/$USER/C2C2-14E6/"
-    local flags='--archive --size-only --delete --prune-empty-dirs
-        --protect-args --progress'
-    rsync $flags -- "${in[@]}" "$out"
+    rsync --archive --size-only --delete --prune-empty-dirs --protect-args \
+          --progress \
+          -- "${in[@]}" "$out"
 }
 
 if [ "$1" == "local" ]; then
