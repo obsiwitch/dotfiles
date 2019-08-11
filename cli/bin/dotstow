@@ -1,0 +1,24 @@
+#!/bin/bash
+
+source dotfail
+
+# dotstow - replicate and symlink directory tree
+#
+# Synopsis
+#   dotstow src_tree dest_tree
+#
+# Description
+#   Replicate `src_tree` into `dest_tree` by creating the directory tree and
+#   symlinking files.
+dotstow() {
+    [[ "$#" -ge 2 ]] || dotfail 'missing file operand'
+
+    shopt -s globstar dotglob
+    local f; for f in "$1"/**; do
+        [[ -d "$f" ]] && continue
+        dotln "$f" "$2/${f#$1}"
+    done
+    shopt -u globstar dotglob
+}
+
+dotstow "$@"
