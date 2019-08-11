@@ -1,11 +1,19 @@
 #!/bin/bash
 
-(for filePath in "$@"; do
-    if [[ -d $filePath ]]; then continue; fi
+# hashrename - rename files with their sha1sum
+#
+# Synopsis
+#   hashrename file...
+hashrename() {
+    local filepath; for filepath in "$@"; do
+        if [[ -d $filepath ]]; then continue; fi
 
-    dirPath=$(dirname "$filePath")
-    fileExt=$(echo "$filePath" | awk -F . '{print $NF}')
-    hash=$(sha1sum "$filePath" | cut -d' ' -f1)
+        local dirpath=$(dirname "$filepath")
+        local fileext=$(echo "$filepath" | awk -F . '{print $NF}')
+        local hash=$(sha1sum "$filepath" | cut -d' ' -f1)
 
-    mv "$filePath" "$dirPath/$hash.$fileExt"
-done)
+        mv "$filepath" "$dirpath/$hash.$fileext"
+    done
+}
+
+hashrename "$@"
