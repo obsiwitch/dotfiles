@@ -1,7 +1,7 @@
 #!/bin/bash
 
 backup_local() {
-    private umount # do not backup plaintext private
+    dotprivate umount # do not backup plaintext private
     local in=(
         "$HOME"/*
         "$HOME/.dotfiles"
@@ -54,7 +54,7 @@ elif [ "$1" == "archive" ]; then
 elif [ "$1" == "phone" ]; then
     sync_phone
 else
-    echo 'usage: backup local [--restore]'
-    echo '       backup archive'
-    echo '       backup phone'
+    echo 'usage: dotbackup local [--restore]'
+    echo '       dotbackup archive'
+    echo '       dotbackup phone'
 fi

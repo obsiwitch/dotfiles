@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# hashrename - rename files with their sha1sum
+# dothashrename - rename files with their sha1sum
 #
 # Synopsis
-#   hashrename file...
-hashrename() {
+#   dothashrename file...
+dothashrename() {
     local filepath; for filepath in "$@"; do
         if [[ -d $filepath ]]; then continue; fi
 
@@ -16,4 +16,4 @@ hashrename() {
     done
 }
 
-hashrename "$@"
+dothashrename "$@"

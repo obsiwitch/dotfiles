@@ -19,4 +19,4 @@ private_umount() {
 
 if   [ "$1" == "mount"  ]; then private_mount
 elif [ "$1" == "umount" ]; then private_umount
-else echo 'usage: private <mount | umount>'; fi
+else echo 'usage: dotprivate <mount | umount>'; fi

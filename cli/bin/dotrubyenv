@@ -1,5 +1,5 @@
 #!/bin/bash
 
-# usage: source rubyenv
+# usage: source dotrubyenv
 
 PATH="$(ruby -e "puts Gem.user_dir")/bin:$PATH"
