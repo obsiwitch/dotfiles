@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# dotfail - exit the shell
+#
+# Synopsis
+#   cmd || dotfail [message] [exit_status = 1]
+#   cmd && dotfail [message] [exit_status = 1]
+#
+# Description
+#   Exits the shell with `exit_status` (default: 1) and a `message`. You can use
+#   the exit status of the last command executed with `$?`.
+#
+# Examples
+#   source dotfail # needs to be sourced first
+#
+#   [[ "$#" -ge 2 ]] || dotfail 'missing file operand'
+#   -> script - main - l2, r1: missing file operand
+#
+#   [[ "$#" -lt 2 ]] && dotfail 'missing file operand'
+#   -> script - main - l3, r1: missing file operand
+#
+#   [ || dotfail 'missing ]' "$?"
+#   -> script - main - (l4, r2): missing ]
+dotfail() {
+    local status="${2:-1}"
+    local line subroutine file
+    IFS=' ' read -r line subroutine file < <(caller 0)
+    echo "$file - $subroutine - l$line, r$status: $1" 1>&2
+    exit "$status"
+}
