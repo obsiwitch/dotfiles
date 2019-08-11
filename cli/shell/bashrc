@@ -1,29 +1,31 @@
-# If not running interactively, don't do anything.
-[[ $- != *i* ]] && return
+# Interactive shell only
+[[ $- == *i* ]] && {
+    # 256 colors in virtual console
+    [[ "$TERM" == "linux" ]] && export TERM='xterm-256color'
 
-# Variables
+    # Disable bash history persistence (RAM history still works).
+    export HISTFILE=/dev/null
 
-# 256 colors in virtual console
-[[ "$TERM" == "linux" ]] && export TERM='xterm-256color'
+    # Pager
+    export PAGER='less'
+    export LESS='--RAW-CONTROL-CHARS'
+    export LESSHISTFILE='-'
 
-## Disable bash history persistence (RAM history still works).
-export HISTFILE=/dev/null
+    # Check the window size after each command and, if necessary, update the
+    # values of LINES and COLUMNS.
+    shopt -s checkwinsize
 
-## Pager
-export PAGER='less'
-export LESS='--RAW-CONTROL-CHARS'
-export LESSHISTFILE='-'
+    # Handle **
+    shopt -s globstar
 
-# Options
+    # Includes
+    for file in "$HOME/.bashrc.d/"*.sh; do
+        source "$file"
+    done
+}
 
-## Check the window size after each command and, if necessary, update the values
-## of LINES and COLUMNS.
-shopt -s checkwinsize
-
-## Handle **
-shopt -s globstar
-
-# Includes
-for file in ~/.bashrc.d/*.sh; do
-    source "$file"
-done
+# Interactive shell & Non-interactive login shell
+{
+    # Path
+    export PATH="$HOME/.local/bin:$PATH"
+}

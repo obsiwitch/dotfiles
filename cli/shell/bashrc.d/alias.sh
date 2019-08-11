@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[[ $- != *i* ]] && return
+
 alias ls='ls --group-directories-first --color=auto --human-readable'
 alias grep='grep --color=auto'
 alias cb='xclip -rmlastnl -selection clipboard'
