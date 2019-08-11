@@ -8,5 +8,5 @@
 $ cd ~
 $ git clone https://gitlab.com/Obsidienne/dotfiles.git .dotfiles
 $ cd .dotfiles
-$ <dir>/install.sh # e.g. cli/install.sh
+$ <dir>/setup.sh
 ~~~
