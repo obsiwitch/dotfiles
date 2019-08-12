@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# cbtxt - copy text to clipboard
+#
+# Synopsis
+#   cmd | cbtxt
+#   cbtxt txt
+
+if [[ "$#" -eq 0 ]]; then
+    cat
+else
+    echo "$*"
+fi | xclip -rmlastnl -selection clipboard

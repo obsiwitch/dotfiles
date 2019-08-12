@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# cbfiles - copy files using the clipboard
+#
+# Synopsis
+#   cmd | cbfiles
+#   cbfiles path...
+#
+# Description
+#   Hold paths in the clipboard to paste the corresponding files later in
+#   applications supporting the 'x-special/gnome-copied-files' target atom (e.g.
+#   Thunar).
+#
+# References
+#   * https://larsee.com/blog/2019/05/clipboard-files/
+#   * https://unix.stackexchange.com/a/53537
+#   * https://askubuntu.com/a/210428
+
+path2uri() {
+    sed 's/^    //' << '    PY'  | python - "$@"
+    import pathlib
+    import sys
+    for path in sys.argv[1:]:
+        uri = pathlib.Path(path) \
+            .resolve(strict = True) \
+            .as_uri()
+        print(uri)
+    PY
+}
+
+if [[ "$#" -eq 0 ]]; then
+    readarray -t stdin_args
+    path2uri "${stdin_args[@]}"
+else
+    path2uri "$@"
+fi | xclip -selection clipboard -target x-special/gnome-copied-files
