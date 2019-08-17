@@ -12,6 +12,7 @@ class Xattr:
     @classmethod
     def list(cls, path): return [
         attr[5:] for attr in os.listxattr(path)
+        if attr[:5] == 'user.'
     ]
 
     @classmethod
