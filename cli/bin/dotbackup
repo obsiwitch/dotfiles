@@ -1,14 +1,11 @@
 #!/bin/bash
 
 backup_local() {
-    dotprivate umount # do not backup plaintext private
-    local in=(
-        "$HOME"/*
-        "$HOME/.dotfiles"
-        "$HOME/.dotprivate"
-    )
+    dotprivate umount
+    local in=( "$HOME/" )
     local out="/run/media/$USER/yayaka_storage/$USER"
     rsync --archive --delete --prune-empty-dirs --protect-args --progress \
+          --exclude '.cache' \
           -- "${in[@]}" "$out"
 }
 
