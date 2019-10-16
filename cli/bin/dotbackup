@@ -18,8 +18,8 @@ restore_local() {
 
 backup_archive() {
     local in=(
-        "$HOME/Private/encrypted"
         "$HOME/Documents"
+        "$HOME/.private"
         "$HOME/.dotfiles"
         "$HOME/.dotprivate"
     )
