@@ -38,6 +38,9 @@ sync_phone() {
     rsync --archive --size-only --delete --prune-empty-dirs --protect-args \
           --progress \
           -- "${in[@]}" "$out"
+
+    cd "$out"
+    backup_archive
 }
 
 if [ "$1" == "local" ]; then
