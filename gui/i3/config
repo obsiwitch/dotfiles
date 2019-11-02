@@ -9,7 +9,7 @@ font pango:DejaVu Sans Mono 10
 ## Windows decorations
 ### class                border  backgr. text    indicator
 client.focused          #282828 #282828 #F8F8F2 #4777D7
-client.focused_inactive #d6d6d6 #d6d6d6 #858585 #484e50
+client.focused_inactive #d6d6d6 #d6d6d6 #454545 #292d2e
 client.unfocused        #d6d6d6 #d6d6d6 #858585 #292d2e
 client.placeholder      #0c0c0c #0c0c0c #ffffff #000000
 client.urgent           #900000 #900000 #ffffff #900000
