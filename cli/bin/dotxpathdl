@@ -5,6 +5,7 @@ import argparse
 import textwrap
 import lxml.html
 import requests
+from urllib.parse import urljoin
 
 class Downloader:
     def __init__(self, start_url, elem_xpath, next_xpath):
@@ -37,7 +38,8 @@ class Downloader:
             tree = lxml.html.fromstring(html)
 
             next_url = tree.xpath(self.next_xpath) if self.next_xpath else None
-            next_url = next_url[0] if next_url else None
+            next_url = urljoin(self.start_url, next_url[0]) if next_url \
+                  else None
 
             elem_urls = tree.xpath(self.elem_xpath)
             for elem_url in elem_urls: yield elem_url
