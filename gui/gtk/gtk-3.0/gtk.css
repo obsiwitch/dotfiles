@@ -1,13 +1,42 @@
-/* Deepin tweaks */
+/* Adwaita tweaks */
 
+/* Square elements */
 * {
     border-radius: 0px;
 }
 
-headerbar, headerbar * {
-    min-height: 0;
+/* Fix white border around windows in i3 */
+decoration {
+    padding: 0;
 }
 
-headerbar > button:not(.flat) {
-    border: 1px solid rgba(0, 0, 0, 0.2);
+/* smaller headerbar & fix color */
+headerbar {
+    background-image: none;
+    background-color: #eaeaea;
+    min-height: 0;
+}
+headerbar * {
+  min-height: 22px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* smaller tabs & fix color */
+notebook > header tabs {
+    background-color: #eaeaea;
+}
+notebook > header tab {
+    background-color: #eaeaea;
+    padding: 1px 6px;
+    margin: 0px 0px;
+}
+notebook > header tab:checked {
+    background-color: #eeeeee;
+}
+
+/* button fix color */
+button:checked {
+    background-image: none;
+    background-color: #e0e0e0;
 }
