@@ -41,6 +41,4 @@ dotln "$PWD/gui/desktop/mpvg.desktop" "$HOME/.local/share/applications/"
 dotln "$PWD/gui/kitty" "$HOME/.config/"
 
 # cache
-dotln '/dev/null' "$HOME/.cache/thumbnails"
-dotln '/dev/null' "$HOME/.thumbnails"
 dotln '/dev/null' "$HOME/.python_history"
