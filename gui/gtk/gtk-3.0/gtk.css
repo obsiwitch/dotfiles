@@ -10,19 +10,13 @@ decoration {
     padding: 0;
 }
 
-/* smaller headerbar & fix color */
+/* Fix headerbar color */
 headerbar {
     background-image: none;
     background-color: #eaeaea;
-    min-height: 0;
-}
-headerbar * {
-  min-height: 22px;
-  padding-top: 0;
-  padding-bottom: 0;
 }
 
-/* smaller tabs & fix color */
+/* Smaller tabs & fix color */
 notebook > header tabs {
     background-color: #eaeaea;
 }
@@ -35,7 +29,7 @@ notebook > header tab:checked {
     background-color: #eeeeee;
 }
 
-/* button fix color */
+/* Button fix color */
 button:checked {
     background-image: none;
     background-color: #e0e0e0;
