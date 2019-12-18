@@ -7,7 +7,8 @@ _fzf_select() {
     local lineright=${READLINE_LINE:$READLINE_POINT}
     local selected=$(
         fd . --print0 \
-        | fzf --reverse --multi --read0 --print0 --exit-0 \
+        | fzf --reverse --prompt="> ${lineleft}_${lineright} > " \
+              --multi --read0 --print0 \
         | xargs -0 --no-run-if-empty printf '%q '
     )
     [[ -z "$selected" ]] && return
