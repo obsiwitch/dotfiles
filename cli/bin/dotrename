@@ -6,11 +6,12 @@
 # Synopsis
 #   dotrename file...
 dotrename() {
-    local filepath; for filepath in "$@"; do
+    local filepath dirpath hash ext
+    for filepath in "$@"; do
         if [[ -d $filepath ]]; then continue; fi
-        local dirpath=$(dirname "$filepath")
-        local ext=${filepath#*.}
-        local hash=$(sha1sum "$filepath" | cut -d' ' -f1)
+        dirpath=$(dirname "$filepath")
+        ext=${filepath#*.}
+        hash=$(sha1sum "$filepath" | cut -d' ' -f1)
         mv "$filepath" "$dirpath/$hash.$ext"
     done
 }
