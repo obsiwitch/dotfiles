@@ -1,29 +1,17 @@
 #!/bin/bash
 
 # dotrename - rename files with their sha1sum to provide a (hopefully) unique
-# filename.
+# filename and preseve file extensions.
 #
 # Synopsis
 #   dotrename file...
-#
-# Description
-#   Rename files with their sha1sum and preserve file extensions. Truncate hash
-#   if the new filename is too long.
 dotrename() {
     local filepath; for filepath in "$@"; do
         if [[ -d $filepath ]]; then continue; fi
-
         local dirpath=$(dirname "$filepath")
         local ext=${filepath#*.}
         local hash=$(sha1sum "$filepath" | cut -d' ' -f1)
-        local filename="$hash.$ext"
-        local totlen="$(echo -n "$filename" | wc --bytes)" # bytes
-        local maxlen=$(getconf NAME_MAX .) # bytes
-        (( totlen > maxlen )) && {
-            filename="${filename:totlen - maxlen}" # truncate hash
-            filename="${filename#.}" # remove leading dot (edge case)
-        }
-        mv "$filepath" "$dirpath/$filename"
+        mv "$filepath" "$dirpath/$hash.$ext"
     done
 }
 
