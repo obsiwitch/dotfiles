@@ -1,20 +1,22 @@
-#!/bin/bash
+#!/usr/bin/env python3
 
-# dotrename - rename files with their sha1sum to provide a (hopefully) unique
-# filename and preseve file extensions.
-#
-# Synopsis
-#   dotrename file...
-dotrename() {
-    local filepath dirpath filename hash ext
-    for filepath in "$@"; do
-        if [[ -d $filepath ]]; then continue; fi
-        dirpath=$(dirname "$filepath")
-        filename=$(basename "$filepath")
-        hash=$(sha1sum "$filepath" | cut -d' ' -f1)
-        ext=$(grep --only-matching --regexp='\..*' <<< "$filename")
-        mv "$filepath" "$dirpath/${hash}${ext}"
-    done
-}
+import sys, pathlib, shutil, argparse
+from subprocess import check_output as sh
 
-dotrename "$@"
+def dotrename(paths):
+    for path in paths:
+        path = pathlib.Path(path)
+        if path.is_dir(): continue
+        hash = sh(['sha1sum', path], text = True).split()[0]
+        suffix = ''.join(path.suffixes)
+        shutil.move(path, path.with_name(hash + suffix))
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description = 'Rename files with their \
+        sha1sum to provide a (hopefully) unique filename. Preseve file \
+        extensions.')
+    parser.add_argument('paths', nargs = '+')
+    parser.add_argument('-d', '--debug', action = 'store_true')
+    args = parser.parse_args()
+    if not args.debug: sys.tracebacklimit = 0
+    dotrename(args.paths)
