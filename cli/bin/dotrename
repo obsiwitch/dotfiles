@@ -10,9 +10,9 @@ dotrename() {
     for filepath in "$@"; do
         if [[ -d $filepath ]]; then continue; fi
         dirpath=$(dirname "$filepath")
-        ext=${filepath#*.}
         hash=$(sha1sum "$filepath" | cut -d' ' -f1)
-        mv "$filepath" "$dirpath/$hash.$ext"
+        ext=$(grep --only-matching --regexp='\..*' <<< "$filepath")
+        mv "$filepath" "$dirpath/${hash}${ext}"
     done
 }
 
