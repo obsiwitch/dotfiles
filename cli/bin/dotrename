@@ -6,12 +6,13 @@
 # Synopsis
 #   dotrename file...
 dotrename() {
-    local filepath dirpath hash ext
+    local filepath dirpath filename hash ext
     for filepath in "$@"; do
         if [[ -d $filepath ]]; then continue; fi
         dirpath=$(dirname "$filepath")
+        filename=$(basename "$filepath")
         hash=$(sha1sum "$filepath" | cut -d' ' -f1)
-        ext=$(grep --only-matching --regexp='\..*' <<< "$filepath")
+        ext=$(grep --only-matching --regexp='\..*' <<< "$filename")
         mv "$filepath" "$dirpath/${hash}${ext}"
     done
 }
