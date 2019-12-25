@@ -86,17 +86,16 @@ bindsym Print exec --no-startup-id xfce4-screenshooter
 ## music
 
 ### play/pause
-bindsym control+twosuperior exec --no-startup-id quodlibet --play-pause
-bindsym XF86AudioPlay exec --no-startup-id quodlibet --play-pause
-
-### next
-bindsym control+eacute exec --no-startup-id quodlibet --next
-
-### previous
-bindsym control+ampersand exec --no-startup-id quodlibet --previous
+bindsym control+F9 exec --no-startup-id quodlibet --play-pause
 
 ### status
-bindsym control+quotedbl exec --no-startup-id .config/i3/scripts/music.sh
+bindsym $alt+F9 exec --no-startup-id .config/i3/scripts/music.sh
+
+### previous
+bindsym control+F10 exec --no-startup-id quodlibet --previous
+
+### next
+bindsym control+F11 exec --no-startup-id quodlibet --next
 
 ## volume
 
