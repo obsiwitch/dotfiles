@@ -20,6 +20,8 @@ dotcp "$PWD/gui/Xfce/xfce4-power-manager.xml" \
 dotcp "$PWD/gui/thunar/uca.xml" "$HOME/.config/Thunar/"
 dotcp "$PWD/gui/thunar/thunar.xml" \
       "$HOME/.config/xfce4/xfconf/xfce-perchannel-xml/"
+cat "$PWD/gui/nemo/dconf" | dconf load /
+dotln "$PWD/gui/nemo/actions" "$HOME/.local/share/nemo/"
 
 # notifications
 dotln "$PWD/gui/dunst" "$HOME/.config/"

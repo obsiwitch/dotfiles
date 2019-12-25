@@ -34,3 +34,8 @@ button:checked {
     background-image: none;
     background-color: #e0e0e0;
 }
+
+/* Nemo floating status bar background */
+.nemo-window .floating-bar {
+    background-color: #eeeeee;
+}
