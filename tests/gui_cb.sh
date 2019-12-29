@@ -17,7 +17,8 @@ test_cbfiles() {
 
     local str="file://$(realpath "$0")"
     cbfiles "$0"
-    [[ "$(xclip -selection clipboard -out)" == "$str" ]] || dotfail
+    [[ "$(xclip -selection clipboard -out)" \
+        == "$(echo -e "copy\n$str")" ]] || dotfail
 }
 
 test_cbtxt

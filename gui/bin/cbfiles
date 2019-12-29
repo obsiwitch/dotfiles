@@ -9,7 +9,7 @@
 # Description
 #   Hold paths in the clipboard to paste the corresponding files later in
 #   applications supporting the 'x-special/gnome-copied-files' target atom (e.g.
-#   Thunar).
+#   Thunar, Nemo).
 #
 # References
 #   * https://larsee.com/blog/2019/05/clipboard-files/
@@ -28,9 +28,12 @@ path2uri() {
     PY
 }
 
-if [[ "$#" -eq 0 ]]; then
-    readarray -t stdin_args
-    path2uri "${stdin_args[@]}"
-else
-    path2uri "$@"
-fi | xclip -selection clipboard -target x-special/gnome-copied-files
+{
+    echo 'copy'
+    if [[ "$#" -eq 0 ]]; then
+        readarray -t stdin_args
+        path2uri "${stdin_args[@]}" | head --bytes=-1
+    else
+        path2uri "$@" | head --bytes=-1
+    fi
+} | xclip -selection clipboard -target x-special/gnome-copied-files
