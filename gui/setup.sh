@@ -1,46 +1,47 @@
 #!/bin/bash
 
-PATH="$PWD/cli/bin:$PATH"
+DOTDIR="$(realpath "$(dirname "$0")/..")"
+PATH="$DOTDIR/cli/bin:$PATH"
 
 # bin
-dotln "$PWD/gui/bin/"* "$HOME/.local/bin/"
+dotln "$DOTDIR/gui/bin/"* "$HOME/.local/bin/"
 
 # i3
-dotln "$PWD/gui/i3" "$HOME/.config/"
+dotln "$DOTDIR/gui/i3" "$HOME/.config/"
 
 # GTK
-dotln "$PWD/gui/gtk/gtk-2.0/gtkrc-2.0" "$HOME/.gtkrc-2.0"
-dotln "$PWD/gui/gtk/gtk-3.0" "$HOME/.config/"
+dotln "$DOTDIR/gui/gtk/gtk-2.0/gtkrc-2.0" "$HOME/.gtkrc-2.0"
+dotln "$DOTDIR/gui/gtk/gtk-3.0" "$HOME/.config/"
 
 # power manager
-dotcp "$PWD/gui/Xfce/xfce4-power-manager.xml" \
+dotcp "$DOTDIR/gui/Xfce/xfce4-power-manager.xml" \
       "$HOME/.config/xfce4/xfconf/xfce-perchannel-xml/"
 
 # file manager
-dotcp "$PWD/gui/thunar/uca.xml" "$HOME/.config/Thunar/"
-dotcp "$PWD/gui/thunar/thunar.xml" \
+dotcp "$DOTDIR/gui/thunar/uca.xml" "$HOME/.config/Thunar/"
+dotcp "$DOTDIR/gui/thunar/thunar.xml" \
       "$HOME/.config/xfce4/xfconf/xfce-perchannel-xml/"
-cat "$PWD/gui/nemo/dconf" | dconf load /
-dotln "$PWD/gui/nemo/actions" "$HOME/.local/share/nemo/"
+dconf load / < "$DOTDIR/gui/nemo/dconf"
+dotln "$DOTDIR/gui/nemo/actions" "$HOME/.local/share/nemo/"
 
 # notifications
-dotln "$PWD/gui/dunst" "$HOME/.config/"
+dotln "$DOTDIR/gui/dunst" "$HOME/.config/"
 
 # X
-dotln "$PWD/gui/X/xinitrc" "$HOME/.xinitrc"
+dotln "$DOTDIR/gui/X/xinitrc" "$HOME/.xinitrc"
 
 # Qt
-dotln "$PWD/gui/Qt/qt.sh" "$HOME/.bashrc.d/"
+dotln "$DOTDIR/gui/Qt/qt.sh" "$HOME/.bashrc.d/"
 
 # xdg
-dotln "$PWD/gui/xdg/user-dirs.conf" "$HOME/.config/"
+dotln "$DOTDIR/gui/xdg/user-dirs.conf" "$HOME/.config/"
 
 # mpv
-dotln "$PWD/gui/mpv" "$HOME/.config/"
-dotln "$PWD/gui/desktop/mpvg.desktop" "$HOME/.local/share/applications/"
+dotln "$DOTDIR/gui/mpv" "$HOME/.config/"
+dotln "$DOTDIR/gui/desktop/mpvg.desktop" "$HOME/.local/share/applications/"
 
 # terminal
-dotln "$PWD/gui/kitty" "$HOME/.config/"
+dotln "$DOTDIR/gui/kitty" "$HOME/.config/"
 
 # cache
 dotln '/dev/null' "$HOME/.python_history"

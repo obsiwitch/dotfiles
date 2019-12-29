@@ -1,15 +1,16 @@
 #!/bin/bash
 
-PATH="$PWD/cli/bin:$PATH"
+DOTDIR="$(realpath "$(dirname "$0")/..")"
+PATH="$DOTDIR/cli/bin:$PATH"
 
 # bin
-dotln "$PWD/cli/bin/"* "$HOME/.local/bin/"
+dotln "$DOTDIR/cli/bin/"* "$HOME/.local/bin/"
 
 # shell
-dotln "$PWD/cli/shell/profile" "$HOME/.profile"
-dotln "$PWD/cli/shell/bashrc" "$HOME/.bashrc"
-dotln "$PWD/cli/shell/inputrc" "$HOME/.inputrc"
-dotln "$PWD/cli/shell/bashrc.d/"*.sh "$HOME/.bashrc.d/"
+dotln "$DOTDIR/cli/shell/profile" "$HOME/.profile"
+dotln "$DOTDIR/cli/shell/bashrc" "$HOME/.bashrc"
+dotln "$DOTDIR/cli/shell/inputrc" "$HOME/.inputrc"
+dotln "$DOTDIR/cli/shell/bashrc.d/"*.sh "$HOME/.bashrc.d/"
 
 # git
-dotln "$PWD/cli/git" "$HOME/.config/"
+dotln "$DOTDIR/cli/git" "$HOME/.config/"
