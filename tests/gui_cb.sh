@@ -1,10 +1,11 @@
 #!/bin/bash
 
-PATH="$PWD/cli/bin:$PATH"
+DOTDIR="$(realpath "$(dirname "$0")/..")"
+PATH="$DOTDIR/gui/bin:$DOTDIR/cli/bin:$PATH"
 source dotfail
 
 test_cbtxt() {
-    shellcheck 'gui/bin/cbtxt'
+    shellcheck "$DOTDIR/gui/bin/cbtxt"
 
     local str='Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
     cbtxt "$str"
@@ -12,9 +13,9 @@ test_cbtxt() {
 }
 
 test_cbfiles() {
-    shellcheck 'gui/bin/cbfiles'
+    shellcheck "$DOTDIR/gui/bin/cbfiles"
 
-    local str="file://$PWD/$0"
+    local str="file://$(realpath "$0")"
     cbfiles "$0"
     [[ "$(xclip -selection clipboard -out)" == "$str" ]] || dotfail
 }

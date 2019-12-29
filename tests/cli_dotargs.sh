@@ -1,9 +1,10 @@
 #!/bin/bash
 
-PATH="$PWD/cli/bin:$PATH"
+DOTDIR="$(realpath "$(dirname "$0")/..")"
+PATH="$DOTDIR/cli/bin:$PATH"
 source dotfail
 
-shellcheck --exclude='SC2034' 'cli/bin/dotargs'
+shellcheck --exclude='SC2034' "$DOTDIR/cli/bin/dotargs"
 
 eval "$(dotargs a -l=orem b -i c --dolor=sit d --amet e)"
 out1='declare -a posargs=([0]="a" [1]="b" [2]="c" [3]="d" [4]="e")'

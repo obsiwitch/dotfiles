@@ -1,9 +1,8 @@
 #!/bin/bash
 
-PATH="$PWD/cli/bin:$PATH"
+DOTDIR="$(realpath "$(dirname "$0")/..")"
+PATH="$DOTDIR/cli/bin:$PATH"
 source dotfail
-
-shellcheck 'cli/bin/dotinarray'
 
 str="$(dotreplace 'lorem ipsum dolor' 'lorem' 'nya')"
 [[ "$str" == 'nya ipsum dolor' ]] || dotfail

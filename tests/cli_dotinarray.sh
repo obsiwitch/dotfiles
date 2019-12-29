@@ -1,9 +1,10 @@
 #!/bin/bash
 
-PATH="$PWD/cli/bin:$PATH"
+DOTDIR="$(realpath "$(dirname "$0")/..")"
+PATH="$DOTDIR/cli/bin:$PATH"
 source dotfail
 
-shellcheck 'cli/bin/dotinarray'
+shellcheck "$DOTDIR/cli/bin/dotinarray"
 
 array=( miaou meow nya )
 dotinarray miaou "${array[@]}" || dotfail
