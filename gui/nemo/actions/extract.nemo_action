@@ -2,6 +2,6 @@
 Name=Extract
 Icon-Name=extract-archive
 Exec=kitty -d %P aunpack -eD %F
-Quote=single
+EscapeSpaces=true
 Selection=any
 Extensions=zip;rar;7z;001;tar;gz;xz;bz2;cbz;cbr;
