@@ -10,7 +10,6 @@ disabled-actions=['new-launcher.nemo_action', 'send-by-mail.nemo_action', 'mount
 
 [org/nemo/preferences]
 bulk-rename-tool=b'/usr/lib/Thunar/ThunarBulkRename'
-confirm-trash=false
 date-format='iso'
 default-folder-viewer='list-view'
 show-compact-view-icon-toolbar=false
