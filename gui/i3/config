@@ -133,7 +133,7 @@ bindsym $mod+f fullscreen toggle
 
 ## Manipulate container layout
 bindsym $mod+Tab split toggle
-bindsym $mod+Shift+Tab layout toggle stacking split
+bindsym $mod+Shift+Tab layout toggle stacking tabbed split
 
 ## floating windows
 
