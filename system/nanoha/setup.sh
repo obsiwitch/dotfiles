@@ -1,14 +1,20 @@
 #!/bin/bash
 
+set -o errexit -o nounset
+
+DOTFILESP="$(realpath "$(dirname "$0")/../..")"
+DOTNANOHAP="$DOTFILESP/system/nanoha"
+PATH="$DOTFILESP/cli/bin:$PATH"
+
 # kernel modules
-dotcp "$PWD/system/nanoha/kernel/blacklist.conf" '/etc/modprobe.d/'
+dotcp "$DOTNANOHAP/kernel/blacklist.conf" '/etc/modprobe.d/'
 
 # X11
-dotcp "$PWD/system/nanoha/xorg/"* '/etc/X11/xorg.conf.d/'
+dotcp "$DOTNANOHAP/xorg/"* '/etc/X11/xorg.conf.d/'
 
 # firewall
-dotcp "$PWD/system/nanoha/security/nftables.conf" '/etc/'
+dotcp "$DOTNANOHAP/security/nftables.conf" '/etc/'
 
 # sudo
-dotcp "$PWD/system/nanoha/security/sudo_group" '/etc/sudoers.d/group'
+dotcp "$DOTNANOHAP/security/sudo_group" '/etc/sudoers.d/group'
 chmod 0440 '/etc/sudoers.d/group'
