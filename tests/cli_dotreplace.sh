@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DOTDIR="$(realpath "$(dirname "$0")/..")"
-PATH="$DOTDIR/cli/bin:$PATH"
+DOTFILESP="$(realpath "$(dirname "$0")/..")"
+PATH="$DOTFILESP/cli/bin:$PATH"
 source dotfail
 
 str="$(dotreplace 'lorem ipsum dolor' 'lorem' 'nya')"

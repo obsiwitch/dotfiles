@@ -1,11 +1,11 @@
 #!/bin/bash
 
-DOTDIR="$(realpath "$(dirname "$0")/..")"
-PATH="$DOTDIR/gui/bin:$DOTDIR/cli/bin:$PATH"
+DOTFILESP="$(realpath "$(dirname "$0")/..")"
+PATH="$DOTFILESP/cli/bin:$PATH"
 source dotfail
 
 test_cbtxt() {
-    shellcheck "$DOTDIR/gui/bin/cbtxt"
+    shellcheck "$DOTFILESP/gui/bin/cbtxt"
 
     local str='Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
     cbtxt "$str"
@@ -13,7 +13,7 @@ test_cbtxt() {
 }
 
 test_cbfiles() {
-    shellcheck "$DOTDIR/gui/bin/cbfiles"
+    shellcheck "$DOTFILESP/gui/bin/cbfiles"
 
     local str="file://$(realpath "$0")"
     cbfiles "$0"
