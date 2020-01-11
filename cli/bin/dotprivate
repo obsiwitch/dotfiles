@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -o errexit -o nounset
+
 encdir="$HOME/.private"
 plaindir="$HOME/Private"
 
@@ -17,6 +19,16 @@ private_umount() {
     pkill gocryptfs
 }
 
-if   [ "$1" == "mount"  ]; then private_mount
-elif [ "$1" == "umount" ]; then private_umount
-else echo 'usage: dotprivate <mount | umount>'; fi
+help() {
+    echo 'usage: dotprivate <mount | umount>'
+    exit 1
+}
+
+[[ -n "${1:-}" ]] || help
+if [[ "$1" == "mount" ]]; then
+    private_mount
+elif [[ "$1" == "umount" ]]; then
+    private_umount
+else
+    help
+fi

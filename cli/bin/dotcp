@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -o errexit -o nounset
+
 source dotfail
 
 # dotcp - copy files/dirs and create parent directories

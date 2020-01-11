@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -o errexit -o nounset
+
 # cbtxt - copy text to clipboard
 #
 # Synopsis

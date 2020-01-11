@@ -1,7 +1,9 @@
 #!/bin/bash
 
+set -o errexit -o nounset
+
 backup_local() {
-    dotprivate umount
+    dotprivate umount || :
     local in=( "$HOME/" )
     local out="/run/media/$USER/yayaka_storage/$USER"
     rsync --archive --delete --prune-empty-dirs --protect-args --progress \
@@ -23,7 +25,7 @@ backup_archive() {
         "$HOME/.dotfiles"
         "$HOME/.dotprivate"
     )
-    local out=$(date +'b%y%m%d.tar')
+    local out; out="$(date +'b%y%m%d.tar')"
     tar --create --verbose --preserve-permissions --file \
         "$out" "${in[@]}"
 }
@@ -39,22 +41,30 @@ sync_phone() {
           --progress \
           -- "${in[@]}" "$out"
 
+    # faster to backup one big file than many small ones, especially on a
+    # poor quality SD card
     cd "$out"
     backup_archive
 }
 
-if [ "$1" == "local" ]; then
-    if [ "$2" == "--restore" ]; then
+help() {
+    echo 'usage: dotbackup local [--restore]'
+    echo '       dotbackup archive'
+    echo '       dotbackup phone'
+    exit 1
+}
+
+[[ -n "${1:-}" ]] || help
+if [[ "$1" == "local" ]]; then
+    if [[ "${2:-}" == "--restore" ]]; then
         restore_local
     else
         backup_local
     fi
-elif [ "$1" == "archive" ]; then
+elif [[ "$1" == "archive" ]]; then
     backup_archive
-elif [ "$1" == "phone" ]; then
+elif [[ "$1" == "phone" ]]; then
     sync_phone
 else
-    echo 'usage: dotbackup local [--restore]'
-    echo '       dotbackup archive'
-    echo '       dotbackup phone'
+    help
 fi
