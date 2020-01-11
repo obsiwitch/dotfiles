@@ -22,6 +22,7 @@ tooltips-in-icon-view=true
 tooltips-in-list-view=true
 tooltips-show-file-type=true
 tooltips-show-mod-date=true
+disable-menu-warning=true
 
 [org/nemo/window-state]
 start-with-sidebar=true
