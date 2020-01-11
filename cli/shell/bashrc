@@ -24,8 +24,9 @@
     done
 }
 
-# Interactive shell & Non-interactive login shell
 {
     # Path
     export PATH="$HOME/.local/bin:$PATH"
+    export PATH="$HOME/.local/dotclibin:$PATH"
+    export PATH="$HOME/.local/dotguibin:$PATH"
 }

@@ -1,16 +1,19 @@
 #!/bin/bash
 
-DOTDIR="$(realpath "$(dirname "$0")/..")"
-PATH="$DOTDIR/cli/bin:$PATH"
+set -o errexit -o nounset
+
+DOTFILESP="$(realpath "$(dirname "$0")/..")"
+DOTCLIP="$DOTFILESP/cli"
+PATH="$DOTFILESP/cli/bin:$PATH"
 
 # bin
-dotln "$DOTDIR/cli/bin/"* "$HOME/.local/bin/"
+dotln "$DOTCLIP/bin" "$HOME/.local/dotclibin"
 
 # shell
-dotln "$DOTDIR/cli/shell/profile" "$HOME/.profile"
-dotln "$DOTDIR/cli/shell/bashrc" "$HOME/.bashrc"
-dotln "$DOTDIR/cli/shell/inputrc" "$HOME/.inputrc"
-dotln "$DOTDIR/cli/shell/bashrc.d/"*.sh "$HOME/.bashrc.d/"
+dotln "$DOTCLIP/shell/profile" "$HOME/.profile"
+dotln "$DOTCLIP/shell/bashrc" "$HOME/.bashrc"
+dotln "$DOTCLIP/shell/inputrc" "$HOME/.inputrc"
+dotln "$DOTCLIP/shell/bashrc.d/"*.sh "$HOME/.bashrc.d/"
 
 # git
-dotln "$DOTDIR/cli/git" "$HOME/.config/"
+dotln "$DOTCLIP/git" "$HOME/.config/"
