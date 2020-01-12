@@ -21,7 +21,6 @@ restore_local() {
 backup_archive() {
     local in=(
         "$HOME/Documents"
-        "$HOME/.private"
         "$HOME/.dotfiles"
         "$HOME/.dotprivate"
     )

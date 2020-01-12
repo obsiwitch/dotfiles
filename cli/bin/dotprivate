@@ -2,7 +2,7 @@
 
 set -o errexit -o nounset
 
-encdir="$HOME/.private"
+encdir="$HOME/.dotprivate/encrypted"
 plaindir="$HOME/Private"
 
 # Mount encrypted directory in plaintext directory.
