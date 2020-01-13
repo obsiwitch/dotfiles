@@ -28,4 +28,4 @@ disable-menu-warning=true
 start-with-sidebar=true
 start-with-menu-bar=false
 start-with-toolbar=false
-start-with-status-bar=false
+start-with-status-bar=true
