@@ -3,7 +3,7 @@
     word_wrap = yes
 
     frame_width = 2
-    frame_color = "#F8F8F2"
+    frame_color = "#D6D6D6"
     separator_color = frame
 
     follow = mouse
@@ -33,17 +33,17 @@
 
 [urgency_low]
     background = "#282828"
-    foreground = "#F8F8F2"
+    foreground = "#D6D6D6"
     timeout = 10
 
 [urgency_normal]
     background = "#282828"
-    foreground = "#F8F8F2"
+    foreground = "#D6D6D6"
     timeout = 10
 
 [urgency_critical]
     background = "#900000"
-    foreground = "#F8F8F2"
+    foreground = "#D6D6D6"
     timeout = 10
 
 [power_manager_brightness]

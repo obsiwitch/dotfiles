@@ -7,12 +7,11 @@
 font pango:DejaVu Sans Mono 10
 
 ## Windows decorations
-### class                border  backgr. text    indicator
-client.focused          #282828 #282828 #F8F8F2 #4777D7
-client.focused_inactive #d6d6d6 #d6d6d6 #454545 #292d2e
-client.unfocused        #d6d6d6 #d6d6d6 #858585 #292d2e
-client.placeholder      #0c0c0c #0c0c0c #ffffff #000000
-client.urgent           #900000 #900000 #ffffff #900000
+### class               border  bg      text    indicator
+client.focused          #282828 #282828 #D6D6D6 #4777D7
+client.focused_inactive #686868 #686868 #D6D6D6 #686868
+client.unfocused        #D6D6D6 #D6D6D6 #868686 #D6D6D6
+client.urgent           #900000 #900000 #D6D6D6 #900000
 
 ### force titlebar and borders on all windows (avoid gtk3 csd borderless)
 for_window [class=".*"] border normal
@@ -23,15 +22,15 @@ bar {
     status_command i3blocks -c .config/i3/i3blocks.conf
 
     colors {
-        background #d6d6d6
+        background #D6D6D6
         statusline #282828
         separator  #282828
 
         # class            border  bg      text
-        urgent_workspace   #A23351 #A23351 #d6d6d6
-        focused_workspace  #282828 #282828 #d6d6d6
-        active_workspace   #777777 #777777 #d6d6d6
-        inactive_workspace #d6d6d6 #d6d6d6 #282828
+        focused_workspace  #282828 #282828 #D6D6D6
+        active_workspace   #686868 #686868 #D6D6D6
+        inactive_workspace #D6D6D6 #D6D6D6 #282828
+        urgent_workspace   #900000 #900000 #D6D6D6
     }
 }
 
