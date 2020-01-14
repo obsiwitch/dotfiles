@@ -15,7 +15,7 @@ test_cbtxt() {
 test_cbfiles() {
     shellcheck "$DOTFILESP/gui/bin/cbfiles"
 
-    local str="file://$(realpath "$0")"
+    local str; str="file://$(realpath "$0")"
     cbfiles "$0"
     [[ "$(xclip -selection clipboard -out)" \
         == "$(echo -e "copy\n$str")" ]] || dotfail

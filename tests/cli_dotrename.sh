@@ -5,7 +5,7 @@ PATH="$DOTFILESP/cli/bin:$PATH"
 source dotfail
 
 tmpdir=$(mktemp -d)
-trap "rm -r $tmpdir" EXIT
+trap 'rm -r "$tmpdir"' EXIT
 
 echo 'a' > "$tmpdir/a"
 dotrename "$tmpdir/a"
