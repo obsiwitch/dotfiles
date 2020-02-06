@@ -45,7 +45,7 @@ setup.packages.gui() {
     [[ -d "${1:-}" ]] || dotfail 'specify root directory'
     local pac="pacstrap -i $1"
     $pac xorg xorg-xinit arandr xclip pulseaudio pamixer pavucontrol pasystray \
-        xfce4-power-manager network-manager-applet gnome-themes-extra \
+        xfce4-power-manager network-manager-applet gnome-themes-extra redshift \
         papirus-icon-theme kitty thunar tumbler ffmpegthumbnailer nemo \
         dconf-editor gvfs gvfs-mtp meld firefox transmission-gtk soundconverter \
         quodlibet gimp tiled inkscape eom mpv blender openscad evince mupdf \
