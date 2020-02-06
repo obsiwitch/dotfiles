@@ -48,7 +48,7 @@ setup.packages.gui() {
         xfce4-power-manager network-manager-applet gnome-themes-extra \
         papirus-icon-theme kitty thunar tumbler ffmpegthumbnailer nemo \
         dconf-editor gvfs gvfs-mtp meld firefox transmission-gtk soundconverter \
-        quodlibet gimp inkscape eom mpv blender openscad evince mupdf \
+        quodlibet gimp tiled inkscape eom mpv blender openscad evince mupdf \
         texlive-most texlive-langextra pandoc libreoffice hunspell-fr \
         hunspell-en_US adobe-source-han-sans-jp-fonts otf-font-awesome pluma \
         atom galculator keepassxc gparted xfce4-screenshooter \
