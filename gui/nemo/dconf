@@ -2,6 +2,9 @@
 exec='kitty'
 exec-arg=''
 
+[org/nemo/icon-view]
+default-zoom-level='larger'
+
 [org/nemo/list-view]
 default-visible-columns=['name', 'size', 'date_modified']
 
@@ -23,6 +26,7 @@ tooltips-in-list-view=true
 tooltips-show-file-type=true
 tooltips-show-mod-date=true
 disable-menu-warning=true
+thumbnail-limit=uint64 5242880
 
 [org/nemo/window-state]
 start-with-sidebar=true
