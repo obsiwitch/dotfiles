@@ -24,16 +24,20 @@ backup_archive() {
         "$HOME/.dotfiles"
         "$HOME/.dotprivate"
     )
-    local out; out="$(date +'b%y%m%d.tar')"
-    tar --create --verbose --preserve-permissions --file \
-        "$out" "${in[@]}"
+    local out; out="$(date +'b%y%m%d.tar.enc')"
+    tar --create --verbose --preserve-permissions "${in[@]}" \
+        | gpg --symmetric --output "$out"
+}
+
+restore_archive() {
+    gpg --decrypt "$1" | tar --extract --verbose
 }
 
 sync_phone() {
     local in=(
         "$HOME/Downloads"
         "$HOME/Music"
-        "$HOME/.dotprivate/keepass"
+        "$HOME/.dotprivate"
     )
     local out="/run/media/$USER/C2C2-14E6/"
     rsync --archive --size-only --delete --prune-empty-dirs --protect-args \
@@ -47,7 +51,7 @@ sync_phone() {
 }
 
 help() {
-    echo 'usage: dotbackup local [--restore]'
+    echo 'usage: dotbackup local'
     echo '       dotbackup archive'
     echo '       dotbackup phone'
     exit 1
@@ -55,11 +59,7 @@ help() {
 
 [[ -n "${1:-}" ]] || help
 if [[ "$1" == "local" ]]; then
-    if [[ "${2:-}" == "--restore" ]]; then
-        restore_local
-    else
-        backup_local
-    fi
+    backup_local
 elif [[ "$1" == "archive" ]]; then
     backup_archive
 elif [[ "$1" == "phone" ]]; then
