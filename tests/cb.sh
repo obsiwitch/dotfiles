@@ -1,11 +1,13 @@
 #!/bin/bash
 
+set -o errexit -o nounset
+
 DOTFILESP="$(realpath "$(dirname "$0")/..")"
-PATH="$DOTFILESP/cli/bin:$PATH"
+PATH="$DOTFILESP/user/bin:$PATH"
 source dotfail
 
 test_cbtxt() {
-    shellcheck "$DOTFILESP/gui/bin/cbtxt"
+    shellcheck "$DOTFILESP/user/bin/cbtxt"
 
     local str='Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
     cbtxt "$str"
@@ -13,7 +15,7 @@ test_cbtxt() {
 }
 
 test_cbfiles() {
-    shellcheck "$DOTFILESP/gui/bin/cbfiles"
+    shellcheck "$DOTFILESP/user/bin/cbfiles"
 
     local str; str="file://$(realpath "$0")"
     cbfiles "$0"

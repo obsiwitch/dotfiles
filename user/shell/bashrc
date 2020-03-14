@@ -27,6 +27,5 @@
 {
     # Path
     export PATH="$HOME/.local/bin:$PATH"
-    export PATH="$HOME/.local/dotclibin:$PATH"
-    export PATH="$HOME/.local/dotguibin:$PATH"
+    export PATH="$HOME/.local/dotbin:$PATH"
 }

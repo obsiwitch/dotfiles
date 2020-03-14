@@ -1,7 +1,9 @@
 #!/bin/bash
 
+set -o errexit -o nounset
+
 DOTFILESP="$(realpath "$(dirname "$0")/..")"
-PATH="$DOTFILESP/cli/bin:$PATH"
+PATH="$DOTFILESP/user/bin:$PATH"
 source dotfail
 
 tmpdir=$(mktemp -d)
