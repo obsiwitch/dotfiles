@@ -3,7 +3,6 @@
 set -o errexit -o nounset
 
 backup_local() {
-    dotprivate umount || :
     local in=( "$HOME/" )
     local out="/run/media/$USER/yayaka_storage/$USER"
     rsync --archive --delete --prune-empty-dirs --protect-args --progress \
