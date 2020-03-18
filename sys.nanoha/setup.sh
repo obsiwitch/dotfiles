@@ -3,7 +3,7 @@
 set -o errexit -o nounset
 
 DOTFILESP="$(realpath "$(dirname "$0")/../..")"
-DOTNANOHAP="$DOTFILESP/system/nanoha"
+DOTNANOHAP="$DOTFILESP/sys.nanoha"
 PATH="$DOTFILESP/user/bin:$PATH"
 
 source dotfail
