@@ -54,8 +54,8 @@ exec --no-startup-id xfce4-power-manager
 ## Volume Manager
 exec --no-startup-id pasystray --notify=all
 
-## Background
-exec --no-startup-id xsetroot -solid '#282c34'
+## Wallpaper
+exec --no-startup-id feh --no-fehbg --bg-fill .config/i3/bg
 
 ## Screen layout
 exec --no-startup-id screenlayout laptop
