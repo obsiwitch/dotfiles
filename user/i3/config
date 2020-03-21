@@ -77,7 +77,7 @@ bindsym $mod+Ctrl+Return exec --no-startup-id nemo
 bindsym --release $mod+l exec --no-startup-id xflock4
 
 ## exit i3
-bindsym $mod+e exec --no-startup-id .config/i3/scripts/exit.sh
+bindsym $mod+e exec --no-startup-id .config/i3/exit.sh
 
 ## screenshots
 bindsym Print exec --no-startup-id xfce4-screenshooter
@@ -88,7 +88,7 @@ bindsym Print exec --no-startup-id xfce4-screenshooter
 bindsym control+F9 exec --no-startup-id quodlibet --play-pause
 
 ### status
-bindsym $alt+F9 exec --no-startup-id .config/i3/scripts/music.sh
+bindsym $alt+F9 exec --no-startup-id .config/i3/music.sh
 
 ### previous
 bindsym control+F10 exec --no-startup-id quodlibet --previous
