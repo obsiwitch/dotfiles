@@ -13,8 +13,7 @@ def dotrename(paths):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'Rename files with their \
-        sha1sum to provide a (hopefully) unique filename. Preseve file \
-        extensions.')
+        sha1sum to provide a (hopefully) unique filename. Preserve extensions.')
     parser.add_argument('paths', nargs = '+')
     parser.add_argument('-d', '--debug', action = 'store_true')
     args = parser.parse_args()

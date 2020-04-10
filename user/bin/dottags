@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Description
+#   find all distinct tags/extensions within a directory
+# Synopsis
+#   dottags [path...]
+
+set -o errexit -o nounset
+
+fd --glob '*.*' "$@" \
+    | sed "s:.*/::" \
+    | grep -o '\.[^.]*' \
+    | sort | uniq -c | sort -rn
