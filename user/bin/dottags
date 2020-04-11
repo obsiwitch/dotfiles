@@ -8,6 +8,6 @@
 set -o errexit -o nounset
 
 fd --glob '*.*' "$@" \
-    | sed "s:.*/::" \
+    | sed 's:.*/::' \
     | grep -o '\.[^.]*' \
     | sort | uniq -c | sort -n
