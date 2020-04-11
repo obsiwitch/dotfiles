@@ -6,7 +6,7 @@ choice=$(
         | dmenu
 )
 case "$choice" in
-    reload)    screenlayout && i3-msg restart;;
+    reload)    i3-msg restart;;
     sleep)     xflock4 ; systemctl suspend;;
     hibernate) xflock4 ; systemctl hibernate;;
     logout)    i3-msg exit;;
