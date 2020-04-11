@@ -10,4 +10,4 @@ set -o errexit -o nounset
 fd --glob '*.*' "$@" \
     | sed "s:.*/::" \
     | grep -o '\.[^.]*' \
-    | sort | uniq -c | sort -rn
+    | sort | uniq -c | sort -n
