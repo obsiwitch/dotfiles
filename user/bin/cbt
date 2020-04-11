@@ -2,11 +2,11 @@
 
 set -o errexit -o nounset
 
-# cbtxt - copy text to clipboard
-#
 # Synopsis
-#   cmd | cbtxt
-#   cbtxt txt
+#   cmd | cbt
+#   cbt txt
+# Description
+#   Copy text to clipboard.
 
 if [[ "$#" -eq 0 ]]; then
     cat

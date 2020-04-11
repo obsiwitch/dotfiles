@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Description
-#   find all distinct tags/extensions within a directory
 # Synopsis
 #   dottags [path...]
+# Description
+#   find all distinct tags/extensions within a directory
 
 set -o errexit -o nounset
 

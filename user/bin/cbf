@@ -2,17 +2,13 @@
 
 set -o errexit -o nounset
 
-# cbfiles - copy files using the clipboard
-#
 # Synopsis
-#   cmd | cbfiles
-#   cbfiles path...
-#
+#   cmd | cbf
+#   cbf path...
 # Description
-#   Hold paths in the clipboard to paste the corresponding files later in
-#   applications supporting the 'x-special/gnome-copied-files' target atom (e.g.
-#   Thunar, Nemo).
-#
+#   Copy files using the clipboard. Hold paths in the clipboard to paste the
+#   corresponding files later in applications supporting the
+#   'x-special/gnome-copied-files' target atom (e.g. Thunar, Nemo).
 # References
 #   * https://larsee.com/blog/2019/05/clipboard-files/
 #   * https://unix.stackexchange.com/a/53537
