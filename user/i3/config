@@ -20,6 +20,7 @@ for_window [class=".*"] border normal
 
 bar {
     status_command i3status -c .config/i3/i3status.conf
+    separator_symbol " "
     tray_output primary
 
     colors {
