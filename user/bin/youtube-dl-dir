@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -o errexit -o nounset
+
+# Download playlists in subdirectories.
+youtube-dl --output='%(playlist)s/%(playlist_index)03d.%(title)s.%(id)s.%(ext)s' "$@"
