@@ -2,7 +2,7 @@
 
 set -o errexit -o nounset
 
-DOTFILESP="$(realpath "$(dirname "$0")/../..")"
+DOTFILESP="$(realpath "$(dirname "$0")/..")"
 DOTNANOHAP="$DOTFILESP/sys.nanoha"
 PATH="$DOTFILESP/user/bin:$PATH"
 
@@ -90,11 +90,11 @@ setup.configure() {
     # locale
     sed -i '/^#en_US.UTF-8/ s/^#//' /etc/locale.gen
     locale-gen
-    localectl set-locale LANG=en_US.UTF-8
-    localectl set-keymap fr
+    echo 'LANG=en_US.UTF-8' > /etc/locale.conf
+    echo 'KEYMAP=fr' > /etc/vconsole.conf
 
     # network
-    hostnamectl set-hostname nanoha
+    echo 'nanoha' > /etc/hostname
 
     # users
     echo 'root' && passwd root
