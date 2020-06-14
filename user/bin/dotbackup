@@ -15,11 +15,17 @@ restore_local() {
 }
 
 backup_archive() {
+    local out; out="$(date +'b%y%m%d.tar')"
+    [[ -f "$out" ]] && {
+        echo "$PWD/$out already exists" >&2
+        exit 1
+    }
+
     dotprivate umount || :
     tar --create --verbose --preserve-permissions \
         "$HOME/.dotfiles" \
         "$HOME/.dotprivate" \
-        --file="$(date +'b%y%m%d.tar')"
+        --file="$out"
 }
 
 sync_phone() {
