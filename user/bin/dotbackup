@@ -3,50 +3,37 @@
 set -o errexit -o nounset
 
 backup_local() {
-    local in=( "$HOME/" )
-    local out="/run/media/$USER/yayaka_storage/$USER"
+    dotprivate umount || :
     rsync --archive --delete --prune-empty-dirs --protect-args --progress \
-          --exclude '.cache' \
-          -- "${in[@]}" "$out"
+          --exclude='.cache' \
+          "$HOME/" "/run/media/$USER/yayaka_storage/$USER"
 }
 
 restore_local() {
-    local in="/run/media/$USER/yayaka_storage/$USER/"
-    local out="$HOME"
     rsync --archive --protect-args --progress \
-          -- "$in" "$out"
+          "/run/media/$USER/yayaka_storage/$USER/" "$HOME"
 }
 
 backup_archive() {
-    local in=(
-        "$HOME/Documents"
-        "$HOME/.dotfiles"
-        "$HOME/.dotprivate"
-    )
-    local out; out="$(date +'b%y%m%d.tar.enc')"
-    tar --create --verbose --preserve-permissions "${in[@]}" \
-        | gpg --symmetric --output "$out"
-}
-
-restore_archive() {
-    gpg --decrypt "$1" | tar --extract --verbose
+    dotprivate umount || :
+    tar --create --verbose --preserve-permissions \
+        "$HOME/.dotfiles" \
+        "$HOME/.dotprivate" \
+        --file="$(date +'b%y%m%d.tar')"
 }
 
 sync_phone() {
-    local in=(
-        "$HOME/Downloads"
-        "$HOME/Music"
-        "$HOME/.dotprivate"
-    )
     local out="/run/media/$USER/C2C2-14E6/"
-    rsync --archive --size-only --delete --prune-empty-dirs --protect-args \
-          --progress \
-          -- "${in[@]}" "$out"
+    rsync --archive --delete --prune-empty-dirs --protect-args --progress \
+          --size-only \
+          "$HOME/Downloads" \
+          "$HOME/Music" \
+          "$HOME/.dotprivate/keepass" \
+          "$out"
 
-    # faster to backup one big file than many small ones, especially on a
-    # poor quality SD card
-    cd "$out"
-    backup_archive
+    # faster to backup one big file than many small ones especially on a poor
+    # quality SD card
+    (cd "$out"; backup_archive)
 }
 
 help() {
