@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Synopsis
+#   doterr [message] [exit_status = 1]
+#   cmd || doterr [message] [exit_status = 1]
+#   cmd && doterr [message] [exit_status = 1]
+# Description
+#   Outputs an error message and exit with a status code indicating failure.
+# Examples
+#   [[ "$#" -ge 2 ]] || doterr 'missing file operand'
+#   -> ?1 missing file operand
+#
+#   [[ "$#" -lt 2 ]] && doterr 'missing file operand'
+#   -> ?1 missing file operand
+#
+#   [ || doterr 'missing ]' "$?"
+#   -> ?2 missing ]
+doterr() {
+    local status="${2:-1}"
+    echo "?$status ${1:-}" 1>&2
+    exit "$status"
+}
+
+doterr "$@"

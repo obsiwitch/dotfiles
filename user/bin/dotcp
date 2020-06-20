@@ -2,18 +2,12 @@
 
 set -o errexit -o nounset
 
-source dotfail
-
-# dotcp - copy files/dirs and create parent directories
-#
 # Synopsis
 #   dotcp src... dest[/]`
-#
 # Description
-#   Copy files/dirs and create intermediate destination subdirectories if
-#   necessary.
+#   Copy files/dirs and create parent directories if necessary.
 dotcp() {
-    [[ "$#" -ge 2 ]] || dotfail 'missing file operand'
+    [[ "$#" -ge 2 ]] || doterr 'missing file operand'
     dotmkdir "${*: -1}"
     cp --no-dereference --recursive "$@"
 }

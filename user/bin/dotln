@@ -2,18 +2,12 @@
 
 set -o errexit -o nounset
 
-source dotfail
-
-# dotcp - symlink files/dirs and create parent directories
-#
 # Synopsis
 #   dotln src... dest[/]`
-#
 # Description
-#   Symlink files/dirs and create intermediate destination subdirectories if
-#   necessary.
+#   Symlink files/dirs and create parent directories if necessary.
 dotln() {
-    [[ "$#" -ge 2 ]] || dotfail 'missing file operand'
+    [[ "$#" -ge 2 ]] || doterr 'missing file operand'
     dotmkdir "${*: -1}"
     ln --symbolic --no-dereference --force "$@"
 }

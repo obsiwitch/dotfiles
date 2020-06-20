@@ -6,8 +6,6 @@ DOTFILESP="$(realpath "$(dirname "$0")/..")"
 DOTNANOHAP="$DOTFILESP/sys.nanoha"
 PATH="$DOTFILESP/user/bin:$PATH"
 
-source dotfail
-
 setup.help() {
     echo 'Arch install script'
     echo
@@ -25,14 +23,14 @@ setup.help() {
 }
 
 setup.packages.core() {
-    [[ -d "${1:-}" ]] || dotfail 'specify root directory'
+    [[ -d "${1:-}" ]] || doterr 'specify root directory'
     local pac="pacstrap -i $1"
     $pac base base-devel linux-lts linux-firmware intel-ucode grub \
         pacman-contrib arch-install-scripts networkmanager nftables
 }
 
 setup.packages.cli() {
-    [[ -d "${1:-}" ]] || dotfail 'specify root directory'
+    [[ -d "${1:-}" ]] || doterr 'specify root directory'
     local pac="pacstrap -i $1"
     $pac man bash-completion shellcheck less moreutils nano neovim git python \
         python-pip fzf pdfgrep jq yq wget curl links openssh nmap whois \
@@ -42,7 +40,7 @@ setup.packages.cli() {
 }
 
 setup.packages.gui() {
-    [[ -d "${1:-}" ]] || dotfail 'specify root directory'
+    [[ -d "${1:-}" ]] || doterr 'specify root directory'
     local pac="pacstrap -i $1"
     $pac xorg xorg-xinit arandr xclip pulseaudio pamixer pavucontrol pasystray \
         xfce4-power-manager network-manager-applet gnome-themes-extra redshift \
@@ -60,7 +58,7 @@ setup.bootloader() {
     if [[ -d /sys/firmware/efi ]]; then
         grub-install --target='x86_64-efi' --efi-directory='/boot/efi'
     else
-        [[ -b "${1:-}" ]] || dotfail 'specify a block device'
+        [[ -b "${1:-}" ]] || doterr 'specify a block device'
         grub-install --target='i386-pc' "$1"
     fi
     grub-mkconfig -o /boot/grub/grub.cfg
