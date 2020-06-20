@@ -3,9 +3,9 @@
 set -o errexit -o nounset
 
 backup_local() {
-    dotprivate umount || :
     rsync --archive --delete --prune-empty-dirs --protect-args --progress \
           --exclude='.cache' \
+          --exclude="$HOME/.dotprivate/plaintext" \
           "$HOME/" "/run/media/$USER/yayaka_storage/$USER"
 }
 
@@ -18,8 +18,8 @@ backup_archive() {
     local out; out="$(date +'b%y%m%d.tar')"
     [[ -f "$out" ]] && doterr "$PWD/$out already exists"
 
-    dotprivate umount || :
     tar --create --verbose --preserve-permissions \
+        --exclude="$HOME/.dotprivate/plaintext" \
         "$HOME/.dotfiles" \
         "$HOME/.dotprivate" \
         --file="$out"
