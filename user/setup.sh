@@ -50,7 +50,6 @@ dotln "$DOTUSERP/xdg/user-dirs.conf" "$HOME/.config/"
 
 # mpv
 dotln "$DOTUSERP/mpv" "$HOME/.config/"
-dotln "$DOTUSERP/desktop/mpvg.desktop" "$HOME/.local/share/applications/"
 
 # terminal
 dotln "$DOTUSERP/kitty" "$HOME/.config/"
