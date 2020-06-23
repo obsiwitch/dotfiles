@@ -59,7 +59,7 @@ bindsym $mod+Ctrl+Return exec --no-startup-id nemo
 bindsym --release $mod+l exec --no-startup-id xflock4
 
 ## exit i3
-bindsym $mod+e exec --no-startup-id .config/i3/exit.sh
+bindsym $mod+e exec --no-startup-id dotexit
 
 ## screenshots
 bindsym Print exec --no-startup-id xfce4-screenshooter
