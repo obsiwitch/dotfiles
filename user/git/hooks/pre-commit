@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -o errexit -o nounset
+
+# Prevent committing changes containing specific keywords.
+keywords() {
+    local diff; diff="$(git --no-pager diff --color='always' \
+                            --staged -G '(TODO|DEBUG)')"
+    if grep --quiet '(TODO|DEBUG)' <<< "$diff"; then
+        echo "$(tput smso)Global pre-commit hook: keywords$(tput sgr0)"
+        echo "$diff"
+        exit 1
+    fi
+}
+
+keywords
