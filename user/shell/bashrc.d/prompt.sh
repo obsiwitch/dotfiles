@@ -17,8 +17,8 @@ __prompt() {
 
     # $1: content
     # $2: color
-    # $3: prefix (default: [)
-    # $4: suffix (default: ])
+    # $3: prefix (default: none)
+    # $4: suffix (default: none)
     # see tput(1), terminfo(5) and infocmp(1M)
     prompt_block() {
         test -z "$1" && return 1
