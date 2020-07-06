@@ -54,5 +54,10 @@ dotln "$DOTUSERP/mpv" "$HOME/.config/"
 # terminal
 dotln "$DOTUSERP/kitty" "$HOME/.config/"
 
+# blender
+if command -v blender; then
+    blender --background --python "$DOTUSERP/blender/userprefs.py"
+fi > /dev/null
+
 # cache
 dotln '/dev/null' "$HOME/.python_history"
