@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+
+import sys
+
+if 'bpy' not in sys.modules:
+    import subprocess
+    assert len(sys.argv) > 1
+    subprocess.run(['blender', '--python', sys.argv[0], '--', *sys.argv[1:]])
+else:
+    import bpy
+    from pathlib import Path
+
+    bpy.context.preferences.view.show_splash = False
+
+    for f in sys.argv[sys.argv.index('--') + 1:]:
+        f = Path(f)
+        assert f.exists()
+        if f.suffix == '.dae':
+            bpy.ops.wm.collada_import(filepath = str(f))
+        elif f.suffix == '.svg':
+            bpy.ops.import_curve.svg(filepath = str(f))
+        elif f.suffix == '.stl':
+            bpy.ops.import_mesh.stl(filepath = str(f))
+        elif f.suffix == '.fbx':
+            bpy.ops.import_scene.fbx(filepath = str(f))
+        elif f.suffix == '.gltf' or f.suffix == '.glb':
+            bpy.ops.import_scene.gltf(filepath = str(f))
+        elif f.suffix == '.obj':
+            bpy.ops.import_scene.obj(filepath = str(f))
+        else:
+            raise RuntimeError(f'No importer associated with {f.suffix}')

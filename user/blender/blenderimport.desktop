@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Blender Import
+Exec=blenderimport %F
+Terminal=false
+NoDisplay=true
+Icon=blender
+Categories=Graphics;3DGraphics;
