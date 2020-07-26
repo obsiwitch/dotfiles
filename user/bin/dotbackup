@@ -5,7 +5,7 @@ set -o errexit -o nounset
 backup_local() {
     rsync --archive --delete --prune-empty-dirs --protect-args --progress \
           --exclude='.cache' \
-          --exclude="$HOME/.dotprivate/plaintext" \
+          --exclude=".dotprivate/plaintext" \
           "$HOME/" "/run/media/$USER/yayaka_storage/$USER"
 }
 
