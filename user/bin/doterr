@@ -5,12 +5,14 @@
 #   cmd || doterr [message] [exit_status = 1]
 #   cmd && doterr [message] [exit_status = 1]
 # Description
-#   Outputs an error message and exit with a status code indicating failure.
+#   Outputs an error message and returns with a status code. It should be used
+#   in conjunction with `set -o errexit` in order to make scripts exit early on
+#   error.
 # Examples
 #   [[ "$#" -ge 2 ]] || doterr 'missing file operand'
 #   -> ?1 missing file operand
 #
-#   [[ "$#" -lt 2 ]] && doterr 'missing file operand'
+#   if [[ "$#" -lt 2 ]]; then doterr 'missing file operand'; fi
 #   -> ?1 missing file operand
 #
 #   [ || doterr 'missing ]' "$?"
@@ -18,7 +20,7 @@
 doterr() {
     local status="${2:-1}"
     echo "?$status ${1:-}" 1>&2
-    exit "$status"
+    return "$status"
 }
 
 doterr "$@"
