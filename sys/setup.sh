@@ -42,13 +42,14 @@ setup.packages.cli() {
 setup.packages.gui() {
     [[ -d "${1:-}" ]] || doterr 'specify root directory'
     local pac="pacstrap -i $1"
-    $pac xorg xorg-xinit arandr xclip pulseaudio pamixer pavucontrol pasystray \
-        xfce4-power-manager network-manager-applet gnome-themes-extra redshift \
+    $pac xorg xorg-xinit xf86-video-intel arandr xclip \
+        pulseaudio pamixer pavucontrol pasystray \
+        xfce4-power-manager network-manager-applet gnome-themes-extra \
         papirus-icon-theme kitty thunar tumbler ffmpegthumbnailer nemo \
         dconf-editor gvfs gvfs-mtp meld firefox transmission-gtk soundconverter \
         quodlibet gimp tiled inkscape eom mpv blender openscad evince mupdf \
         texlive-most texlive-langextra pandoc libreoffice hunspell-fr \
-        hunspell-en_US adobe-source-han-sans-jp-fonts otf-font-awesome pluma \
+        hunspell-en_US adobe-source-han-sans-jp-fonts otf-font-awesome gedit \
         atom galculator keepassxc gparted xfce4-screenshooter \
         simplescreenrecorder ghex i3 dmenu rofi dunst feh \
         cups hplip system-config-printer sane simplescan
