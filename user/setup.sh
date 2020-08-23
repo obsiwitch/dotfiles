@@ -30,9 +30,6 @@ dotcp "$DOTUSERP/Xfce/xfce4-power-manager.xml" \
       "$HOME/.config/xfce4/xfconf/xfce-perchannel-xml/"
 
 # file manager
-dotcp "$DOTUSERP/thunar/uca.xml" "$HOME/.config/Thunar/"
-dotcp "$DOTUSERP/thunar/thunar.xml" \
-      "$HOME/.config/xfce4/xfconf/xfce-perchannel-xml/"
 dconf load / < "$DOTUSERP/nemo/dconf"
 dotln "$DOTUSERP/nemo/actions" "$HOME/.local/share/nemo/"
 
