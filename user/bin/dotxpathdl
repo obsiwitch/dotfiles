@@ -14,10 +14,10 @@ class Downloader:
         self.next_xpath = next_xpath
 
     def start(self):
-        for i, elem_url in enumerate(self.iterate()):
+        for i, j, elem_url in self.iterate():
             self.download(
                 url      = elem_url,
-                filename = f"{i}_{os.path.basename(elem_url)}",
+                filename = f"{i}_{j}_{os.path.basename(elem_url)}",
             )
 
     def request(self, url): return requests.get(
@@ -33,6 +33,7 @@ class Downloader:
 
     def iterate(self):
         next_url = self.start_url
+        i = 0
         while next_url:
             html = self.request(next_url).content
             tree = lxml.html.fromstring(html)
@@ -42,7 +43,8 @@ class Downloader:
                   else None
 
             elem_urls = tree.xpath(self.elem_xpath)
-            for elem_url in elem_urls: yield elem_url
+            for j, elem_url in enumerate(elem_urls): yield i, j, elem_url
+            i += 1
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
