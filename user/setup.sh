@@ -9,6 +9,9 @@ PATH="$DOTFILESP/user/bin:$PATH"
 # bin
 dotln "$DOTUSERP/bin" "$HOME/.local/dotbin"
 
+# lib
+dotln "$DOTUSERP/lib" "$HOME/.local/dotlib"
+
 # shell
 dotln "$DOTUSERP/shell/profile" "$HOME/.profile"
 dotln "$DOTUSERP/shell/bashrc" "$HOME/.bashrc"
