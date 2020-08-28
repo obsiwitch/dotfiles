@@ -29,7 +29,7 @@ dotln "$DOTUSERP/gtk/gtk-2.0/gtkrc-2.0" "$HOME/.gtkrc-2.0"
 dotln "$DOTUSERP/gtk/gtk-3.0" "$HOME/.config/"
 
 # power manager
-dotcp "$DOTUSERP/Xfce/xfce4-power-manager.xml" \
+dotcp "$DOTUSERP/xfce4/power-manager.xml" \
       "$HOME/.config/xfce4/xfconf/xfce-perchannel-xml/"
 
 # file manager
