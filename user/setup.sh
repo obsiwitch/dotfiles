@@ -39,8 +39,8 @@ dotln "$DOTUSERP/nemo/actions" "$HOME/.local/share/nemo/"
 # notifications
 dotln "$DOTUSERP/dunst" "$HOME/.config/"
 
-# X
-dotln "$DOTUSERP/X/xinitrc" "$HOME/.xinitrc"
+# xorg
+dotln "$DOTUSERP/xorg/xinitrc" "$HOME/.xinitrc"
 
 # Qt
 dotln "$DOTUSERP/Qt/qt.sh" "$HOME/.bashrc.d/"
