@@ -16,7 +16,7 @@ dotln "$DOTUSERP/lib" "$HOME/.local/dotlib"
 dotln "$DOTUSERP/shell/profile" "$HOME/.profile"
 dotln "$DOTUSERP/shell/bashrc" "$HOME/.bashrc"
 dotln "$DOTUSERP/shell/inputrc" "$HOME/.inputrc"
-dotln "$DOTUSERP/shell/bashrc.d/"*.sh "$HOME/.bashrc.d/"
+dotln "$DOTUSERP/shell/bashrc.d" "$HOME/.bashrc.d"
 
 # git
 dotln "$DOTUSERP/git" "$HOME/.config/"
@@ -41,9 +41,6 @@ dotln "$DOTUSERP/dunst" "$HOME/.config/"
 
 # xorg
 dotln "$DOTUSERP/xorg/xinitrc" "$HOME/.xinitrc"
-
-# Qt
-dotln "$DOTUSERP/Qt/qt.sh" "$HOME/.bashrc.d/"
 
 # xdg
 dotln "$DOTUSERP/xdg/user-dirs.conf" "$HOME/.config/"
