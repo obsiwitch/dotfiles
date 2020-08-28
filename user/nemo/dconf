@@ -7,6 +7,7 @@ default-zoom-level='larger'
 
 [org/nemo/list-view]
 default-visible-columns=['name', 'size', 'date_modified']
+search-visible-columns=['name', 'size', 'where']
 
 [org/nemo/plugins]
 disabled-actions=['new-launcher.nemo_action', 'send-by-mail.nemo_action', 'mount-archive.nemo_action', 'set-as-background.nemo_action', 'add-desklets.nemo_action', 'change-background.nemo_action']
@@ -15,15 +16,14 @@ disabled-actions=['new-launcher.nemo_action', 'send-by-mail.nemo_action', 'mount
 bulk-rename-tool=b'/usr/lib/Thunar/ThunarBulkRename'
 date-format='iso'
 default-folder-viewer='list-view'
+desktop-is-home-dir=true
 show-compact-view-icon-toolbar=false
 show-edit-icon-toolbar=false
 show-full-path-titles=true
 show-open-in-terminal-toolbar=true
 show-search-icon-toolbar=false
 size-prefixes='base-2'
-tooltips-in-icon-view=true
 tooltips-in-list-view=true
-tooltips-show-file-type=true
 tooltips-show-mod-date=true
 disable-menu-warning=true
 thumbnail-limit=uint64 5242880
