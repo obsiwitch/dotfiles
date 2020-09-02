@@ -35,7 +35,7 @@ setup.packages.cli() {
         man bash-completion shellcheck less moreutils nano neovim git python \
         python-pip fzf pdfgrep jq yq wget curl links openssh nmap whois \
         speedtest-cli youtube-dl rsync ranger trash-cli atool p7zip unrar unzip \
-        zip htop iotop lshw ncdu tree nethogs android-tools gocryptfs \
+        zip htop iotop glances lshw ncdu tree nethogs android-tools gocryptfs \
         imagemagick inotify-tools dosfstools tcc gdb valgrind testdisk
 }
 
