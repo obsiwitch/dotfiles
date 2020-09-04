@@ -1,6 +1,4 @@
 import os
-import argparse
-import textwrap
 import lxml.html
 import requests
 from urllib.parse import urljoin
