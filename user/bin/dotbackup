@@ -3,45 +3,35 @@
 set -o errexit -o nounset
 
 backup_local() {
-    rsync --archive --delete --prune-empty-dirs --protect-args --progress \
-          --exclude='.cache' \
-          --exclude=".dotprivate/plaintext" \
-          "$HOME/" "/run/media/$USER/yayaka_storage/$USER"
-}
-
-restore_local() {
-    rsync --archive --protect-args --progress \
-          "/run/media/$USER/yayaka_storage/$USER/" "$HOME"
-}
-
-backup_archive() {
-    local out; out="$(date +'b%y%m%d.tar')"
-    [[ -f "$out" ]] && doterr "$PWD/$out already exists"
-
-    tar --create --verbose --preserve-permissions \
+    local repository="/run/media/$USER/yayaka_storage/$USER"
+    borg init --encryption='repokey-blake2' "$repository" || :
+    borg create "${repository}::{now}" "$HOME" \
+        --exclude="$HOME/.cache" \
         --exclude="$HOME/.dotprivate/plaintext" \
-        "$HOME/.dotfiles" \
-        "$HOME/.dotprivate" \
-        --file="$out"
+        --progress --stats
+    borg prune "$repository" --keep-last='24' --stats
 }
 
 sync_phone() {
     local out="/run/media/$USER/C2C2-14E6/"
-    rsync --archive --delete --prune-empty-dirs --protect-args --progress \
-          --size-only \
+    rsync --archive --delete --protect-args --progress --size-only \
           "$HOME/Downloads" \
           "$HOME/Music" \
           "$HOME/.dotprivate/keepass" \
           "$out"
 
-    # faster to backup one big file than many small ones especially on a poor
-    # quality SD card
-    (cd "$out"; backup_archive)
+    local repository="$out/borg"
+    borg init --encryption='repokey-blake2' "$repository" || :
+    borg create "${repository}::{now}" \
+        "$HOME/.dotfiles" \
+        "$HOME/.dotprivate" \
+        --exclude="$HOME/.dotprivate/plaintext" \
+        --progress --stats
+    borg prune "$repository" --keep-last='24' --stats
 }
 
 help() {
     echo 'usage: dotbackup local'
-    echo '       dotbackup archive'
     echo '       dotbackup phone'
     exit 1
 }
@@ -49,8 +39,6 @@ help() {
 [[ -n "${1:-}" ]] || help
 if [[ "$1" == "local" ]]; then
     backup_local
-elif [[ "$1" == "archive" ]]; then
-    backup_archive
 elif [[ "$1" == "phone" ]]; then
     sync_phone
 else
