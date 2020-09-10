@@ -36,7 +36,8 @@ setup.packages.cli() {
         python-pip fzf pdfgrep jq yq wget curl links openssh nmap whois \
         speedtest-cli youtube-dl rsync ranger trash-cli atool p7zip unrar unzip \
         zip htop iotop glances lshw ncdu tree nethogs android-tools gocryptfs \
-        imagemagick inotify-tools dosfstools tcc gdb valgrind testdisk
+        imagemagick inotify-tools dosfstools tcc gdb valgrind testdisk borg \
+        python-llfuse
 }
 
 setup.packages.gui() {
@@ -51,7 +52,7 @@ setup.packages.gui() {
         hunspell-en_US adobe-source-han-sans-jp-fonts otf-font-awesome gedit \
         atom galculator keepassxc gparted xfce4-screenshooter \
         simplescreenrecorder ghex i3 dmenu rofi dunst feh \
-        cups hplip system-config-printer sane simplescan
+        cups hplip system-config-printer sane simplescan file-roller
 }
 
 setup.provision() {
