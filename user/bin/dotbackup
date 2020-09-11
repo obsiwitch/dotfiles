@@ -2,45 +2,48 @@
 
 set -o errexit -o nounset
 
-backup_local() {
-    local repository="/run/media/$USER/yayaka_storage/$USER"
-    borg init --encryption='repokey-blake2' "$repository" || :
-    borg create "${repository}::{now}" "$HOME" \
-        --exclude="$HOME/.cache" \
+backup_borg() {
+    borg init --encryption='repokey-blake2' "$1" || :
+    borg create "${1}::{now}" \
+        "$HOME/.dotfiles" \
+        "$HOME/.dotprivate" \
+        "$HOME/.mozilla" \
         --exclude="$HOME/.dotprivate/plaintext" \
         --progress --stats
-    borg prune "$repository" --keep-last='24' --stats
 }
 
-sync_phone() {
+backup_extdrive() {
+    local out="/run/media/$USER/yayaka_storage/$USER"
+    rsync --archive --delete --protect-args --progress \
+        --exclude='.cache' \
+        --exclude=".dotprivate/plaintext" \
+        "$HOME/" "$out/rsync"
+
+    backup_borg "$out/borg"
+}
+
+backup_phone() {
     local out="/run/media/$USER/C2C2-14E6/"
     rsync --archive --delete --protect-args --progress --size-only \
           "$HOME/Downloads" \
           "$HOME/Music" \
           "$HOME/.dotprivate/keepass" \
-          "$out"
+          "$out/rsync"
 
-    local repository="$out/borg"
-    borg init --encryption='repokey-blake2' "$repository" || :
-    borg create "${repository}::{now}" \
-        "$HOME/.dotfiles" \
-        "$HOME/.dotprivate" \
-        --exclude="$HOME/.dotprivate/plaintext" \
-        --progress --stats
-    borg prune "$repository" --keep-last='24' --stats
+    backup_borg "$out/borg"
 }
 
 help() {
-    echo 'usage: dotbackup local'
+    echo 'usage: dotbackup extdrive'
     echo '       dotbackup phone'
     exit 1
 }
 
 [[ -n "${1:-}" ]] || help
-if [[ "$1" == "local" ]]; then
-    backup_local
+if [[ "$1" == "extdrive" ]]; then
+    backup_extdrive
 elif [[ "$1" == "phone" ]]; then
-    sync_phone
+    backup_phone
 else
     help
 fi
