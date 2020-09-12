@@ -3,12 +3,15 @@
 set -o errexit -o nounset
 
 backup_borg() {
+    mount | grep "$HOME/.dotprivate/encrypted" || {
+        echo -n 'Mount dotprivate: '
+        dotprivate mount
+    }
     borg init --encryption='repokey-blake2' "$1" || :
     borg create "${1}::{now}" \
         "$HOME/.dotfiles" \
         "$HOME/.dotprivate" \
         "$HOME/.mozilla" \
-        --exclude="$HOME/.dotprivate/plaintext" \
         --progress --stats
 }
 
