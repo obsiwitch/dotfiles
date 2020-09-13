@@ -38,11 +38,10 @@ bar {
 
 # Autostart ####################################################################
 
-exec --no-startup-id nm-applet
-exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pasystray --notify=all
-exec --no-startup-id dunst
-
+exec_always --no-startup-id xfce4-power-manager --restart
+exec_always --no-startup-id "killall nm-applet; nm-applet"
+exec_always --no-startup-id "killall pasystray; pasystray --notify=all"
+exec_always --no-startup-id "killall dunst; dunst"
 exec_always --no-startup-id dotscreen
 exec_always --no-startup-id feh --no-fehbg --bg-fill "$i3dir/wallpaper"
 
