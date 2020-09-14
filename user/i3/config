@@ -20,7 +20,7 @@ client.urgent           #900000 #900000 #D6D6D6 #900000
 for_window [class=".*"] border normal
 
 bar {
-    status_command i3status -c "$i3dir/i3status.conf"
+    status_command i3blocks -c "$i3dir/i3blocks.conf"
     separator_symbol " "
     tray_output primary
 
