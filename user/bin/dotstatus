@@ -1,0 +1,140 @@
+#!/usr/bin/env python3
+
+import json, asyncio, datetime, sys, logging, os
+from pathlib import Path
+import subprocess as cmd
+
+RUNDIR = Path(f'/run/user/{os.getuid()}/dotstatus/')
+RUNDIR.mkdir(parents=True, exist_ok=True)
+LOGFILE = RUNDIR / 'log'
+
+cmd.sh = lambda cmdstr: cmd.check_output(cmdstr, shell=True, text=True)
+
+# doc: https://i3wm.org/docs/i3bar-protocol.html
+class Block(dict):
+    DEFAULTS = {
+        'full_text': '',
+        'border': '#282828',
+        'border_top': 0,
+        'border_bottom': 2,
+        'border_left': 0,
+        'border_right': 0,
+        'min_width': 50,
+        'align': 'center',
+    }
+
+    def __init__(self, blocks, **kwargs):
+        super().__init__(**self.DEFAULTS)
+        super().__init__(**kwargs)
+        self['name'] = self.__class__.__name__
+        self['instance'] = str(id(self))
+        self.blocks = blocks
+
+    def on_click(self, event):
+        self.out_once()
+
+    def out_once(self): pass
+    async def out_loop(self): pass
+
+class BDateTime(Block):
+    def out_once(self):
+        self.now = datetime.datetime.now()
+        self['full_text'] = self.now.strftime(' %Y/%m/%d  %H:%M')
+        self.blocks.print()
+
+    async def out_loop(self):
+        while True:
+            self.out_once()
+            await asyncio.sleep(60 - self.now.second)
+
+class BDisk(Block):
+    def out_once(self):
+        available = cmd.sh("df -h /").splitlines()[1].split()[3]
+        self['full_text'] = f' {available}iB'
+        self.blocks.print()
+
+    async def out_loop(self):
+        while True:
+            self.out_once()
+            await asyncio.sleep(5)
+
+class BRAM(Block):
+    def out_once(self):
+        available = cmd.sh("free -h").splitlines()[1].split()[6]
+        self['full_text'] = f' {available}B'
+        self.blocks.print()
+
+    async def out_loop(self):
+        while True:
+            self.out_once()
+            await asyncio.sleep(5)
+
+class BCPU(Block):
+    def out_once(self):
+        load = Path('/proc/loadavg').read_text().split()[1]
+        self['full_text'] = f" {load}"
+        self.blocks.print()
+
+    async def out_loop(self):
+        while True:
+            self.out_once()
+            await asyncio.sleep(5)
+
+class BPackages(Block):
+    def on_click(self, event):
+        super().on_click(event)
+        if event['button'] == 3:
+            cmd.run(['kitty', 'sudo', 'pacman', '-Syu'])
+
+    def out_once(self):
+        nupdates = cmd.sh('checkupdates | wc -l').rstrip()
+        self['full_text'] = f' {nupdates}'
+        self.blocks.print()
+
+    async def out_loop(self):
+        while True:
+            self.out_once()
+            await asyncio.sleep(3600)
+
+class Blocks(dict):
+    def __init__(self):
+        super().__init__()
+        self.loop = asyncio.get_event_loop()
+
+    def print(self):
+        print(',', json.dumps( list(self.values()) ), flush=True)
+
+    # ref: https://stackoverflow.com/a/36785819
+    async def click_handler(self):
+        while line := await self.loop.run_in_executor(None, sys.stdin.readline):
+            if line.startswith('['): continue
+            line = line.lstrip(',')
+            event = json.loads(line)
+            logging.debug(event)
+            self[event['instance']].on_click(event)
+
+    def insert(self, clsblock, **kwargs):
+        block = clsblock(blocks=self, **kwargs)
+        self[block['instance']] = block
+        task = self.loop.create_task(block.out_loop())
+
+    def main(self):
+        # preamble
+        print(json.dumps({ "version": 1, "click_events": True, }))
+        print('[')
+        print('[]')
+
+        # async tasks
+        self.loop.create_task(self.click_handler())
+        self.insert(BCPU)
+        self.insert(BRAM)
+        self.insert(BDisk)
+        self.insert(BPackages)
+        self.insert(BDateTime)
+        self.loop.run_forever()
+
+if __name__ == "__main__":
+    if ('-d' in sys.argv) or ('--debug' in sys.argv):
+        logging.basicConfig(filename=LOGFILE, level=logging.DEBUG)
+
+    Blocks().main()
