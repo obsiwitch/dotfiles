@@ -14,7 +14,7 @@ font pango:DejaVu Sans Mono 10
 client.focused          #282828 #282828 #D6D6D6 #4777D7
 client.focused_inactive #686868 #686868 #D6D6D6 #686868
 client.unfocused        #D6D6D6 #D6D6D6 #868686 #D6D6D6
-client.urgent           #900000 #900000 #D6D6D6 #900000
+client.urgent           #E04B3E #E04B3E #D6D6D6 #E04B3E
 
 ### force titlebar and borders on all windows (avoid gtk3 csd borderless)
 for_window [class=".*"] border normal
@@ -32,7 +32,7 @@ bar {
         focused_workspace  #282828 #282828 #D6D6D6
         active_workspace   #686868 #686868 #D6D6D6
         inactive_workspace #D6D6D6 #D6D6D6 #282828
-        urgent_workspace   #900000 #900000 #D6D6D6
+        urgent_workspace   #E04B3E #E04B3E #D6D6D6
     }
 }
 
