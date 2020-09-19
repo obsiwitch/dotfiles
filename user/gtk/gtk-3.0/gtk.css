@@ -1,5 +1,10 @@
 /* Adwaita tweaks */
 
+/* Square elements */
+* {
+    border-radius: 0px;
+}
+
 /* Fix white border around windows in i3 */
 decoration {
     padding: 0;
