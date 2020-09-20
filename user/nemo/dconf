@@ -21,15 +21,12 @@ show-compact-view-icon-toolbar=false
 show-edit-icon-toolbar=false
 show-full-path-titles=true
 show-open-in-terminal-toolbar=true
-show-search-icon-toolbar=false
 size-prefixes='base-2'
-tooltips-in-list-view=true
-tooltips-show-mod-date=true
 disable-menu-warning=true
 thumbnail-limit=uint64 5242880
 
 [org/nemo/window-state]
-start-with-sidebar=true
 start-with-menu-bar=false
 start-with-toolbar=true
-start-with-status-bar=true
+start-with-sidebar=true
+start-with-status-bar=false

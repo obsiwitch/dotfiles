@@ -33,6 +33,7 @@ dotcp "$DOTUSERP/xfce4/power-manager.xml" \
       "$HOME/.config/xfce4/xfconf/xfce-perchannel-xml/"
 
 # file manager
+dbus-launch dconf reset -f '/org/nemo/'
 dbus-launch dconf load / < "$DOTUSERP/nemo/dconf"
 dotln "$DOTUSERP/nemo/actions" "$HOME/.local/share/nemo/"
 
