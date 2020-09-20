@@ -22,8 +22,9 @@ notebook > header tabs {
 }
 notebook > header tab {
     background-color: #eaeaea;
-    padding: 1px 6px;
-    margin: 0px 0px;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0 0;
 }
 notebook > header tab:checked {
     background-color: #eeeeee;
@@ -37,5 +38,5 @@ button:checked {
 
 /* Nemo floating status bar background */
 .nemo-window .floating-bar {
-    background-color: #eeeeee;
+    background-color: #eaeaea;
 }
