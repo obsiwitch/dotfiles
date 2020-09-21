@@ -62,9 +62,6 @@ setup.provision() {
     # X11
     dotcp "$DOTSYSP/xorg/"* '/etc/X11/xorg.conf.d/'
 
-    # firewall
-    dotcp "$DOTSYSP/security/nftables.conf" '/etc/'
-
     # sudo
     dotcp "$DOTSYSP/security/sudo_group" '/etc/sudoers.d/group'
     chmod 0440 '/etc/sudoers.d/group'
