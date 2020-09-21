@@ -8,7 +8,9 @@
 	editor = nvim
 	hooksPath = ~/.config/git/hooks
 [alias]
-	tree = log --graph --oneline --all --decorate
+	dotlog = log --graph --oneline --all --decorate
+	dotdiff = diff --patch-with-stat
+	dotshow = show --patch-with-stat
 [push]
 	default = simple
 [merge]
