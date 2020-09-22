@@ -44,7 +44,7 @@
 [urgency_critical]
     background = "#E04B3E"
     foreground = "#D6D6D6"
-    timeout = 10
+    timeout = 0
 
 [power_manager_brightness]
     appname = "xfce4-power-manager"
