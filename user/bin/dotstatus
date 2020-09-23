@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import json, asyncio, datetime, sys, logging, os
+import json, asyncio, datetime, sys, logging, os, re
 from pathlib import Path
 import subprocess as cmd
 
@@ -100,6 +100,36 @@ class BPackages(Block):
             self.out_once()
             await asyncio.sleep(3600)
 
+class BNetwork(Block):
+    ICONS = { 'none': '', 'limited': '', 'full': '', }
+
+    def on_click(self, event):
+        if event['button'] == 1:
+            cmd.run(['gnome-control-center', 'wifi'])
+        elif event['button'] == 3:
+            cmd.run(['nm-connection-editor'])
+
+    def on_msg(self, event): pass
+
+    def out_once(self, connectivity):
+        connection = cmd.sh('nmcli -t c show --active').split(':')
+        interface = connection[3][:-1]
+        name = connection[0]
+        self['full_text'] = f'{self.ICONS[connectivity]} {interface} {name}'
+        self.blocks.print()
+
+    async def out_loop(self):
+        connectivity = cmd.sh('nmcli -t g').split(':')[1]
+        self.out_once(connectivity)
+
+        nmcli = await asyncio.create_subprocess_shell('nmcli monitor',
+            stdout=cmd.PIPE)
+        while line:= await nmcli.stdout.readline():
+            line = line.decode()
+            logging.debug(line)
+            if m := re.match(r"Connectivity is now '(.*)'", line):
+                self.out_once(m.group(1))
+
 class Blocks(dict):
     def __init__(self):
         super().__init__()
@@ -148,6 +178,7 @@ class Blocks(dict):
         self.insert(BRAM)
         self.insert(BDisk)
         self.insert(BPackages)
+        self.insert(BNetwork)
         self.insert(BDateTime)
         self.loop.run_forever()
 
