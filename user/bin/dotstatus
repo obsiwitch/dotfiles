@@ -7,6 +7,7 @@ import subprocess as cmd
 RUNDIR = Path(f'/run/user/{os.getuid()}/dotstatus/')
 RUNDIR.mkdir(parents=True, exist_ok=True)
 LOGFILE = RUNDIR / 'log'
+PIPE = RUNDIR / 'pipe'
 
 cmd.sh = lambda cmdstr: cmd.check_output(cmdstr, shell=True, text=True)
 
@@ -31,6 +32,9 @@ class Block(dict):
         self.blocks = blocks
 
     def on_click(self, event):
+        self.out_once()
+
+    def on_msg(self, event):
         self.out_once()
 
     def out_once(self): pass
@@ -99,6 +103,8 @@ class BPackages(Block):
 class Blocks(dict):
     def __init__(self):
         super().__init__()
+        if not PIPE.exists():
+            os.mkfifo(str(PIPE))
         self.loop = asyncio.get_event_loop()
 
     def print(self):
@@ -113,6 +119,17 @@ class Blocks(dict):
             logging.debug(event)
             self[event['instance']].on_click(event)
 
+    async def msg_handler(self):
+        while True:
+            with await self.loop.run_in_executor(None, PIPE.open) as p:
+                line = await self.loop.run_in_executor(None, p.readline)
+                event = json.loads(line)
+                logging.debug(event)
+                for block in self.values():
+                    if block['name'] == event['dst']:
+                        logging.debug(block['instance'], event)
+                        self[block['instance']].on_msg(event)
+
     def insert(self, clsblock, **kwargs):
         block = clsblock(blocks=self, **kwargs)
         self[block['instance']] = block
@@ -126,6 +143,7 @@ class Blocks(dict):
 
         # async tasks
         self.loop.create_task(self.click_handler())
+        self.loop.create_task(self.msg_handler())
         self.insert(BCPU)
         self.insert(BRAM)
         self.insert(BDisk)
