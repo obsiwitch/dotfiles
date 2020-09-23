@@ -1,6 +1,0 @@
-#!/bin/bash
-
-set -o errexit -o nounset
-
-json="{ \"src\": \"$1\", \"dst\": \"$2\", \"msg\": \"$3\" }"
-echo "$json" > "/run/user/$UID/dotstatus/pipe"
