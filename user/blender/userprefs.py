@@ -13,6 +13,8 @@ bpy.ops.wm.save_homefile()
 # Preferences
 bpy.context.preferences.view.show_tooltips_python = True
 bpy.context.preferences.view.show_developer_ui = True
+bpy.context.preferences.view.show_statusbar_memory = True
+bpy.context.preferences.view.show_statusbar_stats = True
 bpy.context.preferences.inputs.use_auto_perspective = False
 
 # Addons
