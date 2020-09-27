@@ -5,6 +5,8 @@
 
 set $i3dir "$HOME/.config/i3/"
 set $mod Mod4
+set $exec exec --no-startup-id
+set $exec_always exec_always --no-startup-id
 
 # Theme ########################################################################
 
@@ -38,44 +40,43 @@ bar {
 
 # Autostart ####################################################################
 
-exec_always --no-startup-id xfce4-power-manager --restart
-exec_always --no-startup-id "killall nm-applet; nm-applet"
-exec_always --no-startup-id "killall pasystray; pasystray --notify=all"
-exec_always --no-startup-id "killall dunst; dunst"
-exec_always --no-startup-id dotscreen
-exec_always --no-startup-id feh --no-fehbg --bg-fill "$i3dir/wallpaper"
+$exec_always xfce4-power-manager --restart
+$exec_always "killall nm-applet; nm-applet"
+$exec_always "killall pasystray; pasystray --notify=all"
+$exec_always "killall dunst; dunst"
+$exec_always dotscreen
+$exec_always feh --no-fehbg --bg-fill "$i3dir/wallpaper"
 
 # Applications keybindings #####################################################
 
 ## launcher
-bindsym $mod+Return exec --no-startup-id dmenu_run
+bindsym $mod+Return $exec dmenu_run
 
 ## terminal
-bindsym $mod+Shift+Return exec --no-startup-id kitty
+bindsym $mod+Shift+Return $exec kitty
 
 ## file manager
-bindsym $mod+Ctrl+Return exec --no-startup-id nemo
+bindsym $mod+Ctrl+Return $exec nemo
 
 ## lock screen
-bindsym --release $mod+l exec --no-startup-id xflock4
+bindsym --release $mod+l $exec xflock4
 
 ## exit i3
-bindsym $mod+e exec --no-startup-id dotexit
+bindsym $mod+e $exec dotexit
 
 ## screenshots
-bindsym Print exec --no-startup-id xfce4-screenshooter
+bindsym Print $exec xfce4-screenshooter
 
 ## volume
-bindsym XF86AudioMute        exec --no-startup-id pamixer --toggle-mute
-bindsym XF86AudioLowerVolume exec --no-startup-id pamixer --decrease 5
-bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer --increase 5
+bindsym XF86AudioMute        $exec pamixer --toggle-mute
+bindsym XF86AudioLowerVolume $exec pamixer --decrease 5
+bindsym XF86AudioRaiseVolume $exec pamixer --increase 5
 
 ## music
-bindsym Control+F9  exec --no-startup-id quodlibet --play-pause
-bindsym Control+F10 exec --no-startup-id quodlibet --previous
-bindsym Control+F11 exec --no-startup-id quodlibet --next
-bindsym Shift+F9 exec --no-startup-id notify-send \
-    "Music" "$(quodlibet --print-playing)"
+bindsym Control+F9  $exec quodlibet --play-pause
+bindsym Control+F10 $exec quodlibet --previous
+bindsym Control+F11 $exec quodlibet --next
+bindsym Shift+F9 $exec notify-send "Music" "$(quodlibet --print-playing)"
 
 # WM keybindings ###############################################################
 
