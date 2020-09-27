@@ -1,0 +1,29 @@
+#!/bin/bash
+
+dotpa_print() {
+    local in out
+    out="$(pamixer --get-volume-human | sed s'/muted//')"
+    in="$(pamixer --default-source --get-volume-human | sed s'/muted//')"
+    echo " $out  $in"
+}
+
+dotpa_monitor() {
+    dotpa_print
+    pactl subscribe | while read -r line; do
+        # discard sink-input events
+        if grep -q 'sink-input' <<< "$line"; then continue; fi
+
+        # if multiple lines can be read approximately at the same time, discard
+        # them to avoid updating the block multiple times in a row
+        while read -rt0.1; do :; done
+
+        dotpa_print
+        for _ in {1..6}; do read -r; done # discard pamixer events
+    done
+}
+
+if [[ "$1" == "pulseaudio" ]]; then
+    dotpa_monitor
+else
+    exit 1
+fi
