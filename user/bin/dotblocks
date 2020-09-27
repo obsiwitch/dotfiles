@@ -22,8 +22,18 @@ dotpa_monitor() {
     done
 }
 
+dotcpu() {
+    local load temp
+    load="$(awk '{ print $1 }' /proc/loadavg)"
+    temp="$(sensors coretemp-isa-0000 \
+        | awk 'NR == 3 { gsub("+", "", $4); print $4 }')"
+    echo " $load  $temp"
+}
+
 if [[ "$1" == "pulseaudio" ]]; then
     dotpa_monitor
+elif [[ "$1" == "cpu" ]]; then
+    dotcpu
 else
     exit 1
 fi
