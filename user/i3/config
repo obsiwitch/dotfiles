@@ -67,6 +67,12 @@ bindsym $mod+e $exec dotexit
 ## screenshots
 bindsym Print $exec xfce4-screenshooter
 
+## brightness
+bindsym XF86MonBrightnessDown $exec xbacklight -steps 1 -5 \
+    && pkill -RTMIN+15 i3blocks
+bindsym XF86MonBrightnessUp $exec xbacklight -steps 1 +5 \
+    && pkill -RTMIN+15 i3blocks
+
 ## volume
 bindsym XF86AudioMute        $exec pamixer --toggle-mute
 bindsym XF86AudioLowerVolume $exec pamixer --decrease 5

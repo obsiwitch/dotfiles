@@ -45,8 +45,3 @@
     background = "#E04B3E"
     foreground = "#D6D6D6"
     timeout = 0
-
-[power_manager_brightness]
-    appname = "xfce4-power-manager"
-    body    = "Brightness*"
-    format  = "<b>%s</b>\nBrightness: %p"

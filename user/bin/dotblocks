@@ -30,10 +30,20 @@ dotcpu() {
     echo " $load  $temp"
 }
 
+dotpower() {
+    local power backlight
+    power="$(upower -i '/org/freedesktop/UPower/devices/battery_BAT0' \
+        | awk '/percentage/ { print $2 }')"
+    backlight="$(xbacklight | xargs printf '%.0f%%')"
+    echo " $backlight  $power"
+}
+
 if [[ "$1" == "pulseaudio" ]]; then
     dotpa_monitor
 elif [[ "$1" == "cpu" ]]; then
     dotcpu
+elif [[ "$1" == "power" ]]; then
+    dotpower
 else
     exit 1
 fi
