@@ -22,14 +22,6 @@ dotpa_monitor() {
     done
 }
 
-dotcpu() {
-    local load temp
-    load="$(awk '{ print $1 }' /proc/loadavg)"
-    temp="$(sensors coretemp-isa-0000 \
-        | awk 'NR == 3 { gsub("+", "", $4); print $4 }')"
-    echo " $load  $temp"
-}
-
 dotpower() {
     local power backlight
     power="$(upower -i '/org/freedesktop/UPower/devices/battery_BAT0' \
@@ -40,8 +32,6 @@ dotpower() {
 
 if [[ "$1" == "pulseaudio" ]]; then
     dotpa_monitor
-elif [[ "$1" == "cpu" ]]; then
-    dotcpu
 elif [[ "$1" == "power" ]]; then
     dotpower
 else
