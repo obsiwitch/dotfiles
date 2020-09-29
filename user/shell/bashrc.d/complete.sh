@@ -16,7 +16,7 @@ _fzf_select() {
     READLINE_POINT=$(( $READLINE_POINT + ${#selected} ))
 }
 bind -x '"\C-f": _fzf_select "$PWD"'
-bind -x '"\C-g": _fzf_select "$HOME" "$HOME/Documents"'
+bind -x '"\C-g": _fzf_select "$HOME"'
 
 # Completion fallback for commands handled by bash-completion _longopt and _cd.
 # Restore glob completion. See unmerged pull-request [Handle ambiguous globs

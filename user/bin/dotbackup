@@ -3,15 +3,12 @@
 set -o errexit -o nounset
 
 backup_borg() {
-    mount | grep "$HOME/.dotprivate/encrypted" || {
-        echo -n 'Mount dotprivate: '
-        dotprivate mount
-    }
     borg init --encryption='repokey-blake2' "$1" || :
     borg create "${1}::{now}" \
         "$HOME/.dotfiles" \
         "$HOME/.dotprivate" \
         "$HOME/.mozilla" \
+        "$HOME/Documents" \
         --progress --stats
 }
 
@@ -19,7 +16,6 @@ backup_extdrive() {
     local out="/run/media/$USER/yayaka_storage/$USER"
     rsync --archive --delete --protect-args --progress \
         --exclude='.cache' \
-        --exclude=".dotprivate/plaintext" \
         "$HOME/" "$out/rsync"
 
     backup_borg "$out/borg"
