@@ -30,9 +30,9 @@
     export PATH="$HOME/.local/dotbin:$PATH"
     export PYTHONPATH="$HOME/.local/dotlib/python:$PYTHONPATH"
 
-    ## Applications: binaries directly downloaded from websites. Added at the
-    ## end of PATH to avoid masking already existing commands. For applications
-    ## in a directory, make an absolute symlink in 'Applications' to the binary
-    ## (e.g. ln -s "$HOME/Applications/[...]/aseprite" "$HOME/Applications/")
+    # Applications: binaries directly downloaded from websites. Added at the
+    # end of PATH to avoid masking already existing commands. For applications
+    # in a directory, make an absolute symlink in 'Applications' to the binary
+    # (e.g. ln -s "$HOME/Applications/[...]/aseprite" "$HOME/Applications/")
     export PATH="$PATH:$HOME/Applications"
 }

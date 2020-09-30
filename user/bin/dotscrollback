@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -o errexit -o nounset
+
+# 1. delete prompt
+# 2. suppress repeated empty output lines
+# 3. open neovim in read-only mode and go to the end of the scrollback buffer
+perl -pe 's/^┌(\[.*\]){4,}\n// ; s/└//' \
+    | cat --squeeze-blank \
+    | nvim -R '+'
