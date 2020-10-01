@@ -22,18 +22,25 @@ dotpa_out() {
     echo " $(pamixer --get-volume-human | sed s'/muted//')"
 }
 
+dotbrightness() {
+    case "${button:-}" in
+        4) xbacklight -steps 1 +5;;
+        5) xbacklight -steps 1 -5;;
+    esac
+    echo " $(xbacklight | xargs printf '%.0f%%')"
+}
+
 dotpower() {
-    local power backlight
-    power="$(upower -i '/org/freedesktop/UPower/devices/battery_BAT0' \
+    echo " $(upower -i '/org/freedesktop/UPower/devices/battery_BAT0' \
         | awk '/percentage/ { print $2 }')"
-    backlight="$(xbacklight | xargs printf '%.0f%%')"
-    echo " $backlight  $power"
 }
 
 if [[ "$1" == "pa_in" ]]; then
     dotpa_in
 elif [[ "$1" == "pa_out" ]]; then
     dotpa_out
+elif [[ "$1" == "brightness" ]]; then
+    dotbrightness
 elif [[ "$1" == "power" ]]; then
     dotpower
 else
