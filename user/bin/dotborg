@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -o errexit -o nounset
+
+export BORG_REPO="$HOME/Snapshots"
+
+snapshot() {
+    borg create --progress --stats --comment="${2:-}" \
+        "${1:-}::{now:%Y-%m-%d-%H-%M-%S}"  \
+        "$HOME/.dotfiles" \
+        "$HOME/.dotprivate" \
+        "$HOME/.mozilla" \
+        "$HOME/Documents"
+}
+
+if [[ -z "${1:-}" ]]; then
+    borg
+    echo "
+    snapshot [repo] [comment]
+        create snapshot of $HOME (partial) in [repo=$BORG_REPO]
+    head
+        display name of latest archive"
+elif [[ "$1" == 'snapshot' ]]; then
+    snapshot "${@:2}"
+elif [[ "$1" == 'head' ]]; then
+    borg list --last=1 --format='{archive}' "${@:2}"
+elif [[ "$1" == 'list' && "$*" != *'::'* ]]; then
+    borg list --format='* {archive} · {comment}{NL}' "${@:2}"
+else
+    borg "$@"
+fi
