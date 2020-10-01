@@ -4,12 +4,6 @@ set -o errexit -o nounset
 
 # Synopsis
 #   cmd | cbt
-#   cbt txt
 # Description
-#   Copy text to clipboard.
-
-if [[ "$#" -eq 0 ]]; then
-    cat
-else
-    echo "$*"
-fi | xclip -rmlastnl -selection clipboard
+#   Copy text from stdin to clipboard.
+nohup xclip -rmlastnl -selection clipboard &> /dev/null
