@@ -11,7 +11,10 @@
 	dotlog = log --graph --oneline --all --decorate
 	dotdiff = diff --patch-with-stat
 	dotshow = show --patch-with-stat
+	dotstatus = status --show-stash -vv
 [push]
 	default = simple
 [merge]
 	tool = meld
+[pager]
+	dotstatus = true
