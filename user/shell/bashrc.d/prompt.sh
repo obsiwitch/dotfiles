@@ -2,6 +2,8 @@
 
 [[ $- != *i* ]] && return
 
+source /usr/share/git/completion/git-prompt.sh
+
 __prompt() {
     local exit="$?"
 
@@ -24,21 +26,24 @@ __prompt() {
         test -z "$1" && return 1
         local prefix="${3}"
         local suffix="${4}"
-        local color="\[$(tput setaf "$2")\]"
-        local reset="\[$(tput sgr0)\]"
+        local color; color="\[$(tput setaf "$2")\]"
+        local reset; reset="\[$(tput sgr0)\]"
         echo -n "${prefix}${color}$1${reset}${suffix}"
     }
 
     prompt_git() {
-        local branch=$( ( \
-            git symbolic-ref --short HEAD \
-         || git rev-parse --short HEAD \
-        ) 2>/dev/null )
-        prompt_block "$branch" $blue2 '[' ']'
+        local status; status="$(
+            GIT_PS1_SHOWDIRTYSTATE=1 \
+            GIT_PS1_SHOWSTASHSTATE=1 \
+            GIT_PS1_SHOWUNTRACKEDFILES=1 \
+            GIT_PS1_SHOWUPSTREAM='auto' \
+            __git_ps1 '%s'
+        )"
+        prompt_block "$status" $blue2 '[' ']'
     }
 
     prompt_jobs() {
-        jobs -l | tr --squeeze-repeats ' ' | while read job; do
+        jobs -l | tr --squeeze-repeats ' ' | while read -r job; do
             prompt_block "$job" $yellow2 '│ ' '\n'
         done
     }
@@ -53,10 +58,10 @@ __prompt() {
     }
 
     prompt_prompt() {
-        local btime=$(prompt_block '\A' $purple1 '[' ']')
-        local buser=$(prompt_block '\u' $red1 '[' ']')
-        local bhost=$(prompt_block '\h' $red2 '[' ']')
-        local bpwd=$(prompt_block '\w' $blue1 '[' ']')
+        local btime; btime=$(prompt_block '\A' $purple1 '[' ']')
+        local buser; buser=$(prompt_block '\u' $red1 '[' ']')
+        local bhost; bhost=$(prompt_block '\h' $red2 '[' ']')
+        local bpwd; bpwd=$(prompt_block '\w' $blue1 '[' ']')
         PS1="$(prompt_status '┌')${btime}${buser}${bhost}${bpwd}$(prompt_git)\n"
         PS1="$PS1$(prompt_jobs)"
         PS1="$PS1$(prompt_status '└> ')"
