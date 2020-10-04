@@ -102,7 +102,6 @@ bindsym $mod+Shift+Right move right
 
 ## kill focused window
 bindsym $mod+q kill
-bindsym Control+q nop
 
 ## fullscreen focused window
 bindsym $mod+f fullscreen toggle
