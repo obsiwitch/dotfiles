@@ -2,34 +2,25 @@
 
 set -o errexit -o nounset
 
-backup_borg() {
-    borg init --encryption='repokey-blake2' "$1" || :
-    borg create "${1}::{now}" \
-        "$HOME/.dotfiles" \
-        "$HOME/.dotprivate" \
-        "$HOME/.mozilla" \
-        "$HOME/Documents" \
-        --progress --stats
-}
-
+# External drive: fs encrypted w/ dm-crypt
+# * rsync home including borg ~/Snapshots (encryption=none)
 backup_extdrive() {
-    local out="/run/media/$USER/yayaka_storage/$USER"
+    local out="/run/media/$USER/extyayaka"
+    dotborg snapshot '' 'backup_extdrive'
+    dotborg check
     rsync --archive --delete --protect-args --progress \
-        --exclude='.cache' \
-        "$HOME/" "$out/rsync"
-
-    backup_borg "$out/borg"
+        --exclude='.cache' "$HOME" "$out"
 }
 
+# Phone SD card: no encryption
+# * rsync entertainment
+# * borg snapshot (encryption=repokey-blake2)
 backup_phone() {
     local out="/run/media/$USER/C2C2-14E6/"
     rsync --archive --delete --protect-args --progress --size-only \
-          "$HOME/Downloads" \
-          "$HOME/Music" \
-          "$HOME/.dotprivate/keepass" \
-          "$out/rsync"
-
-    backup_borg "$out/borg"
+          "$HOME/Downloads" "$HOME/Music" "$HOME/.dotprivate" "$out/rsync"
+    dotborg snapshot "$out/borg" 'backup_phone'
+    dotborg check "$out/borg"
 }
 
 help() {
