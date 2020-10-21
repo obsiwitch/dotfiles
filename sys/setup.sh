@@ -30,7 +30,7 @@ setup.bootstrap() {
 
 setup.packages.cli() {
     pacman --root="${1:-/}" -Syu --needed \
-        base base-devel linux-lts linux-firmware intel-ucode amd-ucode grub \
+        base base-devel linux linux-firmware intel-ucode amd-ucode grub \
         pacman-contrib arch-install-scripts networkmanager nftables \
         man bash-completion shellcheck less moreutils nano neovim git python \
         python-pip fzf pdfgrep jq yq wget curl links openssh nmap whois \
@@ -57,7 +57,7 @@ setup.packages.gui() {
 
 setup.provision() {
     # kernel modules
-    dotcp "$DOTSYSP/kernel/blacklist.conf" '/etc/modprobe.d/'
+    dotcp "$DOTSYSP/kernel/"* '/etc/modprobe.d/'
 
     # X11
     dotcp "$DOTSYSP/xorg/"* '/etc/X11/xorg.conf.d/'
