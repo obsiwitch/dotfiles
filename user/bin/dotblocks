@@ -9,7 +9,8 @@ dotpa_in() {
         4) pamixer --default-source --increase 5;;
         5) pamixer --default-source --decrease 5;;
     esac
-    echo " $(pamixer --default-source --get-volume-human | sed s'/muted//')"
+    echo "$(pamixer --default-source --get-mute --get-volume \
+            | sed -e 's/false//' -e 's/true//')%"
 }
 
 dotpa_out() {
@@ -19,7 +20,8 @@ dotpa_out() {
         4) pamixer --increase 5;;
         5) pamixer --decrease 5;;
     esac
-    echo " $(pamixer --get-volume-human | sed s'/muted//')"
+    echo "$(pamixer --get-mute --get-volume \
+            | sed -e 's/false//' -e 's/true//')%"
 }
 
 dotbrightness() {
