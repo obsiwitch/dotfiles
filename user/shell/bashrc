@@ -8,7 +8,7 @@
 
     # Pager
     export PAGER='less'
-    export LESS='--RAW-CONTROL-CHARS'
+    export LESS='--RAW-CONTROL-CHARS --no-init'
     export LESSHISTFILE='-'
 
     # Check the window size after each command and, if necessary, update the
