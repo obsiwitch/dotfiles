@@ -14,13 +14,13 @@ backup_extdrive() {
 
 # Phone SD card: no encryption
 # * rsync entertainment
-# * borg snapshot (encryption=repokey-blake2)
+# * borg export-tar | gpg symmetric
 backup_phone() {
     local out="/run/media/$USER/C2C2-14E6/"
-    rsync --archive --delete --protect-args --progress --size-only \
-          "$HOME/Downloads" "$HOME/Music" "$HOME/.dotprivate" "$out/rsync"
-    dotborg snapshot "$out/borg" 'backup_phone'
-    dotborg check "$out/borg"
+    rsync --recursive --delete --protect-args --progress --size-only \
+          "$HOME/Downloads" "$HOME/Music" "$HOME/.dotprivate" "$out"
+    dotborg export-tar --progress "::$(dotborg head)" - \
+        |  gpg --symmetric --output "$out/borg.tar.enc"
 }
 
 help() {
