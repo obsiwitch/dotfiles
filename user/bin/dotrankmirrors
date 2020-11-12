@@ -2,6 +2,7 @@
 
 set -o errexit -o nounset
 
+ping -c1 archlinux.org
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.old
 curl -s 'https://www.archlinux.org/mirrorlist/?country=FR&protocol=https' \
     | sed 's/#//' \
