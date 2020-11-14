@@ -1,10 +1,13 @@
 #!/bin/bash
 
-set -o errexit -o nounset
+set -o errexit -o nounset -o pipefail
 
-ping -c1 archlinux.org
-cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.old
-curl -s 'https://www.archlinux.org/mirrorlist/?country=FR&protocol=https' \
+mv '/etc/pacman.d/mirrorlist' '/etc/pacman.d/mirrorlist.old'
+if ! curl -s 'https://www.archlinux.org/mirrorlist/?country=FR&protocol=https' \
     | sed 's/#//' \
     | rankmirrors -n 5 - \
-    | tee /etc/pacman.d/mirrorlist
+    | tee '/etc/pacman.d/mirrorlist'
+then
+    mv '/etc/pacman.d/mirrorlist.old' '/etc/pacman.d/mirrorlist'
+    exit 1
+fi
