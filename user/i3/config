@@ -72,7 +72,7 @@ bindsym XF86MonBrightnessDown $exec xbacklight -steps 1 -5 \
 bindsym XF86MonBrightnessUp $exec xbacklight -steps 1 +5 \
     && pkill -RTMIN+15 i3blocks
 
-## volume
+## audio: output
 bindsym XF86AudioMute $exec pamixer --toggle-mute \
     && pkill -RTMIN+14 i3blocks
 bindsym XF86AudioLowerVolume $exec pamixer --decrease 5 \
@@ -80,7 +80,15 @@ bindsym XF86AudioLowerVolume $exec pamixer --decrease 5 \
 bindsym XF86AudioRaiseVolume $exec pamixer --increase 5 \
     && pkill -RTMIN+14 i3blocks
 
-## music
+## audio: input
+bindsym Mod1+F9 $exec pamixer --default-source --toggle-mute \
+    && pkill -RTMIN+14 i3blocks
+bindsym Mod1+F10 $exec pamixer --default-source --decrease 5 \
+    && pkill -RTMIN+14 i3blocks
+bindsym Mod1+F11 $exec pamixer --default-source --increase 5 \
+    && pkill -RTMIN+14 i3blocks
+
+## audio: music
 bindsym Control+F9  $exec quodlibet --play-pause
 bindsym Control+F10 $exec quodlibet --previous
 bindsym Control+F11 $exec quodlibet --next
