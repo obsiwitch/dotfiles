@@ -10,15 +10,22 @@ setup.help() {
     echo 'Arch install script'
     echo
     echo 'useful external tools:'
-    echo '* keymap: loadkeys fr'
-    echo '* network: wifi-menu'
-    echo '* partition: fdisk cfdisk cgdisk parted mkfs mkswap swapon genfstab'
+    echo '* partition: cfdisk cgdisk parted mkfs mkswap swapon genfstab'
     echo '* container: arch-chroot systemd-nspawn machinectl'
     echo
     echo "usage: $(basename "$0") <cmd>"
     echo '  provision'
     echo '  configure'
     echo '  bootloader [device]'
+}
+
+setup.live.conf() {
+    # loadkeys fr
+    # iwctl
+    # pacman -Sy archlinux-keyring pacman-contrib git
+    # git clone https://gitlab.com/Obsidienne/dotfiles.git
+    dotrankmirrors
+    cfdisk  # gpt: EFI system (512MiB), Linux filesystem (remainder)
 }
 
 setup.provision() {
