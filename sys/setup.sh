@@ -14,6 +14,8 @@ setup.help() {
     echo '* container: arch-chroot systemd-nspawn machinectl'
     echo
     echo "usage: $(basename "$0") <cmd>"
+    echo '  live.conf'
+    echo '  sys.init <root partition> <boot partition>'
     echo '  provision'
     echo '  configure'
     echo '  bootloader [device]'
@@ -26,6 +28,36 @@ setup.live.conf() {
     # git clone https://gitlab.com/Obsidienne/dotfiles.git
     dotrankmirrors
     cfdisk  # gpt: EFI system (512MiB), Linux filesystem (remainder)
+}
+
+setup.sys.init() {
+    # root partition: dm-crypt + LUKS, ext4
+    cryptsetup --verify-passphrase luksFormat "$1"
+    cryptsetup open "$1" 'cryptroot'
+    mkfs.ext4 '/dev/mapper/cryptroot'
+    mount '/dev/mapper/cryptroot' '/mnt'
+
+    # boot partition
+    mkfs.fat -F32 "$2"
+    mkdir '/mnt/boot'
+    mount "$2" '/mnt/boot'
+
+    # swap file
+    dd if='/dev/zero' of='/mnt/swapfile' bs=1M count=8192 status=progress
+    chmod 600 '/mnt/swapfile'
+    mkswap '/mnt/swapfile'
+    swapon '/mnt/swapfile'
+
+    # packages
+    pacstrap -i '/mnt' base base-devel linux linux-firmware intel-ucode \
+        amd-ucode grub efibootmgr archiso pacman-contrib networkmanager \
+        nftables
+
+    # fstab
+    genfstab -U '/mnt' > '/mnt/etc/fstab'
+
+    # copy dotfiles
+    cp -r "$DOTFILESP" '/mnt/root/'
 }
 
 setup.provision() {
