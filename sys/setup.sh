@@ -9,9 +9,10 @@ PATH="$DOTFILESP/user/bin:$PATH"
 setup.help() {
     echo 'Arch install script'
     echo
-    echo 'useful external tools:'
-    echo '* partition: cfdisk cgdisk parted mkfs mkswap swapon genfstab'
-    echo '* container: arch-chroot systemd-nspawn machinectl'
+    echo 'references:'
+    echo '* https://wiki.archlinux.org/index.php/installation_guide'
+    echo '* https://wiki.archlinux.org/index.php/Dm-crypt'
+    echo '* https://wiki.archlinux.org/index.php/Partitioning'
     echo
     echo "usage: $(basename "$0") <cmd>"
     echo '  live.conf'
