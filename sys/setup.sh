@@ -16,9 +16,8 @@ setup.help() {
     echo "usage: $(basename "$0") <cmd>"
     echo '  live.conf'
     echo '  sys.init <root partition> <boot partition>'
-    echo '  provision'
-    echo '  configure'
-    echo '  bootloader [device]'
+    echo '  sys.conf'
+    echo '  sys.systemd'
 }
 
 setup.live.conf() {
@@ -60,26 +59,21 @@ setup.sys.init() {
     cp -r "$DOTFILESP" '/mnt/root/'
 }
 
-setup.provision() {
+setup.sys.conf() {
     # kernel modules
-    dotcp "$DOTSYSP/kernel/"* '/etc/modprobe.d/'
+    cp -r "$DOTSYSP/etc/modprobe.d" '/etc'
 
     # X11
-    dotcp "$DOTSYSP/xorg/"* '/etc/X11/xorg.conf.d/'
+    cp -r "$DOTSYSP/etc/X11" '/etc'
 
     # sudo
-    dotcp "$DOTSYSP/security/sudo_group" '/etc/sudoers.d/group'
-    chmod 0440 '/etc/sudoers.d/group'
-}
+    sed -i '/^# %sudo\tALL/ s/^# //' '/etc/sudoers'
 
-setup.configure() {
-    # time
-    timedatectl set-timezone Europe/Paris
-    timedatectl set-ntp true
-    timedatectl set-local-rtc false
+    # time zone
+    ln -sf '/usr/share/zoneinfo/Europe/Paris' '/etc/localtime'
 
-    # locale
-    sed -i '/^#en_US.UTF-8/ s/^#//' /etc/locale.gen
+    # localization
+    sed -i '/^#en_US.UTF-8/ s/^#//' '/etc/locale.gen'
     locale-gen
     echo 'LANG=en_US.UTF-8' > /etc/locale.conf
     echo 'KEYMAP=fr' > /etc/vconsole.conf
@@ -87,25 +81,27 @@ setup.configure() {
     # network
     echo 'nanoha' > /etc/hostname
 
-    # users
-    echo 'root' && passwd root
-    groupadd sudo || :
-    useradd luna --create-home --groups sudo || :
-    echo 'luna' && passwd luna
+    # initramfs (requires: /etc/vconsole.conf)
+    cp {"$DOTSYSP",}'/etc/mkinitcpio.conf'
+    mkinitcpio --allpresets
 
-    # services
-    systemctl enable NetworkManager.service
-    systemctl enable nftables.service
+    # bootloader
+    cp {"$DOTSYSP",}'/etc/default/grub'
+    grub-install --target='x86_64-efi' --efi-directory='/boot'
+    grub-mkconfig -o '/boot/grub/grub.cfg'
+
+    # users
+    echo -n 'root '; passwd root
+    groupadd sudo
+    useradd luna --create-home --groups sudo
+    echo -n 'luna '; passwd luna
 }
 
-setup.bootloader() {
-    if [[ -d /sys/firmware/efi ]]; then
-        grub-install --target='x86_64-efi' --efi-directory='/boot/efi'
-    else
-        [[ -b "${1:-}" ]] || doterr 'specify a block device'
-        grub-install --target='i386-pc' "$1"
-    fi
-    grub-mkconfig -o /boot/grub/grub.cfg
+setup.sys.systemd() {
+    timedatectl set-ntp true
+    timedatectl set-local-rtc false
+    systemctl enable --now NetworkManager.service
+    systemctl enable --now nftables.service
 }
 
 if [[ "$(type -t "setup.${1:-}")" == 'function' ]]; then
