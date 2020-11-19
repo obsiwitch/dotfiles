@@ -16,43 +16,9 @@ setup.help() {
     echo '* container: arch-chroot systemd-nspawn machinectl'
     echo
     echo "usage: $(basename "$0") <cmd>"
-    echo '  bootstrap <root>'
-    echo '  packages.{cli,gui} [root]'
     echo '  provision'
     echo '  configure'
     echo '  bootloader [device]'
-}
-
-setup.bootstrap() {
-    [[ -d "${1:-}" ]] || doterr 'specify root directory'
-    pacstrap -i "$1"
-}
-
-setup.packages.cli() {
-    pacman --root="${1:-/}" -Syu --needed \
-        base base-devel linux linux-firmware intel-ucode amd-ucode grub \
-        pacman-contrib arch-install-scripts networkmanager nftables \
-        man bash-completion shellcheck less moreutils nano neovim git python \
-        python-pip fzf pdfgrep jq yq wget curl links openssh nmap whois \
-        speedtest-cli youtube-dl rsync ranger trash-cli atool p7zip unrar unzip \
-        zip htop iotop glances lshw ncdu tree nethogs android-tools gocryptfs \
-        imagemagick inotify-tools dosfstools tcc gdb valgrind testdisk borg \
-        python-llfuse
-}
-
-setup.packages.gui() {
-    pacman --root="${1:-/}" -Syu --needed \
-        xorg xorg-xinit xf86-video-intel arandr xclip \
-        pulseaudio pamixer pavucontrol pasystray \
-        xfce4-power-manager network-manager-applet gnome-themes-extra \
-        papirus-icon-theme kitty thunar tumbler ffmpegthumbnailer nemo \
-        dconf-editor gvfs gvfs-mtp meld firefox transmission-gtk soundconverter \
-        quodlibet gimp tiled inkscape eom mpv blender openscad evince mupdf \
-        texlive-most texlive-langextra pandoc libreoffice hunspell-fr \
-        hunspell-en_US adobe-source-han-sans-jp-fonts otf-font-awesome gedit \
-        atom galculator keepassxc gparted xfce4-screenshooter \
-        simplescreenrecorder ghex i3 dmenu rofi dunst feh \
-        cups hplip system-config-printer sane simplescan file-roller
 }
 
 setup.provision() {
