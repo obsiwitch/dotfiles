@@ -16,7 +16,7 @@ setup.help() {
     echo
     echo "usage: $(basename "$0") <cmd>"
     echo '  live.conf'
-    echo '  sys.init <root partition> <boot partition>'
+    echo '  sys.init <device>'
     echo '  sys.conf'
     echo '  sys.systemd'
 }
@@ -27,20 +27,26 @@ setup.live.conf() {
     # pacman -Sy archlinux-keyring pacman-contrib git
     # git clone https://gitlab.com/Obsidienne/dotfiles.git
     dotrankmirrors
-    cfdisk  # gpt: EFI system (512MiB), Linux filesystem (remainder)
 }
 
 setup.sys.init() {
+    # partitioning
+    local device="$1"
+    parted "$device" \
+        mklabel gpt \
+        mkpart 'ESP' fat32 1MiB 513MiB \
+        mkpart 'Arch' ext4 513MiB 100%
+
     # root partition: dm-crypt + LUKS, ext4
-    cryptsetup --verify-passphrase luksFormat "$1"
-    cryptsetup open "$1" 'cryptroot'
+    cryptsetup --verify-passphrase luksFormat "${device}2"
+    cryptsetup open "${device}2" 'cryptroot'
     mkfs.ext4 '/dev/mapper/cryptroot'
     mount '/dev/mapper/cryptroot' '/mnt'
 
     # boot partition
-    mkfs.fat -F32 "$2"
+    mkfs.fat -F32 "${device}1"
     mkdir '/mnt/boot'
-    mount "$2" '/mnt/boot'
+    mount "${device}1" '/mnt/boot'
 
     # swap file
     dd if='/dev/zero' of='/mnt/swapfile' bs=1M count=8192 status=progress
