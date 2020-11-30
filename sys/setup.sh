@@ -6,6 +6,8 @@ DOTFILESP="$(realpath "$(dirname "$0")/..")"
 DOTSYSP="$DOTFILESP/sys"
 PATH="$DOTFILESP/user/bin:$PATH"
 
+dotpatch() { patch --reject-file='/dev/stderr'; }
+
 setup.help() {
     echo 'Arch install script'
     echo
@@ -87,6 +89,9 @@ setup.sys.conf() {
 
     # network
     echo 'nanoha' > /etc/hostname
+
+    # pacman
+    dotpatch '/etc/pacman.conf' "$DOTSYSP/etc/pacman.conf.patch"
 
     # initramfs (requires: /etc/vconsole.conf)
     cp {"$DOTSYSP",}'/etc/mkinitcpio.conf'
