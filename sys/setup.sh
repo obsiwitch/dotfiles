@@ -77,6 +77,7 @@ setup.sys.conf() {
 
     # sudo
     sed -i '/^# %sudo\tALL/ s/^# //' '/etc/sudoers'
+    groupadd -f sudo
 
     # time zone
     ln -sf '/usr/share/zoneinfo/Europe/Paris' '/etc/localtime'
@@ -103,10 +104,7 @@ setup.sys.conf() {
     grub-mkconfig -o '/boot/grub/grub.cfg'
 
     # users
-    echo -n 'root '; passwd root
-    groupadd sudo
-    useradd luna --create-home --groups sudo
-    echo -n 'luna '; passwd luna
+    useradd luna --create-home --groups sudo || [[ "$?" -eq 9 ]]
 }
 
 setup.sys.systemd() {
