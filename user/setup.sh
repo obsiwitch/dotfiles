@@ -32,7 +32,6 @@ dotln "$DOTUSERP/gtk/gtk-3.0" "$HOME/.config/"
 cp -r "$DOTUSERP/xfce4" "$HOME/.config"
 
 # file manager
-dconf reset -f '/org/nemo/'
 dconf load / < "$DOTUSERP/nemo/dconf"
 dotln "$DOTUSERP/nemo/actions" "$HOME/.local/share/nemo/"
 
@@ -56,3 +55,6 @@ if command -v blender; then
     "$DOTUSERP/blender/userprefs.py"
 fi > /dev/null
 dotln "$DOTUSERP/blender/blenderimport.desktop" "$HOME/.local/share/applications/"
+
+# ibus
+dconf load / < "$DOTUSERP/ibus/dconf"

@@ -1,0 +1,12 @@
+[desktop/ibus/general]
+preload-engines=['table:latex']
+
+[desktop/ibus/general/hotkey]
+triggers=['']
+
+[desktop/ibus/panel/emoji]
+hotkey=['']
+unicode-hotkey=['']
+
+[org/freedesktop/ibus/engine/table/latex]
+keybindings={'commit_candidate_to_preedit_10': <@as []>, 'commit_candidate_to_preedit_3': <@as []>, 'commit_to_preedit': <@as []>, 'remove_candidate_2': <@as []>, 'commit_candidate_to_preedit_9': <@as []>, 'remove_candidate_10': <@as []>, 'commit_candidate_5': <@as []>, 'lookup_table_page_up': <['Page_Up', 'KP_Page_Up', 'KP_Prior', 'minus']>, 'commit_candidate_to_preedit_4': <@as []>, 'setup': <@as []>, 'remove_candidate_8': <@as []>, 'switch_to_next_chinese_mode': <@as []>, 'commit_candidate_6': <@as []>, 'remove_candidate_3': <@as []>, 'select_previous_candidate_in_current_page': <@as []>, 'remove_candidate_9': <@as []>, 'commit_candidate_1': <@as []>, 'commit_candidate_to_preedit_5': <@as []>, 'commit_candidate_7': <@as []>, 'remove_candidate_4': <@as []>, 'toggle_input_mode_on_off': <@as []>, 'commit_candidate_10': <@as []>, 'commit_candidate_2': <@as []>, 'toggle_letter_width': <@as []>, 'commit_candidate_to_preedit_6': <@as []>, 'remove_candidate_5': <@as []>, 'commit_candidate_8': <@as []>, 'commit_candidate_to_preedit_1': <@as []>, 'lookup_table_page_down': <['Page_Down', 'KP_Page_Down', 'KP_Next', 'equal']>, 'toggle_pinyin_mode': <@as []>, 'commit_candidate_3': <@as []>, 'commit_candidate_to_preedit_7': <@as []>, 'cancel': <['Escape']>, 'select_next_candidate_in_current_page': <@as []>, 'commit_candidate_9': <@as []>, 'commit_candidate_to_preedit_2': <@as []>, 'commit': <['space', 'Return']>, 'remove_candidate_6': <@as []>, 'toggle_punctuation_width': <@as []>, 'toggle_autocommit_mode': <@as []>, 'commit_candidate_4': <@as []>, 'commit_candidate_to_preedit_8': <@as []>, 'remove_candidate_1': <@as []>, 'remove_candidate_7': <@as []>, 'toggle_suggestion_mode': <@as []>, 'toggle_onechar_mode': <@as []>}
