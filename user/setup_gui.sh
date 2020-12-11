@@ -6,21 +6,6 @@ DOTFILESP="$(realpath "$(dirname "$0")/..")"
 DOTUSERP="$DOTFILESP/user"
 PATH="$DOTFILESP/user/bin:$PATH"
 
-# bin
-dotln "$DOTUSERP/bin" "$HOME/.local/dotbin"
-
-# lib
-dotln "$DOTUSERP/lib" "$HOME/.local/dotlib"
-
-# shell
-dotln "$DOTUSERP/shell/profile" "$HOME/.profile"
-dotln "$DOTUSERP/shell/bashrc" "$HOME/.bashrc"
-dotln "$DOTUSERP/shell/inputrc" "$HOME/.inputrc"
-dotln "$DOTUSERP/shell/bashrc.d" "$HOME/.bashrc.d"
-
-# git
-dotln "$DOTUSERP/git" "$HOME/.config/"
-
 # i3
 dotln "$DOTUSERP/i3" "$HOME/.config/"
 
