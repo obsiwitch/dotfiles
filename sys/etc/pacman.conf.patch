@@ -1,8 +1,0 @@
-@@ -31,7 +31,7 @@
- # Misc options
- #UseSyslog
- #Color
--#TotalDownload
-+TotalDownload
- CheckSpace
- #VerbosePkgLists
