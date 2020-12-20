@@ -51,9 +51,9 @@ __prompt() {
     # $1: content
     prompt_status() {
         if [[ $exit -eq 0 ]]; then
-            echo -n "$1"
+            echo -n ">"
         else
-            prompt_block "$1" "$red2"
+            prompt_block "[$exit]>" "$red2"
         fi
     }
 
@@ -62,9 +62,9 @@ __prompt() {
         local buser; buser=$(prompt_block '\u' $red1 '[' ']')
         local bhost; bhost=$(prompt_block '\h' $red2 '[' ']')
         local bpwd; bpwd=$(prompt_block '\w' $blue1 '[' ']')
-        PS1="$(prompt_status '┌')${btime}${buser}${bhost}${bpwd}$(prompt_git)\n"
+        PS1="┌${btime}${buser}${bhost}${bpwd}$(prompt_git)\n"
         PS1="$PS1$(prompt_jobs)"
-        PS1="$PS1$(prompt_status '└> ')"
+        PS1="$PS1└$(prompt_status) "
     }
 
     prompt_title() {
