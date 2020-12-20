@@ -18,6 +18,7 @@ export PYTHONPATH="$HOME/.local/dotlib/python${PYTHONPATH:+:$PYTHONPATH}"
 
     # Disable bash history persistence (RAM history still works).
     export HISTFILE=/dev/null
+    export HISTSIZE=10000
 
     # Pager
     export PAGER='less'
