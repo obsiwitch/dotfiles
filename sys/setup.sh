@@ -49,7 +49,7 @@ setup.sys.init() {
     mount "${device}1" '/mnt/boot'
 
     # swap file
-    dd if='/dev/zero' of='/mnt/swapfile' bs=1M count=8192 status=progress
+    dd if='/dev/zero' of='/mnt/swapfile' bs=1M count=12288 status=progress
     chmod 600 '/mnt/swapfile'
     mkswap '/mnt/swapfile'
     swapon '/mnt/swapfile'
