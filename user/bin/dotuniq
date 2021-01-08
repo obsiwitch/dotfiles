@@ -3,8 +3,8 @@
 import argparse
 
 parser = argparse.ArgumentParser(description='Omit repeated entries regardless \
-     of their adjacency. Keep the entries in their initial order. Entries are \
-     separated by a delimiter.')
+    of their adjacency. Keep the entries in their initial order. Entries are \
+    separated by a delimiter.')
 parser.add_argument('delimiter')
 parser.add_argument('input')
 args = parser.parse_args()
@@ -12,6 +12,7 @@ args = parser.parse_args()
 args.input = args.input.split(args.delimiter)
 args.input = dict.fromkeys(args.input) # use dict as ordered set
 args.input.pop('', None) # remove empty entry that might result from consecutive
-                         # or leading/trailing delimiters (e.g. :e1:::e2::e3)
+                         # or leading/trailing delimiters, e.g. :e1:::e2::e3:
+                         # -> e1:e2:e3
 args.input = args.delimiter.join(args.input.keys())
 print(args.input, end='')

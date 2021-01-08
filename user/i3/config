@@ -41,7 +41,6 @@ bar {
 # Autostart ####################################################################
 
 $exec_always xfce4-power-manager --restart
-$exec_always "killall xss-lock; xss-lock --ignore-sleep i3lock"
 $exec_always "killall nm-applet; nm-applet"
 $exec_always "killall dunst; dunst"
 $exec_always dotscreen
