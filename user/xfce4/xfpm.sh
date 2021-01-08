@@ -22,6 +22,8 @@ xfconf-set 'lid-action-on-ac' 'uint' '2'
 
 xfconf-set 'critical-power-action' 'uint' '2'
 
+xfconf-set 'lock-screen-suspend-hibernate' 'bool' 'false'
+
 # Display
 xfconf-set 'dpms-enabled' 'bool' 'false'
 xfconf-set 'blank-on-battery' 'int' '0' # xset s 0

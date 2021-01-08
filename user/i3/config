@@ -58,7 +58,7 @@ bindsym $mod+Shift+Return $exec kitty
 bindsym $mod+Ctrl+Return $exec nemo
 
 ## lock screen
-bindsym --release $mod+l $exec xflock4
+bindsym --release $mod+l $exec i3lock
 
 ## exit i3
 bindsym $mod+e $exec dotexit
