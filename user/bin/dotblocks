@@ -33,7 +33,12 @@ dotbrightness() {
 }
 
 dotpower() {
-    echo " $(upower -i '/org/freedesktop/UPower/devices/battery_BAT0' \
+    local devices='/org/freedesktop/UPower/devices'
+    local icon=''
+    if upower -i "$devices/line_power_ADP1" | grep -q 'online: *yes'; then
+        local icon=''
+    fi
+    echo "$icon $(upower -i "$devices/battery_BAT0" \
         | awk '/percentage/ { print $2 }')"
 }
 
