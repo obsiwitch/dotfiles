@@ -29,4 +29,4 @@ thumbnail-limit=uint64 5242880
 start-with-menu-bar=false
 start-with-toolbar=true
 start-with-sidebar=true
-start-with-status-bar=false
+start-with-status-bar=true
