@@ -17,7 +17,10 @@ backup_extdrive() {
 
 # Phone SD card: no encryption
 backup_phone() {
-    local out="/run/user/$UID/gvfs/mtp:host=HMD_Global_Nokia_2.2_HZAL1670CAJ60412338/SanDisk SD card/"
+    local device='HMD_Global_Nokia_2.2_HZAL1670CAJ60412338'
+    local out="/run/user/$UID/gvfs/mtp:host=$device/SanDisk SD card/"
+
+    gio mount "mtp://$device/"
 
     # rsync entertainment
     rsync --recursive --delete --protect-args --progress --size-only --inplace \
@@ -26,6 +29,8 @@ backup_phone() {
     # copy latest borg snapshot encrypted
     dotborg export-tar --progress "::$(dotborg head)" - \
         | gpg --symmetric --output "$out/borg.tar.enc"
+
+    gio mount --unmount "mtp://$device/"
 }
 
 help() {
