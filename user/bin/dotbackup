@@ -3,24 +3,29 @@
 set -o errexit -o nounset
 
 # External drive: fs encrypted w/ dm-crypt
-# * rsync home including borg ~/Snapshots (encryption=none)
 backup_extdrive() {
     local out="/run/media/$USER/extyayaka"
+
+    # create borg snapshot before backup
     dotborg snapshot '' 'backup_extdrive'
     dotborg check
+
+    # rsync home
     rsync --archive --delete --protect-args --progress \
         --exclude='.cache' "$HOME" "$out"
 }
 
 # Phone SD card: no encryption
-# * rsync entertainment
-# * borg export-tar | gpg symmetric
 backup_phone() {
-    local out="/run/media/$USER/C2C2-14E6/"
-    rsync --recursive --delete --protect-args --progress --size-only \
-          "$HOME/Downloads" "$HOME/Music" "$HOME/.dotprivate" "$out"
+    local out="/run/user/$UID/gvfs/mtp:host=HMD_Global_Nokia_2.2_HZAL1670CAJ60412338/SanDisk SD card/"
+
+    # rsync entertainment
+    rsync --recursive --delete --protect-args --progress --size-only --inplace \
+        "$HOME/Downloads" "$HOME/Music" "$HOME/.dotprivate" "$out"
+
+    # copy latest borg snapshot encrypted
     dotborg export-tar --progress "::$(dotborg head)" - \
-        |  gpg --symmetric --output "$out/borg.tar.enc"
+        | gpg --symmetric --output "$out/borg.tar.enc"
 }
 
 help() {
