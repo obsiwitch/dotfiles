@@ -5,7 +5,7 @@ choice=$(echo 'reload sleep hibernate logout restart shutdown' \
          | dmenu)
 case "$choice" in
     reload)    i3-msg restart;;
-    sleep)     xflock4 ; systemctl suspend;;
+    sleep)     i3lock; systemctl suspend;;
     hibernate) systemctl hibernate;;
     logout)    i3-msg exit;;
     restart)   systemctl reboot;;
