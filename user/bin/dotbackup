@@ -17,17 +17,19 @@ backup_extdrive() {
 }
 
 # Phone SD card
-# * p1 100% · no encryption · F32: entertainment & latest borg snapshot
+# * p1 ~96 GiB · no encryption · F32: entertainment
+# * p2 ~32 GiB · dm-crypt w/ LUKS · ext4: borg snapshots
 backup_phone() {
-    local out="/run/media/$USER/74DB-16F0/"
+    local out1="/run/media/$USER/74DB-16F0/"
+    local out2="/run/media/$USER/e52c217c-391c-424c-a2d5-382099ee2ac7"
 
     # rsync entertainment
     rsync --recursive --delete --protect-args --progress --size-only \
-        "$HOME/Downloads" "$HOME/Music" "$HOME/.dotprivate" "$out"
+        "$HOME/Downloads" "$HOME/Music" "$HOME/.dotprivate" "$out1"
 
-    # copy latest borg snapshot encrypted
-    dotborg export-tar --progress "::$(dotborg head)" - \
-        | gpg --symmetric --output "$out/borg.tar.enc"
+    # rsync borg snapshots
+    rsync --archive --delete --protect-args --progress \
+        "$HOME/Snapshots" "$out2"
 }
 
 help() {
