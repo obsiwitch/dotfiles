@@ -2,7 +2,8 @@
 
 set -o errexit -o nounset
 
-# External drive: fs encrypted w/ dm-crypt
+# External drive
+# * p1 100% · dm-crypt w/ LUKS · ext4: home
 backup_extdrive() {
     local out="/run/media/$USER/extyayaka"
 
@@ -15,22 +16,18 @@ backup_extdrive() {
         --exclude='.cache' "$HOME" "$out"
 }
 
-# Phone SD card: no encryption
+# Phone SD card
+# * p1 100% · no encryption · F32: entertainment & latest borg snapshot
 backup_phone() {
-    local device='HMD_Global_Nokia_2.2_HZAL1670CAJ60412338'
-    local out="/run/user/$UID/gvfs/mtp:host=$device/SanDisk SD card/"
-
-    gio mount "mtp://$device/"
+    local out="/run/media/$USER/74DB-16F0/"
 
     # rsync entertainment
-    rsync --recursive --delete --protect-args --progress --size-only --inplace \
+    rsync --recursive --delete --protect-args --progress --size-only \
         "$HOME/Downloads" "$HOME/Music" "$HOME/.dotprivate" "$out"
 
     # copy latest borg snapshot encrypted
     dotborg export-tar --progress "::$(dotborg head)" - \
         | gpg --symmetric --output "$out/borg.tar.enc"
-
-    gio mount --unmount "mtp://$device/"
 }
 
 help() {
