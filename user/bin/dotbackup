@@ -20,16 +20,24 @@ backup_extdrive() {
 # * p1 ~96 GiB · no encryption · F32: entertainment
 # * p2 ~32 GiB · dm-crypt w/ LUKS · ext4: borg snapshots
 backup_phone() {
-    local out1="/run/media/$USER/74DB-16F0/"
-    local out2="/run/media/$USER/e52c217c-391c-424c-a2d5-382099ee2ac7"
+    local media="/run/media/$USER"
+    local uuid1='74DB-16F0'
+    local uuid2crypt='0a87f529-3264-44fe-aee0-6876b833c98d'
+    local uuid2plain='e52c217c-391c-424c-a2d5-382099ee2ac7'
 
     # rsync entertainment
+    test -d "$media/$uuid1" \
+        || gio mount --device="$uuid1"
     rsync --recursive --delete --protect-args --progress --size-only \
-        "$HOME/Downloads" "$HOME/Music" "$HOME/.dotprivate" "$out1"
+        "$HOME/Downloads" "$HOME/Music" "$HOME/.dotprivate" "$media/$uuid1"
+    gio mount --unmount "file://$media/$uuid1"
 
     # rsync borg snapshots
+    test -d "$media/$uuid2plain" \
+        || gio mount --device="$uuid2crypt"
     rsync --archive --delete --protect-args --progress \
-        "$HOME/Snapshots" "$out2"
+        "$HOME/Snapshots" "$media/$uuid2plain"
+    gio mount --unmount "file://$media/$uuid2plain"
 }
 
 help() {
