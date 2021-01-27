@@ -33,8 +33,12 @@ backup_phone() {
     gio mount --unmount "file://$media/$uuid1"
 
     # rsync borg snapshots
+    trap '' INT # Workaround: Disable SIGINT to avoid problem during passphrase
+                # prompt. The device is kept busy by gvfs-udisks2-volume-monitor
+                # after SIGINT (^C) even though it shouldn't.
     test -d "$media/$uuid2plain" \
         || gio mount --device="$uuid2crypt"
+    trap '-' INT # restore SIGINT's default behaviour
     rsync --archive --delete --protect-args --progress \
         "$HOME/Snapshots" "$media/$uuid2plain"
     gio mount --unmount "file://$media/$uuid2plain"
