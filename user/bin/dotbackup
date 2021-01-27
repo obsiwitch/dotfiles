@@ -5,6 +5,7 @@ set -o errexit -o nounset
 # External drive
 # * p1 100% · dm-crypt w/ LUKS · ext4: home
 backup_extdrive() {
+    local uuidcrypt='5c38e9ec-be27-410c-b0ab-7e9efac8d37e'
     local out="/run/media/$USER/extyayaka"
 
     # create borg snapshot before backup
@@ -12,8 +13,14 @@ backup_extdrive() {
     dotborg check
 
     # rsync home
+    trap '' INT # Workaround: Disable SIGINT to avoid problem during passphrase
+                # prompt. The device is kept busy by gvfs-udisks2-volume-monitor
+                # after SIGINT (^C) even though it shouldn't.
+    test -d "$out" || gio mount --device="$uuidcrypt"
+    trap '-' INT # restore SIGINT's default behaviour
     rsync --archive --delete --protect-args --progress \
         --exclude='.cache' "$HOME" "$out"
+    gio mount --unmount "file://$out"
 }
 
 # Phone SD card
@@ -26,19 +33,15 @@ backup_phone() {
     local uuid2plain='e52c217c-391c-424c-a2d5-382099ee2ac7'
 
     # rsync entertainment
-    test -d "$media/$uuid1" \
-        || gio mount --device="$uuid1"
+    test -d "$media/$uuid1" || gio mount --device="$uuid1"
     rsync --recursive --delete --protect-args --progress --size-only \
         "$HOME/Downloads" "$HOME/Music" "$HOME/.dotprivate" "$media/$uuid1"
     gio mount --unmount "file://$media/$uuid1"
 
     # rsync borg snapshots
-    trap '' INT # Workaround: Disable SIGINT to avoid problem during passphrase
-                # prompt. The device is kept busy by gvfs-udisks2-volume-monitor
-                # after SIGINT (^C) even though it shouldn't.
-    test -d "$media/$uuid2plain" \
-        || gio mount --device="$uuid2crypt"
-    trap '-' INT # restore SIGINT's default behaviour
+    trap '' INT
+    test -d "$media/$uuid2plain" || gio mount --device="$uuid2crypt"
+    trap '-' INT
     rsync --archive --delete --protect-args --progress \
         "$HOME/Snapshots" "$media/$uuid2plain"
     gio mount --unmount "file://$media/$uuid2plain"
