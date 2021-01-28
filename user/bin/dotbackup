@@ -2,10 +2,10 @@
 
 set -o errexit -o nounset
 
-# Mount device ("$1" device file or other identifier) if it hasn't already been
-# mounted at "$2". SIGINT is disabled as a workaround to avoid problems during
-# passphrase prompt for encrypted volumes. The device is kept busy by
-# gvfs-udisks2-volume-monitor after SIGINT (^C) even though it shouldn't.
+# Mount $1 (device file or other identifier) if it hasn't already been mounted
+# at $2 (directory path). SIGINT (^C) is disabled as a workaround to avoid
+# problems during passphrase prompt for encrypted volumes: the device is kept
+# busy by gvfs-udisks2-volume-monitor after SIGINT even though it shouldn't.
 backup_mount() {
     trap '' INT # disable SIGINT
     test -d "$2" || gio mount --device="$1"
