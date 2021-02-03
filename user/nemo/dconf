@@ -13,7 +13,7 @@ search-visible-columns=['name', 'size', 'where']
 disabled-actions=['new-launcher.nemo_action', 'send-by-mail.nemo_action', 'mount-archive.nemo_action', 'set-as-background.nemo_action', 'add-desklets.nemo_action', 'change-background.nemo_action']
 
 [org/nemo/preferences]
-bulk-rename-tool=b'/usr/lib/Thunar/ThunarBulkRename'
+bulk-rename-tool=b'thunar --bulk-rename'
 date-format='iso'
 default-folder-viewer='list-view'
 desktop-is-home-dir=true
