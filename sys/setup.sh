@@ -24,7 +24,7 @@ setup.help() {
 setup.live.conf() {
     # loadkeys fr
     # iwctl station $iface connect $ssid
-    # pacman -Sy archlinux-keyring pacman-contrib git
+    # pacman -Sy archlinux-keyring pacman-contrib git grub efibootmgr
     # git clone https://gitlab.com/Obsidienne/dotfiles.git
     dotrankmirrors
 }
@@ -63,6 +63,11 @@ setup.sys.init() {
     # fstab
     genfstab -U '/mnt' > '/mnt/etc/fstab'
 
+    # bootloader
+    grub-install --target='x86_64-efi' \
+        --efi-directory='/mnt/boot' \
+        --boot-directory='/mnt/boot'
+
     # copy dotfiles
     cp -r "$DOTFILESP" '/mnt/root/'
 }
@@ -89,7 +94,6 @@ setup.sys.conf() {
 
     # bootloader
     cp {"$DOTSYSP",}'/etc/default/grub'
-    grub-install --target='x86_64-efi' --efi-directory='/boot'
     grub-mkconfig -o '/boot/grub/grub.cfg'
 
     # pacman
