@@ -3,6 +3,9 @@
 GRUB_DEFAULT=0
 GRUB_TIMEOUT=5
 GRUB_DISTRIBUTOR="Arch"
+
+# cryptdevice UUID: lsblk --nodeps --noheadings --output='UUID' '/dev/sda2'
+# resume_offset: filefrag -v '/swapfile' | awk '/^ *0:/ {print $4}'
 GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet cryptdevice=UUID=4e5889c0-e923-4f67-b06a-a045dd5c6446:cryptroot resume=/dev/mapper/cryptroot resume_offset=34816.."
 GRUB_CMDLINE_LINUX=""
 
