@@ -52,3 +52,6 @@ GRUB_DISABLE_RECOVERY=true
 # Uncomment to make GRUB remember the last selection. This requires
 # setting 'GRUB_DEFAULT=saved' above.
 #GRUB_SAVEDEFAULT="true"
+
+# Generate flat menu with all entries on top level.
+GRUB_DISABLE_SUBMENU=y
