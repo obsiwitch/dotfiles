@@ -15,15 +15,15 @@ setup.help() {
     echo '* https://wiki.archlinux.org/index.php/Partitioning'
     echo
     echo "usage: $(basename "$0") <cmd>"
-    echo '  live.conf'
-    echo '  sys.init <device>'
-    echo '  sys.conf'
-    echo '  sys.systemd'
+    echo 'live:     live.conf'
+    echo 'live:     sys.init <device>'
+    echo 'chroot:   sys.conf'
+    echo 'system:   sys.systemd'
 }
 
 setup.live.conf() {
     # loadkeys fr
-    # iwctl
+    # iwctl station $iface connect $ssid
     # pacman -Sy archlinux-keyring pacman-contrib git
     # git clone https://gitlab.com/Obsidienne/dotfiles.git
     dotrankmirrors
