@@ -32,6 +32,7 @@ setup.live.conf() {
 setup.sys.init() {
     # partitioning
     local device="$1"
+    wipefs --all "$device"
     parted "$device" \
         mklabel gpt \
         mkpart 'ESP' fat32 1MiB 513MiB \
