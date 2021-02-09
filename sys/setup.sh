@@ -56,9 +56,8 @@ setup.sys.init() {
     swapon '/mnt/swapfile'
 
     # packages
-    pacstrap -i '/mnt' base base-devel linux-lts linux linux-firmware \
-        intel-ucode amd-ucode grub efibootmgr archiso pacman-contrib \
-        networkmanager nftables
+    pacstrap -i '/mnt' base base-devel linux-lts linux-firmware intel-ucode \
+        amd-ucode grub efibootmgr archiso pacman-contrib networkmanager nftables
 
     # fstab
     genfstab -U '/mnt' > '/mnt/etc/fstab'
