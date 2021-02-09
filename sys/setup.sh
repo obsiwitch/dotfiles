@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -o errexit -o nounset
+set -o errexit -o nounset -o xtrace
 
 DOTFILESP="$(realpath "$(dirname "$0")/..")"
 DOTSYSP="$DOTFILESP/sys"
@@ -122,9 +122,8 @@ setup.sys.systemd() {
     systemctl enable --now nftables.service
 }
 
-if [[ "$(type -t "setup.${1:-}")" == 'function' ]]; then
-    "setup.$1" "${@:2}"
-else
+"setup.$1" "${@:2}" || {
+    set +o xtrace
     setup.help
     exit 1
-fi
+}
