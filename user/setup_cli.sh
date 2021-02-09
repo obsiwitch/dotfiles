@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -o errexit -o nounset
+set -o errexit -o nounset -o xtrace
 
 DOTFILESP="$(realpath "$(dirname "$0")/..")"
 DOTUSERP="$DOTFILESP/user"
