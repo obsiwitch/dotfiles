@@ -57,7 +57,8 @@ setup.sys.init() {
 
     # packages
     pacstrap -i '/mnt' base base-devel linux-lts linux-firmware intel-ucode \
-        amd-ucode grub efibootmgr archiso pacman-contrib networkmanager nftables
+        amd-ucode grub efibootmgr archiso pacman-contrib networkmanager nftables \
+        python python-pip
 
     # fstab
     genfstab -U '/mnt' > '/mnt/etc/fstab'
@@ -92,7 +93,10 @@ setup.sys.conf() {
     mkinitcpio --allpresets
 
     # bootloader
-    cp {"$DOTSYSP",}'/etc/default/grub'
+    dottemplate "$DOTSYSP/etc/default/grub.tpl" \
+        crypt_uuid="$(lsblk --nodeps --noheadings --output='UUID' '/dev/sda2')" \
+        resume_offset="$(filefrag -v '/swapfile' | awk '/^ *0:/ {print $4}')" \
+        | tee {"$DOTSYSP",}'/etc/default/grub' > /dev/null
     grub-mkconfig -o '/boot/grub/grub.cfg'
 
     # pacman

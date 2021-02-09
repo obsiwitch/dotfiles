@@ -3,7 +3,7 @@
 GRUB_DEFAULT=0
 GRUB_TIMEOUT=5
 GRUB_DISTRIBUTOR="Arch"
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet cryptdevice=UUID=4e5889c0-e923-4f67-b06a-a045dd5c6446:cryptroot resume=/dev/mapper/cryptroot resume_offset=34816.."
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet cryptdevice=UUID={crypt_uuid}:cryptroot resume=/dev/mapper/cryptroot resume_offset={resume_offset}"
 GRUB_CMDLINE_LINUX=""
 
 # Preload both GPT and MBR modules so that they are not missed
