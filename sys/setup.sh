@@ -68,16 +68,6 @@ setup.sys.init() {
 }
 
 setup.sys.conf() {
-    # kernel modules
-    cp -r "$DOTSYSP/etc/modprobe.d" '/etc'
-
-    # X11
-    cp -r "$DOTSYSP/etc/X11" '/etc'
-
-    # sudo
-    sed -i '/^# %sudo\tALL/ s/^# //' '/etc/sudoers'
-    groupadd -f sudo
-
     # time zone
     ln -sf '/usr/share/zoneinfo/Europe/Paris' '/etc/localtime'
 
@@ -90,8 +80,8 @@ setup.sys.conf() {
     # network
     echo 'nanoha' > /etc/hostname
 
-    # pacman
-    cp {"$DOTSYSP",}'/etc/pacman.conf'
+    # kernel modules
+    cp -r "$DOTSYSP/etc/modprobe.d" '/etc'
 
     # initramfs (requires: /etc/vconsole.conf)
     cp {"$DOTSYSP",}'/etc/mkinitcpio.conf'
@@ -102,8 +92,18 @@ setup.sys.conf() {
     grub-install --target='x86_64-efi' --efi-directory='/boot'
     grub-mkconfig -o '/boot/grub/grub.cfg'
 
+    # pacman
+    cp {"$DOTSYSP",}'/etc/pacman.conf'
+
+    # sudo
+    sed -i '/^# %sudo\tALL/ s/^# //' '/etc/sudoers'
+    groupadd -f sudo
+
     # users
     useradd luna --create-home --groups sudo || [[ "$?" -eq 9 ]]
+
+    # X11
+    cp -r "$DOTSYSP/etc/X11" '/etc'
 }
 
 setup.sys.systemd() {
