@@ -1,0 +1,68 @@
+# core
+base
+base-devel
+linux-lts
+linux-firmware
+intel-ucode
+amd-ucode
+grub
+efibootmgr
+
+# utils
+archiso
+pacman-contrib
+moreutils
+man-db
+units
+
+# files
+dosfstools
+less
+fd
+fzf
+ncdu
+ranger
+trash-cli
+atool
+p7zip
+unrar
+unzip
+zip
+borg
+
+# monitoring
+htop
+glances
+lshw
+iotop
+lynis
+
+# dev
+bash-completion
+shellcheck
+python
+python-pip
+xonsh
+git
+nano
+neovim
+android-tools
+
+# network
+networkmanager
+nftables
+curl
+wget
+openssh
+rsync
+links
+nmap
+traceroute
+whois
+speedtest-cli
+youtube-dl
+
+# media
+pulseaudio
+pamixer
+pulsemixer

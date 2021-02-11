@@ -1,0 +1,95 @@
+# desktop environment
+xorg
+xorg-xinit
+xclip
+xf86-video-intel
+
+gnome-themes-extra
+papirus-icon-theme
+i3-gaps
+i3status
+i3blocks
+i3lock
+dmenu
+inotify-tools
+dunst
+xfce4-power-manager
+network-manager-applet
+pavucontrol
+
+# admin
+gparted
+xfce4-settings
+system-config-printer
+arandr
+dconf-editor
+
+# utils
+gnome-clocks
+keepassxc
+
+# files
+nemo
+thunar
+file-roller
+gvfs
+gvfs-mtp
+ffmpegthumbnailer
+webp-pixbuf-loader
+
+# dev
+kitty
+gedit
+atom
+bless
+meld
+gnome-boxes
+
+# sci
+galculator
+
+# network
+firefox
+transmission-gtk
+
+# media-fonts
+ttf-dejavu
+otf-font-awesome
+adobe-source-han-sans-jp-fonts
+noto-fonts-emoji
+
+# media-text
+libreoffice-fresh
+hunspell-en_US
+hunspell-fr
+pandoc
+texlive-most
+mupdf
+evince
+foliate
+
+# media-gfx
+cups
+hplip
+sane
+simple-scan
+feh
+eom
+xfce4-screenshooter
+imagemagick
+gimp
+
+# media-3D
+openscad
+blender
+
+# media-video
+mpv
+simplescreenrecorder
+mkvtoolnix-gui
+cheese
+
+# media-sound
+quodlibet
+soundconverter
+gnome-sound-recorder
