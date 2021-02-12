@@ -12,7 +12,7 @@ heading() {
 }
 
 # Errors
-echo; heading '# Errors: failed systemd units'
+heading '# Errors: failed systemd units'
 systemctl --failed
 
 # Packages
