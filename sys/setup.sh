@@ -7,6 +7,7 @@ DOTSYSP="$DOTFILESP/sys"
 PATH="$DOTFILESP/user/bin:$PATH"
 
 setup.help() {
+    set +o xtrace
     echo 'Arch install script'
     echo
     echo 'references:'
@@ -19,6 +20,7 @@ setup.help() {
     echo 'live:     sys.init <device>'
     echo 'chroot:   sys.conf'
     echo 'system:   sys.systemd'
+    exit 1
 }
 
 setup.live.conf() {
@@ -121,8 +123,8 @@ setup.sys.systemd() {
     systemctl enable --now nftables.service
 }
 
-"setup.$1" "${@:2}" || {
-    set +o xtrace
+if [[ "$(type -t "setup.${1:-}")" == 'function' ]]; then
+    "setup.$1" "${@:2}"
+else
     setup.help
-    exit 1
-}
+fi
