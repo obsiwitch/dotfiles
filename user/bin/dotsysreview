@@ -11,15 +11,18 @@ heading() {
     echo "$(tput smso)$*$(tput rmso)"
 }
 
+heading '# Cheatsheet'
+echo 'sudo journalctl --priority=4 --pager-end'
+
 # Errors
-heading '# Errors: failed systemd units'
+echo; heading '# Errors: failed systemd units'
 systemctl --failed
 
 # Packages
 ## List packages from dotfiles.
 packages_dotfiles() {
     sed -e '/^#.*/d' -e '/^$/d' \
-        "$(realpath "$(dirname "$0")/../../sys/packages/")"/* \
+        "$(dirname "$0")/../../sys/packages/"/* \
         | sort
 }
 
@@ -28,7 +31,7 @@ packages_dotfiles() {
 packages_installed() {
     local groups=(base-devel xorg texlive-most)
     comm -23 \
-        <({ pacman -Qq --explicit
+        <({ pacman -Qq --explicit;
             tr ' ' '\n' <<< "${groups[@]}"; } | sort) \
         <(pacman -Qq --groups "${groups[@]}" | sort)
 }
