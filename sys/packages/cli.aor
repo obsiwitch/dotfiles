@@ -66,3 +66,6 @@ youtube-dl
 pulseaudio
 pamixer
 pulsemixer
+cups
+hplip
+sane
