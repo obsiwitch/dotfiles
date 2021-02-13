@@ -56,9 +56,8 @@ setup.sys.init() {
     swapon '/mnt/swapfile'
 
     # packages
-    pacstrap -i '/mnt' base base-devel linux-lts linux-firmware intel-ucode \
-        amd-ucode grub efibootmgr archiso pacman-contrib networkmanager nftables \
-        python python-pip
+    sed -e '/^#.*/d' -e '/^$/d' "$DOTSYSP/packages/cli.aor" \
+        | pacstrap -i '/mnt' -
 
     # fstab
     genfstab -U '/mnt' > '/mnt/etc/fstab'
