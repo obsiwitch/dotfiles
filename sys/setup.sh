@@ -126,6 +126,7 @@ setup.sys.systemd() {
     timedatectl set-local-rtc false
     systemctl enable --now NetworkManager.service
     systemctl enable --now nftables.service
+    systemctl enable --now cups.service
 }
 
 if [[ "$(type -t "setup.${1:-}")" == 'function' ]]; then
