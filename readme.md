@@ -1,7 +1,5 @@
 # Obsidienne's dotfiles
 
-![screenshot GUI](https://framapic.org/5KsGsexI5PQ3/xN5GPrtk9c3v.png)
-
 ## Install
 
 ```sh
