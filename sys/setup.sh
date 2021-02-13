@@ -114,6 +114,11 @@ setup.sys.conf() {
 
     # X11
     cp -r "$DOTSYSP/etc/X11" '/etc'
+
+    # cups
+    cp -r "$DOTSYSP/etc/cups" '/etc'
+    chmod 640 '/etc/cups/cupsd.conf'
+    chown root:cups '/etc/cups/cupsd.conf'
 }
 
 setup.sys.systemd() {
