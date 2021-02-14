@@ -1,0 +1,60 @@
+"*":
+  "autocomplete-python":
+    useKite: false
+  "bracket-matcher":
+    autocompleteBrackets: false
+  core:
+    allowPendingPaneItems: false
+    audioBeep: false
+    automaticallyUpdate: false
+    closeEmptyWindows: false
+    customFileTypes:
+      "source.python": [
+        "xsh"
+      ]
+    disabledPackages: [
+      "about"
+      "archive-view"
+      "background-tips"
+      "bookmarks"
+      "dalek"
+      "exception-reporting"
+      "metrics"
+      "open-on-github"
+      "styleguide"
+      "welcome"
+      "github"
+      "image-view"
+      "symbols-view"
+      "autosave"
+      "kite"
+      "keybinding-resolver"
+    ]
+    telemetryConsent: "no"
+    themes: [
+      "one-light-ui"
+      "one-dark-syntax"
+    ]
+    warnOnLargeFileLimit: 2
+  editor:
+    defaultFontSize: 15
+    fontSize: 15
+    showIndentGuide: true
+    showInvisibles: true
+    softWrap: true
+    softWrapHangingIndent: 2
+    tabLength: 4
+  "fuzzy-finder":
+    useRipGrep: true
+  "markdown-preview":
+    useGitHubStyle: true
+  "open-terminal-here":
+    command: "kitty"
+  "spell-check":
+    locales: [
+      "en-US"
+      "fr-FR"
+    ]
+".gfm.source":
+  editor:
+    softWrapAtPreferredLineLength: true

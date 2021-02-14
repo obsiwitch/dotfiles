@@ -40,3 +40,18 @@ if command -v blender; then
     "$DOTUSERP/blender/userprefs.py"
 fi > /dev/null
 dotln "$DOTUSERP/blender/blenderimport.desktop" "$HOME/.local/share/applications/"
+
+# atom
+dotln "$DOTUSERP/atom/config.cson" "$HOME/.atom/"
+apm disable about archive-view autosave background-tips bookmarks dalek \
+    exception-reporting github image-view keybinding-resolver metrics \
+    open-on-github styleguide symbols-view welcome kite
+apm-needed-install() {
+    local package; for package in "$@"; do
+        [[ -d "$HOME/.atom/packages/$package" ]] || apm install "$package"
+    done
+}
+apm-needed-install atom-beautify autocomplete-python language-generic-config \
+    language-kotlin language-lua language-openscad language-tex open-terminal-here \
+    split-diff
+pip install --user --upgrade jedi # autocomplete-python dependency
