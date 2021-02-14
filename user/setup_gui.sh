@@ -43,9 +43,6 @@ dotln "$DOTUSERP/blender/blenderimport.desktop" "$HOME/.local/share/applications
 
 # atom
 dotln "$DOTUSERP/atom/config.cson" "$HOME/.atom/"
-apm disable about archive-view autosave background-tips bookmarks dalek \
-    exception-reporting github image-view keybinding-resolver metrics \
-    open-on-github styleguide symbols-view welcome kite
 apm-needed-install() {
     local package; for package in "$@"; do
         [[ -d "$HOME/.atom/packages/$package" ]] || apm install "$package"
