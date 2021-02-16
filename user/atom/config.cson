@@ -46,6 +46,8 @@
     tabLength: 4
   "fuzzy-finder":
     useRipGrep: true
+  "git-diff":
+    showIconsInEditorGutter: true
   "markdown-preview":
     useGitHubStyle: true
   "open-terminal-here":
