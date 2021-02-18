@@ -24,8 +24,7 @@ backup_extdrive() {
 
     # rsync home
     backup_mount "$uuidcrypt" "$out"
-    rsync --archive --delete --protect-args --progress \
-        --exclude='.cache' "$HOME" "$out"
+    rsync --archive --delete --protect-args --progress "$HOME" "$out"
     gio mount --unmount "$out"
 }
 
