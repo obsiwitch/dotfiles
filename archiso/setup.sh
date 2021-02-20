@@ -11,7 +11,9 @@ PATH="$gp_dotfiles/user/bin:$PATH"
 gp_profile="$gp_dotarchiso/releng"
 gp_build_profile="$gp_build/releng"
 cp -r '/usr/share/archiso/configs/releng/.' "$gp_build_profile"
-cat "$gp_profile/packages.x86_64" >> "$gp_build_profile/packages.x86_64"
+cat "$gp_profile/airootfs/etc/mkinitcpio.conf.part" \
+    >> "$gp_build_profile/airootfs/etc/mkinitcpio.conf"
+cat "$gp_profile/packages.x86_64.part" >> "$gp_build_profile/packages.x86_64"
 cp "$gp_profile/profiledef.sh" "$gp_build_profile"
 git clone "$gp_dotfiles" "$gp_build_profile/airootfs/root/dotfiles"
 
