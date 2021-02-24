@@ -20,3 +20,6 @@ dotln "$DOTUSERP/shell/bashrc.d" "$HOME/.bashrc.d"
 
 # git
 dotln "$DOTUSERP/git" "$HOME/.config/"
+
+# micro
+dotln "$DOTUSERP/micro" "$HOME/.config/"

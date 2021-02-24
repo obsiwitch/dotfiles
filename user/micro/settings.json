@@ -1,0 +1,8 @@
+{
+    "backup": false,
+    "colorcolumn": 80,
+    "diffgutter": true,
+    "rmtrailingws": true,
+    "scrollbar": true,
+    "softwrap": true
+}
