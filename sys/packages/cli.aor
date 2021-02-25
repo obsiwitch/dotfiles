@@ -29,6 +29,8 @@ unrar
 unzip
 zip
 borg
+lsof
+tree
 
 # monitoring
 htop
@@ -46,7 +48,6 @@ xonsh
 git
 nano
 micro
-neovim
 android-tools
 
 # network
