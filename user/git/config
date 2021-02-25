@@ -5,7 +5,6 @@
 	helper = cache
 [core]
 	autocrlf = input
-	editor = nvim
 	hooksPath = ~/.config/git/hooks
 [alias]
 	dotlog = log --graph --oneline --all --decorate

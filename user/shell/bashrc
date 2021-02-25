@@ -25,6 +25,10 @@ export PYTHONPATH="$(dotuniq ':' "$PYTHONPATH")"
     export LESS='--RAW-CONTROL-CHARS --no-init'
     export LESSHISTFILE='-'
 
+    # Editor
+    export VISUAL='micro'
+    export EDITOR='micro'
+
     # Check the window size after each command and, if necessary, update the
     # values of LINES and COLUMNS.
     shopt -s checkwinsize
