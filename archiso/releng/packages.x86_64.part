@@ -2,6 +2,11 @@ networkmanager
 pacman-contrib
 git
 grub
+
+arch-wiki-docs
+links
+fzf
+
 xorg-server
 xfce4
 xfce4-goodies
