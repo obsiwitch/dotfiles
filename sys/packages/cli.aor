@@ -13,6 +13,7 @@ archiso
 pacman-contrib
 moreutils
 man-db
+arch-wiki-docs
 units
 
 # files
