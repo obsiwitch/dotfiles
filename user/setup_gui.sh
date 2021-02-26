@@ -48,7 +48,7 @@ apm-needed-install() {
         [[ -d "$HOME/.atom/packages/$package" ]] || apm install "$package"
     done
 }
-apm-needed-install atom-beautify autocomplete-python language-generic-config \
-    language-kotlin language-lua language-openscad language-tex open-terminal-here \
+apm-needed-install atom-beautify language-generic-config language-kotlin \
+    language-lua language-openscad language-tex open-terminal-here \
     split-diff
 pip install --user --upgrade jedi # autocomplete-python dependency
