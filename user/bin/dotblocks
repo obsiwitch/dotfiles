@@ -2,7 +2,7 @@
 
 set -o errexit -o nounset
 
-dotpa_in() {
+block_pa_in() {
     case "${button:-}" in
         1) pamixer --default-source --toggle-mute;;
         3) pavucontrol;;
@@ -13,7 +13,7 @@ dotpa_in() {
             | sed -e 's/false//' -e 's/true//')%"
 }
 
-dotpa_out() {
+block_pa_out() {
     case "${button:-}" in
         1) pamixer --toggle-mute;;
         3) pavucontrol;;
@@ -24,7 +24,7 @@ dotpa_out() {
             | sed -e 's/false//' -e 's/true//')%"
 }
 
-dotbrightness() {
+block_brightness() {
     case "${button:-}" in
         4) xbacklight -steps 1 +5;;
         5) xbacklight -steps 1 -5;;
@@ -32,7 +32,7 @@ dotbrightness() {
     echo " $(xbacklight | xargs printf '%.0f%%')"
 }
 
-dotpower() {
+block_power() {
     local devices='/org/freedesktop/UPower/devices'
     local icon=''
     if upower -i "$devices/line_power_ADP1" | grep -q 'online: *yes'; then
@@ -42,14 +42,18 @@ dotpower() {
         | awk '/percentage/ { print $2 }')"
 }
 
-if [[ "$1" == "pa_in" ]]; then
-    dotpa_in
-elif [[ "$1" == "pa_out" ]]; then
-    dotpa_out
-elif [[ "$1" == "brightness" ]]; then
-    dotbrightness
-elif [[ "$1" == "power" ]]; then
-    dotpower
-else
-    exit 1
-fi
+block_ram() {
+    echo -n ' '
+    local ram="$(free -h | awk 'NR == 2 {print $7 "B"}')"
+    local swap="$(free -h | awk 'NR == 3 {print $4 "B"}')"
+    echo "R:$ram S:$swap"
+}
+
+case ${1:-} in
+    pa_in) block_pa_in;;
+    pa_out) block_pa_out;;
+    brightness) block_brightness;;
+    power) block_power;;
+    ram) block_ram;;
+    *) exit 1;;
+esac
