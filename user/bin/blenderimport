@@ -15,17 +15,18 @@ else:
     for f in sys.argv[sys.argv.index('--') + 1:]:
         f = Path(f)
         assert f.exists()
-        if f.suffix == '.dae':
+        suffix_lower = f.suffix.lower()
+        if suffix_lower == '.dae':
             bpy.ops.wm.collada_import(filepath = str(f))
-        elif f.suffix == '.svg':
+        elif suffix_lower == '.svg':
             bpy.ops.import_curve.svg(filepath = str(f))
-        elif f.suffix == '.stl':
+        elif suffix_lower == '.stl':
             bpy.ops.import_mesh.stl(filepath = str(f))
-        elif f.suffix == '.fbx':
+        elif suffix_lower == '.fbx':
             bpy.ops.import_scene.fbx(filepath = str(f))
-        elif f.suffix == '.gltf' or f.suffix == '.glb':
+        elif suffix_lower == '.gltf' or suffix_lower == '.glb':
             bpy.ops.import_scene.gltf(filepath = str(f))
-        elif f.suffix == '.obj':
+        elif suffix_lower == '.obj':
             bpy.ops.import_scene.obj(filepath = str(f))
         else:
             raise RuntimeError(f'No importer associated with {f.suffix}')
