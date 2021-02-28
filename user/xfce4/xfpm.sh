@@ -13,6 +13,7 @@ xfconf-set() {
 xfconf-query --reset --recursive --property="/$channel"
 
 # General
+xfconf-set 'general-notification' 'bool' 'false'
 xfconf-set 'show-tray-icon' 'bool' 'true'
 
 # System
