@@ -30,6 +30,7 @@ unrar
 unzip
 zip
 borg
+python-llfuse
 lsof
 tree
 
