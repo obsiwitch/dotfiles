@@ -17,3 +17,5 @@
 	tool = meld
 [pager]
 	dotstatus = true
+[init]
+	defaultBranch = main
