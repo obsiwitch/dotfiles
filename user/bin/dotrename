@@ -3,19 +3,23 @@
 import sys, pathlib, shutil, argparse
 from subprocess import check_output as sh
 
-def dotrename(paths):
-    for path in paths:
-        path = pathlib.Path(path)
-        if path.is_dir(): continue
-        hash = sh(['sha1sum', path], text = True).split()[0]
-        suffix = ''.join(path.suffixes)
-        shutil.move(path, path.with_name(hash + suffix))
+def hashrename(paths, characters):
+    for old_path in paths:
+        old_path = pathlib.Path(old_path)
+        if old_path.is_dir(): continue
+        shorthash = sh(['sha1sum', old_path], text = True).split()[0][:characters]
+        suffix = ''.join(old_path.suffixes)
+        new_path = old_path.with_name(shorthash + suffix)
+
+        if old_path == new_path: continue
+        print(f'* {old_path} -> {new_path}')
+        shutil.move(old_path, new_path)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description = 'Rename files with their \
-        sha1sum to provide a (hopefully) unique filename. Preserve extensions.')
+    parser = argparse.ArgumentParser(description = 'Rename files with a shortened \
+        hash to provide a (hopefully) unique filename. Preserve extensions.',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('paths', nargs = '+')
-    parser.add_argument('-d', '--debug', action = 'store_true')
+    parser.add_argument('--short', default=7, help='shortens hash to SHORT characters')
     args = parser.parse_args()
-    if not args.debug: sys.tracebacklimit = 0
-    dotrename(args.paths)
+    hashrename(paths=args.paths, characters=args.short)
