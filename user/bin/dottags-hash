@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import sys, pathlib, shutil, argparse
+import pathlib, shutil, argparse
 from subprocess import check_output as sh
 
 def hashrename(paths, characters):
