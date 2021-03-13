@@ -1,9 +1,8 @@
 #!/bin/bash
 
-# Synopsis
-#   dottags [path...]
-# Description
-#   find all distinct tags/extensions within a directory
+# dottags-count [path...]
+# count all distinct tags/extensions within a directory
+# expected format: title[.tag/ext...]
 
 set -o errexit -o nounset
 
