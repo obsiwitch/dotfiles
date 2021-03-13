@@ -1,12 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env python3
 
-# dottags-count [path...]
-# count all distinct tags/extensions within a directory
-# expected format: title[.tag/ext...]
+import pathlib, argparse, collections
 
-set -o errexit -o nounset
+def count_tags(paths):
+    counter = collections.Counter()
+    for path in paths:
+        path = pathlib.Path(path)
+        if tags := next((s for s in path.suffixes if s.startswith('.+')), ''):
+            counter.update(tags[2:].split('+'))
 
-fd --glob '*.*' "$@" \
-    | sed 's:.*/::' \
-    | grep -o '\.[^.]*' \
-    | sort | uniq -c | sort -n
+    for k, v in reversed(counter.most_common()):
+        print(k, v)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description = 'Count distinct tags for the \
+        specified files. Expected filename format: title[.[+tag ...]][.suffix ...]')
+    parser.add_argument('paths', nargs = '+')
+    args = parser.parse_args()
+    count_tags(args.paths)
