@@ -48,3 +48,7 @@ diff --color=always --unified=0 <(packages_dotfiles) <(packages_installed) \
 
 echo; heading '# Packages: unused dependencies'
 pacman -Qq --deps --unrequired || :
+
+echo; heading '# Latest operations'
+echo "* last upgrade: $(grep 'pacman -S -y -u' /var/log/pacman.log | tail -n1)"
+echo "* last snapshot: $(dotborg head)"
