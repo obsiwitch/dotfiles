@@ -19,8 +19,8 @@ backup_extdrive() {
     local out="/run/media/$USER/extyayaka"
 
     # create borg snapshot before backup
-    dotborg snapshot '' 'backup_extdrive'
     dotborg check
+    dotborg snapshot '' 'backup_extdrive'
 
     # rsync home
     backup_mount "$uuidcrypt" "$out"
