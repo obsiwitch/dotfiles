@@ -42,18 +42,10 @@ block_power() {
         | awk '/percentage/ { print $2 }')"
 }
 
-block_ram() {
-    echo -n ' '
-    local ram="$(free -h | awk 'NR == 2 {print $7 "B"}')"
-    local swap="$(free -h | awk 'NR == 3 {print $4 "B"}')"
-    echo "R:$ram S:$swap"
-}
-
 case ${1:-} in
     pa_in) block_pa_in;;
     pa_out) block_pa_out;;
     brightness) block_brightness;;
     power) block_power;;
-    ram) block_ram;;
     *) exit 1;;
 esac
