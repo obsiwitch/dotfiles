@@ -23,7 +23,7 @@ show-full-path-titles=true
 show-open-in-terminal-toolbar=true
 size-prefixes='base-2'
 disable-menu-warning=true
-thumbnail-limit=uint64 10485760
+thumbnail-limit=uint64 104857600
 
 [org/nemo/window-state]
 start-with-menu-bar=false
