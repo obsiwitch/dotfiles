@@ -5,5 +5,3 @@
     --ignore-empty-password \
     --no-unlock-indicator \
     "$@"
-
-xset dpms force off
