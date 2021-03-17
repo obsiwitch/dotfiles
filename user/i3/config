@@ -58,13 +58,13 @@ bindsym $mod+Shift+Return $exec kitty
 bindsym $mod+Ctrl+Return $exec nemo
 
 ## lock screen
-bindsym --release $mod+l $exec "i3lock; xset dpms force off"
+bindsym --release $mod+l $exec dotexit lock
 
 ## suspend
-bindsym --release $mod+Shift+l $exec "i3lock; systemctl suspend"
+bindsym --release $mod+Shift+l $exec dotexit sleep
 
 ## hibernate
-bindsym --release $mod+Ctrl+l $exec systemctl hibernate
+bindsym --release $mod+Ctrl+l $exec dotexit hibernate
 
 ## exit i3
 bindsym $mod+e $exec dotexit

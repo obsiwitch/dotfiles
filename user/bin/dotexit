@@ -1,10 +1,15 @@
 #!/bin/bash
 
-choice=$(echo 'reload sleep hibernate logout restart shutdown' \
-         | tr ' ' '\n' \
-         | dmenu)
+set -o errexit -o nounset
+
+choice=${1:-}
+if [[ -z "$choice" ]]; then
+    choice=$(echo 'reload lock sleep hibernate logout restart shutdown' \
+             | tr ' ' '\n' | dmenu)
+fi
 case "$choice" in
     reload)    i3-msg restart;;
+    lock)      i3lock; xset dpms force off;;
     sleep)     i3lock; systemctl suspend;;
     hibernate) systemctl hibernate;;
     logout)    i3-msg exit;;
