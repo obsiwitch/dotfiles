@@ -4,15 +4,15 @@ set -o errexit -o nounset
 
 choice=${1:-}
 if [[ -z "$choice" ]]; then
-    choice=$(echo 'reload lock sleep hibernate logout restart shutdown' \
+    choice=$(echo 'reload - lock suspend hibernate - logout reboot poweroff' \
              | tr ' ' '\n' | dmenu)
 fi
 case "$choice" in
     reload)    i3-msg restart;;
     lock)      i3lock; xset dpms force off;;
-    sleep)     i3lock; systemctl suspend;;
+    suspend)   i3lock; systemctl suspend;;
     hibernate) systemctl hibernate;;
     logout)    i3-msg exit;;
-    restart)   systemctl reboot;;
-    shutdown)  systemctl poweroff;;
+    reboot)    systemctl reboot;;
+    poweroff)  systemctl poweroff;;
 esac

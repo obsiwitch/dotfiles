@@ -58,16 +58,16 @@ bindsym $mod+Shift+Return $exec kitty
 bindsym $mod+Ctrl+Return $exec nemo
 
 ## lock screen
-bindsym --release $mod+l $exec dotexit lock
+bindsym --release $mod+l $exec dotpowerctl lock
 
 ## suspend
-bindsym --release $mod+Shift+l $exec dotexit sleep
+bindsym --release $mod+Shift+l $exec dotpowerctl suspend
 
 ## hibernate
-bindsym --release $mod+Ctrl+l $exec dotexit hibernate
+bindsym --release $mod+Ctrl+l $exec dotpowerctl hibernate
 
 ## exit i3
-bindsym $mod+e $exec dotexit
+bindsym $mod+e $exec dotpowerctl
 
 ## screenshots
 bindsym Print $exec xfce4-screenshooter
