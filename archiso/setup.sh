@@ -10,6 +10,7 @@ PATH="$gp_dotfiles/user/bin:$PATH"
 # Prepare profile
 gp_profile="$gp_dotarchiso/releng"
 gp_build_profile="$gp_build/releng"
+mkdir -p "$gp_build_profile"
 cp -r '/usr/share/archiso/configs/releng/.' "$gp_build_profile"
 cat "$gp_profile/airootfs/etc/mkinitcpio.conf.part" \
     >> "$gp_build_profile/airootfs/etc/mkinitcpio.conf"
