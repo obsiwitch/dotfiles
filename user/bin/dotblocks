@@ -33,13 +33,18 @@ block_brightness() {
 }
 
 block_power() {
-    local devices='/org/freedesktop/UPower/devices'
-    local icon=''
-    if upower -i "$devices/line_power_ADP1" | grep -q 'online: *yes'; then
+    local plugged capacity
+    plugged=$(cat '/sys/class/power_supply/ADP1/online')
+    capacity=$(cat '/sys/class/power_supply/BAT0/capacity')
+    if [[ "$plugged" -eq 1 ]]; then
         local icon=''
+    else
+        local icon=''
     fi
-    echo "$icon $(upower -i "$devices/battery_BAT0" \
-        | awk '/percentage/ { print $2 }')"
+    echo "$icon $capacity%"
+    if [[ "$plugged" -eq 0 && "$capacity" -le 10 ]]; then
+        exit 33
+    fi
 }
 
 case ${1:-} in

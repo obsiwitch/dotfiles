@@ -112,6 +112,9 @@ setup.sys.conf() {
     passwd --status luna | awk '$2 != "P" {exit 1}' || passwd luna
     passwd --status root | awk '$2 != "P" {exit 1}' || passwd root
 
+    # systemd
+    cp -r "$DOTSYSP/etc/systemd" '/etc'
+
     # X11
     cp -r "$DOTSYSP/etc/X11" '/etc'
 

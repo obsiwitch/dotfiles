@@ -12,13 +12,11 @@ i3lock
 dmenu
 inotify-tools
 dunst
-xfce4-power-manager
 network-manager-applet
 pavucontrol
 
 # admin
 gparted
-xfce4-settings
 system-config-printer
 arandr
 dconf-editor

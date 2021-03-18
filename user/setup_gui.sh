@@ -13,9 +13,6 @@ dotln "$DOTUSERP/i3" "$HOME/.config/"
 dotln "$DOTUSERP/gtk/gtk-2.0/gtkrc-2.0" "$HOME/.gtkrc-2.0"
 dotln "$DOTUSERP/gtk/gtk-3.0" "$HOME/.config/"
 
-# power manager
-"$DOTUSERP/xfce4/xfpm.sh"
-
 # file manager
 dconf load / < "$DOTUSERP/nemo/dconf"
 dotln "$DOTUSERP/nemo/actions" "$HOME/.local/share/nemo/"
