@@ -16,6 +16,7 @@ echo 'sudo journalctl --priority=4 --pager-end'
 # Errors
 echo; heading '# Errors: failed systemd units'
 systemctl --failed
+systemctl --user --failed
 
 # Packages
 ## List packages from dotfiles.
