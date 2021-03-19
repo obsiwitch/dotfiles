@@ -58,11 +58,10 @@ __prompt() {
     }
 
     prompt_prompt() {
-        local btime; btime=$(prompt_block '\A' $purple1 '[' ']')
         local buser; buser=$(prompt_block '\u' $red1 '[' ']')
         local bhost; bhost=$(prompt_block '\h' $red2 '[' ']')
         local bpwd; bpwd=$(prompt_block '\w' $blue1 '[' ']')
-        PS1="┌${btime}${buser}${bhost}${bpwd}$(prompt_git)\n"
+        PS1="┌${buser}${bhost}${bpwd}$(prompt_git)\n"
         PS1="$PS1$(prompt_jobs)"
         PS1="$PS1└$(prompt_status) "
     }
