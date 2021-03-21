@@ -2,7 +2,7 @@
 
 set -o errexit -o nounset -o xtrace
 
-DOTFILESP="$(realpath "$(dirname "$0")/..")"
+DOTFILESP="$(realpath "${BASH_SOURCE%/*}/..")"
 DOTUSERP="$DOTFILESP/user"
 PATH="$DOTFILESP/user/bin:$PATH"
 

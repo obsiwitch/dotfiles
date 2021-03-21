@@ -22,7 +22,7 @@ systemctl --user --failed
 ## List packages from dotfiles.
 packages_dotfiles() {
     sed -e '/^#.*/d' -e '/^$/d' \
-        "$(dirname "$0")/../../sys/packages/"/* \
+        "${BASH_SOURCE%/*}/../../sys/packages/"/* \
         | sort
 }
 

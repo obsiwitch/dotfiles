@@ -2,7 +2,7 @@
 
 set -o errexit -o nounset -o xtrace
 
-gp_dotfiles="$(realpath "$(dirname "$0")/..")"
+gp_dotfiles="$(realpath "${BASH_SOURCE%/*}/..")"
 gp_dotarchiso="$gp_dotfiles/archiso"
 gp_build="$gp_dotfiles/build"
 PATH="$gp_dotfiles/user/bin:$PATH"

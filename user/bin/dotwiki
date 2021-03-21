@@ -11,7 +11,7 @@ case ${1:-} in
         url="$(find '/usr/share/doc/arch-wiki/html/en/' -print0 \
             | fzf --read0)";;
     *)
-        echo "usage: [BROWSER=links] $0 <index|fzf>"
+        echo "usage: [BROWSER=links] ${BASH_SOURCE%/*} <index|fzf>"
         exit 1
 esac
 

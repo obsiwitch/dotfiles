@@ -2,7 +2,7 @@
 
 set -o errexit -o nounset -o xtrace
 
-DOTFILESP="$(realpath "$(dirname "$0")/..")"
+DOTFILESP="$(realpath "${BASH_SOURCE%/*}/..")"
 DOTSYSP="$DOTFILESP/sys"
 PATH="$DOTFILESP/user/bin:$PATH"
 
@@ -15,7 +15,7 @@ setup.help() {
     echo '* https://wiki.archlinux.org/index.php/Dm-crypt'
     echo '* https://wiki.archlinux.org/index.php/Partitioning'
     echo
-    echo "usage: $(basename "$0") <cmd>"
+    echo "usage: ${BASH_SOURCE##*/} <cmd>"
     echo 'live:     live.conf'
     echo 'live:     sys.init <device>'
     echo 'chroot:   sys.conf'
