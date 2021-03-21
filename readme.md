@@ -1,5 +1,7 @@
 # Obsidienne's dotfiles
 
+![screenshot](https://i.imgur.com/L5Y0tu6.png)
+
 ## Install
 
 ```sh
