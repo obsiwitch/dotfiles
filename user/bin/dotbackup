@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -o errexit -o nounset
+set -o errexit -o nounset -o xtrace
 
 # Mount $1 (device file or other identifier) if it hasn't already been mounted
 # at $2 (directory path). SIGINT (^C) is disabled as a workaround to avoid
@@ -50,14 +50,29 @@ backup_phone() {
     gio mount --unmount "$media/$uuid2plain"
 }
 
+# Remote: gocryptfs -reverse: borg snapshots
+backup_remote() {
+    local snapshots_plain="$HOME/Snapshots"
+    local snapshots_crypt="/run/user/$UID/dotbackup_mnt"
+
+    gocryptfs -init -reverse "$snapshots_plain" || [[ "$?" -eq 7 ]]
+
+    mkdir -p "$snapshots_crypt"
+    gocryptfs -reverse "$snapshots_plain" "$snapshots_crypt"
+    rclone sync --progress "$snapshots_crypt" 'remote:snapshots_crypt'
+    fusermount -u "$snapshots_crypt"
+}
+
 help() {
     echo 'usage: dotbackup extdrive'
     echo '       dotbackup phone'
+    echo '       dotbackup remote'
     exit 1
 }
 
 case ${1:-} in
     extdrive) backup_extdrive;;
     phone) backup_phone;;
+    remote) backup_remote;;
     *) help;;
 esac

@@ -2,7 +2,7 @@
 
 set -o errexit -o nounset
 
-export BORG_REPO="$HOME/Snapshots"
+export BORG_REPO="$HOME/Snapshots" # encryption=none
 
 snapshot() {
     borg create --progress --stats --comment="${2:-}" \
