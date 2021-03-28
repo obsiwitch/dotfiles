@@ -64,6 +64,7 @@ backup_remote() {
 }
 
 help() {
+    set +o xtrace
     echo 'usage: dotbackup extdrive'
     echo '       dotbackup phone'
     echo '       dotbackup remote'
