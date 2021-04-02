@@ -2,65 +2,78 @@
 
 set -o errexit -o nounset -o xtrace
 
+MEDIADIR="/run/media/$USER"
+RUNTIMEDIR="/run/user/$UID"
+GOCRYPTFSMNT="$RUNTIMEDIR/gocryptfs"
+
 # Mount $1 (device file or other identifier) if it hasn't already been mounted
 # at $2 (directory path). SIGINT (^C) is disabled as a workaround to avoid
 # problems during passphrase prompt for encrypted volumes: the device is kept
 # busy by gvfs-udisks2-volume-monitor after SIGINT even though it shouldn't.
-backup_mount() {
+gio_mount() {
     trap '' INT # disable SIGINT
     test -d "$2" || gio mount --device="$1"
     trap '-' INT # restore SIGINT's default behaviour
 }
 
-# External drive
-# * p1 100% · dm-crypt w/ LUKS · ext4: home
+# Mount encrypted view of $HOME/Snapshots to $1.
+snapshots_mount() {
+    rmdir "$1" || : # preventively remove empty directory to avoid syncing it
+    test -d "$1" || {
+        mkdir -p "$1"
+        gocryptfs -reverse "$HOME/Snapshots" "$1"
+    }
+}
+# Unmount $1 FUSE fs and remove empty mountpoint.
+fuse_unmount() {
+    fusermount -u "$1"
+    rmdir "$1"
+}
+
+# External drive: p1 ext4 100%: dm-crypt w/ LUKS: home
 backup_extdrive() {
-    local uuidcrypt='5c38e9ec-be27-410c-b0ab-7e9efac8d37e'
-    local out="/run/media/$USER/extyayaka"
+    local uuid_crypt='5c38e9ec-be27-410c-b0ab-7e9efac8d37e'
+    local uuid_plain='d51b9763-ba6a-4948-baba-b0e78cd5c28c'
+    local out="$MEDIADIR/$uuid_plain"
 
     # create borg snapshot before backup
     dotborg check
     dotborg snapshot '' 'backup_extdrive'
 
     # rsync home
-    backup_mount "$uuidcrypt" "$out"
+    gio_mount "$uuid_crypt" "$out"
     rsync --archive --delete --protect-args --progress "$HOME" "$out"
     gio mount --unmount "$out"
 }
 
-# Phone SD card
-# * p1 ~96 GiB · no encryption · F32: entertainment
-# * p2 ~32 GiB · dm-crypt w/ LUKS · ext4: borg snapshots
+# Phone SD card: p1 F32 100%:
+# * no encryption: entertainment
+# * gocryptfs -reverse: borg snapshots
 backup_phone() {
-    local media="/run/media/$USER"
-    local uuid1='74DB-16F0'
-    local uuid2crypt='0a87f529-3264-44fe-aee0-6876b833c98d'
-    local uuid2plain='e52c217c-391c-424c-a2d5-382099ee2ac7'
+    local uuid='74DB-16F0'
+    local out="$MEDIADIR/$uuid"
+    gio_mount "$uuid" "$out"
 
     # rsync entertainment
-    backup_mount "$uuid1" "$media/$uuid1"
     rsync --recursive --delete --protect-args --progress --size-only \
-        "$HOME/Downloads" "$HOME/Music" "$HOME/.dotprivate" "$media/$uuid1"
-    gio mount --unmount "$media/$uuid1"
+        "$HOME/Downloads" "$HOME/Music" "$out"
 
-    # rsync borg snapshots
-    backup_mount "$uuid2crypt" "$media/$uuid2plain"
-    rsync --archive --delete --protect-args --progress \
-        "$HOME/Snapshots" "$media/$uuid2plain"
-    gio mount --unmount "$media/$uuid2plain"
+    # rsync encrypted borg snapshots
+    local snapshots_crypt="$GOCRYPTFSMNT/Snapshots"
+    snapshots_mount "$snapshots_crypt"
+    rsync --recursive --delete --protect-args --progress --size-only \
+        "$snapshots_crypt" "$out"
+    fuse_unmount "$snapshots_crypt"
+
+    gio mount --unmount "$out"
 }
 
 # Remote: gocryptfs -reverse: borg snapshots
 backup_remote() {
-    local snapshots_plain="$HOME/Snapshots"
-    local snapshots_crypt="/run/user/$UID/dotbackup_mnt"
-
-    gocryptfs -init -reverse "$snapshots_plain" || [[ "$?" -eq 7 ]]
-
-    mkdir -p "$snapshots_crypt"
-    gocryptfs -reverse "$snapshots_plain" "$snapshots_crypt"
+    local snapshots_crypt="$GOCRYPTFSMNT/Snapshots"
+    snapshots_mount "$snapshots_crypt"
     rclone sync --progress "$snapshots_crypt" 'remote:snapshots_crypt'
-    fusermount -u "$snapshots_crypt"
+    fuse_unmount "$snapshots_crypt"
 }
 
 help() {
