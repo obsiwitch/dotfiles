@@ -56,7 +56,7 @@ noto-fonts-emoji
 
 # media-text
 libreoffice-fresh
-hunspell-en_US
+hunspell-en_us
 hunspell-fr
 pandoc
 texlive-most

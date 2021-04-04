@@ -35,6 +35,7 @@ lsof
 tree
 fdupes
 gocryptfs
+smartmontools
 
 # monitoring
 htop
@@ -48,6 +49,7 @@ bash-completion
 shellcheck
 python
 python-pip
+mypy
 xonsh
 git
 nano
