@@ -16,18 +16,20 @@ gio_mount() {
     trap '-' INT # restore SIGINT's default behaviour
 }
 
-# Mount encrypted view of $HOME/Snapshots to $1.
+SNAPSHOTS_PLAIN="$HOME/Snapshots"
+SNAPSHOTS_CRYPT="$GOCRYPTFSMNT/Snapshots"
+# Mount encrypted view of $SNAPSHOTS_PLAIN to $SNAPSHOTS_CRYPT.
 snapshots_mount() {
-    rmdir "$1" || : # preventively remove empty directory to avoid syncing it
-    test -d "$1" || {
-        mkdir -p "$1"
-        gocryptfs -reverse "$HOME/Snapshots" "$1"
+    rmdir "$SNAPSHOTS_CRYPT" || : # preventively remove empty directory to avoid syncing it
+    test -d "$SNAPSHOTS_CRYPT" || {
+        mkdir -p "$SNAPSHOTS_CRYPT"
+        gocryptfs -reverse "$SNAPSHOTS_PLAIN" "$SNAPSHOTS_CRYPT"
     }
 }
-# Unmount $1 FUSE fs and remove empty mountpoint.
-fuse_unmount() {
-    fusermount -u "$1"
-    rmdir "$1"
+# Unmount $SNAPSHOTS_CRYPT and remove empty mountpoint.
+snapshots_unmount() {
+    fusermount -u "$SNAPSHOTS_CRYPT"
+    rmdir "$SNAPSHOTS_CRYPT"
 }
 
 # External drive: p1 ext4 100%: dm-crypt w/ LUKS: home
@@ -59,21 +61,19 @@ backup_phone() {
         "$HOME/Downloads" "$HOME/Music" "$out"
 
     # rsync encrypted borg snapshots
-    local snapshots_crypt="$GOCRYPTFSMNT/Snapshots"
-    snapshots_mount "$snapshots_crypt"
+    snapshots_mount
     rsync --recursive --delete --protect-args --progress --size-only \
-        "$snapshots_crypt" "$out"
-    fuse_unmount "$snapshots_crypt"
+        "$SNAPSHOTS_CRYPT" "$out"
+    snapshots_unmount
 
     gio mount --unmount "$out"
 }
 
 # Remote: gocryptfs -reverse: borg snapshots
 backup_remote() {
-    local snapshots_crypt="$GOCRYPTFSMNT/Snapshots"
-    snapshots_mount "$snapshots_crypt"
-    rclone sync --progress "$snapshots_crypt" 'remote:snapshots_crypt'
-    fuse_unmount "$snapshots_crypt"
+    snapshots_mount
+    rclone sync --progress "$SNAPSHOTS_CRYPT" 'remote:snapshots_crypt'
+    snapshots_unmount
 }
 
 help() {
