@@ -11,6 +11,8 @@ else:
     from pathlib import Path
 
     bpy.context.preferences.view.show_splash = False
+    bpy.ops.object.select_all(action = 'SELECT')
+    bpy.ops.object.delete()
 
     for f in sys.argv[sys.argv.index('--') + 1:]:
         f = Path(f)

@@ -2,12 +2,12 @@
 
 import bpy
 
-# Set startup file
+# Set startup file (startup.blend)
 bpy.ops.object.select_all(action = 'SELECT')
 bpy.ops.object.delete()
 bpy.ops.wm.save_homefile()
 
-# Preferences
+# Set user preferences (userpref.blend)
 bpy.context.preferences.view.show_splash = False
 bpy.context.preferences.view.show_tooltips_python = True
 bpy.context.preferences.view.show_developer_ui = True
@@ -20,9 +20,10 @@ bpykc = bpy.context.window_manager.keyconfigs['blender']
 bpykc.preferences.use_select_all_toggle = True
 bpykc.preferences.spacebar_action = 'SEARCH'
 
-# Addons
+## Addons
 bpy.ops.preferences.addon_enable(module = 'mesh_f2')
 
-# Save
+## Save
 bpy.ops.wm.save_userpref()
+
 bpy.ops.wm.quit_blender()
