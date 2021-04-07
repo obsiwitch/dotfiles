@@ -29,5 +29,20 @@ else:
             bpy.ops.import_scene.gltf(filepath = str(f))
         elif suffix_lower == '.obj':
             bpy.ops.import_scene.obj(filepath = str(f))
+        elif suffix_lower == '.py':
+            # ref: https://blender.stackexchange.com/q/8435
+            # switch to scripting workspace
+            bpy.context.window.workspace = bpy.data.workspaces['Scripting']
+
+            # load and display file in text editor
+            text_editor = next(area for area in bpy.data.screens['Scripting'].areas
+                                    if area.type == 'TEXT_EDITOR')
+            text = bpy.data.texts.load(str(f))
+            text_editor.spaces[0].text = text
+
+            # run script
+            context = bpy.context.copy()
+            context['edit_text'] = text
+            bpy.ops.text.run_script(context)
         else:
             raise RuntimeError(f'No importer associated with {f.suffix}')
