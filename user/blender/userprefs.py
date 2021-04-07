@@ -3,8 +3,9 @@
 import bpy
 
 # Set startup file (startup.blend)
-bpy.ops.object.select_all(action = 'SELECT')
-bpy.ops.object.delete()
+for data_type in (bpy.data.cameras, bpy.data.lights, bpy.data.meshes,
+                  bpy.data.objects, bpy.data.collections):
+    for item in data_type: data_type.remove(item)
 bpy.ops.wm.save_homefile()
 
 # Set user preferences (userpref.blend)
