@@ -37,12 +37,6 @@ else:
             # load and display file in text editor
             text_editor = next(area for area in bpy.data.screens['Scripting'].areas
                                     if area.type == 'TEXT_EDITOR')
-            text = bpy.data.texts.load(str(f))
-            text_editor.spaces[0].text = text
-
-            # run script
-            context = bpy.context.copy()
-            context['edit_text'] = text
-            bpy.ops.text.run_script(context)
+            text_editor.spaces[0].text = bpy.data.texts.load(str(f))
         else:
             raise RuntimeError(f'No importer associated with {f.suffix}')
