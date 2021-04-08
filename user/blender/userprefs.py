@@ -3,8 +3,8 @@
 import bpy
 
 # Set startup file (startup.blend)
-for data_type in (bpy.data.cameras, bpy.data.lights, bpy.data.meshes,
-                  bpy.data.objects, bpy.data.collections):
+for data_type in (bpy.data.actions, bpy.data.cameras, bpy.data.lights,
+                  bpy.data.meshes, bpy.data.objects, bpy.data.collections):
     for item in data_type: data_type.remove(item)
 bpy.ops.wm.save_homefile()
 
