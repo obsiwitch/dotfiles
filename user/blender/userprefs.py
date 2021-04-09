@@ -3,9 +3,6 @@
 import bpy
 
 # Set startup file (startup.blend)
-for data_type in (bpy.data.cameras, bpy.data.lights, bpy.data.meshes,
-                  bpy.data.objects, bpy.data.collections):
-    for item in data_type: data_type.remove(item)
 bpy.ops.wm.save_homefile()
 
 # Set user preferences (userpref.blend)
@@ -27,4 +24,5 @@ bpy.ops.preferences.addon_enable(module = 'mesh_f2')
 ## Save
 bpy.ops.wm.save_userpref()
 
+# Close window
 bpy.ops.wm.quit_blender()
