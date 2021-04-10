@@ -4,13 +4,23 @@ import pathlib, argparse, collections
 
 def count_tags(paths):
     counter = collections.Counter()
+    missing = []
     for path in paths:
         path = pathlib.Path(path)
         if tags := next((s for s in path.suffixes if s.startswith('.+')), ''):
             counter.update(tags[2:].split('+'))
+        else:
+            missing.append(path)
 
-    for k, v in reversed(counter.most_common()):
-        print(k, v)
+    if counter:
+        print('\033[7mCount tags\033[0m')
+        for k, v in reversed(counter.most_common()):
+            print(k, v)
+
+    if missing:
+        print('\033[7mMissing tags\033[0m')
+        for p in missing:
+            print(str(p))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'Count distinct tags for the \
