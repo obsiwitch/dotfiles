@@ -4,7 +4,6 @@ set -o errexit -o nounset -o xtrace
 
 MEDIADIR="/run/media/$USER"
 RUNTIMEDIR="/run/user/$UID"
-GOCRYPTFSMNT="$RUNTIMEDIR/gocryptfs"
 
 # Mount $1 (device file or other identifier) if it hasn't already been mounted
 # at $2 (directory path). SIGINT (^C) is disabled as a workaround to avoid
@@ -17,7 +16,7 @@ gio_mount() {
 }
 
 SNAPSHOTS_PLAIN="$HOME/Snapshots"
-SNAPSHOTS_CRYPT="$GOCRYPTFSMNT/Snapshots"
+SNAPSHOTS_CRYPT="$RUNTIMEDIR/gocryptfs/Snapshots"
 # Mount encrypted view of $SNAPSHOTS_PLAIN to $SNAPSHOTS_CRYPT.
 snapshots_mount() {
     rmdir "$SNAPSHOTS_CRYPT" || : # preventively remove empty directory to avoid syncing it
