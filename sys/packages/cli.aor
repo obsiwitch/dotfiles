@@ -13,6 +13,7 @@ archiso
 pacman-contrib
 moreutils
 man-db
+man-pages
 arch-wiki-docs
 units
 
@@ -41,6 +42,7 @@ smartmontools
 htop
 glances
 lshw
+usbutils
 iotop
 lynis
 
@@ -56,6 +58,8 @@ nano
 micro
 android-tools
 strace
+geckodriver
+python-selenium
 
 # network
 networkmanager
