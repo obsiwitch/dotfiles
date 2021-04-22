@@ -114,6 +114,7 @@ setup.sys.conf() {
 
     # systemd
     cp -r "$DOTSYSP/etc/systemd" '/etc'
+    cp -r "$DOTSYSP/etc/tmpfiles.d" '/etc'
 
     # X11
     cp -r "$DOTSYSP/etc/X11" '/etc'
