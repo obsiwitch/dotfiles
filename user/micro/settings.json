@@ -4,5 +4,6 @@
     "diffgutter": true,
     "rmtrailingws": true,
     "scrollbar": true,
-    "softwrap": true
+    "softwrap": true,
+    "tabstospaces": true
 }
