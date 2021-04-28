@@ -39,7 +39,7 @@ fi > /dev/null
 dotln "$DOTUSERP/blender/blenderimport.desktop" "$HOME/.local/share/applications/"
 
 # atom
-dotln "$DOTUSERP/atom/config.cson" "$HOME/.atom/"
+dotln "$DOTUSERP/atom/"* "$HOME/.atom/"
 apm-needed-install() {
     local package; for package in "$@"; do
         [[ -d "$HOME/.atom/packages/$package" ]] || apm install "$package"
