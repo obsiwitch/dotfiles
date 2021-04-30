@@ -37,7 +37,7 @@ export PYTHONPATH="$(dotuniq ':' "$PYTHONPATH")"
     shopt -s globstar
 
     # Includes
-    for file in "$HOME/.bashrc.d/"*.sh; do
-        source "$file"
-    done
+    source "$HOME/.config/bashrc.d/alias.sh"
+    source "$HOME/.config/bashrc.d/complete.sh"
+    source "$HOME/.config/bashrc.d/prompt.sh"
 }

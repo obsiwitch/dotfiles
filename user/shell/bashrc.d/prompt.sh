@@ -61,7 +61,7 @@ __prompt() {
         local bpwd; bpwd=$(prompt_block '\w' $blue1 '[' ']')
         PS1="$(prompt_status)${buser}${bhost}${bpwd}$(prompt_git)\n"
         PS1="$PS1$(prompt_jobs)"
-        PS1="$PS1└> "
+        PS1="$PS1\$ "
     }
 
     prompt_title() {

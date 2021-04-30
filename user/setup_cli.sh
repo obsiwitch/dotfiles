@@ -16,7 +16,7 @@ dotln "$DOTUSERP/lib" "$HOME/.local/dotlib"
 dotln "$DOTUSERP/shell/profile" "$HOME/.profile"
 dotln "$DOTUSERP/shell/bashrc" "$HOME/.bashrc"
 dotln "$DOTUSERP/shell/inputrc" "$HOME/.inputrc"
-dotln "$DOTUSERP/shell/bashrc.d" "$HOME/.bashrc.d"
+dotln "$DOTUSERP/shell/bashrc.d" "$HOME/.config/"
 
 # git
 dotln "$DOTUSERP/git" "$HOME/.config/"
