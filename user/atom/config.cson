@@ -51,6 +51,8 @@
     panelHeight: 300
   "markdown-preview":
     useGitHubStyle: true
+  nim:
+    onTheFlyChecking: false
   "open-terminal-here":
     command: "kitty"
   "spell-check":
