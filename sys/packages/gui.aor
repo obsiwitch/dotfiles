@@ -4,7 +4,6 @@ xorg-xinit
 xclip
 xf86-video-intel
 gnome-themes-extra
-papirus-icon-theme
 i3-gaps
 i3status
 i3blocks
