@@ -9,7 +9,6 @@ snapshot() {
         "${1:-}::{now:%Y-%m-%d-%H-%M-%S}"  \
         "$HOME/.dotfiles" \
         "$HOME/.dotprivate" \
-        "$HOME/.mozilla" \
         "$HOME/Documents"
 }
 
