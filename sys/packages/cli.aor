@@ -44,7 +44,6 @@ glances
 lshw
 usbutils
 iotop
-lynis
 
 # dev
 bash-completion
@@ -52,14 +51,15 @@ shellcheck
 python
 python-pip
 mypy
-xonsh
 git
-nano
 micro
 android-tools
 strace
 geckodriver
 python-selenium
+nim
+nimble
+valgrind
 
 # network
 networkmanager
