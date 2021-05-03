@@ -94,7 +94,7 @@ bindsym Mod1+F11 $exec pamixer --default-source --increase 5 \
 bindsym Control+F9  $exec quodlibet --play-pause
 bindsym Control+F10 $exec quodlibet --previous
 bindsym Control+F11 $exec quodlibet --next
-bindsym Shift+F9 $exec notify-send "Music" "$(quodlibet --print-playing)"
+bindsym Shift+F9 $exec notify-send "Music" -- "$(quodlibet --print-playing)"
 
 # WM keybindings ###############################################################
 
