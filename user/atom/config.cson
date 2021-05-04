@@ -52,6 +52,7 @@
   "markdown-preview":
     useGitHubStyle: true
   nim:
+    nimsuggestEnabled: false
     onTheFlyChecking: false
   "open-terminal-here":
     command: "kitty"
