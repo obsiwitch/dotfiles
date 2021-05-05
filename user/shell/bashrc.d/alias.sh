@@ -8,3 +8,4 @@ ls() { /bin/ls --group-directories-first --color='auto' --human-readable \
 alias grep='grep --color=auto'
 alias ip='ip -color'
 alias diff='diff --unified --color=auto'
+alias icat='kitty +kitten icat'
