@@ -57,9 +57,10 @@ android-tools
 strace
 geckodriver
 python-selenium
-nim
-nimble
 valgrind
+parallel
+python-matplotlib
+python-more-itertools
 
 # network
 networkmanager

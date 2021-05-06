@@ -45,6 +45,5 @@ apm-needed-install() {
         [[ -d "$HOME/.atom/packages/$package" ]] || apm install "$package"
     done
 }
-apm-needed-install atom-beautify language-generic-config language-kotlin \
-    language-lua language-openscad language-tex open-terminal-here \
-    split-diff nim
+apm-needed-install atom-beautify dbclick-tree-view language-generic-config \
+    open-terminal-here split-diff
