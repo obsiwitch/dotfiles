@@ -168,11 +168,11 @@ bindsym Control+$mod+Left  workspace prev_on_output
 bindsym Control+$mod+Right workspace next_on_output
 
 ### switch combined workspaces
-bindsym $mod+Ctrl+ampersand  workspace 1; workspace 6
-bindsym $mod+Ctrl+eacute     workspace 2; workspace 7
-bindsym $mod+Ctrl+quotedbl   workspace 3; workspace 8
-bindsym $mod+Ctrl+apostrophe workspace 4; workspace 9
-bindsym $mod+Ctrl+parenleft  workspace 5; workspace 10
+bindsym $mod+Ctrl+ampersand  workspace 6;  workspace 1
+bindsym $mod+Ctrl+eacute     workspace 7;  workspace 2
+bindsym $mod+Ctrl+quotedbl   workspace 8;  workspace 3
+bindsym $mod+Ctrl+apostrophe workspace 9;  workspace 4
+bindsym $mod+Ctrl+parenleft  workspace 10; workspace 5
 
 ### move focused container to workspace
 bindsym $mod+Shift+ampersand  move container to workspace 1
