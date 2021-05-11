@@ -25,6 +25,7 @@ export PYTHONPATH="$(dotuniq ':' "$PYTHONPATH")"
     export PAGER='less'
     export LESS='--RAW-CONTROL-CHARS --no-init'
     export LESSHISTFILE='-'
+    export BROWSER='links'
 
     # Editor
     export VISUAL='micro'
