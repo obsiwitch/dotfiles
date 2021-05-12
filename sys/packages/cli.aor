@@ -80,7 +80,6 @@ youtube-dl
 # media
 pulseaudio
 pamixer
-pulsemixer
 cups
 hplip
 sane
