@@ -11,6 +11,8 @@
     padding = 8
     horizontal_padding = 8
 
+    max_icon_size = 32
+
     # Message format. Pango Markup Format is enabled.
     #   %a  appname
     #   %s  summary
