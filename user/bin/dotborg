@@ -5,8 +5,8 @@ set -o errexit -o nounset
 export BORG_REPO="$HOME/Snapshots" # encryption=none
 
 snapshot() {
-    borg create --progress --stats --comment="${2:-}" \
-        "${1:-}::{now:%Y-%m-%d-%H-%M-%S}"  \
+    borg create --progress --stats --comment="${1:-}" \
+        "${2:-}::{now:%Y-%m-%d-%H-%M-%S}"  \
         "$HOME/.dotfiles" \
         "$HOME/.dotprivate" \
         "$HOME/Documents"
@@ -15,7 +15,7 @@ snapshot() {
 if [[ -z "${1:-}" ]]; then
     borg
     echo "
-    snapshot [repo] [comment]
+    snapshot [comment] [repo]
         create snapshot of $HOME (partial) in [repo=$BORG_REPO]
     head
         display name of latest archive"

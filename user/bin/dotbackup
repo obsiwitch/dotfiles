@@ -39,7 +39,7 @@ backup_extdrive() {
 
     # create borg snapshot before backup
     dotborg check
-    dotborg snapshot '' 'backup_extdrive'
+    dotborg snapshot 'backup_extdrive'
 
     # rsync home
     gio_mount "$uuid_crypt" "$out"
