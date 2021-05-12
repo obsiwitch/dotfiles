@@ -10,9 +10,6 @@ set -o errexit -o nounset
 heading() { echo "$(tput smso)$*$(tput rmso)"; }
 bold() { echo "$(tput bold)$*$(tput sgr0)"; }
 
-heading '# Cheatsheet'
-echo 'sudo journalctl --priority=4 --pager-end'
-
 # Errors
 echo; heading '# Errors: failed systemd units'
 systemctl --failed
@@ -48,8 +45,3 @@ diff --color=always --unified=0 <(packages_dotfiles) <(packages_installed) \
 
 echo; heading '# Packages: unused dependencies'
 pacman -Qq --deps --unrequired || :
-
-echo; heading '# Stats'
-echo "* $(bold latest upgrade): $(grep -e '-Syu' -e '-S -y -u' /var/log/pacman.log \
-    | tail -n1)"
-echo "* $(bold latest snapshot): $(dotborg head)"
