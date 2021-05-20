@@ -38,8 +38,10 @@ backup_extdrive() {
     local out="$MEDIADIR/$uuid_plain"
 
     # create borg snapshot before backup
-    dotborg check
+    time dotborg check --verbose --progress
     dotborg snapshot 'backup_extdrive'
+    # keep 4 end-of-week archives & 1 end-of-month archive per month
+    dotborg prune --keep-weekly=4 --keep-monthly=-1 --list --progress
 
     # rsync home
     gio_mount "$uuid_crypt" "$out"
