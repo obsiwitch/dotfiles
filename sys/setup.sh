@@ -27,7 +27,7 @@ setup.live.conf() {
     # loadkeys fr
     # iwctl station $iface connect $ssid
     # pacman -Sy archlinux-keyring pacman-contrib git grub efibootmgr
-    # git clone https://gitlab.com/Obsidienne/dotfiles.git
+    # git clone https://github.com/obsiwitch/dotfiles.git
     dotrankmirrors
 }
 
