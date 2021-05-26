@@ -12,6 +12,7 @@ bpy.context.preferences.view.show_developer_ui = True
 bpy.context.preferences.view.show_statusbar_memory = True
 bpy.context.preferences.view.show_statusbar_stats = True
 bpy.context.preferences.inputs.use_auto_perspective = False
+bpy.context.preferences.filepaths.save_version = 0
 
 ## UI required (--background flag won't work)
 bpykc = bpy.context.window_manager.keyconfigs['blender']
