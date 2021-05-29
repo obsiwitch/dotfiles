@@ -57,11 +57,14 @@ bindsym $mod+Shift+Return $exec kitty
 ## file manager
 bindsym $mod+Ctrl+Return $exec nemo
 
+## lock screen
+bindsym --release $mod+l $exec dotpowerctl lock
+
 ## suspend
-bindsym --release $mod+l $exec dotpowerctl suspend
+bindsym --release $mod+Shift+l $exec dotpowerctl suspend
 
 ## hibernate
-bindsym --release $mod+Shift+l $exec dotpowerctl hibernate
+bindsym --release $mod+Ctrl+l $exec dotpowerctl hibernate
 
 ## exit i3
 bindsym $mod+e $exec dotpowerctl
