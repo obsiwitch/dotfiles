@@ -21,6 +21,7 @@ bpykc.preferences.spacebar_action = 'SEARCH'
 
 ## Addons
 bpy.ops.preferences.addon_enable(module = 'mesh_f2')
+bpy.ops.preferences.addon_enable(module = 'rigify')
 
 ## Save
 bpy.ops.wm.save_userpref()
