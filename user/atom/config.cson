@@ -32,7 +32,7 @@
     telemetryConsent: "no"
     themes: [
       "one-light-ui"
-      "one-dark-syntax"
+      "one-light-syntax"
     ]
     warnOnLargeFileLimit: 2
   editor:
