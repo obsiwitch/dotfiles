@@ -100,9 +100,6 @@ setup.sys.conf() {
         | tee {"$DOTSYSP",}'/etc/default/grub' > /dev/null
     grub-mkconfig -o '/boot/grub/grub.cfg'
 
-    # pacman
-    cp {"$DOTSYSP",}'/etc/pacman.conf'
-
     # sudo
     sed -i '/^# %sudo\tALL/ s/^# //' '/etc/sudoers'
     groupadd -f sudo
