@@ -15,13 +15,14 @@ bpy.context.preferences.inputs.use_auto_perspective = False
 bpy.context.preferences.filepaths.save_version = 0
 
 ## UI required (--background flag won't work)
-bpykc = bpy.context.window_manager.keyconfigs['blender']
+bpykc = bpy.context.window_manager.keyconfigs[0]
 bpykc.preferences.use_select_all_toggle = True
 bpykc.preferences.spacebar_action = 'SEARCH'
 
 ## Addons
 bpy.ops.preferences.addon_enable(module = 'mesh_f2')
 bpy.ops.preferences.addon_enable(module = 'rigify')
+bpy.ops.preferences.addon_enable(module = 'script_reset')
 
 ## Save
 bpy.ops.wm.save_userpref()

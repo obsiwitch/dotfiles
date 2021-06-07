@@ -36,6 +36,9 @@ dotln "$DOTUSERP/kitty" "$HOME/.config/"
 if command -v blender; then
     "$DOTUSERP/blender/userprefs.py"
 fi > /dev/null
+blender_version="$(blender -v | awk 'NR==1 {print $2}')"
+blender_version="${blender_version%.*}"
+dotln "$DOTUSERP/blender/scripts" "$HOME/.config/blender/$blender_version/"
 dotln "$DOTUSERP/blender/blenderimport.desktop" "$HOME/.local/share/applications/"
 
 # atom

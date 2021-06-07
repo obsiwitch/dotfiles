@@ -37,7 +37,6 @@
     warnOnLargeFileLimit: 2
   editor:
     defaultFontSize: 15
-    fontSize: 15
     showIndentGuide: true
     showInvisibles: true
     softWrap: true
