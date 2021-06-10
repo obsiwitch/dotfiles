@@ -157,6 +157,10 @@ workspace 8:c3  output HDMI1
 workspace 9:c4  output HDMI1
 workspace 10:c5 output HDMI1
 
+### scratchpad
+bindsym $mod+twosuperior scratchpad show
+bindsym $mod+Shift+twosuperior move scratchpad
+
 ### switch workspace
 bindsym $mod+ampersand  workspace 1
 bindsym $mod+eacute     workspace 2
