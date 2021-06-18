@@ -39,7 +39,7 @@ backup_extdrive() {
 
     # create borg snapshot before backup
     time dotborg check --verbose --progress
-    dotborg snapshot 'backup_extdrive'
+    dotborg snapshot --comment='backup_extdrive'
     # keep 4 end-of-week archives & 1 end-of-month archive per month
     dotborg prune --keep-weekly=4 --keep-monthly=-1 --list --progress
 
