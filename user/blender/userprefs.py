@@ -13,6 +13,7 @@ bpy.context.preferences.view.show_statusbar_memory = True
 bpy.context.preferences.view.show_statusbar_stats = True
 bpy.context.preferences.inputs.use_auto_perspective = False
 bpy.context.preferences.filepaths.save_version = 0
+bpy.context.preferences.filepaths.use_load_ui = False
 
 ## UI required (--background flag won't work)
 bpykc = bpy.context.window_manager.keyconfigs[0]
