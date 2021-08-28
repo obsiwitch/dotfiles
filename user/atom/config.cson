@@ -32,7 +32,7 @@
     telemetryConsent: "no"
     themes: [
       "one-light-ui"
-      "one-light-syntax"
+      "one-dark-syntax"
     ]
     warnOnLargeFileLimit: 2
   editor:
@@ -60,3 +60,6 @@
 ".gfm.source":
   editor:
     softWrapAtPreferredLineLength: true
+".rust.source":
+  editor:
+    preferredLineLength: 80
