@@ -1,5 +1,4 @@
-# i3 configuration
-# http://i3wm.org/docs/userguide.html
+# i3 configuration (http://i3wm.org/docs/userguide.html)
 
 # Variables ####################################################################
 
@@ -12,17 +11,16 @@ set $exec_always exec_always --no-startup-id
 
 font pango:DejaVu Sans Mono 11
 
-### class               border  bg      text    indicator
+## class                border  bg      text    indicator
 client.focused          #282828 #282828 #D6D6D6 #4777D7
 client.focused_inactive #686868 #686868 #D6D6D6 #686868
 client.unfocused        #D6D6D6 #D6D6D6 #868686 #D6D6D6
 client.urgent           #E04B3E #E04B3E #D6D6D6 #E04B3E
 
-### force titlebar and borders on all windows (avoid gtk3 csd borderless)
+## force titlebar and borders on all windows (avoid gtk3 csd borderless)
 for_window [class=".*"] border normal
 
 bar {
-    strip_workspace_numbers yes
     status_command i3blocks -c "$i3dir/i3blocks.conf"
     separator_symbol " "
     tray_output primary
@@ -141,50 +139,46 @@ floating_modifier $mod
 bindsym $mod+space focus mode_toggle
 bindsym $mod+Shift+space floating toggle
 
-## workspaces
+## scratchpad
+bindsym $mod+twosuperior scratchpad show
+bindsym $mod+Shift+twosuperior move scratchpad
 
-### laptop screen
+## workspaces: screens
 workspace 1  output primary
 workspace 2  output primary
 workspace 3  output primary
 workspace 4  output primary
 workspace 5  output primary
+workspace 6  output HDMI1
+workspace 7  output HDMI1
+workspace 8  output HDMI1
+workspace 9  output HDMI1
+workspace 10 output HDMI1
 
-### external screen
-workspace 6:c1  output HDMI1
-workspace 7:c2  output HDMI1
-workspace 8:c3  output HDMI1
-workspace 9:c4  output HDMI1
-workspace 10:c5 output HDMI1
-
-### scratchpad
-bindsym $mod+twosuperior scratchpad show
-bindsym $mod+Shift+twosuperior move scratchpad
-
-### switch workspace
+## workspaces: switch
 bindsym $mod+ampersand  workspace 1
 bindsym $mod+eacute     workspace 2
 bindsym $mod+quotedbl   workspace 3
 bindsym $mod+apostrophe workspace 4
 bindsym $mod+parenleft  workspace 5
-bindsym $mod+Ctrl+ampersand  workspace 6:c1
-bindsym $mod+Ctrl+eacute     workspace 7:c2
-bindsym $mod+Ctrl+quotedbl   workspace 8:c3
-bindsym $mod+Ctrl+apostrophe workspace 9:c4
-bindsym $mod+Ctrl+parenleft  workspace 10:c5
+bindsym $mod+minus      workspace 6
+bindsym $mod+egrave     workspace 7
+bindsym $mod+underscore workspace 8
+bindsym $mod+ccedilla   workspace 9
+bindsym $mod+agrave     workspace 10
 bindsym Control+$mod+Left  workspace prev_on_output
 bindsym Control+$mod+Right workspace next_on_output
 
-### move focused container to workspace
+## workspaces: move
 bindsym $mod+Shift+ampersand  move container to workspace 1
 bindsym $mod+Shift+eacute     move container to workspace 2
 bindsym $mod+Shift+quotedbl   move container to workspace 3
 bindsym $mod+Shift+apostrophe move container to workspace 4
 bindsym $mod+Shift+parenleft  move container to workspace 5
-bindsym $mod+Shift+Ctrl+ampersand  move container to workspace 6:c1
-bindsym $mod+Shift+Ctrl+eacute     move container to workspace 7:c2
-bindsym $mod+Shift+Ctrl+quotedbl   move container to workspace 8:c3
-bindsym $mod+Shift+Ctrl+apostrophe move container to workspace 9:c4
-bindsym $mod+Shift+Ctrl+parenleft  move container to workspace 10:c5
+bindsym $mod+Shift+minus      move container to workspace 6
+bindsym $mod+Shift+egrave     move container to workspace 7
+bindsym $mod+Shift+underscore move container to workspace 8
+bindsym $mod+Shift+ccedilla   move container to workspace 9
+bindsym $mod+Shift+agrave     move container to workspace 10
 bindsym Control+$mod+Shift+Left move container to workspace prev_on_output
 bindsym Control+$mod+ShiftRight move container to workspace next_on_output
