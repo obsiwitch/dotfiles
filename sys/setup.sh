@@ -94,10 +94,10 @@ setup.sys.conf() {
     mkinitcpio --allpresets
 
     # bootloader
-    dottemplate "$DOTSYSP/etc/default/grub.tpl" \
-        crypt_uuid="$(lsblk --nodeps --noheadings --output='UUID' '/dev/sda2')" \
-        resume_offset="$(filefrag -v '/swapfile' | awk '/^ *0:/ {print $4}')" \
-        | tee {"$DOTSYSP",}'/etc/default/grub' > /dev/null
+    crypt_uuid="$(lsblk --nodeps --noheadings --output='UUID' '/dev/sda2')" \
+    resume_offset="$(filefrag -v '/swapfile' | awk '/^ *0:/ {print $4}')" \
+        envsubst <"$DOTSYSP/etc/default/grub.tpl" \
+            | tee {"$DOTSYSP",}'/etc/default/grub' > /dev/null
     grub-mkconfig -o '/boot/grub/grub.cfg'
 
     # sudo
