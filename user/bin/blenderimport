@@ -8,8 +8,6 @@ if 'bpy' not in sys.modules:
 else:
     from pathlib import Path
     import bpy
-    import script_reset
-    script_reset.delete_data()
     for f in sys.argv[sys.argv.index('--') + 1:]:
         f = Path(f)
         assert f.exists()
