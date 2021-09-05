@@ -12,8 +12,8 @@ bold() { echo "$(tput bold)$*$(tput sgr0)"; }
 
 # Errors
 echo; heading '# Errors: failed systemd units'
-systemctl --failed
-systemctl --user --failed
+systemctl --failed || :
+systemctl --user --failed || :
 
 # Packages
 ## List packages from dotfiles.
@@ -39,7 +39,7 @@ grep --color=always --line-number 'warning' '/var/log/pacman.log' | tail -5
 echo; heading '# Packages: pacnew & pacsave'
 fd --color=always '\.(pacnew|pacsave)' '/etc'
 
-echo; heading '# Packages: diff dotfiles installed'
+echo; heading '# Packages: diff dotfiles vs installed'
 diff --color=always --unified=0 <(packages_dotfiles) <(packages_installed) \
     | sed -e '1,2d' -e '/@@/d'
 
