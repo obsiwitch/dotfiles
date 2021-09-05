@@ -2,18 +2,23 @@ import sys, bpy
 from pathlib import Path
 
 bl_info = {
-    "name": "Script Reload & Run",
+    "name": "Script Utilities",
     "author": "Obsidienne",
     "blender": (2, 80, 0),
     "category": "Development",
 }
 keymaps = []
 
-def dump(mesh):
-    print(f"vertices={[ tuple(v.co) for v in mesh.vertices ]}")
-    print(f"edges={[ tuple(e.vertices) for e in mesh.edges ]}")
-    print(f"faces={[ tuple(f.vertices) for f in mesh.polygons ]}")
+# Monkey patch Mesh.__repr__ to be more verbose (dump vertices, edges and faces).
+mesh_repr_old = bpy.types.Mesh.__repr__
+def mesh_repr_new(mesh):
+    return mesh_repr_old(mesh) \
+         + f"\nvertices={[ tuple(v.co) for v in mesh.vertices ]})" \
+         + f"\nedges={[ tuple(e.vertices) for e in mesh.edges ]})" \
+         + f"\nfaces={[ tuple(f.vertices) for f in mesh.polygons ]}"
+bpy.types.Mesh.__repr__ = mesh_repr_new
 
+# Reload and run script in one operator.
 class ScriptReloadRun(bpy.types.Operator):
     bl_idname = 'text.reload_run'
     bl_label = 'Reload and run script'
