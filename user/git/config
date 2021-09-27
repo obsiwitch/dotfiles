@@ -7,7 +7,7 @@
 	autocrlf = input
 	hooksPath = ~/.config/git/hooks
 [alias]
-	dotlog = log --graph --oneline --all --decorate
+	dotlog = log --graph --all --format='%C(auto)%h%d %s [%C(blue)%an %C(magenta)%as%C(auto)]'
 	dotdiff = diff --patch-with-stat
 	dotshow = show --patch-with-stat
 	dotstatus = status --show-stash -vv
