@@ -24,6 +24,7 @@ bpykc.preferences.spacebar_action = 'SEARCH'
 bpy.ops.preferences.addon_enable(module = 'mesh_f2')
 bpy.ops.preferences.addon_enable(module = 'mesh_looptools')
 bpy.ops.preferences.addon_enable(module = 'rigify')
+bpy.ops.preferences.addon_enable(module = 'measureit')
 bpy.ops.preferences.addon_enable(module = 'obsi_script_utils')
 
 # Save preferences (userpref.blend)
