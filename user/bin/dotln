@@ -7,7 +7,10 @@ set -o errexit -o nounset
 # Description
 #   Symlink files/dirs and create parent directories if necessary.
 dotln() {
-    [[ "$#" -ge 2 ]] || doterr 'missing file operand'
+    if [[ "$#" -lt 2 ]]; then
+        echo 'missing file operand'
+        exit 1
+    fi
     dotmkdir "${*: -1}"
     ln --symbolic --no-dereference --force "$@"
 }
