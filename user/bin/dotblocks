@@ -34,14 +34,16 @@ block_brightness() {
 
 block_power() {
     local plugged capacity
-    plugged=$(cat '/sys/class/power_supply/ADP1/online')
-    capacity=$(cat '/sys/class/power_supply/BAT0/capacity')
+    plugged=$(< '/sys/class/power_supply/ADP1/online')
+    capacity=$(< '/sys/class/power_supply/BAT0/capacity')
     if [[ "$plugged" -eq 1 ]]; then
         local icon=''
     else
         local icon=''
     fi
     echo "$icon $capacity%"
+
+    # low power: set urgent (https://github.com/vivien/i3blocks#command)
     if [[ "$plugged" -eq 0 && "$capacity" -le 10 ]]; then
         exit 33
     fi
