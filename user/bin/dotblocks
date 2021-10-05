@@ -47,10 +47,4 @@ block_power() {
     fi
 }
 
-case ${1:-} in
-    pa_in) block_pa_in;;
-    pa_out) block_pa_out;;
-    brightness) block_brightness;;
-    power) block_power;;
-    *) exit 1;;
-esac
+"block_$1"
