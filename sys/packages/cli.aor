@@ -78,7 +78,8 @@ speedtest-cli
 youtube-dl
 
 # media
-pulseaudio
+pipewire
+pipewire-pulse
 pamixer
 cups
 hplip
