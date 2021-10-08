@@ -51,6 +51,10 @@ shellcheck
 python
 python-pip
 mypy
+flake8
+python-matplotlib
+python-scipy
+tk
 git
 micro
 android-tools
@@ -59,8 +63,7 @@ geckodriver
 python-selenium
 valgrind
 parallel
-python-matplotlib
-python-more-itertools
+rust
 
 # network
 networkmanager
