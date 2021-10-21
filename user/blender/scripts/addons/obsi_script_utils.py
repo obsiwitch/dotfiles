@@ -13,8 +13,8 @@ keymaps = []
 mesh_repr_old = bpy.types.Mesh.__repr__
 def mesh_repr_new(mesh):
     return mesh_repr_old(mesh) \
-         + f"\nvertices={[ tuple(v.co) for v in mesh.vertices ]})" \
-         + f"\nedges={[ tuple(e.vertices) for e in mesh.edges ]})" \
+         + f"\nvertices={[ tuple(v.co) for v in mesh.vertices ]}" \
+         + f"\nedges={[ tuple(e.vertices) for e in mesh.edges ]}" \
          + f"\nfaces={[ tuple(f.vertices) for f in mesh.polygons ]}"
 bpy.types.Mesh.__repr__ = mesh_repr_new
 
