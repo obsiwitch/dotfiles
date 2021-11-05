@@ -92,6 +92,9 @@ bindsym Control+F10 $exec quodlibet --previous
 bindsym Control+F11 $exec quodlibet --next
 bindsym Shift+F9 $exec notify-send "Music" -- "$(quodlibet --print-playing)"
 
+## notifications
+bindsym Pause $exec dunstctl close
+
 # WM keybindings ###############################################################
 
 ## focus window
