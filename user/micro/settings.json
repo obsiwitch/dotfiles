@@ -3,6 +3,7 @@
     "backup": false,
     "colorcolumn": 80,
     "diffgutter": true,
+    "linter": false,
     "rmtrailingws": true,
     "scrollbar": true,
     "softwrap": true,
