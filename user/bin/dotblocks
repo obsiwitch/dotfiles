@@ -4,10 +4,10 @@ set -o errexit -o nounset
 
 block_pa_in() {
     case "${button:-}" in
-        1) pamixer --default-source --toggle-mute;;
+        1) pactl set-source-mute @DEFAULT_SOURCE@ toggle;;
         3) pavucontrol;;
-        4) pamixer --default-source --increase 5;;
-        5) pamixer --default-source --decrease 5;;
+        4) pactl set-source-volume @DEFAULT_SOURCE@ +5%;;
+        5) pactl set-source-volume @DEFAULT_SOURCE@ -5%;;
     esac
     echo "$(pamixer --default-source --get-mute --get-volume \
             | sed -e 's/false//' -e 's/true//')%"
@@ -15,10 +15,10 @@ block_pa_in() {
 
 block_pa_out() {
     case "${button:-}" in
-        1) pamixer --toggle-mute;;
+        1) pactl set-sink-mute @DEFAULT_SINK@ toggle;;
         3) pavucontrol;;
-        4) pamixer --increase 5;;
-        5) pamixer --decrease 5;;
+        4) pactl set-sink-volume @DEFAULT_SINK@ +5%;;
+        5) pactl set-sink-volume @DEFAULT_SINK@ -5%;;
     esac
     echo "$(pamixer --get-mute --get-volume \
             | sed -e 's/false//' -e 's/true//')%"
@@ -26,10 +26,10 @@ block_pa_out() {
 
 block_brightness() {
     case "${button:-}" in
-        4) xbacklight -steps 1 +5;;
-        5) xbacklight -steps 1 -5;;
+        4) brightnessctl -q set 5%+;;
+        5) brightnessctl -q set 5%-;;
     esac
-    echo " $(xbacklight | xargs printf '%.0f%%')"
+    echo " $(brightnessctl -m | cut -d',' -f4)"
 }
 
 block_power() {

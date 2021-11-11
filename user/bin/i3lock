@@ -1,7 +1,0 @@
-#!/bin/bash
-
-/bin/i3lock \
-    --image="$HOME/.config/i3/wallpaper" --tiling \
-    --ignore-empty-password \
-    --no-unlock-indicator \
-    "$@"

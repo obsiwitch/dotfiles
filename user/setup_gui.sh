@@ -6,8 +6,9 @@ DOTFILESP="$(realpath "${BASH_SOURCE%/*}/..")"
 DOTUSERP="$DOTFILESP/user"
 PATH="$DOTFILESP/user/bin:$PATH"
 
-# i3
-dotln "$DOTUSERP/i3" "$HOME/.config/"
+# sway
+dotln "$DOTUSERP/sway" "$HOME/.config/"
+dotln "$DOTUSERP/swaylock" "$HOME/.config/"
 
 # GTK
 dotln "$DOTUSERP/gtk/gtk-2.0/gtkrc-2.0" "$HOME/.gtkrc-2.0"
@@ -19,9 +20,6 @@ dotln "$DOTUSERP/nemo/actions" "$HOME/.local/share/nemo/"
 
 # notifications
 dotln "$DOTUSERP/dunst" "$HOME/.config/"
-
-# xorg
-dotln "$DOTUSERP/xorg/xinitrc" "$HOME/.xinitrc"
 
 # xdg
 dotln "$DOTUSERP/xdg/user-dirs.conf" "$HOME/.config/"

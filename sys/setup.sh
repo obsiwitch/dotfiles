@@ -113,9 +113,6 @@ setup.sys.conf() {
     cp -r "$DOTSYSP/etc/systemd" '/etc'
     cp -r "$DOTSYSP/etc/tmpfiles.d" '/etc'
 
-    # X11
-    cp -r "$DOTSYSP/etc/X11" '/etc'
-
     # cups
     cp -r "$DOTSYSP/etc/cups" '/etc'
     chmod 640 '/etc/cups/cupsd.conf'

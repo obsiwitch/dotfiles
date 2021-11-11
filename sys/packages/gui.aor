@@ -1,13 +1,12 @@
 # desktop environment
-xorg
-xorg-xinit
-xclip
 xf86-video-intel
 gnome-themes-extra
-i3-gaps
-i3status
+sway
+xorg-xwayland
+swaylock
+wl-clipboard
 i3blocks
-i3lock
+brightnessctl
 dmenu
 inotify-tools
 dunst

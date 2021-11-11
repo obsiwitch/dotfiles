@@ -8,11 +8,11 @@ if [[ -z "$choice" ]]; then
              | tr ' ' '\n' | dmenu)
 fi
 case "$choice" in
-    reload)    i3-msg restart;;
-    lock)      i3lock; xset dpms force off;;
-    suspend)   i3lock; systemctl suspend;;
+    reload)    swaymsg reload;;
+    lock)      swaylock --daemonize; xset dpms force off;;
+    suspend)   swaylock --daemonize; systemctl suspend;;
     hibernate) systemctl hibernate;;
-    logout)    i3-msg exit;;
+    logout)    swaymsg exit;;
     reboot)    systemctl reboot;;
     poweroff)  systemctl poweroff;;
 esac
