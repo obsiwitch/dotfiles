@@ -52,4 +52,4 @@ apm-needed-install() {
     done
 }
 apm-needed-install atom-beautify dbclick-tree-view language-generic-config \
-    open-terminal-here split-diff
+    open-terminal-here split-diff highlight-selected

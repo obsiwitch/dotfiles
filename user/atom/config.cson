@@ -46,6 +46,7 @@
     useRipGrep: true
   "git-diff":
     showIconsInEditorGutter: true
+  "highlight-selected": {}
   "linter-ui-default":
     panelHeight: 300
   "markdown-preview":
