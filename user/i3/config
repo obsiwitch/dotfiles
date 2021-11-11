@@ -42,6 +42,7 @@ $exec_always "killall nm-applet; nm-applet"
 $exec_always "killall dunst; dunst"
 $exec_always dotscreen
 $exec_always feh --no-fehbg --bg-fill "$i3dir/wallpaper"
+$exec_always xset s 0 0
 $exec_always xset dpms 0 0 0
 
 # Applications keybindings #####################################################
