@@ -5,4 +5,8 @@ for f in /etc/X11/xinit/xinitrc.d/*.sh ; do
 done
 unset f
 
+# https://bugs.archlinux.org/task/72661
+# https://gitlab.freedesktop.org/xorg/xserver/-/issues/1241
+xrandr --dpi 96
+
 exec i3
