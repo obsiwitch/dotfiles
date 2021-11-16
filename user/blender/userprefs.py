@@ -15,6 +15,7 @@ BCP.view.show_statusbar_memory = True
 BCP.view.show_statusbar_stats = True
 BCP.inputs.use_auto_perspective = False
 BCP.filepaths.save_version = 0 # default: 1
+BCP.edit.undo_steps = 256 # default: 32
 BCP.filepaths.use_load_ui = False
 BCP.themes['Default'].view_3d.extra_face_angle = (0.498, 1.000, 0.498) # default: (0.0, 0.0, 0.8)
 
