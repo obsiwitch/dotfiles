@@ -1,5 +1,6 @@
 import sys, bpy
 from pathlib import Path
+from pprint import pprint
 
 bl_info = {
     "name": "Script Utilities",
@@ -27,9 +28,19 @@ class ScriptReloadRun(bpy.types.Operator):
         bpy.ops.text.run_script()
         return {"FINISHED"}
 
+# Print content of bpy.context to stdout.
+# ref: https://blender.stackexchange.com/a/215967
+class PrintContext(bpy.types.Operator):
+    bl_idname = 'ui.print_context'
+    bl_label = "print context to stdout"
+    def execute(self, context):
+        pprint(context.copy())
+        return {"FINISHED"}
+
 def register():
     # add operators
     bpy.utils.register_class(ScriptReloadRun)
+    bpy.utils.register_class(PrintContext)
 
     # add keymaps
     kc = bpy.context.window_manager.keyconfigs.addon
@@ -40,6 +51,7 @@ def register():
 def unregister():
     # remove operators
     bpy.utils.unregister_class(ScriptReloadRun)
+    bpy.utils.unregister_class(PrintContext)
 
     # remove keymaps
     for km, kmi in keymaps:
