@@ -22,7 +22,6 @@ BCP.themes['Default'].view_3d.extra_face_angle = (0.498, 1.000, 0.498) # default
 # Set keybindings (UI required, --background flag won't work)
 BCWMKC = bpy.context.window_manager.keyconfigs[0]
 BCWMKC.preferences.use_select_all_toggle = True
-BCWMKC.preferences.spacebar_action = 'SEARCH' # default: 'PLAY'
 
 # Enable addons
 BOP = bpy.ops.preferences
