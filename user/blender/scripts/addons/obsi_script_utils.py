@@ -24,9 +24,12 @@ class ScriptReloadRun(bpy.types.Operator):
     bl_idname = 'wm.script_reload_run'
     bl_label = 'Reload and run script'
     def execute(self, context):
-        override = { 'screen': bpy.data.screens['Scripting'] }
+        override = {}
+        override['screen'] = bpy.data.screens['Scripting']
         override['area'] = next(area for area in override['screen'].areas
                                 if area.type == 'TEXT_EDITOR')
+        override['region'] = next(region for region in override['area'].regions
+                                  if region.type == 'WINDOW')
         bpy.ops.text.reload(override)
         bpy.ops.text.run_script(override)
         return {"FINISHED"}
