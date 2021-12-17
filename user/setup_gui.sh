@@ -33,7 +33,7 @@ dotln "$DOTUSERP/mpv" "$HOME/.config/"
 dotln "$DOTUSERP/kitty" "$HOME/.config/"
 
 # blender
-if command -v blender; then
+if command -v blender > /dev/null; then
     blender_version="$(blender -v | awk 'NR==1 {print $2}')"
     blender_version="${blender_version%.*}"
     dotln "$DOTUSERP/blender/scripts" \
@@ -42,7 +42,7 @@ if command -v blender; then
           "$HOME/.local/share/applications/"
 
     "$DOTUSERP/blender/userprefs.py"
-fi > /dev/null
+fi
 
 # atom
 dotln "$DOTUSERP/atom/"* "$HOME/.atom/"

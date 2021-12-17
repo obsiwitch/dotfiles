@@ -19,13 +19,16 @@ def mesh_repr_new(mesh):
          + f"\nfaces={[ tuple(f.vertices) for f in mesh.polygons ]}"
 bpy.types.Mesh.__repr__ = mesh_repr_new
 
-# Reload and run script in one operator.
+# Reload and run script from anywhere in one operator.
 class ScriptReloadRun(bpy.types.Operator):
-    bl_idname = 'text.reload_run'
+    bl_idname = 'wm.script_reload_run'
     bl_label = 'Reload and run script'
     def execute(self, context):
-        bpy.ops.text.reload()
-        bpy.ops.text.run_script()
+        override = { 'screen': bpy.data.screens['Scripting'] }
+        override['area'] = next(area for area in override['screen'].areas
+                                if area.type == 'TEXT_EDITOR')
+        bpy.ops.text.reload(override)
+        bpy.ops.text.run_script(override)
         return {"FINISHED"}
 
 # Print content of bpy.context to stdout.
@@ -44,8 +47,8 @@ def register():
 
     # add keymaps
     kc = bpy.context.window_manager.keyconfigs.addon
-    km = kc.keymaps.new(name='Text', space_type='TEXT_EDITOR')
-    kmi = km.keymap_items.new('text.reload_run', 'P', 'PRESS', alt=True)
+    km = kc.keymaps.new(name='Window', space_type='EMPTY')
+    kmi = km.keymap_items.new('wm.script_reload_run', 'F5', 'PRESS')
     keymaps.append((km, kmi))
 
 def unregister():
