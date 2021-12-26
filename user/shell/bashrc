@@ -8,6 +8,15 @@ export PATH="$(dotuniq ':' "$PATH")"
 export PYTHONPATH="$HOME/.local/dotlib/python:$PYTHONPATH"
 export PYTHONPATH="$(dotuniq ':' "$PYTHONPATH")"
 
+# ssh-agent: useful to avoid having git-lfs asking for credentials multiple times
+# note: the lifetime flag (-t) is overriden by a lifetime specified trough
+# ssh-add or ~/.ssh/config AddKeysToAgent.
+# note: do not forget to add `AddKeysToAgent <lifetime>` in '~/.ssh/config'.
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent -t 300 -a "$SSH_AUTH_SOCK" # note: overriden by value set
+fi
+
 # Interactive shell only
 [[ $- == *i* ]] && {
     # 256 colors in virtual console
