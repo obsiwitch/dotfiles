@@ -32,7 +32,7 @@
     telemetryConsent: "no"
     themes: [
       "one-light-ui"
-      "one-dark-syntax"
+      "one-light-syntax"
     ]
     warnOnLargeFileLimit: 2
   editor:
@@ -52,7 +52,7 @@
   "markdown-preview":
     useGitHubStyle: true
   "open-terminal-here":
-    command: "kitty"
+    command: "mate-terminal"
   "spell-check":
     locales: [
       "en-US"

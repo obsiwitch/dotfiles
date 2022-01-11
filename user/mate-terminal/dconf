@@ -1,0 +1,10 @@
+[org/mate/terminal/profiles/default]
+default-show-menubar=false
+title-mode='after'
+use-theme-colors=false
+foreground-color='#D8D8D8D8D8D8'
+background-color='#28272C2C3434'
+bold-color-same-as-fg=true
+palette='#4A4A4B4B4A4A:#C8C8403F6564:#807FD4D46868:#D7D7A1A16969:#69698585D7D7:#C8C76A6AD4D4:#6F6FCCCBD1D1:#DBDBDCDCDCDC:#696969696969:#F2F26C6C9191:#A3A3F2F2A0A0:#F5F5CDA7A254:#A2A2C1C1F5F5:#D2D2A2A2F5F5:#A0A0E9E9F2F2:#FDFDFDFDFDFD'
+scrollback-lines=10000
+scrollbar-position='hidden'

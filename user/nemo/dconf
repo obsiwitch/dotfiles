@@ -1,5 +1,5 @@
 [org/cinnamon/desktop/applications/terminal]
-exec='kitty'
+exec='mate-terminal'
 exec-arg=''
 
 [org/nemo/icon-view]
@@ -17,8 +17,6 @@ bulk-rename-tool=b'thunar --bulk-rename'
 date-format='iso'
 default-folder-viewer='list-view'
 desktop-is-home-dir=true
-show-compact-view-icon-toolbar=false
-show-edit-icon-toolbar=false
 show-full-path-titles=true
 show-open-in-terminal-toolbar=true
 size-prefixes='base-2'

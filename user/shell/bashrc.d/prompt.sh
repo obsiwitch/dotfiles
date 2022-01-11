@@ -21,7 +21,10 @@ __prompt() {
     # $2: color
     # $3: prefix (default: none)
     # $4: suffix (default: none)
-    # see tput(1), terminfo(5) and infocmp(1M)
+    # Escape sequences: tput(1), terminfo(5) and infocmp(1M).
+    # Note: \[ and \] enclose a sequence of non-printing characters (bash(1)).
+    # I use them to avoid non-printing characters messing with the navigation
+    # (e.g. arrows, home, end) (d1e9dfa).
     prompt_block() {
         test -z "$1" && return 1
         local prefix="${3}"
@@ -55,24 +58,22 @@ __prompt() {
         fi
     }
 
-    prompt_prompt() {
-        local buser; buser=$(prompt_block '\u' $red1 '[' ']')
-        local bhost; bhost=$(prompt_block '\h' $red2 '[' ']')
-        local bpwd; bpwd=$(prompt_block '\w' $blue1 '[' ']')
-        PS1="$(prompt_status)${buser}${bhost}${bpwd}$(prompt_git)\n"
-        PS1="$PS1$(prompt_jobs)"
-        PS1="$PS1\$ "
-    }
-
     prompt_title() {
-        tput hs && echo -n "$(tput tsl)${USER}@${HOSTNAME}: ${PWD}$(tput fsl)"
+        # Escape sequences are directly used here instead of using tput because
+        # the fsl and tsl capabilities aren't set by TERM=xterm-256color.
+        local fsl='\e]2;'
+        local tsl='\a'
+        echo -n "\[$fsl${USER}@${HOSTNAME}: ${PWD}$tsl\]"
     }
 
-    prompt_prompt
-    prompt_title
+    local buser; buser=$(prompt_block '\u' $red1 '[' ']')
+    local bhost; bhost=$(prompt_block '\h' $red2 '[' ']')
+    local bpwd; bpwd=$(prompt_block '\w' $blue1 '[' ']')
+    PS1="$(prompt_title)$(prompt_status)${buser}${bhost}${bpwd}$(prompt_git)\n"
+    PS1="$PS1$(prompt_jobs)"
+    PS1="$PS1\$ "
 
-    unset -f prompt_block prompt_git prompt_jobs prompt_status \
-        prompt_prompt prompt_title
+    unset -f prompt_block prompt_git prompt_jobs prompt_status prompt_title
 }
 
 PROMPT_COMMAND='__prompt'

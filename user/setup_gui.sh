@@ -14,6 +14,8 @@ dotln "$DOTUSERP/gtk/gtk-2.0/gtkrc-2.0" "$HOME/.gtkrc-2.0"
 dotln "$DOTUSERP/gtk/gtk-3.0" "$HOME/.config/"
 
 # file manager
+dconf reset -f '/org/cinnamon/desktop/applications/terminal/'
+dconf reset -f '/org/nemo/'
 dconf load / < "$DOTUSERP/nemo/dconf"
 dotln "$DOTUSERP/nemo/actions" "$HOME/.local/share/nemo/"
 
@@ -30,7 +32,8 @@ dotln "$DOTUSERP/xdg/user-dirs.conf" "$HOME/.config/"
 dotln "$DOTUSERP/mpv" "$HOME/.config/"
 
 # terminal
-dotln "$DOTUSERP/kitty" "$HOME/.config/"
+dconf reset -f '/org/mate/terminal/'
+dconf load / < "$DOTUSERP/mate-terminal/dconf"
 
 # blender
 if command -v blender > /dev/null; then

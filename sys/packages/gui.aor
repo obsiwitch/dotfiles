@@ -33,7 +33,7 @@ ffmpegthumbnailer
 webp-pixbuf-loader
 
 # dev
-kitty
+mate-terminal
 gedit
 atom
 bless
