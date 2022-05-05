@@ -32,21 +32,25 @@ block_brightness() {
     echo " $(xbacklight | xargs printf '%.0f%%')"
 }
 
-block_power() {
-    local plugged capacity
+block_power_print() {
+    local plugged capacity icon
     plugged=$(< '/sys/class/power_supply/ADP1/online')
     capacity=$(< '/sys/class/power_supply/BAT0/capacity')
-    if [[ "$plugged" -eq 1 ]]; then
-        local icon=''
-    else
-        local icon=''
-    fi
-    echo "$icon $capacity%"
-
-    # low power: set urgent (https://github.com/vivien/i3blocks#command)
+    if [[ "$plugged" -eq 1 ]]; then icon=''; else icon=''; fi
     if [[ "$plugged" -eq 0 && "$capacity" -le 10 ]]; then
-        exit 33
+        urgent='true'
+    else
+        urgent='false'
     fi
+    printf '{"full_text":"%s", "urgent":%s}\n' "$icon $capacity%" "$urgent"
+}
+
+block_power() {
+    block_power_print
+    # alternative: timeout 30 inotifywait ...
+    while inotifywait --timeout=30 -qq  /sys/class/power_supply/ADP1/uevent || :; do
+        block_power_print
+    done
 }
 
 "block_$1"
