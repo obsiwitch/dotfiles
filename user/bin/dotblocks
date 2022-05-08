@@ -2,10 +2,10 @@
 
 set -o errexit -o nounset
 
-block_pa_in() {
+block_audio_in() {
     case "${button:-}" in
         1) pamixer --default-source --toggle-mute;;
-        3) pavucontrol;;
+        3) i3-msg -q exec pavucontrol;;
         4) pamixer --default-source --increase 5;;
         5) pamixer --default-source --decrease 5;;
     esac
@@ -13,15 +13,21 @@ block_pa_in() {
             | sed -e 's/false//' -e 's/true//')%"
 }
 
-block_pa_out() {
+block_audio_out() {
     case "${button:-}" in
         1) pamixer --toggle-mute;;
-        3) pavucontrol;;
+        3) i3-msg -q exec pavucontrol;;
         4) pamixer --increase 5;;
         5) pamixer --decrease 5;;
     esac
     echo "$(pamixer --get-mute --get-volume \
             | sed -e 's/false//' -e 's/true//')%"
+}
+
+monitor_audio() {
+    stdbuf -oL amixer sevents | while read -r _; do
+        pkill -RTMIN+14 i3blocks
+    done
 }
 
 block_brightness() {
