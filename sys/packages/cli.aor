@@ -82,7 +82,9 @@ youtube-dl
 
 # media
 pipewire
+pipewire-alsa
 pipewire-pulse
+alsa-utils
 pamixer
 cups
 hplip
