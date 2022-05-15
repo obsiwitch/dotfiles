@@ -6,6 +6,10 @@ import bpy
 bpy.ops.wm.save_homefile()
 
 # Set general preferences
+bpy.ops.script.execute_preset(
+    filepath="/usr/share/blender/3.1/scripts/presets/interface_theme/Blender_Light.xml",
+    menu_idname="USERPREF_MT_interface_theme_presets"
+) # default: Blender_Dark.xml
 BCP = bpy.context.preferences
 BCP.view.ui_scale = 1.2 # default: 1.0
 BCP.view.show_splash = False
@@ -17,7 +21,6 @@ BCP.inputs.use_auto_perspective = False
 BCP.filepaths.save_version = 0 # default: 1
 BCP.edit.undo_steps = 256 # default: 32
 BCP.filepaths.use_load_ui = False
-BCP.themes['Default'].view_3d.extra_face_angle = (0.498, 1.000, 0.498) # default: (0.0, 0.0, 0.8)
 
 # Set keybindings (UI required, --background flag won't work)
 BCWMKC = bpy.context.window_manager.keyconfigs[0]
