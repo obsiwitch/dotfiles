@@ -30,7 +30,6 @@ BCWMKC.preferences.use_select_all_toggle = True
 BOP = bpy.ops.preferences
 BOP.addon_enable(module = 'mesh_f2')
 BOP.addon_enable(module = 'mesh_looptools')
-BOP.addon_enable(module = 'rigify')
 BOP.addon_enable(module = 'measureit')
 BOP.addon_enable(module = 'obsi_script_utils')
 
