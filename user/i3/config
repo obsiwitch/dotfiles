@@ -51,7 +51,7 @@ $exec_always xset dpms 0 0 0
 bindsym $mod+Return $exec dmenu_run
 
 ## terminal
-bindsym $mod+Shift+Return $exec mate-terminal
+bindsym $mod+Shift+Return $exec gnome-terminal
 
 ## file manager
 bindsym $mod+Ctrl+Return $exec nemo

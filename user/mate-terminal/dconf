@@ -1,9 +1,0 @@
-[org/mate/terminal/profiles/default]
-default-show-menubar=false
-title-mode='after'
-use-theme-colors=false
-foreground-color='#D8D8D8D8D8D8'
-background-color='#28272C2C3434'
-bold-color-same-as-fg=true
-scrollback-lines=10000
-scrollbar-position='hidden'

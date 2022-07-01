@@ -33,7 +33,7 @@ ffmpegthumbnailer
 webp-pixbuf-loader
 
 # dev
-mate-terminal
+gnome-terminal
 gedit
 gedit-plugins
 libgit2-glib

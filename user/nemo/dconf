@@ -1,7 +1,3 @@
-[org/cinnamon/desktop/applications/terminal]
-exec='mate-terminal'
-exec-arg=''
-
 [org/nemo/icon-view]
 default-zoom-level='larger'
 

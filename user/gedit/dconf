@@ -19,5 +19,3 @@ draw-spaces=['space', 'tab', 'nbsp', 'leading', 'trailing']
 root='file:///'
 filter-mode=@as []
 
-[org/gnome/desktop/default-applications/terminal]
-exec='mate-terminal'
