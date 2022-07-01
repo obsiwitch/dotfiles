@@ -35,7 +35,8 @@ webp-pixbuf-loader
 # dev
 mate-terminal
 gedit
-atom
+gedit-plugins
+libgit2-glib
 bless
 meld
 gnome-boxes

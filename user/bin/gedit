@@ -1,0 +1,4 @@
+#!/bin/bash
+
+dconf write '/org/gnome/gedit/plugins/filebrowser/virtual-root' "'file://$PWD'"
+/usr/bin/gedit --new-window "$@"

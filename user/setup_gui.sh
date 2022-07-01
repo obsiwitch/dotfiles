@@ -35,6 +35,10 @@ dotln "$DOTUSERP/mpv" "$HOME/.config/"
 dconf reset -f '/org/mate/terminal/'
 dconf load / < "$DOTUSERP/mate-terminal/dconf"
 
+# gedit
+dconf reset -f '/org/gnome/gedit/'
+dconf load / < "$DOTUSERP/gedit/dconf"
+
 # blender
 if command -v blender > /dev/null; then
     blender_version="$(blender -v | awk 'NR==1 {print $2}')"
@@ -47,12 +51,3 @@ if command -v blender > /dev/null; then
     "$DOTUSERP/blender/userprefs.py"
 fi
 
-# atom
-dotln "$DOTUSERP/atom/"* "$HOME/.atom/"
-apm-needed-install() {
-    local package; for package in "$@"; do
-        [[ -d "$HOME/.atom/packages/$package" ]] || apm install "$package"
-    done
-}
-apm-needed-install atom-beautify dbclick-tree-view language-generic-config \
-    open-terminal-here split-diff highlight-selected

@@ -1,0 +1,23 @@
+[org/gnome/gedit/preferences/editor]
+display-right-margin=true
+insert-spaces=true
+tabs-size=uint32 4
+
+[org/gnome/gedit/preferences/ui]
+side-panel-visible=true
+
+[org/gnome/gedit/state/window]
+side-panel-active-page='GeditFileBrowserPanel'
+
+[org/gnome/gedit/plugins]
+active-plugins=['docinfo', 'git', 'codecomment', 'quickhighlight', 'drawspaces', 'textsize', 'filebrowser', 'wordcompletion', 'modelines', 'openlinks', 'externaltools', 'spell', 'findinfiles']
+
+[org/gnome/gedit/plugins/drawspaces]
+draw-spaces=['space', 'tab', 'nbsp', 'leading', 'trailing']
+
+[org/gnome/gedit/plugins/filebrowser]
+root='file:///'
+filter-mode=@as []
+
+[org/gnome/desktop/default-applications/terminal]
+exec='mate-terminal'
