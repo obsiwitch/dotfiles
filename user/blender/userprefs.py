@@ -7,7 +7,8 @@ bpy.ops.wm.save_homefile()
 
 # Set general preferences
 bpy.ops.script.execute_preset(
-    filepath="/usr/share/blender/3.1/scripts/presets/interface_theme/Blender_Light.xml",
+    filepath=f"/usr/share/blender/{bpy.app.version_string.rpartition('.')[0]}"
+            + "/scripts/presets/interface_theme/Blender_Light.xml",
     menu_idname="USERPREF_MT_interface_theme_presets"
 ) # default: Blender_Dark.xml
 BCP = bpy.context.preferences
