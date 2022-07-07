@@ -78,7 +78,7 @@ nmap
 traceroute
 whois
 speedtest-cli
-youtube-dl
+yt-dlp
 
 # media
 pipewire

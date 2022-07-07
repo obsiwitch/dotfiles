@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Download playlists in subdirectories.
+yt-dlp --output='%(playlist)s/%(playlist_index)03d.%(title)s.%(id)s.%(ext)s' "$@"
