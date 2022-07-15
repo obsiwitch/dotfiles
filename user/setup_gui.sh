@@ -38,15 +38,13 @@ dconf reset -f '/org/gnome/terminal/'
 dconf reset -f '/org/gnome/gedit/'
 dconf load / < "$DOTUSERP/gedit/dconf"
 
-# blender
-if command -v blender > /dev/null; then
-    blender_version="$(blender -v | awk 'NR==1 {print $2}')"
-    blender_version="${blender_version%.*}"
-    dotln "$DOTUSERP/blender/scripts" \
-          "$HOME/.config/blender/$blender_version/"
-    dotln "$DOTUSERP/blender/blenderimport.desktop" \
-          "$HOME/.local/share/applications/"
+# desktop entries
+dotln "$DOTUSERP/desktop" "$HOME/.local/share/applications"
 
-    "$DOTUSERP/blender/userprefs.py"
-fi
+# blender
+blender_version="$(blender -v | awk 'NR==1 {print $2}')"
+blender_version="${blender_version%.*}"
+dotln "$DOTUSERP/blender/scripts" \
+      "$HOME/.config/blender/$blender_version/"
+"$DOTUSERP/blender/userprefs.py"
 
