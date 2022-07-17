@@ -10,9 +10,9 @@ fi
 case "$choice" in
     reload)    i3-msg restart;;
     lock)      i3lock; xset dpms force off;;
-    suspend)   i3lock; systemctl suspend;;
-    hibernate) systemctl hibernate;;
+    suspend)   i3lock; systemctl suspend -i;;
+    hibernate) systemctl hibernate -i;;
     logout)    i3-msg exit;;
-    reboot)    systemctl reboot;;
-    poweroff)  systemctl poweroff;;
+    reboot)    systemctl reboot -i;;
+    poweroff)  systemctl poweroff -i;;
 esac
