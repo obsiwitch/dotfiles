@@ -86,3 +86,11 @@ cheese
 quodlibet
 soundconverter
 gnome-sound-recorder
+
+# games
+steam-native-runtime
+wine
+wine-mono
+winetricks
+vkd3d
+lib32-vkd3d

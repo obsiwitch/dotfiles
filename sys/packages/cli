@@ -19,6 +19,8 @@ units
 
 # files
 dosfstools
+ntfs-3g
+fuseiso
 less
 fd
 fzf
@@ -58,9 +60,6 @@ tk
 git
 micro
 android-tools
-strace
-geckodriver
-python-selenium
 valgrind
 parallel
 rust

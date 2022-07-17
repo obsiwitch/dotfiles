@@ -58,7 +58,7 @@ setup.sys.init() {
     swapon '/mnt/swapfile'
 
     # packages
-    sed -e '/^#.*/d' -e '/^$/d' "$DOTSYSP/packages/cli.aor" \
+    sed -e '/^#.*/d' -e '/^$/d' "$DOTSYSP/packages/"{cli,gui} \
         | pacstrap -i '/mnt' -
 
     # fstab
