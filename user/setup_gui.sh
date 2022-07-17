@@ -32,7 +32,8 @@ dotln "$DOTUSERP/xdg/user-dirs.conf" "$HOME/.config/"
 dotln "$DOTUSERP/mpv" "$HOME/.config/"
 
 # terminal
-dconf reset -f '/org/gnome/terminal/'
+dconf reset -f '/org/mate/terminal/'
+dconf load / < "$DOTUSERP/mate-terminal/dconf"
 
 # gedit
 dconf reset -f '/org/gnome/gedit/'
