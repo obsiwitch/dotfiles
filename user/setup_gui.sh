@@ -36,6 +36,7 @@ dconf reset -f '/org/mate/terminal/'
 dconf load / < "$DOTUSERP/mate-terminal/dconf"
 
 # gedit
+dconf reset -f '/org/gnome/desktop/applications/terminal/'
 dconf reset -f '/org/gnome/gedit/'
 dconf load / < "$DOTUSERP/gedit/dconf"
 
