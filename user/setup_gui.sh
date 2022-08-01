@@ -50,3 +50,7 @@ dotln "$DOTUSERP/blender/scripts" \
       "$HOME/.config/blender/$blender_version/"
 "$DOTUSERP/blender/userprefs.py"
 
+# wine
+wine reg add 'HKEY_CURRENT_USER\Software\Wine\FileOpenAssociations' /v 'Enable' /d 'N' /f
+wine reg add 'HKEY_CURRENT_USER\Software\Wine\X11 Driver' /v 'UseTakeFocus' /d 'N' /f
+
