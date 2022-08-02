@@ -1,12 +1,10 @@
-/* Adwaita tweaks */
-
-/* Fix white border around windows in i3 */
+/* Fix borders around windows in i3 */
 decoration {
     padding: 0;
 }
 
 /* Fix headerbar color */
-headerbar {
+headerbar, .titlebar {
     background-image: none;
     background-color: #eaeaea;
 }

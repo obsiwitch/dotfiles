@@ -10,8 +10,8 @@ PATH="$DOTFILESP/user/bin:$PATH"
 dotln "$DOTUSERP/i3" "$HOME/.config/"
 
 # GTK
-dotln "$DOTUSERP/gtk/gtk-2.0/gtkrc-2.0" "$HOME/.gtkrc-2.0"
 dotln "$DOTUSERP/gtk/gtk-3.0" "$HOME/.config/"
+dotln "$DOTUSERP/gtk/gtk-4.0" "$HOME/.config/"
 
 # file manager
 dconf reset -f '/org/cinnamon/desktop/applications/terminal/'
