@@ -2,24 +2,24 @@
 
 set -o errexit -o nounset -o xtrace
 
-DOTFILESP="$(realpath "${BASH_SOURCE%/*}/..")"
-DOTUSERP="$DOTFILESP/user"
-PATH="$DOTFILESP/user/bin:$PATH"
+dotfilesp="$(realpath "${BASH_SOURCE%/*}/..")"
+dotuserp="$dotfilesp/user"
+PATH="$dotfilesp/user/bin:$PATH"
 
 # bin
-dotln "$DOTUSERP/bin" "$HOME/.local/dotbin"
+dotln "$dotuserp/bin" "$HOME/.local/dotbin"
 
 # lib
-dotln "$DOTUSERP/lib" "$HOME/.local/dotlib"
+dotln "$dotuserp/lib" "$HOME/.local/dotlib"
 
 # shell
-dotln "$DOTUSERP/shell/profile" "$HOME/.profile"
-dotln "$DOTUSERP/shell/bashrc" "$HOME/.bashrc"
-dotln "$DOTUSERP/shell/inputrc" "$HOME/.inputrc"
-dotln "$DOTUSERP/shell/bashrc.d" "$HOME/.config/"
+dotln "$dotuserp/shell/profile" "$HOME/.profile"
+dotln "$dotuserp/shell/bashrc" "$HOME/.bashrc"
+dotln "$dotuserp/shell/inputrc" "$HOME/.inputrc"
+dotln "$dotuserp/shell/bashrc.d" "$HOME/.config/"
 
 # git
-dotln "$DOTUSERP/git" "$HOME/.config/"
+dotln "$dotuserp/git" "$HOME/.config/"
 
 # micro
-dotln "$DOTUSERP/micro" "$HOME/.config/"
+dotln "$dotuserp/micro" "$HOME/.config/"

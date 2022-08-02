@@ -2,9 +2,9 @@
 
 set -o errexit -o nounset -o xtrace
 
-DOTFILESP="$(realpath "${BASH_SOURCE%/*}/..")"
-DOTSYSP="$DOTFILESP/sys"
-PATH="$DOTFILESP/user/bin:$PATH"
+dotfilesp="$(realpath "${BASH_SOURCE%/*}/..")"
+dotsysp="$dotfilesp/sys"
+PATH="$dotfilesp/user/bin:$PATH"
 
 setup.help() {
     set +o xtrace
@@ -58,7 +58,7 @@ setup.sys.init() {
     swapon '/mnt/swapfile'
 
     # packages
-    sed -e '/^#.*/d' -e '/^$/d' "$DOTSYSP/packages/"{cli,gui} \
+    sed -e '/^#.*/d' -e '/^$/d' "$dotsysp/packages/"{cli,gui} \
         | pacstrap -i '/mnt' -
 
     # fstab
@@ -70,7 +70,7 @@ setup.sys.init() {
         --boot-directory='/mnt/boot'
 
     # copy dotfiles
-    cp -r "$DOTFILESP" '/mnt/root/'
+    cp -r "$dotfilesp" '/mnt/root/'
 }
 
 setup.sys.conf() {
@@ -87,17 +87,17 @@ setup.sys.conf() {
     echo 'nanoha' > /etc/hostname
 
     # kernel modules
-    cp -r "$DOTSYSP/etc/modprobe.d" '/etc'
+    cp -r "$dotsysp/etc/modprobe.d" '/etc'
 
     # initramfs (requires: /etc/vconsole.conf)
-    cp {"$DOTSYSP",}'/etc/mkinitcpio.conf'
+    cp {"$dotsysp",}'/etc/mkinitcpio.conf'
     mkinitcpio --allpresets
 
     # bootloader
     crypt_uuid="$(lsblk --nodeps --noheadings --output='UUID' '/dev/sda2')" \
     resume_offset="$(filefrag -v '/swapfile' | awk '/^ *0:/ {print $4}')" \
-        envsubst <"$DOTSYSP/etc/default/grub.tpl" \
-            | tee {"$DOTSYSP",}'/etc/default/grub' > /dev/null
+        envsubst <"$dotsysp/etc/default/grub.tpl" \
+            | tee {"$dotsysp",}'/etc/default/grub' > /dev/null
     grub-mkconfig -o '/boot/grub/grub.cfg'
 
     # sudo
@@ -110,17 +110,17 @@ setup.sys.conf() {
     passwd --status root | awk '$2 != "P" {exit 1}' || passwd root
 
     # systemd
-    cp -r "$DOTSYSP/etc/systemd" '/etc'
-    cp -r "$DOTSYSP/etc/tmpfiles.d" '/etc'
+    cp -r "$dotsysp/etc/systemd" '/etc'
+    cp -r "$dotsysp/etc/tmpfiles.d" '/etc'
 
     # pacman
-    cp {"$DOTSYSP",}'/etc/pacman.conf'
+    cp {"$dotsysp",}'/etc/pacman.conf'
 
     # X11
-    cp -r "$DOTSYSP/etc/X11" '/etc'
+    cp -r "$dotsysp/etc/X11" '/etc'
 
     # cups
-    cp -r "$DOTSYSP/etc/cups" '/etc'
+    cp -r "$dotsysp/etc/cups" '/etc'
     chmod 640 '/etc/cups/cupsd.conf'
     chown root:cups '/etc/cups/cupsd.conf'
 }
