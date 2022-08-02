@@ -113,6 +113,9 @@ setup.sys.conf() {
     cp -r "$DOTSYSP/etc/systemd" '/etc'
     cp -r "$DOTSYSP/etc/tmpfiles.d" '/etc'
 
+    # pacman
+    cp {"$DOTSYSP",}'/etc/pacman.conf'
+
     # X11
     cp -r "$DOTSYSP/etc/X11" '/etc'
 
