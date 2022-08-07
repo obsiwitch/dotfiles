@@ -5,18 +5,9 @@ set -o errexit -o nounset -o xtrace
 MEDIADIR="/run/media/$USER"
 RUNTIMEDIR="/run/user/$UID"
 
-# Mount $1 (device file or other identifier) if it hasn't already been mounted
-# at $2 (directory path). SIGINT (^C) is disabled as a workaround to avoid
-# problems during passphrase prompt for encrypted volumes: the device is kept
-# busy by gvfs-udisks2-volume-monitor after SIGINT even though it shouldn't.
-gio_mount() {
-    trap '' INT # disable SIGINT
-    test -d "$2" || gio mount --device="$1"
-    trap '-' INT # restore SIGINT's default behaviour
-}
-
 SNAPSHOTS_PLAIN="$HOME/Snapshots"
 SNAPSHOTS_CRYPT="$RUNTIMEDIR/gocryptfs/Snapshots"
+
 # Mount encrypted view of $SNAPSHOTS_PLAIN to $SNAPSHOTS_CRYPT.
 snapshots_mount() {
     rmdir "$SNAPSHOTS_CRYPT" || : # preventively remove empty directory to avoid syncing it
@@ -44,30 +35,38 @@ backup_extdrive() {
     dotborg prune --keep-weekly=4 --keep-monthly=-1 --list --progress
 
     # rsync home
-    gio_mount "$uuid_crypt" "$out"
+    # SIGINT (^C) is disabled as a workaround to avoid problems during passphrase
+    # prompt for encrypted volumes: the device is kept busy by gvfs-udisks2-volume-monitor
+    # after SIGINT even though it shouldn't.
+    trap '' INT # disable SIGINT
+    test -d "$out" || gio mount --device="$uuid_crypt"
+    trap '-' INT # restore SIGINT's default behaviour
     rsync --archive --delete --protect-args --progress "$HOME" "$out"
     gio mount --unmount "$out"
 }
 
-# Phone SD card: p1 F32 100%:
-# * no encryption: entertainment
-# * gocryptfs -reverse: borg snapshots
+# Phone SD card:
+# * v1 private 25%: extension to the internal storage
+# * v2 public 75%: entertainment & gocryptfs -reverse snapshots
+# ```sh
+# adb$ sm list-disks
+# disk:179,96
+# adb$ sm partition disk:179,96 mixed 75
+# adb$ reboot
+# ```
 backup_phone() {
-    local uuid='74DB-16F0'
-    local out="$MEDIADIR/$uuid"
-    gio_mount "$uuid" "$out"
+    local device='HMD_Global_Nokia_2.2_HZAL1670CAJ60412338'
+    local out="/run/user/$UID/gvfs/mtp:host=$device/SanDisk SD card/"
+    test -d "$out" || gio mount "mtp://$device"
+    ( cd "$out" ) # access mount to avoid Input/output error
 
-    # rsync entertainment
-    rsync --recursive --delete --protect-args --progress --size-only \
-        "$HOME/Downloads" "$HOME/Music" "$out"
-
-    # rsync encrypted borg snapshots
     snapshots_mount
-    rsync --recursive --delete --protect-args --progress --size-only \
-        "$SNAPSHOTS_CRYPT" "$out"
+    rsync --recursive --delete --protect-args --progress --size-only --inplace \
+       "$HOME/Downloads/Books" "$HOME/Downloads/Learn" "$HOME/Downloads/Videos" \
+       "$HOME/Music" "$SNAPSHOTS_CRYPT" "$out"
     snapshots_unmount
 
-    gio mount --unmount "$out"
+    gio mount --unmount "mtp://$device"
 }
 
 # Remote: gocryptfs -reverse: borg snapshots
