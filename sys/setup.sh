@@ -84,7 +84,7 @@ setup.sys.conf() {
     echo 'KEYMAP=fr' > /etc/vconsole.conf
 
     # network
-    echo 'nanoha' > /etc/hostname
+    echo 'grimoire-sf31454' > /etc/hostname
 
     # kernel modules
     cp -r "$dotsysp/etc/modprobe.d" '/etc'
