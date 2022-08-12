@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+
+import pathlib, shutil, argparse
+from subprocess import check_output as sh
+
+# Same as `str.partition(sep)` but return a 2-tuple containing the part before
+# the separator and the rest.
+def partition2(string, sep):
+    a, sep, b = string.partition(sep)
+    return a, sep + b
+
+def hashrename(paths, length):
+    for old_path in paths:
+        old_path = pathlib.Path(old_path)
+        if old_path.is_dir(): continue
+        shorthash = sh(['sha1sum', old_path], text = True).split()[0][:length]
+        nametags, suffixes = partition2(old_path.name, '.')
+        _, tags = partition2(nametags, '+')
+        new_path = old_path.with_name(shorthash + tags + suffixes)
+
+        if old_path == new_path:
+            continue
+        elif new_path.exists():
+            raise FileExistsError(f'{old_path} -> {new_path} (duplicate or collision)')
+
+        print(f'* {old_path} -> {new_path}')
+        shutil.move(old_path, new_path)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description = 'Rename files with a shortened \
+        hash to provide a (hopefully) unique filename. Preserve tags and extensions.',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('paths', nargs = '+')
+    parser.add_argument('--length', type=int, default=7,
+        help='shortens hash to LENGTH characters')
+    args = parser.parse_args()
+    hashrename(paths=args.paths, length=args.length)
