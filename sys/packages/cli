@@ -32,6 +32,7 @@ p7zip
 unrar
 unzip
 zip
+dpkg
 borg
 python-llfuse
 lsof
