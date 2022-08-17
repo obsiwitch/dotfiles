@@ -2,24 +2,24 @@
 
 set -o errexit -o nounset -o xtrace
 
+sourcep="$(realpath "${BASH_SOURCE%/*}")"
 dotfilesp="$(realpath "${BASH_SOURCE%/*}/..")"
-dotuserp="$dotfilesp/user"
 PATH="$dotfilesp/user/bin:$PATH"
 
 # bin
-dotln "$dotuserp/bin" "$HOME/.local/dotbin"
+dotln "$sourcep/bin" "$HOME/.local/dotbin"
 
 # lib
-dotln "$dotuserp/lib" "$HOME/.local/dotlib"
+dotln "$sourcep/lib" "$HOME/.local/dotlib"
 
 # shell
-dotln "$dotuserp/shell/profile" "$HOME/.profile"
-dotln "$dotuserp/shell/bashrc" "$HOME/.bashrc"
-dotln "$dotuserp/shell/inputrc" "$HOME/.inputrc"
-dotln "$dotuserp/shell/bashrc.d" "$HOME/.config/"
+dotln "$sourcep/shell/profile" "$HOME/.profile"
+dotln "$sourcep/shell/bashrc" "$HOME/.bashrc"
+dotln "$sourcep/shell/inputrc" "$HOME/.inputrc"
+dotln "$sourcep/shell/bashrc.d" "$HOME/.config/"
 
 # git
-dotln "$dotuserp/git" "$HOME/.config/"
+dotln "$sourcep/git" "$HOME/.config/"
 
 # micro
-dotln "$dotuserp/micro" "$HOME/.config/"
+dotln "$sourcep/micro" "$HOME/.config/"

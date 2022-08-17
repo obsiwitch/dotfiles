@@ -2,8 +2,8 @@
 
 set -o errexit -o nounset -o xtrace
 
+sourcep="$(realpath "${BASH_SOURCE%/*}")"
 dotfilesp="$(realpath "${BASH_SOURCE%/*}/..")"
-dotsysp="$dotfilesp/sys"
 PATH="$dotfilesp/user/bin:$PATH"
 
 setup.help() {
@@ -58,7 +58,7 @@ setup.sys.init() {
     swapon '/mnt/swapfile'
 
     # packages
-    sed -e '/^#.*/d' -e '/^$/d' "$dotsysp/packages/"{cli,gui} \
+    sed -e '/^#.*/d' -e '/^$/d' "$sourcep/packages/"{cli,gui} \
         | pacstrap -i '/mnt' -
 
     # fstab
@@ -87,17 +87,17 @@ setup.sys.conf() {
     echo 'grimoire-sf31454' > /etc/hostname
 
     # kernel modules
-    cp -r "$dotsysp/etc/modprobe.d" '/etc'
+    cp -r "$sourcep/etc/modprobe.d" '/etc'
 
     # initramfs (requires: /etc/vconsole.conf)
-    cp {"$dotsysp",}'/etc/mkinitcpio.conf'
+    cp {"$sourcep",}'/etc/mkinitcpio.conf'
     mkinitcpio --allpresets
 
     # bootloader
     crypt_uuid="$(lsblk --nodeps --noheadings --output='UUID' '/dev/sda2')" \
     resume_offset="$(filefrag -v '/swapfile' | awk '/^ *0:/ {print $4}')" \
-        envsubst <"$dotsysp/etc/default/grub.tpl" \
-            | tee {"$dotsysp",}'/etc/default/grub' > /dev/null
+        envsubst <"$sourcep/etc/default/grub.tpl" \
+            | tee {"$sourcep",}'/etc/default/grub' > /dev/null
     grub-mkconfig -o '/boot/grub/grub.cfg'
 
     # sudo
@@ -110,17 +110,17 @@ setup.sys.conf() {
     passwd --status root | awk '$2 != "P" {exit 1}' || passwd root
 
     # systemd
-    cp -r "$dotsysp/etc/systemd" '/etc'
-    cp -r "$dotsysp/etc/tmpfiles.d" '/etc'
+    cp -r "$sourcep/etc/systemd" '/etc'
+    cp -r "$sourcep/etc/tmpfiles.d" '/etc'
 
     # pacman
-    cp {"$dotsysp",}'/etc/pacman.conf'
+    cp {"$sourcep",}'/etc/pacman.conf'
 
     # X11
-    cp -r "$dotsysp/etc/X11" '/etc'
+    cp -r "$sourcep/etc/X11" '/etc'
 
     # cups
-    cp -r "$dotsysp/etc/cups" '/etc'
+    cp -r "$sourcep/etc/cups" '/etc'
     chmod 640 '/etc/cups/cupsd.conf'
     chown root:cups '/etc/cups/cupsd.conf'
 }
