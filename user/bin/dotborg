@@ -12,11 +12,14 @@ if [[ -z "${1:-}" ]]; then
     head [options]
         display name of latest archive"
 elif [[ "$1" == 'snapshot' ]]; then
+    time borg check --verbose --progress
     borg create --progress --stats "${@:2}" \
         '::{now:%Y-%m-%d-%H-%M-%S}'  \
         "$HOME/.dotfiles" \
         "$HOME/.dotprivate" \
         "$HOME/Documents"
+
+    borg prune --keep-weekly=4 --keep-monthly=12 --keep-yearly=-1 --list --progress
 elif [[ "$1" == 'head' ]]; then
     borg list --last=1 --format='{archive}' "${@:2}"
 elif [[ "$1" == 'list' && "$*" != *'::'* ]]; then

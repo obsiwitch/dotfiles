@@ -28,12 +28,6 @@ backup_extdrive() {
     local uuid_plain='d51b9763-ba6a-4948-baba-b0e78cd5c28c'
     local out="$MEDIADIR/$uuid_plain"
 
-    # create borg snapshot before backup
-    time dotborg check --verbose --progress
-    dotborg snapshot --comment='backup_extdrive'
-    # keep 4 end-of-week archives & 1 end-of-month archive per month
-    dotborg prune --keep-weekly=4 --keep-monthly=-1 --list --progress
-
     # rsync home
     # SIGINT (^C) is disabled as a workaround to avoid problems during passphrase
     # prompt for encrypted volumes: the device is kept busy by gvfs-udisks2-volume-monitor
@@ -78,13 +72,15 @@ backup_remote() {
 
 help() {
     set +o xtrace
-    echo 'usage: dotbackup extdrive'
+    echo 'usage: dotbackup snapshot'
+    echo '       dotbackup extdrive'
     echo '       dotbackup phone'
     echo '       dotbackup remote'
     exit 1
 }
 
 case ${1:-} in
+    snapshot) dotborg snapshot --comment='dotbackup';;
     extdrive) backup_extdrive;;
     phone) backup_phone;;
     remote) backup_remote;;
