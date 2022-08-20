@@ -19,7 +19,7 @@ systemctl --user --failed || :
 ## List packages from dotfiles.
 packages_dotfiles() {
     sed -e '/^#.*/d' -e '/^$/d' \
-        "${BASH_SOURCE%/*}/../../sys/packages/"/* \
+        "${BASH_SOURCE%/*}/../../grimoire-sf31454/packages/"/* \
         | sort
 }
 

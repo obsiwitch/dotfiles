@@ -64,6 +64,7 @@ android-tools
 valgrind
 parallel
 rust
+jq
 
 # network
 networkmanager
