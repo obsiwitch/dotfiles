@@ -9,9 +9,6 @@ PATH="$dotfilesp/user/bin:$PATH"
 # bin
 dotln "$sourcep/bin" "$HOME/.local/dotbin"
 
-# lib
-dotln "$sourcep/lib" "$HOME/.local/dotlib"
-
 # shell
 dotln "$sourcep/shell/profile" "$HOME/.profile"
 dotln "$sourcep/shell/bashrc" "$HOME/.bashrc"

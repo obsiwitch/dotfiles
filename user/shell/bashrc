@@ -5,9 +5,6 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/Applications"
 export PATH="$(dotuniq ':' "$PATH")"
 
-export PYTHONPATH="$HOME/.local/dotlib/python:$PYTHONPATH"
-export PYTHONPATH="$(dotuniq ':' "$PYTHONPATH")"
-
 # Interactive shell only
 [[ $- == *i* ]] && {
     # 256 colors in virtual console
