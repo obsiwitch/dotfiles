@@ -56,8 +56,8 @@ backup_phone() {
 
     snapshots_mount
     rsync --recursive --delete --protect-args --progress --size-only --inplace \
-       "$HOME/Downloads/Books" "$HOME/Downloads/Learn" "$HOME/Downloads/Videos" \
-       "$HOME/Music" "$SNAPSHOTS_CRYPT" "$out"
+       "$HOME/Downloads/Books" "$HOME/Downloads/Videos" "$HOME/Music" \
+       "$SNAPSHOTS_CRYPT" "$out"
     snapshots_unmount
 
     gio mount --unmount "mtp://$device"
