@@ -18,5 +18,8 @@ dotln "$sourcep/shell/bashrc.d" "$HOME/.config/"
 # git
 dotln "$sourcep/git" "$HOME/.config/"
 
+# ranger
+dotln "$sourcep/ranger" "$HOME/.config/"
+
 # micro
 dotln "$sourcep/micro" "$HOME/.config/"
