@@ -10,21 +10,15 @@ set -o errexit -o nounset
 heading() { echo "$(tput smso)$*$(tput rmso)"; }
 bold() { echo "$(tput bold)$*$(tput sgr0)"; }
 
-# Errors
-echo; heading '# Errors: failed systemd units'
-systemctl --failed || :
-systemctl --user --failed || :
-
-# Packages
-## List packages from dotfiles.
+# List packages from dotfiles.
 packages_dotfiles() {
     sed -e '/^#.*/d' -e '/^$/d' \
         "${BASH_SOURCE%/*}/../../grimoire-sf31454/packages/"/* \
         | sort
 }
 
-## List explicitly installed packages and groups. Packages belonging to the
-## specified groups are hidden.
+# List explicitly installed packages and groups. Packages belonging to the
+# specified groups are hidden.
 packages_installed() {
     local groups=(base-devel xorg texlive-most)
     comm -23 \
@@ -33,15 +27,21 @@ packages_installed() {
         <(pacman -Qq --groups "${groups[@]}" | sort)
 }
 
-echo; heading '# Packages: warnings'
-grep --color=always --line-number 'warning' '/var/log/pacman.log' | tail -5
+{
+    heading '# Errors: failed systemd units'
+    systemctl --failed || :
+    systemctl --user --failed || :;
 
-echo; heading '# Packages: pacnew & pacsave'
-fd --color=always '\.(pacnew|pacsave)' '/etc'
+    echo; heading '# Packages: logs from last full upgrade'
+    tac /var/log/pacman.log | sed '/-S -u -y/q' | tac
 
-echo; heading '# Packages: diff dotfiles vs installed'
-diff --color=always --unified=0 <(packages_dotfiles) <(packages_installed) \
-    | sed -e '1,2d' -e '/@@/d'
+    echo; heading '# Packages: pacnew & pacsave'
+    fd --color=always '\.(pacnew|pacsave)' '/etc'
 
-echo; heading '# Packages: unused dependencies'
-pacman -Qq --deps --unrequired || :
+    echo; heading '# Packages: diff dotfiles vs installed'
+    diff --color=always --unified=0 <(packages_dotfiles) <(packages_installed) \
+        | sed -e '1,2d' -e '/@@/d'
+
+    echo; heading '# Packages: unused dependencies'
+    pacman -Qq --deps --unrequired || :
+} | less
