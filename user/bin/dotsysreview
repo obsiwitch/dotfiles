@@ -28,9 +28,11 @@ packages_installed() {
 }
 
 {
-    heading '# Errors: failed systemd units'
-    systemctl --failed || :
-    systemctl --user --failed || :;
+    heading '# Services: system'
+    systemctl --type=service || :
+
+    echo; heading '# Services: user'
+    systemctl --type=service --user || :;
 
     echo; heading '# Packages: logs from last full upgrade'
     tac /var/log/pacman.log | sed '/-S -u -y/q' | tac
