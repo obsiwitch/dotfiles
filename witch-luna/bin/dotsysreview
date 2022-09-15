@@ -8,7 +8,6 @@ set -o errexit -o nounset
 # Ref: https://wiki.archlinux.org/index.php/Pacman/Pacnew_and_Pacsave
 
 heading() { echo "$(tput smso)$*$(tput rmso)"; }
-bold() { echo "$(tput bold)$*$(tput sgr0)"; }
 
 # List packages from dotfiles.
 packages_dotfiles() {
