@@ -1,0 +1,97 @@
+# desktop environment
+xorg
+xorg-xinit
+xclip
+xf86-video-intel
+gnome-themes-extra
+i3-gaps
+i3status
+i3blocks
+i3lock
+dmenu
+inotify-tools
+dunst
+network-manager-applet
+pavucontrol
+
+# admin
+gparted
+system-config-printer
+arandr
+dconf-editor
+
+# utils
+gnome-clocks
+
+# files
+nemo
+thunar
+file-roller
+gvfs
+gvfs-mtp
+ffmpegthumbnailer
+webp-pixbuf-loader
+
+# dev
+mate-terminal
+gedit
+gedit-plugins
+libgit2-glib
+bless
+meld
+gnome-boxes
+
+# sci
+galculator
+
+# network
+firefox
+transmission-gtk
+
+# media-fonts
+ttf-dejavu
+otf-font-awesome
+adobe-source-han-sans-jp-fonts
+noto-fonts-emoji
+
+# media-text
+libreoffice-fresh
+hunspell-en_us
+hunspell-fr
+pandoc
+texlive-most
+mupdf
+evince
+foliate
+
+# media-gfx
+simple-scan
+feh
+eom
+xfce4-screenshooter
+imagemagick
+gimp
+img2pdf
+
+# media-3D
+openscad
+blender
+
+# media-video
+mpv
+simplescreenrecorder
+mkvtoolnix-gui
+cheese
+
+# media-sound
+quodlibet
+soundconverter
+gnome-sound-recorder
+
+# games
+steam-native-runtime
+wine
+wine-mono
+winetricks
+vkd3d
+lib32-vkd3d
