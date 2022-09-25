@@ -4,7 +4,7 @@ set -o errexit -o nounset -o xtrace
 
 sourcep="$(realpath "${BASH_SOURCE%/*}")"
 dotfilesp="$(realpath "${BASH_SOURCE%/*}/..")"
-PATH="$dotfilesp/user/bin:$PATH"
+PATH="$sourcep/bin:$PATH"
 
 # i3
 dotln "$sourcep/i3" "$HOME/.config/"

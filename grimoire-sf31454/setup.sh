@@ -4,7 +4,6 @@ set -o errexit -o nounset -o xtrace
 
 sourcep="$(realpath "${BASH_SOURCE%/*}")"
 dotfilesp="$(realpath "${BASH_SOURCE%/*}/..")"
-PATH="$dotfilesp/user/bin:$PATH"
 
 setup.help() {
     set +o xtrace
