@@ -32,10 +32,10 @@ monitor_audio() {
 
 block_brightness() {
     case "${button:-}" in
-        4) xbacklight -steps 1 +5;;
-        5) xbacklight -steps 1 -5;;
+        4) brightnessctl -q s +5;;
+        5) brightnessctl -q s 5-;;
     esac
-    echo " $(xbacklight | xargs printf '%.0f%%')"
+    echo " $(brightnessctl g)"
 }
 
 block_power() {

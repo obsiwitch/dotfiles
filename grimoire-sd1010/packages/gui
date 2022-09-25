@@ -13,6 +13,7 @@ inotify-tools
 dunst
 network-manager-applet
 pavucontrol
+brightnessctl
 
 # admin
 gparted
