@@ -83,7 +83,7 @@ setup.sys.conf() {
     echo 'KEYMAP=fr' > /etc/vconsole.conf
 
     # network
-    echo 'grimoire-sf31454' > /etc/hostname
+    echo 'grimoire-sd1010' > /etc/hostname
 
     # kernel modules
     cp -r "$sourcep/etc/modprobe.d" '/etc'
@@ -93,9 +93,9 @@ setup.sys.conf() {
     mkinitcpio --allpresets
 
     # bootloader
-    crypt_uuid="$(lsblk --nodeps --noheadings --output='UUID' '/dev/sda2')" \
+    crypt_uuid="$(lsblk --nodeps --noheadings --output='UUID' '/dev/nvme0n1p2')" \
     resume_offset="$(filefrag -v '/swapfile' | awk '/^ *0:/ {print $4}')" \
-        envsubst <"$sourcep/etc/default/grub.tpl" \
+        envsubst < "$sourcep/etc/default/grub.tpl" \
             | tee {"$sourcep",}'/etc/default/grub' > /dev/null
     grub-mkconfig -o '/boot/grub/grub.cfg'
 
@@ -106,11 +106,14 @@ setup.sys.conf() {
     # users
     useradd luna --create-home --groups sudo || [[ "$?" -eq 9 ]]
     passwd --status luna | awk '$2 != "P" {exit 1}' || passwd luna
+
+    useradd celestia --create-home || [[ "$?" -eq 9 ]]
+    passwd --status celestia | awk '$2 != "P" {exit 1}' || passwd celestia
+
     passwd --status root | awk '$2 != "P" {exit 1}' || passwd root
 
     # systemd
     cp -r "$sourcep/etc/systemd" '/etc'
-    cp -r "$sourcep/etc/tmpfiles.d" '/etc'
 
     # pacman
     cp {"$sourcep",}'/etc/pacman.conf'
