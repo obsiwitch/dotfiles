@@ -40,8 +40,8 @@ block_brightness() {
 
 block_power() {
     local plugged capacity icon
-    plugged=$(< '/sys/class/power_supply/ADP1/online')
-    capacity=$(< '/sys/class/power_supply/BAT0/capacity')
+    plugged=$(cat /sys/class/power_supply/A*/online)
+    capacity=$(cat /sys/class/power_supply/BAT*/capacity)
     if [[ "$plugged" -eq 1 ]]; then icon=''; else icon=''; fi
     echo "$icon $capacity%"
 
@@ -53,7 +53,7 @@ block_power() {
 
 # monitor power supply un/plugging
 monitor_power() {
-    while inotifywait -qq  /sys/class/power_supply/ADP1/uevent; do
+    while inotifywait -qq  /sys/class/power_supply/A*/uevent; do
         pkill -RTMIN+16 i3blocks
     done
 }
