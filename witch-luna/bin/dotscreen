@@ -2,12 +2,7 @@
 
 set -o errexit -o nounset
 
-if xrandr | grep -q 'HDMI1 disconnected'; then
-    # laptop
-    xrandr --output eDP1  --auto \
-           --output HDMI1 --off
-else
-    # home
-    xrandr --output eDP1  --auto \
-           --output HDMI1 --auto --left-of eDP1
-fi
+xrandr --auto
+xrandr --output eDP --rotate right # sd1010
+xinput --map-to-output 'FTS3528:00 2808:1015' 'eDP' || : # sd1010
+xrandr --output HDMI1 --left-of eDP1 # sf31454
