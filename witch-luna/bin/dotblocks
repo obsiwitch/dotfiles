@@ -32,10 +32,10 @@ monitor_audio() {
 
 block_brightness() {
     case "${button:-}" in
-        4) brightnessctl -q s +5;;
-        5) brightnessctl -q s 5-;;
+        4) brightnessctl -q s +5%;;
+        5) brightnessctl -q s 5%-;;
     esac
-    echo " $(brightnessctl g)"
+    echo " $(brightnessctl -m | cut -d',' -f4)"
 }
 
 block_power() {
