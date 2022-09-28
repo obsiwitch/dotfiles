@@ -1,18 +1,4 @@
-/* Fix borders around windows in i3 */
-window {
-    padding: 0;
-    box-shadow: none;
-}
-
-/* Fix black background behind popovers in i3 */
-popover {
-    background-color: #FFFFFF;
-    border: 1px solid rgba(0,0,0,0.14);
-}
-popover contents {
-    box-shadow: none;
-    border: none;
-}
-popover arrow {
-    border: none;
+/* Fix window corners in sway */
+window, .titlebar {
+    border-radius: 0;
 }

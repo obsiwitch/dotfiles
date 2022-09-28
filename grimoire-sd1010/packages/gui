@@ -1,33 +1,30 @@
 # desktop environment
-xorg
-xorg-xinit
-xclip
-xf86-video-intel
-xf86-video-amdgpu
 gnome-themes-extra
-i3-gaps
-i3status
 i3blocks
-i3lock
-dmenu
 inotify-tools
 dunst
 network-manager-applet
 pavucontrol
 brightnessctl
+sway
+xorg-xwayland
+xorg-xhost
+swaylock
+dmenu
+bemenu
+wl-clipboard
+swaybg
 
 # admin
 gparted
 system-config-printer
-arandr
 dconf-editor
 
 # utils
 gnome-clocks
 
 # files
-nemo
-thunar
+nautilus
 file-roller
 gvfs
 gvfs-mtp
@@ -35,7 +32,7 @@ ffmpegthumbnailer
 webp-pixbuf-loader
 
 # dev
-mate-terminal
+gnome-terminal
 gedit
 gedit-plugins
 libgit2-glib
@@ -51,7 +48,6 @@ firefox
 transmission-gtk
 
 # media-fonts
-ttf-dejavu
 otf-font-awesome
 adobe-source-han-sans-jp-fonts
 noto-fonts-emoji
@@ -70,7 +66,7 @@ foliate
 simple-scan
 feh
 eom
-xfce4-screenshooter
+grim
 imagemagick
 gimp
 img2pdf
@@ -81,9 +77,8 @@ blender
 
 # media-video
 mpv
-simplescreenrecorder
 mkvtoolnix-gui
-cheese
+wf-recorder
 
 # media-sound
 quodlibet

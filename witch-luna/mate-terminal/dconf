@@ -1,4 +1,0 @@
-[org/mate/terminal/profiles/default]
-default-show-menubar=false
-title-mode='after'
-scrollback-lines=10000

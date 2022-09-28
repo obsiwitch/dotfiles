@@ -10,7 +10,7 @@
     frame_color = "#D6D6D6"
 
     # content
-    font = DejaVu Sans Mono 11
+    font = Source Code Pro 11
     markup = full
     format = "<b>%a - %s</b>\n%b"
     max_icon_size = 32

@@ -6,24 +6,22 @@ sourcep="$(realpath "${BASH_SOURCE%/*}")"
 dotfilesp="$(realpath "${BASH_SOURCE%/*}/..")"
 PATH="$sourcep/bin:$PATH"
 
-# i3
-dotln "$sourcep/i3" "$HOME/.config/"
+# sway
+dotln "$sourcep/sway" "$HOME/.config/"
+dotln "$sourcep/swaylock" "$HOME/.config/"
 
 # GTK
 dotln "$sourcep/gtk/gtk-3.0" "$HOME/.config/"
 dotln "$sourcep/gtk/gtk-4.0" "$HOME/.config/"
+dconf reset -f '/org/gnome/desktop/interface/'
+dconf load / < "$sourcep/gtk/dconf"
 
 # file manager
-dconf reset -f '/org/cinnamon/desktop/applications/terminal/'
-dconf reset -f '/org/nemo/'
-dconf load / < "$sourcep/nemo/dconf"
-dotln "$sourcep/nemo/actions" "$HOME/.local/share/nemo/"
+dconf reset -f '/org/gnome/nautilus/'
+dconf load / < "$sourcep/nautilus/dconf"
 
 # notifications
 dotln "$sourcep/dunst" "$HOME/.config/"
-
-# xorg
-dotln "$sourcep/xorg/xinitrc" "$HOME/.xinitrc"
 
 # xdg
 dotln "$sourcep/xdg/user-dirs.conf" "$HOME/.config/"
@@ -32,11 +30,10 @@ dotln "$sourcep/xdg/user-dirs.conf" "$HOME/.config/"
 dotln "$sourcep/mpv" "$HOME/.config/"
 
 # terminal
-dconf reset -f '/org/mate/terminal/'
-dconf load / < "$sourcep/mate-terminal/dconf"
+dconf reset -f '/org/gnome/terminal/'
+dconf load / < "$sourcep/gnome-terminal/dconf"
 
 # gedit
-dconf reset -f '/org/gnome/desktop/applications/terminal/'
 dconf reset -f '/org/gnome/gedit/'
 dconf load / < "$sourcep/gedit/dconf"
 

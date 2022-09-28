@@ -1,0 +1,4 @@
+ignore-empty-password
+no-unlock-indicator
+image="$HOME/.config/sway/wallpaper"
+scaling=fill

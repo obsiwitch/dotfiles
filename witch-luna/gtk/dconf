@@ -1,0 +1,4 @@
+[org/gnome/desktop/interface]
+color-scheme='prefer-light'
+enable-animations=false
+monospace-font-name='Source Code Pro 11'

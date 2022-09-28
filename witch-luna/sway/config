@@ -1,0 +1,184 @@
+# sway(5) configuration
+
+# Variables ####################################################################
+
+set $mod Mod4
+
+# Devices · libinput -h, sway-output(5), sway-input(5) #########################
+
+output 'Unknown ANX7530 U 0x00000001' transform 90
+output 'Chimei Innolux Corporation 0x14D4 0x00000000' position 1920 0
+output HDMI-A-1 position 0 0
+output * bg wallpaper fill
+
+input type:keyboard xkb_layout fr
+input type:touch map_to_output eDP-1
+input type:touchpad {
+    dwt enabled
+    tap enabled
+    drag enabled
+    drag_lock enabled
+}
+
+# Autostart ####################################################################
+
+exec_always killall nm-applet
+exec_always nm-applet --indicator
+exec_always killall dunst
+exec_always dunst
+
+# Application keybindings ######################################################
+
+# launcher
+bindsym $mod+Return exec bemenu-run
+
+# terminal
+bindsym $mod+Shift+Return exec gnome-terminal
+
+# file manager
+bindsym $mod+Ctrl+Return exec nautilus
+
+# power
+bindsym $mod+e exec dotpowerctl
+bindsym --release $mod+l exec dotpowerctl lock
+bindsym --release $mod+Shift+l exec dotpowerctl suspend
+bindsym --release $mod+Ctrl+l exec dotpowerctl hibernate
+
+# screenshots
+bindsym Print exec GRIM_DEFAULT_DIR="$HOME/Downloads" grim
+
+# brightness
+bindsym XF86MonBrightnessDown exec brightnessctl -q s 5%- && pkill -RTMIN+15 i3blocks
+bindsym XF86MonBrightnessUp exec brightnessctl -q s 5%+ && pkill -RTMIN+15 i3blocks
+
+# audio: output
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+# audio: input
+bindsym Mod1+F9 exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym Mod1+F10 exec pactl set-source-volume @DEFAULT_SOURCE@ -5%
+bindsym Mod1+F11 exec pactl set-source-volume @DEFAULT_SOURCE@ +5%
+
+# audio: music
+bindsym Control+F9  exec quodlibet --play-pause
+bindsym Control+F10 exec quodlibet --previous
+bindsym Control+F11 exec quodlibet --next
+bindsym Shift+F9 exec notify-send "Music" -- "$(quodlibet --print-playing)"
+
+# notifications
+bindsym Pause exec dunstctl close
+
+# WM keybindings ###############################################################
+
+# focus window
+bindsym $mod+Left  focus left
+bindsym $mod+Right focus right
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+
+# move focused window
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Right move right
+
+# kill focused window
+bindsym $mod+q kill
+
+# fullscreen focused window
+bindsym $mod+f fullscreen toggle
+
+# manipulate container layout
+bindsym $mod+Tab split toggle
+bindsym $mod+Shift+Tab layout toggle stacking tabbed split
+
+# resize container
+mode "resize" {
+    bindsym Left  resize shrink width
+    bindsym Right resize grow   width
+    bindsym Down  resize shrink height
+    bindsym Up    resize grow   height
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# floating windows
+floating_modifier $mod
+bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+space floating toggle
+
+# workspaces: scratchpad
+bindsym $mod+twosuperior scratchpad show
+bindsym $mod+Shift+twosuperior move scratchpad
+
+# workspaces: screens
+workspace 1  output eDP-1
+workspace 2  output eDP-1
+workspace 3  output eDP-1
+workspace 4  output eDP-1
+workspace 5  output eDP-1
+workspace 6  output HDMI-A-1
+workspace 7  output HDMI-A-1
+workspace 8  output HDMI-A-1
+workspace 9  output HDMI-A-1
+workspace 10 output HDMI-A-1
+
+# workspaces: switch workspace
+bindsym $mod+ampersand  workspace 1
+bindsym $mod+eacute     workspace 2
+bindsym $mod+quotedbl   workspace 3
+bindsym $mod+apostrophe workspace 4
+bindsym $mod+parenleft  workspace 5
+bindsym $mod+minus      workspace 6
+bindsym $mod+egrave     workspace 7
+bindsym $mod+underscore workspace 8
+bindsym $mod+ccedilla   workspace 9
+bindsym $mod+agrave     workspace 10
+bindsym Control+$mod+Left  workspace prev_on_output
+bindsym Control+$mod+Right workspace next_on_output
+
+# workspaces: move
+bindsym $mod+Shift+ampersand  move container to workspace 1
+bindsym $mod+Shift+eacute     move container to workspace 2
+bindsym $mod+Shift+quotedbl   move container to workspace 3
+bindsym $mod+Shift+apostrophe move container to workspace 4
+bindsym $mod+Shift+parenleft  move container to workspace 5
+bindsym $mod+Shift+minus      move container to workspace 6
+bindsym $mod+Shift+egrave     move container to workspace 7
+bindsym $mod+Shift+underscore move container to workspace 8
+bindsym $mod+Shift+ccedilla   move container to workspace 9
+bindsym $mod+Shift+agrave     move container to workspace 10
+bindsym Control+$mod+Shift+Left  move container to workspace prev_on_output
+bindsym Control+$mod+Shift+Right move container to workspace next_on_output
+
+# Theme ########################################################################
+
+font Source Code Pro 11
+
+# class                 border  bg      text    indicator
+client.focused          #282828 #282828 #D6D6D6 #4777D7
+client.focused_inactive #686868 #686868 #D6D6D6 #686868
+client.unfocused        #D6D6D6 #D6D6D6 #868686 #D6D6D6
+client.urgent           #E04B3E #E04B3E #D6D6D6 #E04B3E
+
+bar {
+    status_command i3blocks -c "$HOME/.config/sway/i3blocks.conf"
+
+    colors {
+        background #D6D6D6
+        statusline #282828
+
+        # class            border  bg      text
+        focused_workspace  #282828 #282828 #D6D6D6
+        active_workspace   #686868 #686868 #D6D6D6
+        inactive_workspace #D6D6D6 #D6D6D6 #282828
+        urgent_workspace   #E04B3E #E04B3E #D6D6D6
+    }
+}
+
+# Includes #####################################################################
+
+include /etc/sway/config.d/*

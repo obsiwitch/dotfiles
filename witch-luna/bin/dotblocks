@@ -5,7 +5,7 @@ set -o errexit -o nounset
 block_audio_in() {
     case "${button:-}" in
         1) pamixer --default-source --toggle-mute;;
-        3) i3-msg -q exec pavucontrol;;
+        3) swaymsg -q exec pavucontrol;;
         4) pamixer --default-source --increase 5;;
         5) pamixer --default-source --decrease 5;;
     esac
@@ -16,7 +16,7 @@ block_audio_in() {
 block_audio_out() {
     case "${button:-}" in
         1) pamixer --toggle-mute;;
-        3) i3-msg -q exec pavucontrol;;
+        3) swaymsg -q exec pavucontrol;;
         4) pamixer --increase 5;;
         5) pamixer --decrease 5;;
     esac

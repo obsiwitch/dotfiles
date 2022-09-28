@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# ref: https://git.suckless.org/dmenu/file/dmenu_run.html
+dmenu_path | bemenu "$@" | ${SHELL:-"/bin/sh"} &

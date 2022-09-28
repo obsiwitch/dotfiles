@@ -115,9 +115,6 @@ setup.sys.conf() {
     # pacman
     cp {"$sourcep",}'/etc/pacman.conf'
 
-    # X11
-    cp -r "$sourcep/etc/X11" '/etc'
-
     # cups
     cp -r "$sourcep/etc/cups" '/etc'
     chmod 640 '/etc/cups/cupsd.conf'

@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -o errexit -o nounset
-
-xrandr --auto
-xrandr --output eDP --rotate right # sd1010
-xinput --map-to-output 'FTS3528:00 2808:1015' 'eDP' || : # sd1010
-xrandr --output HDMI1 --left-of eDP1 # sf31454

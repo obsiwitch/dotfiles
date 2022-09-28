@@ -1,9 +1,0 @@
-#!/bin/bash
-
-set -o errexit -o nounset
-
-# Synopsis
-#   cmd | cbt
-# Description
-#   Copy text from stdin to clipboard.
-nohup xclip -rmlastnl -selection clipboard &> /dev/null
