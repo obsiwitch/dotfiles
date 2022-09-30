@@ -41,11 +41,13 @@ dconf load / < "$sourcep/gedit/dconf"
 dotln "$sourcep/desktop" "$HOME/.local/share/applications"
 
 # blender
-blender_version="$(blender -v | awk 'NR==1 {print $2}')"
-blender_version="${blender_version%.*}"
-dotln "$sourcep/blender/scripts" \
-      "$HOME/.config/blender/$blender_version/"
-"$sourcep/blender/userprefs.py"
+if  [[ -v DISPLAY ]]; then
+    blender_version="$(blender -v | awk 'NR==1 {print $2}')"
+    blender_version="${blender_version%.*}"
+    dotln "$sourcep/blender/scripts" \
+          "$HOME/.config/blender/$blender_version/"
+    "$sourcep/blender/userprefs.py"
+fi
 
 # wine
 wine reg add 'HKEY_CURRENT_USER\Software\Wine\FileOpenAssociations' /v 'Enable' /d 'N' /f
