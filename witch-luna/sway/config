@@ -22,10 +22,8 @@ input type:touchpad {
 
 # Autostart ####################################################################
 
-exec_always killall nm-applet
-exec_always nm-applet --indicator
-exec_always killall dunst
-exec_always dunst
+exec_always 'killall nm-applet; nm-applet --indicator'
+exec_always 'killall dunst; dunst'
 
 # Application keybindings ######################################################
 
@@ -166,6 +164,7 @@ client.urgent           #E04B3E #E04B3E #D6D6D6 #E04B3E
 
 bar {
     status_command i3blocks -c "$HOME/.config/sway/i3blocks.conf"
+    separator_symbol '| '
 
     colors {
         background #D6D6D6
