@@ -18,7 +18,6 @@ setup.help() {
     echo 'live:     live.conf'
     echo 'live:     sys.init <device>'
     echo 'chroot:   sys.conf'
-    echo 'system:   sys.systemd'
     exit 1
 }
 
@@ -114,6 +113,13 @@ setup.sys.conf() {
 
     # systemd
     cp -r "$sourcep/etc/systemd" '/etc'
+    if timedatectl > /dev/null; then
+        timedatectl set-ntp true
+        timedatectl set-local-rtc false
+        systemctl enable --now NetworkManager.service
+        systemctl enable --now nftables.service
+        systemctl enable --now cups.service
+    fi
 
     # pacman
     cp {"$sourcep",}'/etc/pacman.conf'
@@ -122,14 +128,6 @@ setup.sys.conf() {
     cp -r "$sourcep/etc/cups" '/etc'
     chmod 640 '/etc/cups/cupsd.conf'
     chown root:cups '/etc/cups/cupsd.conf'
-}
-
-setup.sys.systemd() {
-    timedatectl set-ntp true
-    timedatectl set-local-rtc false
-    systemctl enable --now NetworkManager.service
-    systemctl enable --now nftables.service
-    systemctl enable --now cups.service
 }
 
 if [[ "$(type -t "setup.${1:-}")" == 'function' ]]; then
