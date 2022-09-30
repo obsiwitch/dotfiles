@@ -27,16 +27,7 @@ packages_installed() {
 }
 
 {
-    heading '# Services: system'
-    systemctl --type=service || :
-
-    echo; heading '# Services: user'
-    systemctl --type=service --user || :;
-
-    echo; heading '# Packages: logs from last full upgrade'
-    tac /var/log/pacman.log | sed '/-S -u -y/q' | tac
-
-    echo; heading '# Packages: pacnew & pacsave'
+    heading '# Packages: pacnew & pacsave'
     fd --color=always '\.(pacnew|pacsave)' '/etc'
 
     echo; heading '# Packages: diff dotfiles vs installed'
@@ -45,4 +36,13 @@ packages_installed() {
 
     echo; heading '# Packages: unused dependencies'
     pacman -Qq --deps --unrequired || :
+
+    echo; heading '# Services: system'
+    systemctl --type=service || :
+
+    echo; heading '# Services: user'
+    systemctl --type=service --user || :;
+
+    echo; heading '# Packages: logs from last full upgrade'
+    tac /var/log/pacman.log | sed '/-S -u -y/q' | tac
 } | less
