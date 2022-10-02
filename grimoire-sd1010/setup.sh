@@ -56,7 +56,7 @@ setup.sys.init() {
     swapon '/mnt/swapfile'
 
     # packages
-    sed -e '/^#.*/d' -e '/^$/d' "$sourcep/packages/"{cli,gui} \
+    sed -e '/^#.*/d' -e '/^$/d' "$sourcep/packages/"{cli,gui}.pkgs \
         | pacstrap -i '/mnt' -
 
     # fstab
@@ -86,6 +86,16 @@ setup.sys.conf() {
 
     # kernel modules
     cp -r "$sourcep/etc/modprobe.d" '/etc'
+    (
+        local buildp; buildp="$(mktemp -d)"
+        cp -r "$sourcep/packages/hid-steam-deck/." "$buildp"
+        chown -R nobody:nobody "$buildp"
+        cd "$buildp"
+        su -s /bin/bash nobody -c 'makepkg'
+        pacman -U ./*.pkg.tar.zst
+        cd ..
+        rm -r "$buildp"
+    )
 
     # initramfs (requires: /etc/vconsole.conf)
     cp {"$sourcep",}'/etc/mkinitcpio.conf'
