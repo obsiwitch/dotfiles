@@ -1,4 +1,13 @@
 #!/bin/bash
 
+set -o errexit -o nounset
+
+# ref: https://git.suckless.org/dmenu/file/dmenu_path.html
 # ref: https://git.suckless.org/dmenu/file/dmenu_run.html
-dmenu_path | bemenu "$@" | ${SHELL:-"/bin/sh"} &
+cache="${XDG_CACHE_HOME:-"$HOME/.cache"}/bemenu-run"
+IFS=: read -ra paths <<< "$PATH"
+if stest -dqr -n "$cache" "${paths[@]}"; then
+    stest -flx "${paths[@]}" | sort -u | tee "$cache"
+else
+    cat "$cache"
+fi | bemenu "$@" | ${SHELL:-"/bin/sh"} &
