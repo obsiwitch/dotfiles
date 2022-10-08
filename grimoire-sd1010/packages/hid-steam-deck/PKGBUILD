@@ -1,7 +1,7 @@
 pkgname=hid-steam-deck-dkms
 _pkgbase=hid-steam
 pkgver=1
-pkgrel=1
+pkgrel=2
 pkgdesc="hid-steam Steam Deck Controller support (DKMS)"
 arch=('x86_64')
 url='https://github.com/obsiwitch/dotfiles'
@@ -10,13 +10,14 @@ depends=('dkms')
 
 _krelease="$(uname -r)"
 _krelease="${_krelease%-*}"
+_krelease="${_krelease/.0-/-}"
 source=("https://raw.githubusercontent.com/archlinux/linux/v$_krelease/drivers/hid/hid-ids.h"
         "https://raw.githubusercontent.com/archlinux/linux/v$_krelease/drivers/hid/hid-steam.c"
         "steam-deck.patch::https://gitlab.com/evlaV/linux-integration/-/commit/72ce570d0b3ae23aaf74ae604d58a2c819d1b4a8.patch"
         'dkms.conf'
         'Kbuild')
-sha256sums=('788bfdc38373898038b62e75f6a939105105843fcf0409fe39d0f2ea490f1642'
-            'a4ad5f74bdc5abac0e21148f964c3bb054b7c5fba299ef2507dc8a5499aadd47'
+sha256sums=('SKIP'
+            'SKIP'
             '9f1522c230527804f0d1593b518ca58b036c232056c20ce89982e297fc320270'
             '9c08f39b3cd67ee688ea54d1e5cf913efbe366c506f0105065746131633ab454'
             '9ed2dcb2e909a7c410766ea9cbd1c8eaa1090c84050014a0d4e27db53749aa83')
