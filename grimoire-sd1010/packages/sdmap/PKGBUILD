@@ -1,0 +1,16 @@
+pkgname=sdmap
+pkgver=1
+pkgrel=1
+pkgdesc="Steam Deck Controller Custom Mappings"
+arch=('x86_64')
+url='https://github.com/obsiwitch/dotfiles'
+
+depends=('hid-steam-deck')
+
+source=('hid-steam.conf')
+sha256sums=('a1a4a405878b3192c84dc58ed169434d4e6dffc51cd6cf5637e545f6901de5fd')
+
+package() {
+    install -Dm644 hid-steam.conf -t "${pkgdir}/usr/lib/modprobe.d/"
+}
+
