@@ -1,0 +1,31 @@
+--- a/drivers/hid/hid-steam.c
++++ b/drivers/hid/hid-steam.c
+@@ -487,6 +487,8 @@
+ 		input_set_capability(input, EV_KEY, BTN_TRIGGER_HAPPY2);
+ 		input_set_capability(input, EV_KEY, BTN_TRIGGER_HAPPY3);
+ 		input_set_capability(input, EV_KEY, BTN_TRIGGER_HAPPY4);
++		input_set_capability(input, EV_KEY, BTN_8);
++		input_set_capability(input, EV_KEY, BTN_9);
+ 	} else {
+ 		input_set_capability(input, EV_KEY, BTN_GEAR_DOWN);
+ 		input_set_capability(input, EV_KEY, BTN_GEAR_UP);
+@@ -1140,8 +1142,8 @@
+  *  10.0 | BTN_TRIGGER_HAPPY4 | right bottom grip button
+  *  10.1 | BTN_THUMB  | left pad pressed
+  *  10.2 | BTN_THUMB2 | right pad pressed
+- *  10.3 | --         | left pad touched
+- *  10.4 | --         | right pad touched
++ *  10.3 | BTN_8      | left pad touched
++ *  10.4 | BTN_9      | right pad touched
+  *  10.5 | --         | unknown
+  *  10.6 | BTN_THUMBL | left joystick clicked
+  *  10.7 | --         | unknown
+@@ -1247,6 +1249,8 @@
+ 	input_event(input, EV_KEY, BTN_DPAD_DOWN, !!(b9 & BIT(3)));
+ 	input_event(input, EV_KEY, BTN_THUMB, !!(b10 & BIT(1)));
+ 	input_event(input, EV_KEY, BTN_THUMB2, !!(b10 & BIT(2)));
++	input_event(input, EV_KEY, BTN_8, lpad_touched);
++	input_event(input, EV_KEY, BTN_9, rpad_touched);
+ 	input_event(input, EV_KEY, BTN_TRIGGER_HAPPY1, !!(b13 & BIT(1)));
+ 	input_event(input, EV_KEY, BTN_TRIGGER_HAPPY2, !!(b13 & BIT(2)));
+ 	input_event(input, EV_KEY, BTN_BASE, !!(b14 & BIT(2)));
