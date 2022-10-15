@@ -10,6 +10,7 @@ sway
 xorg-xwayland
 xorg-xhost
 swaylock
+dmenu
 bemenu
 wl-clipboard
 swaybg
