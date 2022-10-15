@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import sys, curses
+import sys
 from collections import defaultdict
 from enum import Enum
 import libevdev
@@ -180,17 +180,7 @@ class SDMap:
                 return self.joy2keys(ev_in, K.KEY_HOME, K.KEY_END)
         return None
 
-    def curses_keyboard(self, stdscr):
-        stdscr.clear()
-        for y, row in enumerate(self.LAYOUT[0]):
-            for x, key in enumerate(row):
-                attrs = curses.A_STANDOUT if self.vkbd_keypos() == (x, y) else 0
-                stdscr.addstr(f'{key} ', attrs)
-            stdscr.addstr('\n')
-        stdscr.refresh()
-
-    def run(self, stdscr):
-        self.curses_keyboard(stdscr)
+    def run(self):
         while ev_in := next(self.dev_in.events()):
             if ev_in.matches(K.BTN_MODE, 0):
                 self.kbd_mode = not self.kbd_mode
@@ -200,7 +190,6 @@ class SDMap:
                 evs_out.append(InputEvent(EV_SYN.SYN_REPORT, 0))
                 self.dev_out.send_events(evs_out)
             self.state_in[ev_in.code] = ev_in.value
-            self.curses_keyboard(stdscr)
 
 if __name__ == '__main__':
-    curses.wrapper(SDMap().run)
+    SDMap().run()
