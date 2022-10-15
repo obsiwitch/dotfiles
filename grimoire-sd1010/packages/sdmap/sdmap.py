@@ -1,38 +1,37 @@
 #!/usr/bin/env python3
 
-# ref: https://wiki.archlinux.org/title/Keyboard_input
-
 import sys, curses
 from collections import defaultdict
 from enum import Enum
 import libevdev
-from libevdev import InputEvent, EV_SYN, EV_KEY, EV_ABS, EV_REL
+from libevdev import InputEvent, EV_SYN, EV_KEY as K, EV_ABS, EV_REL
 
 class SDMap:
     DEVICE = '/dev/input/by-id/usb-Valve_Software_Steam_Controller_123456789ABCDEF-if02-event-joystick'
-    LAYOUT = [[[EV_KEY.KEY_F1,        EV_KEY.KEY_F2,  EV_KEY.KEY_F3,    EV_KEY.KEY_F4, EV_KEY.KEY_F5,],
-               [EV_KEY.KEY_1,         EV_KEY.KEY_2,   EV_KEY.KEY_3,     EV_KEY.KEY_4,  EV_KEY.KEY_5, ],
-               [EV_KEY.KEY_Q,         EV_KEY.KEY_W,   EV_KEY.KEY_E,     EV_KEY.KEY_R,  EV_KEY.KEY_T, ],
-               [EV_KEY.KEY_A,         EV_KEY.KEY_S,   EV_KEY.KEY_D,     EV_KEY.KEY_F,  EV_KEY.KEY_G, ],
-               [EV_KEY.KEY_Z,         EV_KEY.KEY_X,   EV_KEY.KEY_C,     EV_KEY.KEY_V,  EV_KEY.KEY_B, ],],
+    LAYOUT = [
+        [[K.KEY_F1,        K.KEY_F2,  K.KEY_F3,    K.KEY_F4, K.KEY_F5,],
+         [K.KEY_1,         K.KEY_2,   K.KEY_3,     K.KEY_4,  K.KEY_5, ],
+         [K.KEY_Q,         K.KEY_W,   K.KEY_E,     K.KEY_R,  K.KEY_T, ],
+         [K.KEY_A,         K.KEY_S,   K.KEY_D,     K.KEY_F,  K.KEY_G, ],
+         [K.KEY_Z,         K.KEY_X,   K.KEY_C,     K.KEY_V,  K.KEY_B, ],],
 
-              [[EV_KEY.KEY_F10,       EV_KEY.KEY_F9,  EV_KEY.KEY_F8,    EV_KEY.KEY_F7, EV_KEY.KEY_F6,],
-               [EV_KEY.KEY_0,         EV_KEY.KEY_9,   EV_KEY.KEY_8,     EV_KEY.KEY_7,  EV_KEY.KEY_6, ],
-               [EV_KEY.KEY_P,         EV_KEY.KEY_O,   EV_KEY.KEY_I,     EV_KEY.KEY_U,  EV_KEY.KEY_Y, ],
-               [EV_KEY.KEY_SEMICOLON, EV_KEY.KEY_L,   EV_KEY.KEY_K,     EV_KEY.KEY_J,  EV_KEY.KEY_H, ],
-               [EV_KEY.KEY_SLASH,     EV_KEY.KEY_DOT, EV_KEY.KEY_COMMA, EV_KEY.KEY_M,  EV_KEY.KEY_N, ],],
+        [[K.KEY_F10,       K.KEY_F9,  K.KEY_F8,    K.KEY_F7, K.KEY_F6,],
+         [K.KEY_0,         K.KEY_9,   K.KEY_8,     K.KEY_7,  K.KEY_6, ],
+         [K.KEY_P,         K.KEY_O,   K.KEY_I,     K.KEY_U,  K.KEY_Y, ],
+         [K.KEY_SEMICOLON, K.KEY_L,   K.KEY_K,     K.KEY_J,  K.KEY_H, ],
+         [K.KEY_SLASH,     K.KEY_DOT, K.KEY_COMMA, K.KEY_M,  K.KEY_N, ],],
 
-              [[EV_KEY.KEY_BRIGHTNESSDOWN, EV_KEY.KEY_VOLUMEDOWN, EV_KEY.KEY_MUTE, EV_KEY.KEY_F12, EV_KEY.KEY_F11,       ],
-               [None,                      None,                  None,            None,           EV_KEY.KEY_MINUS,     ],
-               [None,                      None,                  None,            None,           EV_KEY.KEY_LEFTBRACE, ],
-               [None,                      None,                  None,            None,           EV_KEY.KEY_APOSTROPHE,],
-               [None,                      None,                  None,            None,           EV_KEY.KEY_GRAVE,     ],],
+        [[K.KEY_BRIGHTNESSDOWN, K.KEY_VOLUMEDOWN, K.KEY_MUTE, K.KEY_F12, K.KEY_F11,       ],
+         [None,                 None,             None,       None,      K.KEY_MINUS,     ],
+         [None,                 None,             None,       None,      K.KEY_LEFTBRACE, ],
+         [None,                 None,             None,       None,      K.KEY_APOSTROPHE,],
+         [None,                 None,             None,       None,      K.KEY_GRAVE,     ],],
 
-              [[EV_KEY.KEY_BRIGHTNESSUP,   EV_KEY.KEY_VOLUMEUP, None, None, EV_KEY.KEY_SYSRQ,     ],
-               [None,                      None,                None, None, EV_KEY.KEY_EQUAL,     ],
-               [None,                      None,                None, None, EV_KEY.KEY_RIGHTBRACE,],
-               [None,                      None,                None, None, EV_KEY.KEY_BACKSLASH, ],
-               [None,                      None,                None, None, None,                 ],],]
+        [[K.KEY_BRIGHTNESSUP, K.KEY_VOLUMEUP, None, None, K.KEY_SYSRQ,     ],
+         [None,               None,           None, None, K.KEY_EQUAL,     ],
+         [None,               None,           None, None, K.KEY_RIGHTBRACE,],
+         [None,               None,           None, None, K.KEY_BACKSLASH, ],
+         [None,               None,           None, None, None,            ],],]
 
     def __init__(self):
         # input
@@ -41,33 +40,33 @@ class SDMap:
         self.dev_in.grab()
 
         # pointer
-        self.dev_in.enable(EV_KEY.BTN_LEFT)
-        self.dev_in.enable(EV_KEY.BTN_RIGHT)
-        self.dev_in.enable(EV_KEY.BTN_MIDDLE)
-        self.dev_in.enable(EV_KEY.BTN_EXTRA)
-        self.dev_in.enable(EV_KEY.BTN_SIDE)
+        self.dev_in.enable(K.BTN_LEFT)
+        self.dev_in.enable(K.BTN_RIGHT)
+        self.dev_in.enable(K.BTN_MIDDLE)
+        self.dev_in.enable(K.BTN_EXTRA)
+        self.dev_in.enable(K.BTN_SIDE)
         self.dev_in.enable(EV_REL.REL_X)
         self.dev_in.enable(EV_REL.REL_Y)
 
         # keyboard
-        self.dev_in.enable(EV_KEY.KEY_PAGEUP)
-        self.dev_in.enable(EV_KEY.KEY_PAGEDOWN)
-        self.dev_in.enable(EV_KEY.KEY_HOME)
-        self.dev_in.enable(EV_KEY.KEY_END)
-        self.dev_in.enable(EV_KEY.KEY_UP)
-        self.dev_in.enable(EV_KEY.KEY_DOWN)
-        self.dev_in.enable(EV_KEY.KEY_LEFT)
-        self.dev_in.enable(EV_KEY.KEY_RIGHT)
-        self.dev_in.enable(EV_KEY.KEY_LEFTSHIFT)
-        self.dev_in.enable(EV_KEY.KEY_LEFTCTRL)
-        self.dev_in.enable(EV_KEY.KEY_LEFTMETA)
-        self.dev_in.enable(EV_KEY.KEY_LEFTALT)
-        self.dev_in.enable(EV_KEY.KEY_ENTER)
-        self.dev_in.enable(EV_KEY.KEY_ESC)
-        self.dev_in.enable(EV_KEY.KEY_BACKSPACE)
-        self.dev_in.enable(EV_KEY.KEY_SPACE)
-        self.dev_in.enable(EV_KEY.KEY_TAB)
-        self.dev_in.enable(EV_KEY.KEY_COMPOSE)
+        self.dev_in.enable(K.KEY_PAGEUP)
+        self.dev_in.enable(K.KEY_PAGEDOWN)
+        self.dev_in.enable(K.KEY_HOME)
+        self.dev_in.enable(K.KEY_END)
+        self.dev_in.enable(K.KEY_UP)
+        self.dev_in.enable(K.KEY_DOWN)
+        self.dev_in.enable(K.KEY_LEFT)
+        self.dev_in.enable(K.KEY_RIGHT)
+        self.dev_in.enable(K.KEY_LEFTSHIFT)
+        self.dev_in.enable(K.KEY_LEFTCTRL)
+        self.dev_in.enable(K.KEY_LEFTMETA)
+        self.dev_in.enable(K.KEY_LEFTALT)
+        self.dev_in.enable(K.KEY_ENTER)
+        self.dev_in.enable(K.KEY_ESC)
+        self.dev_in.enable(K.KEY_BACKSPACE)
+        self.dev_in.enable(K.KEY_SPACE)
+        self.dev_in.enable(K.KEY_TAB)
+        self.dev_in.enable(K.KEY_COMPOSE)
         for layout in self.LAYOUT:
             for row in layout:
                 for key in row:
@@ -97,7 +96,7 @@ class SDMap:
 
     def vkbd_keypos(self):
         absinfo = self.dev_in.absinfo[EV_ABS.ABS_HAT0X]
-        y  = abs((self.state_in[EV_ABS.ABS_HAT0Y] - absinfo.maximum) * len(self.LAYOUT[0]))
+        y = abs((self.state_in[EV_ABS.ABS_HAT0Y] - absinfo.maximum) * len(self.LAYOUT[0]))
         y /= (absinfo.maximum * 2) + 1
         y = int(y)
         x = (self.state_in[EV_ABS.ABS_HAT0X] + absinfo.maximum) * len(self.LAYOUT[0][0])
@@ -111,7 +110,7 @@ class SDMap:
         return evs_out
 
     def key2vkdb(self, ev_in, layout, fallback_key):
-        if self.state_in[EV_KEY.BTN_8]:
+        if self.state_in[K.BTN_8]:
             x, y = self.vkbd_keypos()
             key = layout[y][x]
             if key is None:
@@ -127,16 +126,16 @@ class SDMap:
 
     def pointer(self, ev_in):
         match ev_in.code:
-            case EV_KEY.BTN_TL:
-                return [InputEvent(EV_KEY.BTN_RIGHT, ev_in.value)]
-            case EV_KEY.BTN_TR:
-                return [InputEvent(EV_KEY.BTN_LEFT, ev_in.value)]
-            case EV_KEY.BTN_THUMBR:
-                return [InputEvent(EV_KEY.BTN_MIDDLE, ev_in.value)]
-            case EV_KEY.BTN_TL2:
-                return [InputEvent(EV_KEY.BTN_SIDE, ev_in.value)]
-            case EV_KEY.BTN_TR2:
-                return [InputEvent(EV_KEY.BTN_EXTRA, ev_in.value)]
+            case K.BTN_TL:
+                return [InputEvent(K.BTN_RIGHT, ev_in.value)]
+            case K.BTN_TR:
+                return [InputEvent(K.BTN_LEFT, ev_in.value)]
+            case K.BTN_THUMBR:
+                return [InputEvent(K.BTN_MIDDLE, ev_in.value)]
+            case K.BTN_TL2:
+                return [InputEvent(K.BTN_SIDE, ev_in.value)]
+            case K.BTN_TR2:
+                return [InputEvent(K.BTN_EXTRA, ev_in.value)]
             case EV_ABS.ABS_HAT1X:
                 return self.abs2rel(ev_in, EV_REL.REL_X, 0.01)
             case EV_ABS.ABS_HAT1Y:
@@ -145,40 +144,40 @@ class SDMap:
 
     def keyboard(self, ev_in):
         match ev_in.code:
-            case EV_KEY.BTN_SOUTH:
-                return self.key2vkdb(ev_in, self.LAYOUT[0], EV_KEY.KEY_ENTER)
-            case EV_KEY.BTN_EAST:
-                return self.key2vkdb(ev_in, self.LAYOUT[1], EV_KEY.KEY_ESC)
-            case EV_KEY.BTN_NORTH:
-                return self.key2vkdb(ev_in, self.LAYOUT[2], EV_KEY.KEY_BACKSPACE)
-            case EV_KEY.BTN_WEST:
-                return self.key2vkdb(ev_in, self.LAYOUT[3], EV_KEY.KEY_SPACE)
-            case EV_KEY.BTN_8:
+            case K.BTN_SOUTH:
+                return self.key2vkdb(ev_in, self.LAYOUT[0], K.KEY_ENTER)
+            case K.BTN_EAST:
+                return self.key2vkdb(ev_in, self.LAYOUT[1], K.KEY_ESC)
+            case K.BTN_NORTH:
+                return self.key2vkdb(ev_in, self.LAYOUT[2], K.KEY_BACKSPACE)
+            case K.BTN_WEST:
+                return self.key2vkdb(ev_in, self.LAYOUT[3], K.KEY_SPACE)
+            case K.BTN_8:
                 return self.vkbd_clear()
-            case EV_KEY.BTN_DPAD_UP:
-                return [InputEvent(EV_KEY.KEY_UP, ev_in.value)]
-            case EV_KEY.BTN_DPAD_DOWN:
-                return [InputEvent(EV_KEY.KEY_DOWN, ev_in.value)]
-            case EV_KEY.BTN_DPAD_LEFT:
-                return [InputEvent(EV_KEY.KEY_LEFT, ev_in.value)]
-            case EV_KEY.BTN_DPAD_RIGHT:
-                return [InputEvent(EV_KEY.KEY_RIGHT, ev_in.value)]
-            case EV_KEY.BTN_TRIGGER_HAPPY1:
-                return [InputEvent(EV_KEY.KEY_LEFTSHIFT, ev_in.value)]
-            case EV_KEY.BTN_TRIGGER_HAPPY3:
-                return [InputEvent(EV_KEY.KEY_LEFTCTRL, ev_in.value)]
-            case EV_KEY.BTN_TRIGGER_HAPPY2:
-                return [InputEvent(EV_KEY.KEY_LEFTMETA, ev_in.value)]
-            case EV_KEY.BTN_TRIGGER_HAPPY4:
-                return [InputEvent(EV_KEY.KEY_LEFTALT, ev_in.value)]
-            case EV_KEY.BTN_SELECT:
-                return [InputEvent(EV_KEY.KEY_TAB, ev_in.value)]
-            case EV_KEY.BTN_START:
-                return [InputEvent(EV_KEY.KEY_COMPOSE, ev_in.value)]
+            case K.BTN_DPAD_UP:
+                return [InputEvent(K.KEY_UP, ev_in.value)]
+            case K.BTN_DPAD_DOWN:
+                return [InputEvent(K.KEY_DOWN, ev_in.value)]
+            case K.BTN_DPAD_LEFT:
+                return [InputEvent(K.KEY_LEFT, ev_in.value)]
+            case K.BTN_DPAD_RIGHT:
+                return [InputEvent(K.KEY_RIGHT, ev_in.value)]
+            case K.BTN_TRIGGER_HAPPY1:
+                return [InputEvent(K.KEY_LEFTSHIFT, ev_in.value)]
+            case K.BTN_TRIGGER_HAPPY3:
+                return [InputEvent(K.KEY_LEFTCTRL, ev_in.value)]
+            case K.BTN_TRIGGER_HAPPY2:
+                return [InputEvent(K.KEY_LEFTMETA, ev_in.value)]
+            case K.BTN_TRIGGER_HAPPY4:
+                return [InputEvent(K.KEY_LEFTALT, ev_in.value)]
+            case K.BTN_SELECT:
+                return [InputEvent(K.KEY_TAB, ev_in.value)]
+            case K.BTN_START:
+                return [InputEvent(K.KEY_COMPOSE, ev_in.value)]
             case EV_ABS.ABS_Y:
-                return self.joy2keys(ev_in, EV_KEY.KEY_PAGEUP, EV_KEY.KEY_PAGEDOWN)
+                return self.joy2keys(ev_in, K.KEY_PAGEUP, K.KEY_PAGEDOWN)
             case EV_ABS.ABS_X:
-                return self.joy2keys(ev_in, EV_KEY.KEY_HOME, EV_KEY.KEY_END)
+                return self.joy2keys(ev_in, K.KEY_HOME, K.KEY_END)
         return None
 
     def curses_keyboard(self, stdscr):
@@ -193,7 +192,7 @@ class SDMap:
     def run(self, stdscr):
         self.curses_keyboard(stdscr)
         while ev_in := next(self.dev_in.events()):
-            if ev_in.matches(EV_KEY.BTN_MODE, 0):
+            if ev_in.matches(K.BTN_MODE, 0):
                 self.kbd_mode = not self.kbd_mode
             elif not self.kbd_mode:
                 self.dev_out.send_events([ev_in])
