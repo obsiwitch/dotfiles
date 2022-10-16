@@ -21,17 +21,17 @@ class SDMap:
          [K.KEY_SEMICOLON, K.KEY_L,   K.KEY_K,     K.KEY_J,  K.KEY_H, ],
          [K.KEY_SLASH,     K.KEY_DOT, K.KEY_COMMA, K.KEY_M,  K.KEY_N, ],],
 
-        [[K.KEY_BRIGHTNESSDOWN, K.KEY_VOLUMEDOWN, K.KEY_MUTE, K.KEY_F12, K.KEY_F11,       ],
-         [None,                 None,             None,       None,      K.KEY_MINUS,     ],
-         [None,                 None,             None,       None,      K.KEY_LEFTBRACE, ],
-         [None,                 None,             None,       None,      K.KEY_APOSTROPHE,],
-         [None,                 None,             None,       None,      K.KEY_GRAVE,     ],],
+        [[K.KEY_PAUSE, K.KEY_SCROLLLOCK, K.KEY_SYSRQ, K.KEY_F12,        K.KEY_F11,       ],
+         [None,        None,             None,        K.KEY_EQUAL,      K.KEY_MINUS,     ],
+         [None,        None,             None,        K.KEY_RIGHTBRACE, K.KEY_LEFTBRACE, ],
+         [None,        None,             None,        K.KEY_BACKSLASH,  K.KEY_APOSTROPHE,],
+         [None,        None,             None,        None,             K.KEY_GRAVE,     ],],
 
-        [[K.KEY_BRIGHTNESSUP, K.KEY_VOLUMEUP, None, None, K.KEY_SYSRQ,     ],
-         [None,               None,           None, None, K.KEY_EQUAL,     ],
-         [None,               None,           None, None, K.KEY_RIGHTBRACE,],
-         [None,               None,           None, None, K.KEY_BACKSLASH, ],
-         [None,               None,           None, None, None,            ],],]
+        [[None, None, None, None, None,],
+         [None, None, None, None, None,],
+         [None, None, None, None, None,],
+         [None, None, None, None, None,],
+         [None, None, None, None, None,],],]
 
     def __init__(self):
         # input
