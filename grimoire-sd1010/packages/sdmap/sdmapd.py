@@ -39,6 +39,10 @@ class SDMap:
         self.dev_in = libevdev.Device(fd)
         self.dev_in.grab()
 
+        # gamepad output: games can access the device without any privilege.
+        # Events only happen when self.kbd_mode == False.
+        self.dev_gamepad = self.dev_in.create_uinput_device()
+
         # pointer
         self.dev_in.enable(K.BTN_LEFT)
         self.dev_in.enable(K.BTN_RIGHT)
@@ -73,12 +77,19 @@ class SDMap:
                     if key is None: continue
                     self.dev_in.enable(key)
 
-        # output
-        self.dev_out = self.dev_in.create_uinput_device()
+        # keyboard & pointer output: requires privileges.
+        # Events only happen when self.kbd_mode == True.
+        self.dev_kbd = self.dev_in.create_uinput_device()
         self.kbd_mode = True
+
+        # contains past events from dev_in
         self.state_in = defaultdict(lambda: 0)
+
+        # contains virtual keyboard keys that aren't yet released
         self.vkbd_out = defaultdict(lambda: 0)
 
+    # map the minimum and maximum values of a joystick axis to the `key_min` and
+    # `key_max` events.
     def joy2keys(self, ev_in, key_min, key_max):
         absinfo = self.dev_in.absinfo[ev_in.code]
         if abs(ev_in.value) <= absinfo.resolution:
@@ -104,11 +115,13 @@ class SDMap:
         x = int(x)
         return x, y
 
+    # returns events to release all pressed keys from the virtual keyboard
     def vkbd_clear(self):
         evs_out = [InputEvent(key, 0) for key in self.vkbd_out.keys()]
         self.vkbd_out.clear()
         return evs_out
 
+    # map a key to send events from a layer of the virtual keyboard layout
     def key2vkdb(self, ev_in, layout, fallback_key):
         if self.state_in[K.BTN_8]:
             x, y = self.vkbd_keypos()
@@ -185,10 +198,10 @@ class SDMap:
             if ev_in.matches(K.BTN_MODE, 0):
                 self.kbd_mode = not self.kbd_mode
             elif not self.kbd_mode:
-                self.dev_out.send_events([ev_in])
+                self.dev_gamepad.send_events([ev_in])
             elif evs_out := self.pointer(ev_in) or self.keyboard(ev_in):
                 evs_out.append(InputEvent(EV_SYN.SYN_REPORT, 0))
-                self.dev_out.send_events(evs_out)
+                self.dev_kbd.send_events(evs_out)
             self.state_in[ev_in.code] = ev_in.value
 
 if __name__ == '__main__':
