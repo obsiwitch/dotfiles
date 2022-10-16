@@ -48,6 +48,7 @@ firefox
 transmission-gtk
 
 # media-fonts
+ttf-dejavu
 otf-font-awesome
 adobe-source-han-sans-jp-fonts
 noto-fonts-emoji
