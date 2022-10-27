@@ -3,7 +3,6 @@ base
 base-devel
 linux
 linux-firmware
-intel-ucode
 amd-ucode
 grub
 efibootmgr
@@ -18,6 +17,7 @@ man-db
 man-pages
 arch-wiki-docs
 units
+evtest
 
 # files
 dosfstools
@@ -92,3 +92,8 @@ pamixer
 cups
 hplip
 sane
+libva-mesa-driver
+lib32-libva-mesa-driver
+mesa-vdpau
+lib32-mesa-vdpau
+mkvtoolnix-cli
