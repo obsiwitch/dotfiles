@@ -1,7 +1,7 @@
 pkgname=hid-steam-deck-dkms
 _pkgbase=hid-steam
 pkgver=2
-pkgrel=2
+pkgrel=3
 pkgdesc="hid-steam Steam Deck Controller support (DKMS)"
 arch=('x86_64')
 url='https://github.com/obsiwitch/dotfiles'
@@ -12,19 +12,16 @@ _krelease='6.0'
 source=("https://raw.githubusercontent.com/torvalds/linux/v$_krelease/drivers/hid/hid-ids.h"
         "https://raw.githubusercontent.com/torvalds/linux/v$_krelease/drivers/hid/hid-steam.c"
         "steam-deck.patch::https://gitlab.com/evlaV/linux-integration/-/commit/72ce570d0b3ae23aaf74ae604d58a2c819d1b4a8.patch"
-        'pad-touched.patch'
         'dkms.conf'
         'Kbuild')
 sha256sums=('SKIP'
             'SKIP'
             '9f1522c230527804f0d1593b518ca58b036c232056c20ce89982e297fc320270'
-            '7415213ab3b3f9cfa18c7db81080e2878e85c5792ca023c28b2a4249a5aa7320'
             '9c08f39b3cd67ee688ea54d1e5cf913efbe366c506f0105065746131633ab454'
             '9ed2dcb2e909a7c410766ea9cbd1c8eaa1090c84050014a0d4e27db53749aa83')
 
 prepare() {
     patch -d .. -Np3 -i steam-deck.patch
-    patch -d .. -Np3 -i pad-touched.patch
 }
 
 package() {

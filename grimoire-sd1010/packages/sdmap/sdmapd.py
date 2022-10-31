@@ -10,7 +10,6 @@ from layout import LAYOUT
 class SDMap:
     DEVICE = '/dev/input/by-id/usb-Valve_Software_Steam_Controller_123456789ABCDEF-if02-event-joystick'
 
-
     def __init__(self):
         # input
         fd = open(self.DEVICE, 'rb')
@@ -103,7 +102,7 @@ class SDMap:
 
     # map a key to send events from a layer of the virtual keyboard layout
     def key2vkdb(self, ev_in, layout, fallback_key):
-        if self.state_in[EV_KEY.BTN_8]:
+        if self.state_in[EV_ABS.ABS_HAT0X] and self.state_in[EV_ABS.ABS_HAT0Y]:
             x, y = self.vkbd_keypos()
             key = layout[y][x]
             if key is None:
@@ -145,8 +144,8 @@ class SDMap:
                 return self.key2vkdb(ev_in, LAYOUT[2], EV_KEY.KEY_BACKSPACE)
             case EV_KEY.BTN_WEST:
                 return self.key2vkdb(ev_in, LAYOUT[3], EV_KEY.KEY_SPACE)
-            case EV_KEY.BTN_8:
-                return self.vkbd_clear()
+            case EV_ABS.ABS_HAT0X | EV_ABS.ABS_HAT0Y:
+                if not ev_in.value: return self.vkbd_clear()
             case EV_KEY.BTN_DPAD_UP:
                 return [InputEvent(EV_KEY.KEY_UP, ev_in.value)]
             case EV_KEY.BTN_DPAD_DOWN:
