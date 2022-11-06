@@ -6,31 +6,22 @@ from enum import Enum
 import libevdev
 from libevdev import InputEvent, EV_SYN, EV_KEY, EV_KEY as K, EV_ABS, EV_REL
 
-LAYOUT = [
-    [[K.KEY_F1,        K.KEY_F2,  K.KEY_F3,    K.KEY_F4, K.KEY_F5,],
-     [K.KEY_1,         K.KEY_2,   K.KEY_3,     K.KEY_4,  K.KEY_5, ],
-     [K.KEY_Q,         K.KEY_W,   K.KEY_E,     K.KEY_R,  K.KEY_T, ],
-     [K.KEY_A,         K.KEY_S,   K.KEY_D,     K.KEY_F,  K.KEY_G, ],
-     [K.KEY_Z,         K.KEY_X,   K.KEY_C,     K.KEY_V,  K.KEY_B, ],],
-
-    [[K.KEY_F10,       K.KEY_F9,  K.KEY_F8,    K.KEY_F7, K.KEY_F6,],
-     [K.KEY_0,         K.KEY_9,   K.KEY_8,     K.KEY_7,  K.KEY_6, ],
-     [K.KEY_P,         K.KEY_O,   K.KEY_I,     K.KEY_U,  K.KEY_Y, ],
-     [K.KEY_SEMICOLON, K.KEY_L,   K.KEY_K,     K.KEY_J,  K.KEY_H, ],
-     [K.KEY_SLASH,     K.KEY_DOT, K.KEY_COMMA, K.KEY_M,  K.KEY_N, ],],
-
-    [[K.KEY_PAUSE, K.KEY_SCROLLLOCK, K.KEY_SYSRQ, K.KEY_F12,        K.KEY_F11,       ],
-     [None,        None,             None,        K.KEY_EQUAL,      K.KEY_MINUS,     ],
-     [None,        None,             None,        K.KEY_RIGHTBRACE, K.KEY_LEFTBRACE, ],
-     [None,        None,             None,        K.KEY_BACKSLASH,  K.KEY_APOSTROPHE,],
-     [None,        None,             None,        None,             K.KEY_GRAVE,     ],],
-
-    [[None, None, None, None, None,],
-     [None, None, None, None, None,],
-     [None, None, None, None, None,],
-     [None, None, None, None, None,],
-     [None, None, None, None, None,],],
-]
+LAYOUT = [[[K.KEY_1, K.KEY_2, K.KEY_3, K.KEY_4],
+           [K.KEY_5, K.KEY_6, K.KEY_7, K.KEY_8],
+           [K.KEY_9, K.KEY_0, K.KEY_MINUS, K.KEY_EQUAL],
+           [K.KEY_F1, K.KEY_F2, K.KEY_F3, K.KEY_F4]],
+          [[K.KEY_Q, K.KEY_W, K.KEY_E, K.KEY_R],
+           [K.KEY_T, K.KEY_Y, K.KEY_U, K.KEY_I],
+           [K.KEY_O, K.KEY_P, K.KEY_LEFTBRACE, K.KEY_RIGHTBRACE],
+           [K.KEY_F5, K.KEY_F6, K.KEY_F7, K.KEY_F8]],
+          [[K.KEY_A, K.KEY_S, K.KEY_D, K.KEY_F],
+           [K.KEY_G, K.KEY_H, K.KEY_J, K.KEY_K],
+           [K.KEY_L, K.KEY_SEMICOLON, K.KEY_APOSTROPHE, K.KEY_BACKSLASH],
+           [K.KEY_F9, K.KEY_F10, K.KEY_F11, K.KEY_F12]],
+          [[K.KEY_Z, K.KEY_X, K.KEY_C, K.KEY_V],
+           [K.KEY_B, K.KEY_N, K.KEY_M, K.KEY_COMMA],
+           [K.KEY_DOT, K.KEY_SLASH, K.KEY_GRAVE, None],
+           [K.KEY_SYSRQ, K.KEY_SCROLLLOCK, K.KEY_PAUSE, K.KEY_DELETE]]]
 
 class SDMap:
     DEVICE = '/dev/input/by-id/usb-Valve_Software_Steam_Controller_123456789ABCDEF-if02-event-joystick'
@@ -74,9 +65,9 @@ class SDMap:
         self.dev_in.enable(EV_KEY.KEY_SPACE)
         self.dev_in.enable(EV_KEY.KEY_TAB)
         self.dev_in.enable(EV_KEY.KEY_COMPOSE)
-        for layout in LAYOUT:
-            for row in layout:
-                for key in row:
+        for row in LAYOUT:
+            for col in row:
+                for key in col:
                     if key is None: continue
                     self.dev_in.enable(key)
 
@@ -111,10 +102,10 @@ class SDMap:
 
     def vkbd_keypos(self):
         absinfo = self.dev_in.absinfo[EV_ABS.ABS_HAT0X]
-        y = abs((self.state_in[EV_ABS.ABS_HAT0Y] - absinfo.maximum) * len(LAYOUT[0]))
+        y = abs((self.state_in[EV_ABS.ABS_HAT0Y] - absinfo.maximum) * len(LAYOUT))
         y /= (absinfo.maximum * 2) + 1
         y = int(y)
-        x = (self.state_in[EV_ABS.ABS_HAT0X] + absinfo.maximum) * len(LAYOUT[0][0])
+        x = (self.state_in[EV_ABS.ABS_HAT0X] + absinfo.maximum) * len(LAYOUT[0])
         x /= (absinfo.maximum * 2) + 1
         x = int(x)
         return x, y
@@ -125,11 +116,11 @@ class SDMap:
         self.vkbd_out.clear()
         return evs_out
 
-    # map a key to send events from a layer of the virtual keyboard layout
-    def key2vkdb(self, ev_in, layout, fallback_key):
+    # map a key to a button of the virtual keyboard
+    def key2vkdb(self, ev_in, bi, fallback_key):
         if self.state_in[EV_ABS.ABS_HAT0X] and self.state_in[EV_ABS.ABS_HAT0Y]:
             x, y = self.vkbd_keypos()
-            key = layout[y][x]
+            key = LAYOUT[y][x][bi]
             if key is None:
                 return None
             elif ev_in.value:
@@ -162,13 +153,13 @@ class SDMap:
     def keyboard(self, ev_in):
         match ev_in.code:
             case EV_KEY.BTN_SOUTH:
-                return self.key2vkdb(ev_in, LAYOUT[0], EV_KEY.KEY_ENTER)
+                return self.key2vkdb(ev_in, 0, EV_KEY.KEY_ENTER)
             case EV_KEY.BTN_EAST:
-                return self.key2vkdb(ev_in, LAYOUT[1], EV_KEY.KEY_ESC)
+                return self.key2vkdb(ev_in, 1, EV_KEY.KEY_ESC)
             case EV_KEY.BTN_NORTH:
-                return self.key2vkdb(ev_in, LAYOUT[2], EV_KEY.KEY_BACKSPACE)
+                return self.key2vkdb(ev_in, 2, EV_KEY.KEY_BACKSPACE)
             case EV_KEY.BTN_WEST:
-                return self.key2vkdb(ev_in, LAYOUT[3], EV_KEY.KEY_SPACE)
+                return self.key2vkdb(ev_in, 3, EV_KEY.KEY_SPACE)
             case EV_ABS.ABS_HAT0X | EV_ABS.ABS_HAT0Y:
                 if not ev_in.value: return self.vkbd_clear()
             case EV_KEY.BTN_DPAD_UP:
