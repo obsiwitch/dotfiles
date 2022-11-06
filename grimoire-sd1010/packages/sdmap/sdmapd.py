@@ -8,20 +8,19 @@ from libevdev import InputEvent, EV_SYN, EV_KEY, EV_KEY as K, EV_ABS, EV_REL
 
 LAYOUT = [[[K.KEY_1, K.KEY_2, K.KEY_3, K.KEY_4],
            [K.KEY_5, K.KEY_6, K.KEY_7, K.KEY_8],
-           [K.KEY_9, K.KEY_0, K.KEY_MINUS, K.KEY_EQUAL],
-           [K.KEY_F1, K.KEY_F2, K.KEY_F3, K.KEY_F4]],
+           [K.KEY_9, K.KEY_0, K.KEY_MINUS, K.KEY_EQUAL]],
           [[K.KEY_Q, K.KEY_W, K.KEY_E, K.KEY_R],
            [K.KEY_T, K.KEY_Y, K.KEY_U, K.KEY_I],
-           [K.KEY_O, K.KEY_P, K.KEY_LEFTBRACE, K.KEY_RIGHTBRACE],
-           [K.KEY_F5, K.KEY_F6, K.KEY_F7, K.KEY_F8]],
+           [K.KEY_O, K.KEY_P, K.KEY_LEFTBRACE, K.KEY_RIGHTBRACE]],
           [[K.KEY_A, K.KEY_S, K.KEY_D, K.KEY_F],
            [K.KEY_G, K.KEY_H, K.KEY_J, K.KEY_K],
-           [K.KEY_L, K.KEY_SEMICOLON, K.KEY_APOSTROPHE, K.KEY_BACKSLASH],
-           [K.KEY_F9, K.KEY_F10, K.KEY_F11, K.KEY_F12]],
+           [K.KEY_L, K.KEY_SEMICOLON, K.KEY_APOSTROPHE, K.KEY_BACKSLASH]],
           [[K.KEY_Z, K.KEY_X, K.KEY_C, K.KEY_V],
            [K.KEY_B, K.KEY_N, K.KEY_M, K.KEY_COMMA],
-           [K.KEY_DOT, K.KEY_SLASH, K.KEY_GRAVE, None],
-           [K.KEY_SYSRQ, K.KEY_SCROLLLOCK, K.KEY_PAUSE, K.KEY_DELETE]]]
+           [K.KEY_DOT, K.KEY_SLASH, K.KEY_GRAVE, K.KEY_102ND]],
+          [[K.KEY_F1, K.KEY_F2, K.KEY_F3, K.KEY_F4],
+           [K.KEY_F5, K.KEY_F6, K.KEY_F7, K.KEY_F8],
+           [K.KEY_F9, K.KEY_SYSRQ, K.KEY_SCROLLLOCK, K.KEY_PAUSE]]]
 
 class SDMap:
     DEVICE = '/dev/input/by-id/usb-Valve_Software_Steam_Controller_123456789ABCDEF-if02-event-joystick'
