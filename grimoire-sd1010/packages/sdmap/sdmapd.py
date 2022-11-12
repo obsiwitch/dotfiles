@@ -40,8 +40,6 @@ class SDMap:
         self.dev_in.enable(EV_KEY.BTN_LEFT)
         self.dev_in.enable(EV_KEY.BTN_RIGHT)
         self.dev_in.enable(EV_KEY.BTN_MIDDLE)
-        self.dev_in.enable(EV_KEY.BTN_EXTRA)
-        self.dev_in.enable(EV_KEY.BTN_SIDE)
         self.dev_in.enable(EV_REL.REL_X)
         self.dev_in.enable(EV_REL.REL_Y)
 
@@ -58,6 +56,7 @@ class SDMap:
         self.dev_in.enable(EV_KEY.KEY_LEFTCTRL)
         self.dev_in.enable(EV_KEY.KEY_LEFTMETA)
         self.dev_in.enable(EV_KEY.KEY_LEFTALT)
+        self.dev_in.enable(EV_KEY.KEY_RIGHTALT)
         self.dev_in.enable(EV_KEY.KEY_ENTER)
         self.dev_in.enable(EV_KEY.KEY_ESC)
         self.dev_in.enable(EV_KEY.KEY_BACKSPACE)
@@ -94,7 +93,7 @@ class SDMap:
             return [InputEvent(key_max, 1)]
         return None
 
-    def abs2rel(self, ev_in, code, coeff):
+    def hat2rel(self, ev_in, code, coeff):
         if (not ev_in.value) or (not self.state_in[ev_in.code]): return None
         delta = ev_in.value - self.state_in[ev_in.code]
         return [InputEvent(code, int(delta * coeff))]
@@ -131,26 +130,20 @@ class SDMap:
             self.vkbd_out[fallback_key] = ev_in.value
             return [InputEvent(fallback_key, ev_in.value)]
 
-    def pointer(self, ev_in):
+    def remap(self, ev_in):
         match ev_in.code:
             case EV_KEY.BTN_TL:
                 return [InputEvent(EV_KEY.BTN_RIGHT, ev_in.value)]
             case EV_KEY.BTN_TR:
                 return [InputEvent(EV_KEY.BTN_LEFT, ev_in.value)]
-            case EV_KEY.BTN_THUMBR:
-                return [InputEvent(EV_KEY.BTN_MIDDLE, ev_in.value)]
             case EV_KEY.BTN_TL2:
-                return [InputEvent(EV_KEY.BTN_SIDE, ev_in.value)]
+                return [InputEvent(EV_KEY.BTN_MIDDLE, ev_in.value)]
             case EV_KEY.BTN_TR2:
-                return [InputEvent(EV_KEY.BTN_EXTRA, ev_in.value)]
+                return [InputEvent(EV_KEY.KEY_RIGHTALT, ev_in.value)]
             case EV_ABS.ABS_HAT1X:
-                return self.abs2rel(ev_in, EV_REL.REL_X, 0.01)
+                return self.hat2rel(ev_in, EV_REL.REL_X, 0.01)
             case EV_ABS.ABS_HAT1Y:
-                return self.abs2rel(ev_in, EV_REL.REL_Y, -0.01)
-        return None
-
-    def keyboard(self, ev_in):
-        match ev_in.code:
+                return self.hat2rel(ev_in, EV_REL.REL_Y, -0.01)
             case EV_KEY.BTN_SOUTH:
                 return self.key2vkdb(ev_in, 0, EV_KEY.KEY_ENTER)
             case EV_KEY.BTN_EAST:
@@ -193,7 +186,7 @@ class SDMap:
                 self.kbd_mode = not self.kbd_mode
             elif not self.kbd_mode:
                 self.dev_gamepad.send_events([ev_in])
-            elif evs_out := self.pointer(ev_in) or self.keyboard(ev_in):
+            elif evs_out := self.remap(ev_in):
                 evs_out.append(InputEvent(EV_SYN.SYN_REPORT, 0))
                 self.dev_kbd.send_events(evs_out)
             self.state_in[ev_in.code] = ev_in.value

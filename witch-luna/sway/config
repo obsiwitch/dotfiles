@@ -23,8 +23,7 @@ input type:touchpad {
     drag_lock enabled
 }
 input '10462:4613:Steam_Deck_sdmapd_keyboard' {
-    middle_emulation enabled
-    scroll_button button8 # back button
+    scroll_button button2 # middle click
 }
 input type:touch map_to_output eDP-1
 
