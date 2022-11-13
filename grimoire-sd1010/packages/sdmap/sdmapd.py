@@ -139,7 +139,7 @@ class SDMap:
             case EV_KEY.BTN_TL2:
                 return [InputEvent(EV_KEY.BTN_MIDDLE, ev_in.value)]
             case EV_KEY.BTN_TR2:
-                return [InputEvent(EV_KEY.KEY_RIGHTALT, ev_in.value)]
+                return [InputEvent(EV_KEY.KEY_LEFTMETA, ev_in.value)]
             case EV_ABS.ABS_HAT1X:
                 return self.hat2rel(ev_in, EV_REL.REL_X, 0.01)
             case EV_ABS.ABS_HAT1Y:
@@ -167,7 +167,7 @@ class SDMap:
             case EV_KEY.BTN_TRIGGER_HAPPY3:
                 return [InputEvent(EV_KEY.KEY_LEFTCTRL, ev_in.value)]
             case EV_KEY.BTN_TRIGGER_HAPPY2:
-                return [InputEvent(EV_KEY.KEY_LEFTMETA, ev_in.value)]
+                return [InputEvent(EV_KEY.KEY_RIGHTALT, ev_in.value)]
             case EV_KEY.BTN_TRIGGER_HAPPY4:
                 return [InputEvent(EV_KEY.KEY_LEFTALT, ev_in.value)]
             case EV_KEY.BTN_SELECT:
