@@ -24,7 +24,7 @@ GRUB_TERMINAL_INPUT=console
 
 # The resolution used on graphical terminal
 # note that you can use only modes which your graphic card supports via VBE
-# you can see them in real GRUB with the command `vbeinfo'
+# you can see them in real GRUB with the command `videoinfo'
 GRUB_GFXMODE=auto
 
 # Uncomment to allow the kernel use the same resolution used by grub
@@ -53,7 +53,7 @@ GRUB_DISABLE_RECOVERY=true
 # setting 'GRUB_DEFAULT=saved' above.
 #GRUB_SAVEDEFAULT=true
 
-# Generate flat menu with all entries on top level.
+# Uncomment to disable submenus in boot menu
 GRUB_DISABLE_SUBMENU=y
 
 # Probing for other operating systems is disabled for security reasons. Read
