@@ -1,11 +1,12 @@
 pkgname=sdmap
 pkgver=1
-pkgrel=1
-pkgdesc="Steam Deck Controller Custom Mappings"
+pkgrel=2
+pkgdesc="Steam Deck Controller custom mapping"
 arch=('x86_64')
 url='https://github.com/obsiwitch/dotfiles'
 
-depends=('hid-steam-deck')
+optdepends=('hid-steam-deck-dkms: Steam Deck Controller support for non-neptune kernel'
+            'linux-neptune: kernel with Steam Deck Controller support')
 
 source=('hid-steam.conf')
 sha256sums=('a1a4a405878b3192c84dc58ed169434d4e6dffc51cd6cf5637e545f6901de5fd')
