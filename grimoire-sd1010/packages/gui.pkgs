@@ -24,7 +24,8 @@ dconf-editor
 gnome-clocks
 
 # files
-nautilus
+nemo
+thunar
 file-roller
 gvfs
 gvfs-mtp

@@ -41,7 +41,7 @@ bindsym $mod+Return exec bemenu-run
 bindsym $mod+Shift+Return exec gnome-terminal
 
 # file manager
-bindsym $mod+Ctrl+Return exec nautilus --new-window
+bindsym $mod+Ctrl+Return exec nemo
 
 # power
 bindsym $mod+e exec dotpowerctl

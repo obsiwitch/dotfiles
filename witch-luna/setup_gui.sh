@@ -17,8 +17,9 @@ dconf reset -f '/org/gnome/desktop/interface/'
 dconf load / < "$sourcep/gtk/dconf"
 
 # file manager
-dconf reset -f '/org/gnome/nautilus/'
-dconf load / < "$sourcep/nautilus/dconf"
+dconf reset -f '/org/nemo/'
+dconf load / < "$sourcep/nemo/dconf"
+dotln "$sourcep/nemo/actions" "$HOME/.local/share/nemo/"
 
 # notifications
 dotln "$sourcep/dunst" "$HOME/.config/"
