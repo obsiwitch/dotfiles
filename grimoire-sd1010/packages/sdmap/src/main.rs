@@ -1,11 +1,21 @@
-use evdev::{uinput, InputEvent, Key};
+use evdev::{uinput, InputEvent, AbsoluteAxisType as Abs, RelativeAxisType as Rel,
+            Key, DeviceState, EventType};
 
 fn key2key(evt_in: InputEvent, key: Key) -> InputEvent {
-    return InputEvent::new(evdev::EventType::KEY, key.code(), evt_in.value());
+    return InputEvent::new(EventType::KEY, key.0, evt_in.value());
 }
 
-fn kbd_map(evt_in: InputEvent) -> Vec<InputEvent> {
-    // note: couldn't find a way to use pattern matching :(
+fn hat2rel(cache: &DeviceState, evt_in: InputEvent, rel: Rel, coeff: f32) -> InputEvent {
+    let past_absinfo = cache.abs_vals().unwrap()[evt_in.code() as usize];
+    let delta = if evt_in.value() == 0 || past_absinfo.value == 0 {
+        0.0
+    } else {
+        (evt_in.value() - past_absinfo.value) as f32 * coeff
+    } as i32;
+    return InputEvent::new(EventType::RELATIVE, rel.0, delta);
+}
+
+fn kbd_map(cache: &DeviceState, evt_in: InputEvent) -> Vec<InputEvent> {
     if evt_in.code() == Key::BTN_TL.0 {
         vec!(key2key(evt_in, Key::BTN_RIGHT))
     } else if evt_in.code() == Key::BTN_TR.0 {
@@ -34,6 +44,10 @@ fn kbd_map(evt_in: InputEvent) -> Vec<InputEvent> {
         vec!(key2key(evt_in, Key::KEY_TAB))
     } else if evt_in.code() == Key::BTN_START.0 {
         vec!(key2key(evt_in, Key::KEY_COMPOSE))
+    } else if evt_in.code() == Abs::ABS_HAT1X.0 {
+        vec!(hat2rel(&cache, evt_in, Rel::REL_X, 0.01))
+    } else if evt_in.code() == Abs::ABS_HAT1Y.0 {
+        vec!(hat2rel(&cache, evt_in, Rel::REL_Y, -0.01))
     } else {
         vec!()
     }
@@ -54,6 +68,9 @@ fn main() -> std::io::Result<()> {
             Key::KEY_LEFTSHIFT, Key::KEY_LEFTCTRL, Key::KEY_RIGHTALT,
             Key::KEY_LEFTALT, Key::KEY_TAB, Key::KEY_COMPOSE
         ]))?
+        .with_relative_axes(&evdev::AttributeSet::from_iter([
+            Rel::REL_X, Rel::REL_Y
+        ]))?
         .build()?;
 
 
@@ -64,24 +81,18 @@ fn main() -> std::io::Result<()> {
 
 
     loop {
+        let cache: DeviceState = dev_in.cached_state().clone();
         let new_events: Vec<InputEvent> = dev_in.fetch_events()?.collect();
-        // the cached state is updated by fetching events just before
-        let cached_keys: Vec<Key> = dev_in.cached_state().key_vals().unwrap()
-                                          .iter().collect();
-        println!("{:?}", cached_keys); // DEBUG
 
-        if cached_keys.eq(&[Key::BTN_BASE, Key::BTN_MODE]) {
+        if cache.key_vals().unwrap().iter().eq([Key::BTN_BASE, Key::BTN_MODE]) {
             kbd_mode = !kbd_mode;
             continue;
         }
 
         for evt_in in new_events {
             if kbd_mode {
-                let evts_out = kbd_map(evt_in);
-                println!("KEYBOARD {:?} => {:?}", evt_in, evts_out); // DEBUG
-                dev_keyboard.emit(&evts_out)?;
+                dev_keyboard.emit(&kbd_map(&cache, evt_in))?;
             } else {
-                println!("GAMEPAD {:?}", evt_in); // DEBUG
                 dev_gamepad.emit(&[evt_in])?;
             }
         }
