@@ -17,6 +17,7 @@ dconf reset -f '/org/gnome/desktop/interface/'
 dconf load / < "$sourcep/gtk/dconf"
 
 # file manager
+dconf reset -f '/org/cinnamon/desktop/applications/terminal/'
 dconf reset -f '/org/nemo/'
 dconf load / < "$sourcep/nemo/dconf"
 dotln "$sourcep/nemo/actions" "$HOME/.local/share/nemo/"

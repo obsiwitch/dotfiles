@@ -1,6 +1,6 @@
 [org/cinnamon/desktop/applications/terminal]
-exec='mate-terminal'
-exec-arg=''
+exec='gnome-terminal'
+exec-arg='-x'
 
 [org/nemo/icon-view]
 default-zoom-level='larger'
@@ -28,4 +28,3 @@ start-with-menu-bar=false
 start-with-toolbar=true
 start-with-sidebar=true
 start-with-status-bar=true
-
