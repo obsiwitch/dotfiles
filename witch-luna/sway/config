@@ -44,10 +44,13 @@ bindsym $mod+Shift+Return exec gnome-terminal
 bindsym $mod+Ctrl+Return exec nemo
 
 # power
-bindsym $mod+e exec dotpowerctl
+bindsym $mod+Backspace exec dotpowerctl
 bindsym --release $mod+l exec dotpowerctl lock
 bindsym --release $mod+Shift+l exec dotpowerctl suspend
 bindsym --release $mod+Ctrl+l exec dotpowerctl hibernate
+
+# notifications
+bindsym $mod+Shift+Backspace exec dunstctl close
 
 # screenshots
 bindsym Print exec GRIM_DEFAULT_DIR="$HOME/Downloads" grim
@@ -71,9 +74,6 @@ bindsym Control+F9  exec quodlibet --play-pause
 bindsym Control+F10 exec quodlibet --previous
 bindsym Control+F11 exec quodlibet --next
 bindsym Shift+F9 exec notify-send "Music" -- "$(quodlibet --print-playing)"
-
-# notifications
-bindsym Pause exec dunstctl close
 
 # WM keybindings ###############################################################
 
