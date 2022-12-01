@@ -4,6 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-evdev = "0.12"
 libc = "0.2"
 xkbcommon = "0.5"
+
+[dependencies.evdev]
+git = "https://github.com/emberian/evdev"
+rev = "dd4f17aba8373edbe073fc8857f03f5598a7fdfd"

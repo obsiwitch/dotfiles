@@ -1,31 +1,38 @@
-use evdev::{uinput, InputEvent, AbsoluteAxisType as Abs, RelativeAxisType as Rel,
-            Key, DeviceState, EventType};
+use evdev::{*, AbsoluteAxisType as Abs, PropType as Prop};
 use libc::input_absinfo;
 use sdmap::VKBD_LAYOUT;
+
+fn absinfo_from_libc(absinfo: input_absinfo) -> AbsInfo {
+    AbsInfo::new(absinfo.value, absinfo.minimum, absinfo.maximum,
+                 absinfo.fuzz, absinfo.flat, absinfo.resolution)
+}
 
 // Map a key event to another key.
 fn key2key(evt_in: InputEvent, key: Key) -> InputEvent {
     return InputEvent::new(EventType::KEY, key.0, evt_in.value());
 }
 
-// Map an absolute event (hat) to a relative one.
-fn hat2rel(cache: &DeviceState, evt_in: InputEvent, rel: Rel, coeff: f32)
--> InputEvent
-{
-    let absvals = cache.abs_vals().unwrap()[evt_in.code() as usize];
-    let delta = if evt_in.value() == 0 || absvals.value == 0 {
-        0.0
-    } else {
-        (evt_in.value() - absvals.value) as f32 * coeff
-    } as i32;
-    return InputEvent::new(EventType::RELATIVE, rel.0, delta);
+// Map absolute events to trackpad events (ABS_X/Y).
+// ref: https://www.kernel.org/doc/Documentation/input/event-codes.txt
+fn abs2trackpad(cache: &DeviceState, evt_in: InputEvent, absx_in: Abs, absy_in: Abs)
+-> Vec<InputEvent> {
+    let abs_vals = cache.abs_vals().unwrap();
+    let touch = (evt_in.value() != 0) as i32;
+    let mut vec = vec!(InputEvent::new(EventType::KEY, Key::BTN_TOUCH.0, touch),
+                       InputEvent::new(EventType::KEY, Key::BTN_TOOL_FINGER.0, touch));
+    if evt_in.value() != 0 { vec.append(&mut vec!(
+        InputEvent::new(EventType::ABSOLUTE, Abs::ABS_X.0,
+                        abs_vals[absx_in.0 as usize].value),
+        InputEvent::new(EventType::ABSOLUTE, Abs::ABS_Y.0,
+                        -abs_vals[absy_in.0 as usize].value),
+    )); }
+    return vec;
 }
 
 // Map the minimum and maximum values of a joystick axis to the `key_min` and
 // `key_max` key events.
 fn joy2keys(absinfo: input_absinfo, evt_in: InputEvent, key_min: Key, key_max: Key)
--> Vec<InputEvent>
-{
+-> Vec<InputEvent> {
     if evt_in.value().abs() <= absinfo.resolution {
         vec!(InputEvent::new(EventType::KEY, key_min.0, 0),
              InputEvent::new(EventType::KEY, key_max.0, 0))
@@ -39,8 +46,7 @@ fn joy2keys(absinfo: input_absinfo, evt_in: InputEvent, key_min: Key, key_max: K
 }
 
 fn vkbd_keypos(absinfo: input_absinfo, absvals: &[input_absinfo])
--> (usize, usize)
-{
+-> (usize, usize) {
     let y = (
         (absvals[Abs::ABS_HAT0Y.0 as usize].value - absinfo.maximum).abs()
         * VKBD_LAYOUT.len() as i32
@@ -55,8 +61,8 @@ fn vkbd_keypos(absinfo: input_absinfo, absvals: &[input_absinfo])
 // Map a physical key to a key of the virtual keyboard depending on the current
 // value of ABS_HAT0{X,Y}. If ABS_HAT0{X,Y} == (0, 0), send the `fallback_key`.
 fn key2vkbd(absinfo: input_absinfo, cache: &DeviceState, evt_in: InputEvent,
-            ki: usize, fallback_key: Key) -> Vec<InputEvent>
-{
+            ki: usize, fallback_key: Key)
+-> Vec<InputEvent> {
     let abs_vals = cache.abs_vals().unwrap();
     if evt_in.value() != 1 {
         return vec!();
@@ -74,8 +80,7 @@ fn key2vkbd(absinfo: input_absinfo, cache: &DeviceState, evt_in: InputEvent,
 }
 
 fn kbd_map(absinfos: &[input_absinfo; 64], cache: &DeviceState, evt_in: InputEvent)
--> Vec<InputEvent>
-{
+-> Vec<InputEvent> {
     if evt_in.code() == Key::BTN_TL.0 {
         vec!(key2key(evt_in, Key::BTN_RIGHT))
     } else if evt_in.code() == Key::BTN_TR.0 {
@@ -105,9 +110,9 @@ fn kbd_map(absinfos: &[input_absinfo; 64], cache: &DeviceState, evt_in: InputEve
     } else if evt_in.code() == Key::BTN_START.0 {
         vec!(key2key(evt_in, Key::KEY_COMPOSE))
     } else if evt_in.code() == Abs::ABS_HAT1X.0 {
-        vec!(hat2rel(cache, evt_in, Rel::REL_X, 0.01))
+        abs2trackpad(cache, evt_in, Abs::ABS_HAT1X, Abs::ABS_HAT1Y)
     } else if evt_in.code() == Abs::ABS_HAT1Y.0 {
-        vec!(hat2rel(cache, evt_in, Rel::REL_Y, -0.01))
+        abs2trackpad(cache, evt_in, Abs::ABS_HAT1X, Abs::ABS_HAT1Y)
     } else if evt_in.code() == Abs::ABS_Y.0 {
         let absinfo = absinfos[evt_in.code() as usize];
         joy2keys(absinfo, evt_in, Key::KEY_PAGEUP, Key::KEY_PAGEDOWN)
@@ -133,26 +138,30 @@ fn kbd_map(absinfos: &[input_absinfo; 64], cache: &DeviceState, evt_in: InputEve
 
 fn main() -> std::io::Result<()> {
     let path_in = "/dev/input/by-id/usb-Valve_Software_Steam_Controller_123456789ABCDEF-if02-event-joystick";
-    let mut dev_in = evdev::Device::open(path_in)?;
+    let mut dev_in = Device::open(path_in)?;
     dev_in.grab()?;
     let absinfos = dev_in.get_abs_state()?;
 
     let mut dev_keyboard = uinput::VirtualDeviceBuilder::new()?
         .name("Steam Deck sdmapd keyboard")
-        .with_keys(&evdev::AttributeSet::from_iter(
+        .with_keys(&AttributeSet::from_iter(
             VKBD_LAYOUT.into_iter().flatten().flatten().chain([
             Key::BTN_RIGHT, Key::BTN_LEFT, Key::BTN_MIDDLE, Key::KEY_LEFTMETA,
             Key::KEY_UP, Key::KEY_DOWN, Key::KEY_LEFT, Key::KEY_RIGHT,
             Key::KEY_LEFTSHIFT, Key::KEY_LEFTCTRL, Key::KEY_RIGHTALT,
             Key::KEY_LEFTALT, Key::KEY_TAB, Key::KEY_COMPOSE, Key::KEY_PAGEUP,
             Key::KEY_PAGEDOWN, Key::KEY_HOME, Key::KEY_END, Key::KEY_ENTER,
-            Key::KEY_ESC, Key::KEY_BACKSPACE, Key::KEY_SPACE
+            Key::KEY_ESC, Key::KEY_BACKSPACE, Key::KEY_SPACE, Key::BTN_TOUCH,
+            Key::BTN_TOOL_FINGER
         ])))?
-        .with_relative_axes(&evdev::AttributeSet::from_iter([
-            Rel::REL_X, Rel::REL_Y
-        ]))?
+        .with_absolute_axis(&UinputAbsSetup::new(
+            Abs::ABS_X, absinfo_from_libc(absinfos[Abs::ABS_HAT1X.0 as usize])
+        ))?
+        .with_absolute_axis(&UinputAbsSetup::new(
+            Abs::ABS_Y, absinfo_from_libc(absinfos[Abs::ABS_HAT1Y.0 as usize])
+        ))?
+        .with_properties(&AttributeSet::from_iter([Prop::POINTER]))?
         .build()?;
-
 
     let mut dev_gamepad = uinput::VirtualDeviceBuilder::new()?
         .name("Steam Deck sdmapd gamepad")
