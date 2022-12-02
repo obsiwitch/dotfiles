@@ -59,10 +59,12 @@ fn main() {
 
     println!(r#"<!DOCTYPE html><html><body>
         <style type="text/css">
-        body {{font-family:monospace; font-size:18px;}}
+        body {{font-family:monospace;}}
         table {{border-collapse: collapse; width:378px; height:378px;}}
         td {{border:1px solid #DDD;}}
-        td .l0 {{font-size:24px; font-weight:bold;}}
+        td .l0 {{font-size:24px;}}
+        td .l1 {{font-size:24px;}}
+        td .l2 {{font-size:24px;}}
         td.x {{border-width: 3px 1px 1px 3px;}}
         td.y {{border-width: 3px 3px 1px 1px;}}
         td.a {{border-width: 1px 1px 3px 3px;}}
