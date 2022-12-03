@@ -23,3 +23,5 @@ dotln "$sourcep/ranger" "$HOME/.config/"
 
 # micro
 dotln "$sourcep/micro" "$HOME/.config/"
+micro -plugin install fzf
+micro -plugin update
