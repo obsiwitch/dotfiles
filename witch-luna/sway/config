@@ -22,9 +22,6 @@ input type:touchpad {
     drag enabled
     drag_lock enabled
 }
-input '10462:4613:Steam_Deck_sdmapd_keyboard' {
-    scroll_button button2 # middle click
-}
 input type:touch map_to_output eDP-1
 
 # Autostart ####################################################################
