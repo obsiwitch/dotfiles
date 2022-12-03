@@ -125,6 +125,7 @@ setup.sys.conf() {
 
     # systemd
     cp -r "$sourcep/etc/systemd" '/etc'
+    cp -r "$sourcep/etc/tmpfiles.d" '/etc'
     if timedatectl > /dev/null; then
         timedatectl set-ntp true
         timedatectl set-local-rtc false
@@ -140,6 +141,9 @@ setup.sys.conf() {
     cp -r "$sourcep/etc/cups" '/etc'
     chmod 640 '/etc/cups/cupsd.conf'
     chown root:cups '/etc/cups/cupsd.conf'
+
+    # udev
+    cp -r "$sourcep/etc/udev" '/etc'
 }
 
 if [[ "$(type -t "setup.${1:-}")" == 'function' ]]; then

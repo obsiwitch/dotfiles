@@ -1,0 +1,2 @@
+# Mount microSD card to a shared directory (/media/VolumeName)
+ENV{DEVNAME}=="/dev/mmcblk0*", ENV{UDISKS_FILESYSTEM_SHARED}="1"
