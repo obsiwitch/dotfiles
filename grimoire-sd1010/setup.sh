@@ -97,7 +97,7 @@ setup.sys.conf() {
 
     # kernel modules
     cp -r "$sourcep/etc/modprobe.d" '/etc'
-    makepkgtmp "$sourcep/packages/hid-steam-deck"
+    makepkgtmp "$dotfilesp/packages/hid-steam-deck-dkms"
 
     # initramfs (requires: /etc/vconsole.conf)
     cp {"$sourcep",}'/etc/mkinitcpio.conf'
