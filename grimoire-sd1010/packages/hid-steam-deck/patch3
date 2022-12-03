@@ -1,0 +1,33 @@
+--- a/drivers/hid/hid-steam.c
++++ b/drivers/hid/hid-steam.c
+@@ -316,7 +316,6 @@
+ 		steam->rumble_right, 2, 0);
+ }
+
+-#ifdef CONFIG_STEAM_FF
+ static int steam_play_effect(struct input_dev *dev, void *data,
+ 				struct ff_effect *effect)
+ {
+@@ -327,7 +326,6 @@
+
+ 	return schedule_work(&steam->rumble_work);
+ }
+-#endif
+
+ static void steam_set_lizard_mode(struct steam_device *steam, bool enable)
+ {
+@@ -580,14 +578,12 @@
+ 	input_abs_set_res(input, ABS_HAT0X, STEAM_PAD_RESOLUTION);
+ 	input_abs_set_res(input, ABS_HAT0Y, STEAM_PAD_RESOLUTION);
+
+-#ifdef CONFIG_STEAM_FF
+ 	if (steam->quirks & STEAM_QUIRK_DECK) {
+ 		input_set_capability(input, EV_FF, FF_RUMBLE);
+ 		ret = input_ff_create_memless(input, NULL, steam_play_effect);
+ 		if (ret)
+ 			goto init_ff_fail;
+ 	}
+-#endif
+
+ 	ret = input_register_device(input);
+ 	if (ret)

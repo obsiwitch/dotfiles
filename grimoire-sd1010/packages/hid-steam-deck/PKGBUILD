@@ -1,7 +1,7 @@
 pkgname=hid-steam-deck-dkms
 _pkgbase=hid-steam
-pkgver=2
-pkgrel=4
+pkgver=3
+pkgrel=1
 pkgdesc="hid-steam Steam Deck Controller support (DKMS)"
 arch=('x86_64')
 url='https://github.com/obsiwitch/dotfiles'
@@ -9,19 +9,31 @@ url='https://github.com/obsiwitch/dotfiles'
 depends=('dkms')
 
 _krelease='6.0'
-source=("https://raw.githubusercontent.com/torvalds/linux/v$_krelease/drivers/hid/hid-ids.h"
-        "https://raw.githubusercontent.com/torvalds/linux/v$_krelease/drivers/hid/hid-steam.c"
-        "steam-deck.patch::https://gitlab.com/evlaV/linux-integration/-/commit/72ce570d0b3ae23aaf74ae604d58a2c819d1b4a8.patch"
+_source_repo="https://raw.githubusercontent.com/torvalds/linux/v${_krelease}"
+_patch_repo="https://gitlab.com/evlaV/linux-integration"
+source=("${_source_repo}/drivers/hid/hid-ids.h"
+        "${_source_repo}/drivers/hid/hid-steam.c"
+        "${_source_repo}/drivers/hid/Kconfig"
+        "patch0::${_patch_repo}/-/commit/72ce570d0b3ae23aaf74ae604d58a2c819d1b4a8.patch"
+        "patch1::${_patch_repo}/-/commit/4196619768de19274fcdba116eba81e36f9436bf.patch"
+        "patch2::${_patch_repo}/-/commit/c616088b5ac4fe34faadc314d71dc14c2e7ebc8c.patch"
+        'patch3'
         'dkms.conf'
         'Kbuild')
 sha256sums=('16cfa6f409c8dde6e230bc13ab14e996ef54afcfbe88238b587272a32b2e8937'
             'a4ad5f74bdc5abac0e21148f964c3bb054b7c5fba299ef2507dc8a5499aadd47'
+            '906018ef0c9b53444363e50c6c779931cd41575e15fa6006d33200df466b5be1'
             '9f1522c230527804f0d1593b518ca58b036c232056c20ce89982e297fc320270'
+            '9f1d78748069424bfcc5e7e886cf292ce955a865776019ff3687e9554e750465'
+            '054f41d41bc73e12f07f605f79f84a8e22127cdc05df4af7fff324a89e7e3060'
+            'daff7ec7a3b95184c440d97ac530afd405e96a1db8cbcb49896791884d2600f8'
             '9c08f39b3cd67ee688ea54d1e5cf913efbe366c506f0105065746131633ab454'
             '9ed2dcb2e909a7c410766ea9cbd1c8eaa1090c84050014a0d4e27db53749aa83')
 
 prepare() {
-    patch -d .. -Np3 -i steam-deck.patch
+    for patchfile in patch*; do
+        patch -d .. -Np3 -i "$patchfile"
+    done
 }
 
 package() {
