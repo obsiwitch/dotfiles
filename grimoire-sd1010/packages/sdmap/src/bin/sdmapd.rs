@@ -1,31 +1,28 @@
-use evdev::{uinput, InputEvent, AbsoluteAxisType as Abs, RelativeAxisType as Rel,
-            Key, DeviceState, EventType};
+use evdev::{*, AbsoluteAxisType as Abs, RelativeAxisType as Rel};
 use libc::input_absinfo;
 use sdmap::VKBD_LAYOUT;
 
 // Map a key event to another key.
 fn key2key(evt_in: InputEvent, key: Key) -> InputEvent {
-    return InputEvent::new(EventType::KEY, key.0, evt_in.value());
+    InputEvent::new(EventType::KEY, key.0, evt_in.value())
 }
 
 // Map an absolute event (hat) to a relative one.
 fn hat2rel(cache: &DeviceState, evt_in: InputEvent, rel: Rel, coeff: f32)
--> InputEvent
-{
+-> InputEvent {
     let absvals = cache.abs_vals().unwrap()[evt_in.code() as usize];
     let delta = if evt_in.value() == 0 || absvals.value == 0 {
         0.0
     } else {
         (evt_in.value() - absvals.value) as f32 * coeff
     } as i32;
-    return InputEvent::new(EventType::RELATIVE, rel.0, delta);
+    InputEvent::new(EventType::RELATIVE, rel.0, delta)
 }
 
 // Map the minimum and maximum values of a joystick axis to the `key_min` and
 // `key_max` key events.
 fn joy2keys(absinfo: input_absinfo, evt_in: InputEvent, key_min: Key, key_max: Key)
--> Vec<InputEvent>
-{
+-> Vec<InputEvent> {
     if evt_in.value().abs() <= absinfo.resolution {
         vec!(InputEvent::new(EventType::KEY, key_min.0, 0),
              InputEvent::new(EventType::KEY, key_max.0, 0))
@@ -39,8 +36,7 @@ fn joy2keys(absinfo: input_absinfo, evt_in: InputEvent, key_min: Key, key_max: K
 }
 
 fn vkbd_keypos(absinfo: input_absinfo, absvals: &[input_absinfo])
--> (usize, usize)
-{
+-> (usize, usize) {
     let y = (
         (absvals[Abs::ABS_HAT0Y.0 as usize].value - absinfo.maximum).abs()
         * VKBD_LAYOUT.len() as i32
@@ -49,33 +45,32 @@ fn vkbd_keypos(absinfo: input_absinfo, absvals: &[input_absinfo])
         (absvals[Abs::ABS_HAT0X.0 as usize].value + absinfo.maximum)
         * VKBD_LAYOUT[0].len() as i32
     ) / ((absinfo.maximum * 2) + 1);
-    return (x as usize, y as usize);
+    (x as usize, y as usize)
 }
 
 // Map a physical key to a key of the virtual keyboard depending on the current
 // value of ABS_HAT0{X,Y}. If ABS_HAT0{X,Y} == (0, 0), send the `fallback_key`.
 fn key2vkbd(absinfo: input_absinfo, cache: &DeviceState, evt_in: InputEvent,
-            ki: usize, fallback_key: Key) -> Vec<InputEvent>
-{
+            ki: usize, fallback_key: Key)
+-> Vec<InputEvent> {
     let abs_vals = cache.abs_vals().unwrap();
     if evt_in.value() != 1 {
-        return vec!();
+        vec!()
     } else if abs_vals[Abs::ABS_HAT0X.0 as usize].value != 0
            || abs_vals[Abs::ABS_HAT0Y.0 as usize].value != 0
     {
         let keypos = vkbd_keypos(absinfo, abs_vals);
         let key = VKBD_LAYOUT[keypos.1][keypos.0][ki];
-        return vec!(InputEvent::new(EventType::KEY, key.0, 1),
-                    InputEvent::new(EventType::KEY, key.0, 0));
+        vec!(InputEvent::new(EventType::KEY, key.0, 1),
+             InputEvent::new(EventType::KEY, key.0, 0))
     } else {
-        return vec!(InputEvent::new(EventType::KEY, fallback_key.0, 1),
-                    InputEvent::new(EventType::KEY, fallback_key.0, 0));
+        vec!(InputEvent::new(EventType::KEY, fallback_key.0, 1),
+             InputEvent::new(EventType::KEY, fallback_key.0, 0))
     }
 }
 
 fn kbd_map(absinfos: &[input_absinfo; 64], cache: &DeviceState, evt_in: InputEvent)
--> Vec<InputEvent>
-{
+-> Vec<InputEvent> {
     if evt_in.code() == Key::BTN_TL.0 {
         vec!(key2key(evt_in, Key::BTN_RIGHT))
     } else if evt_in.code() == Key::BTN_TR.0 {
@@ -105,9 +100,9 @@ fn kbd_map(absinfos: &[input_absinfo; 64], cache: &DeviceState, evt_in: InputEve
     } else if evt_in.code() == Key::BTN_START.0 {
         vec!(key2key(evt_in, Key::KEY_COMPOSE))
     } else if evt_in.code() == Abs::ABS_HAT1X.0 {
-        vec!(hat2rel(cache, evt_in, Rel::REL_X, 0.01))
+        vec!(hat2rel(cache, evt_in, Rel::REL_X, 0.005))
     } else if evt_in.code() == Abs::ABS_HAT1Y.0 {
-        vec!(hat2rel(cache, evt_in, Rel::REL_Y, -0.01))
+        vec!(hat2rel(cache, evt_in, Rel::REL_Y, -0.005))
     } else if evt_in.code() == Abs::ABS_Y.0 {
         let absinfo = absinfos[evt_in.code() as usize];
         joy2keys(absinfo, evt_in, Key::KEY_PAGEUP, Key::KEY_PAGEDOWN)
