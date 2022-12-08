@@ -54,10 +54,10 @@ fn key2vkbd(absinfo: input_absinfo, cache: &DeviceState, evt_in: InputEvent,
             ki: usize, fallback_key: Key)
 -> Vec<InputEvent> {
     let abs_vals = cache.abs_vals().unwrap();
-    if evt_in.value() != 1 {
+    if evt_in.value() == 0 {
         vec!()
     } else if abs_vals[Abs::ABS_HAT0X.0 as usize].value != 0
-           || abs_vals[Abs::ABS_HAT0Y.0 as usize].value != 0
+           && abs_vals[Abs::ABS_HAT0Y.0 as usize].value != 0
     {
         let keypos = vkbd_keypos(absinfo, abs_vals);
         let key = VKBD_LAYOUT[keypos.1][keypos.0][ki];
