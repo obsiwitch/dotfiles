@@ -132,6 +132,7 @@ fn main() -> std::io::Result<()> {
     dev_in.grab()?;
     let absinfos = dev_in.get_abs_state()?;
 
+    // keyboard & mouse
     let mut dev_keyboard = uinput::VirtualDeviceBuilder::new()?
         .name("Steam Deck sdmapd keyboard")
         .with_keys(&AttributeSet::from_iter(
@@ -148,11 +149,20 @@ fn main() -> std::io::Result<()> {
         ]))?
         .build()?;
 
-
+    // gamepad: copy of the input device
     let mut dev_gamepad = uinput::VirtualDeviceBuilder::new()?
         .name("Steam Deck sdmapd gamepad")
-        .with_keys(dev_in.supported_keys().unwrap())?
-        .build()?;
+        .with_keys(dev_in.supported_keys().unwrap())?;
+    for axis in dev_in.supported_absolute_axes().unwrap().iter() {
+        let libc_absinfo = absinfos[axis.0 as usize];
+        let absinfo = AbsInfo::new(
+            libc_absinfo.value, libc_absinfo.minimum, libc_absinfo.maximum,
+            libc_absinfo.fuzz, libc_absinfo.flat, libc_absinfo.resolution
+        );
+        dev_gamepad = dev_gamepad
+            .with_absolute_axis(&UinputAbsSetup::new(axis, absinfo))?;
+    }
+    let mut dev_gamepad = dev_gamepad.build()?;
 
     let mut kbd_mode = true;
 
