@@ -128,13 +128,13 @@ fn kbd_map(absinfos: &[input_absinfo; 64], cache: &DeviceState, evt_in: InputEve
 
 fn main() -> std::io::Result<()> {
     let path_in = "/dev/input/by-id/usb-Valve_Software_Steam_Controller_123456789ABCDEF-if02-event-joystick";
-    let mut dev_in = evdev::Device::open(path_in)?;
+    let mut dev_in = Device::open(path_in)?;
     dev_in.grab()?;
     let absinfos = dev_in.get_abs_state()?;
 
     let mut dev_keyboard = uinput::VirtualDeviceBuilder::new()?
         .name("Steam Deck sdmapd keyboard")
-        .with_keys(&evdev::AttributeSet::from_iter(
+        .with_keys(&AttributeSet::from_iter(
             VKBD_LAYOUT.into_iter().flatten().flatten().chain([
             Key::BTN_RIGHT, Key::BTN_LEFT, Key::BTN_MIDDLE, Key::KEY_LEFTMETA,
             Key::KEY_UP, Key::KEY_DOWN, Key::KEY_LEFT, Key::KEY_RIGHT,
@@ -143,7 +143,7 @@ fn main() -> std::io::Result<()> {
             Key::KEY_PAGEDOWN, Key::KEY_HOME, Key::KEY_END, Key::KEY_ENTER,
             Key::KEY_ESC, Key::KEY_BACKSPACE, Key::KEY_SPACE
         ])))?
-        .with_relative_axes(&evdev::AttributeSet::from_iter([
+        .with_relative_axes(&AttributeSet::from_iter([
             Rel::REL_X, Rel::REL_Y
         ]))?
         .build()?;
@@ -160,7 +160,6 @@ fn main() -> std::io::Result<()> {
         let cache: DeviceState = dev_in.cached_state().clone();
         if cache.key_vals().unwrap().iter().eq([Key::BTN_BASE, Key::BTN_MODE]) {
             kbd_mode = !kbd_mode;
-            continue;
         }
 
         for evt_in in dev_in.fetch_events()? {
