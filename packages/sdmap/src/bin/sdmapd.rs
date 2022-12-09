@@ -133,6 +133,7 @@ fn main() -> std::io::Result<()> {
     let absinfos = dev_in.get_abs_state()?;
 
     // keyboard & mouse
+    let mut kbd_mode = true;
     let mut dev_keyboard = uinput::VirtualDeviceBuilder::new()?
         .name("Steam Deck sdmapd keyboard")
         .with_keys(&AttributeSet::from_iter(
@@ -149,34 +150,20 @@ fn main() -> std::io::Result<()> {
         ]))?
         .build()?;
 
-    // gamepad: copy of the input device
-    let mut dev_gamepad = uinput::VirtualDeviceBuilder::new()?
-        .name("Steam Deck sdmapd gamepad")
-        .with_keys(dev_in.supported_keys().unwrap())?;
-    for axis in dev_in.supported_absolute_axes().unwrap().iter() {
-        let libc_absinfo = absinfos[axis.0 as usize];
-        let absinfo = AbsInfo::new(
-            libc_absinfo.value, libc_absinfo.minimum, libc_absinfo.maximum,
-            libc_absinfo.fuzz, libc_absinfo.flat, libc_absinfo.resolution
-        );
-        dev_gamepad = dev_gamepad
-            .with_absolute_axis(&UinputAbsSetup::new(axis, absinfo))?;
-    }
-    let mut dev_gamepad = dev_gamepad.build()?;
-
-    let mut kbd_mode = true;
-
     loop {
         let cache: DeviceState = dev_in.cached_state().clone();
         if cache.key_vals().unwrap().iter().eq([Key::BTN_BASE, Key::BTN_MODE]) {
             kbd_mode = !kbd_mode;
+            if kbd_mode {
+                dev_in.grab()?;
+            } else {
+                dev_in.ungrab()?;
+            }
         }
 
         for evt_in in dev_in.fetch_events()? {
             if kbd_mode {
                 dev_keyboard.emit(&kbd_map(&absinfos, &cache, evt_in))?;
-            } else {
-                dev_gamepad.emit(&[evt_in])?;
             }
         }
     }
