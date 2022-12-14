@@ -1,60 +1,96 @@
-use evdev::{*, AbsoluteAxisType as Abs, RelativeAxisType as Rel};
+use evdev::{*, AbsoluteAxisType as Abs, PropType as Prop};
 use libc::input_absinfo;
 use sdmap::VKBD_LAYOUT;
+
+trait FromInputAbsinfo { fn from_libc(absinfo: input_absinfo) -> AbsInfo; }
+impl FromInputAbsinfo for AbsInfo {
+    fn from_libc(absinfo: input_absinfo) -> AbsInfo {
+        AbsInfo::new(absinfo.value, absinfo.minimum, absinfo.maximum,
+                     absinfo.fuzz, absinfo.flat, absinfo.resolution)
+    }
+}
 
 struct Sdmapd {
     dev_in: Device,
     absinfos_in: [input_absinfo; 64],
     cache_in: DeviceState,
     dev_keyboard: uinput::VirtualDevice,
+    dev_mouse: uinput::VirtualDevice,
     kbd_mode: bool,
+    touch: bool
 }
 impl Sdmapd {
     pub fn new() -> std::io::Result<Self> {
         let path_in = "/dev/input/by-id/usb-Valve_Software_Steam_Controller_123456789ABCDEF-if02-event-joystick";
         let mut dev_in = Device::open(path_in)?;
         dev_in.grab()?;
+        let absinfos_in = dev_in.get_abs_state()?;
 
-        // keyboard & mouse
         let dev_keyboard = uinput::VirtualDeviceBuilder::new()?
             .name("Steam Deck sdmapd keyboard")
             .with_keys(&AttributeSet::from_iter(
                 VKBD_LAYOUT.into_iter().flatten().flatten().chain([
-                Key::BTN_RIGHT, Key::BTN_LEFT, Key::BTN_MIDDLE, Key::KEY_LEFTMETA,
-                Key::KEY_UP, Key::KEY_DOWN, Key::KEY_LEFT, Key::KEY_RIGHT,
-                Key::KEY_LEFTSHIFT, Key::KEY_LEFTCTRL, Key::KEY_RIGHTALT,
+                Key::KEY_LEFTMETA, Key::KEY_UP, Key::KEY_DOWN, Key::KEY_LEFT,
+                Key::KEY_RIGHT, Key::KEY_LEFTSHIFT, Key::KEY_LEFTCTRL, Key::KEY_RIGHTALT,
                 Key::KEY_LEFTALT, Key::KEY_TAB, Key::KEY_COMPOSE, Key::KEY_PAGEUP,
                 Key::KEY_PAGEDOWN, Key::KEY_HOME, Key::KEY_END, Key::KEY_ENTER,
                 Key::KEY_ESC, Key::KEY_BACKSPACE, Key::KEY_SPACE
             ])))?
-            .with_relative_axes(&AttributeSet::from_iter([
-                Rel::REL_X, Rel::REL_Y
+            .build()?;
+        let dev_mouse = uinput::VirtualDeviceBuilder::new()?
+            .name("Steam Deck sdmapd mouse")
+            .with_keys(&AttributeSet::from_iter([
+                Key::BTN_RIGHT, Key::BTN_LEFT, Key::BTN_MIDDLE,  Key::BTN_TOUCH,
+                Key::BTN_TOOL_FINGER
             ]))?
+            .with_absolute_axis(&UinputAbsSetup::new(
+                Abs::ABS_X,
+                AbsInfo::from_libc(absinfos_in[Abs::ABS_HAT1X.0 as usize])
+            ))?
+            .with_absolute_axis(&UinputAbsSetup::new(
+                Abs::ABS_Y,
+                AbsInfo::from_libc(absinfos_in[Abs::ABS_HAT1Y.0 as usize])
+            ))?
+            .with_properties(&AttributeSet::from_iter([Prop::POINTER]))?
             .build()?;
 
         Ok(Self {
-            absinfos_in: dev_in.get_abs_state()?,
+            absinfos_in,
             cache_in: dev_in.cached_state().clone(),
-            dev_in: dev_in,
-            dev_keyboard: dev_keyboard,
+            dev_in,
+            dev_keyboard,
+            dev_mouse,
             kbd_mode: true,
+            touch: false,
         })
     }
 
-    // Map a key event to another key.
-    fn key2key(&self, evt_in: InputEvent, key: Key) -> InputEvent {
-        InputEvent::new(EventType::KEY, key.0, evt_in.value())
+    // Create a new Key event.
+    fn new_key(&self, key: Key, value: i32) -> InputEvent {
+        InputEvent::new(EventType::KEY, key.0, value)
     }
 
-    // Map an absolute event (hat) to a relative one.
-    fn hat2rel(&self, evt_in: InputEvent, rel: Rel, coeff: f32) -> InputEvent {
-        let absval = self.cache_in.abs_vals().unwrap()[evt_in.code() as usize];
-        let delta = if evt_in.value() == 0 || absval.value == 0 {
-            0.0
+    // Create a new Abs event.
+    fn new_abs(&self, abs: Abs, value: i32) -> InputEvent {
+        InputEvent::new(EventType::ABSOLUTE, abs.0, value)
+    }
+
+    // Map absolute events to trackpad events (ABS_X/Y).
+    // ref: https://www.kernel.org/doc/Documentation/input/event-codes.txt
+    fn abs2trackpad(&mut self, evt_in: InputEvent, abs_out: Abs, factor: i32)
+    -> Vec<InputEvent> {
+        let touched = if evt_in.value() == 0 { 0 }
+                 else if !self.touch { 1 }
+                 else { -1 };
+        let mut vec = if touched >= 0 {
+            self.touch = touched != 0;
+            vec!(self.new_key(Key::BTN_TOUCH, touched),
+                 self.new_key(Key::BTN_TOOL_FINGER, touched))
         } else {
-            (evt_in.value() - absval.value) as f32 * coeff
-        } as i32;
-        InputEvent::new(EventType::RELATIVE, rel.0, delta)
+            vec!()
+        };
+        vec.push(self.new_abs(abs_out, evt_in.value() * factor));
+        vec
     }
 
     // Map the minimum and maximum values of a joystick axis to the `key_min` and
@@ -63,12 +99,11 @@ impl Sdmapd {
     -> Vec<InputEvent> {
         let absinfo = self.absinfos_in[evt_in.code() as usize];
         if evt_in.value().abs() <= absinfo.resolution {
-            vec!(InputEvent::new(EventType::KEY, key_min.0, 0),
-                 InputEvent::new(EventType::KEY, key_max.0, 0))
+            vec!(self.new_key(key_min, 0), self.new_key(key_max, 0))
         } else if evt_in.value() == absinfo.minimum {
-            vec!(InputEvent::new(EventType::KEY, key_min.0, 1))
+            vec!(self.new_key(key_min, 1))
         } else if evt_in.value() == absinfo.maximum {
-            vec!(InputEvent::new(EventType::KEY, key_max.0, 1))
+            vec!(self.new_key(key_max, 1))
         } else {
             vec!()
         }
@@ -100,47 +135,35 @@ impl Sdmapd {
         {
             let keypos = self.vkbd_keypos();
             let key = VKBD_LAYOUT[keypos.1][keypos.0][ki];
-            vec!(InputEvent::new(EventType::KEY, key.0, 1),
-                 InputEvent::new(EventType::KEY, key.0, 0))
+            vec!(self.new_key(key, 1), self.new_key(key, 0))
         } else {
-            vec!(InputEvent::new(EventType::KEY, fallback_key.0, 1),
-                 InputEvent::new(EventType::KEY, fallback_key.0, 0))
+            vec!(self.new_key(fallback_key, 1), self.new_key(fallback_key, 0))
         }
     }
 
-    fn kbd_map(&self, evt_in: InputEvent) -> Vec<InputEvent> {
-        if evt_in.code() == Key::BTN_TL.0 {
-            vec!(self.key2key(evt_in, Key::BTN_RIGHT))
-        } else if evt_in.code() == Key::BTN_TR.0 {
-            vec!(self.key2key(evt_in, Key::BTN_LEFT))
-        } else if evt_in.code() == Key::BTN_TL2.0 {
-            vec!(self.key2key(evt_in, Key::BTN_MIDDLE))
-        } else if evt_in.code() == Key::BTN_TR2.0 {
-            vec!(self.key2key(evt_in, Key::KEY_LEFTMETA))
+    fn kbd_map(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
+        if evt_in.code() == Key::BTN_TR2.0 {
+            vec!(self.new_key(Key::KEY_LEFTMETA, evt_in.value()))
         } else if evt_in.code() == Key::BTN_DPAD_UP.0 {
-            vec!(self.key2key(evt_in, Key::KEY_UP))
+            vec!(self.new_key(Key::KEY_UP, evt_in.value()))
         } else if evt_in.code() == Key::BTN_DPAD_DOWN.0 {
-            vec!(self.key2key(evt_in, Key::KEY_DOWN))
+            vec!(self.new_key(Key::KEY_DOWN, evt_in.value()))
         } else if evt_in.code() == Key::BTN_DPAD_LEFT.0 {
-            vec!(self.key2key(evt_in, Key::KEY_LEFT))
+            vec!(self.new_key(Key::KEY_LEFT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_DPAD_RIGHT.0 {
-            vec!(self.key2key(evt_in, Key::KEY_RIGHT))
+            vec!(self.new_key(Key::KEY_RIGHT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TRIGGER_HAPPY1.0 {
-            vec!(self.key2key(evt_in, Key::KEY_LEFTSHIFT))
+            vec!(self.new_key(Key::KEY_LEFTSHIFT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TRIGGER_HAPPY3.0 {
-            vec!(self.key2key(evt_in, Key::KEY_LEFTCTRL))
+            vec!(self.new_key(Key::KEY_LEFTCTRL, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TRIGGER_HAPPY2.0 {
-            vec!(self.key2key(evt_in, Key::KEY_RIGHTALT))
+            vec!(self.new_key(Key::KEY_RIGHTALT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TRIGGER_HAPPY4.0 {
-            vec!(self.key2key(evt_in, Key::KEY_LEFTALT))
+            vec!(self.new_key(Key::KEY_LEFTALT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_SELECT.0 {
-            vec!(self.key2key(evt_in, Key::KEY_TAB))
+            vec!(self.new_key(Key::KEY_TAB, evt_in.value()))
         } else if evt_in.code() == Key::BTN_START.0 {
-            vec!(self.key2key(evt_in, Key::KEY_COMPOSE))
-        } else if evt_in.code() == Abs::ABS_HAT1X.0 {
-            vec!(self.hat2rel(evt_in, Rel::REL_X, 0.005))
-        } else if evt_in.code() == Abs::ABS_HAT1Y.0 {
-            vec!(self.hat2rel(evt_in, Rel::REL_Y, -0.005))
+            vec!(self.new_key(Key::KEY_COMPOSE, evt_in.value()))
         } else if evt_in.code() == Abs::ABS_Y.0 {
             self.joy2keys(evt_in, Key::KEY_PAGEUP, Key::KEY_PAGEDOWN)
         } else if evt_in.code() == Abs::ABS_X.0 {
@@ -158,11 +181,28 @@ impl Sdmapd {
         }
     }
 
+    fn mouse_map(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
+        if evt_in.code() == Key::BTN_TL.0 {
+            vec!(self.new_key(Key::BTN_RIGHT, evt_in.value()))
+        } else if evt_in.code() == Key::BTN_TR.0 {
+            vec!(self.new_key(Key::BTN_LEFT, evt_in.value()))
+        } else if evt_in.code() == Key::BTN_TL2.0 {
+            vec!(self.new_key(Key::BTN_MIDDLE, evt_in.value()))
+        } else if evt_in.code() == Abs::ABS_HAT1X.0 {
+            self.abs2trackpad(evt_in, Abs::ABS_X, 1)
+        } else if evt_in.code() == Abs::ABS_HAT1Y.0 {
+            self.abs2trackpad(evt_in, Abs::ABS_Y, -1)
+        } else {
+            vec!()
+        }
+    }
+
     pub fn run(&mut self) -> std::io::Result<()> {
         loop {
             self.cache_in = self.dev_in.cached_state().clone();
             if self.cache_in.key_vals().unwrap().iter()
-                   .eq([Key::BTN_BASE, Key::BTN_MODE]) {
+                   .eq([Key::BTN_BASE, Key::BTN_MODE])
+            {
                 self.kbd_mode = !self.kbd_mode;
                 if self.kbd_mode {
                     self.dev_in.grab()?;
@@ -171,12 +211,15 @@ impl Sdmapd {
                 }
             }
 
-            let events: Vec<InputEvent> = self.dev_in.fetch_events()?.collect();
-            for evt_in in events {
-                if self.kbd_mode {
-                    self.dev_keyboard.emit(&self.kbd_map(evt_in))?;
-                }
-            }
+            let events_in: Vec<InputEvent> = self.dev_in.fetch_events()?.collect();
+            let events_kbd: Vec<InputEvent> = events_in.iter().cloned()
+                .flat_map(|evt_in| self.kbd_map(evt_in))
+                .collect();
+            self.dev_keyboard.emit(&events_kbd)?;
+            let events_mouse: Vec<InputEvent> = events_in.into_iter()
+                .flat_map(|evt_in| self.mouse_map(evt_in))
+                .collect();
+            self.dev_mouse.emit(&events_mouse)?;
         }
     }
 }
