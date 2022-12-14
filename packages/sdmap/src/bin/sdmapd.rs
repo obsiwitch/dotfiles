@@ -64,12 +64,12 @@ impl Sdmapd {
     }
 
     // Create a new Key event.
-    fn new_key(&self, key: Key, value: i32) -> InputEvent {
+    fn new_key(key: Key, value: i32) -> InputEvent {
         InputEvent::new(EventType::KEY, key.0, value)
     }
 
     // Create a new Abs event.
-    fn new_abs(&self, abs: Abs, value: i32) -> InputEvent {
+    fn new_abs(abs: Abs, value: i32) -> InputEvent {
         InputEvent::new(EventType::ABSOLUTE, abs.0, value)
     }
 
@@ -82,12 +82,12 @@ impl Sdmapd {
                  else { -1 };
         let mut vec = if touched >= 0 {
             self.touch = touched != 0;
-            vec!(self.new_key(Key::BTN_TOUCH, touched),
-                 self.new_key(Key::BTN_TOOL_FINGER, touched))
+            vec!(Self::new_key(Key::BTN_TOUCH, touched),
+                 Self::new_key(Key::BTN_TOOL_FINGER, touched))
         } else {
             vec!()
         };
-        vec.push(self.new_abs(abs_out, evt_in.value() * factor));
+        vec.push(Self::new_abs(abs_out, evt_in.value() * factor));
         vec
     }
 
@@ -97,11 +97,11 @@ impl Sdmapd {
     -> Vec<InputEvent> {
         let absinfo = self.absinfos_in[evt_in.code() as usize];
         if evt_in.value().abs() <= absinfo.resolution {
-            vec!(self.new_key(key_min, 0), self.new_key(key_max, 0))
+            vec!(Self::new_key(key_min, 0), Self::new_key(key_max, 0))
         } else if evt_in.value() == absinfo.minimum {
-            vec!(self.new_key(key_min, 1))
+            vec!(Self::new_key(key_min, 1))
         } else if evt_in.value() == absinfo.maximum {
-            vec!(self.new_key(key_max, 1))
+            vec!(Self::new_key(key_max, 1))
         } else {
             vec!()
         }
@@ -134,37 +134,37 @@ impl Sdmapd {
         {
             let keypos = self.vkbd_keypos();
             let key = VKBD_LAYOUT[keypos.1][keypos.0][ki];
-            vec!(self.new_key(key, 1), self.new_key(key, 0))
+            vec!(Self::new_key(key, 1), Self::new_key(key, 0))
         } else {
-            vec!(self.new_key(fallback_key, 1), self.new_key(fallback_key, 0))
+            vec!(Self::new_key(fallback_key, 1), Self::new_key(fallback_key, 0))
         }
     }
 
     fn kbd_map(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
         if evt_in.code() == Key::BTN_TR2.0 {
-            vec!(self.new_key(Key::KEY_LEFTMETA, evt_in.value()))
+            vec!(Self::new_key(Key::KEY_LEFTMETA, evt_in.value()))
         } else if evt_in.code() == Key::BTN_DPAD_UP.0 {
-            vec!(self.new_key(Key::KEY_UP, evt_in.value()))
+            vec!(Self::new_key(Key::KEY_UP, evt_in.value()))
         } else if evt_in.code() == Key::BTN_DPAD_DOWN.0 {
-            vec!(self.new_key(Key::KEY_DOWN, evt_in.value()))
+            vec!(Self::new_key(Key::KEY_DOWN, evt_in.value()))
         } else if evt_in.code() == Key::BTN_DPAD_LEFT.0 {
-            vec!(self.new_key(Key::KEY_LEFT, evt_in.value()))
+            vec!(Self::new_key(Key::KEY_LEFT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_DPAD_RIGHT.0 {
-            vec!(self.new_key(Key::KEY_RIGHT, evt_in.value()))
+            vec!(Self::new_key(Key::KEY_RIGHT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TRIGGER_HAPPY1.0 {
-            vec!(self.new_key(Key::KEY_LEFTSHIFT, evt_in.value()))
+            vec!(Self::new_key(Key::KEY_LEFTSHIFT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TRIGGER_HAPPY3.0 {
-            vec!(self.new_key(Key::KEY_LEFTCTRL, evt_in.value()))
+            vec!(Self::new_key(Key::KEY_LEFTCTRL, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TRIGGER_HAPPY2.0 {
-            vec!(self.new_key(Key::KEY_RIGHTALT, evt_in.value()))
+            vec!(Self::new_key(Key::KEY_RIGHTALT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TRIGGER_HAPPY4.0 {
-            vec!(self.new_key(Key::KEY_LEFTALT, evt_in.value()))
+            vec!(Self::new_key(Key::KEY_LEFTALT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_SELECT.0 {
-            vec!(self.new_key(Key::KEY_TAB, evt_in.value()))
+            vec!(Self::new_key(Key::KEY_TAB, evt_in.value()))
         } else if evt_in.code() == Key::BTN_START.0 {
-            vec!(self.new_key(Key::KEY_DELETE, evt_in.value()))
+            vec!(Self::new_key(Key::KEY_DELETE, evt_in.value()))
         } else if evt_in.code() == Key::BTN_BASE.0 {
-            vec!(self.new_key(Key::KEY_COMPOSE, evt_in.value()))
+            vec!(Self::new_key(Key::KEY_COMPOSE, evt_in.value()))
         } else if evt_in.code() == Abs::ABS_Y.0 {
             self.joy2keys(evt_in, Key::KEY_PAGEUP, Key::KEY_PAGEDOWN)
         } else if evt_in.code() == Abs::ABS_X.0 {
@@ -184,11 +184,11 @@ impl Sdmapd {
 
     fn mouse_map(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
         if evt_in.code() == Key::BTN_TL.0 {
-            vec!(self.new_key(Key::BTN_RIGHT, evt_in.value()))
+            vec!(Self::new_key(Key::BTN_RIGHT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TR.0 {
-            vec!(self.new_key(Key::BTN_LEFT, evt_in.value()))
+            vec!(Self::new_key(Key::BTN_LEFT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TL2.0 {
-            vec!(self.new_key(Key::BTN_MIDDLE, evt_in.value()))
+            vec!(Self::new_key(Key::BTN_MIDDLE, evt_in.value()))
         } else if evt_in.code() == Abs::ABS_HAT1X.0 {
             self.abs2trackpad(evt_in, Abs::ABS_X, 1)
         } else if evt_in.code() == Abs::ABS_HAT1Y.0 {
