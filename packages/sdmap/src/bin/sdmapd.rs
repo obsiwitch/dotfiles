@@ -38,7 +38,7 @@ impl Sdmapd {
                 Key::KEY_RIGHT, Key::KEY_LEFTSHIFT, Key::KEY_LEFTCTRL, Key::KEY_RIGHTALT,
                 Key::KEY_LEFTALT, Key::KEY_TAB, Key::KEY_COMPOSE, Key::KEY_PAGEUP,
                 Key::KEY_PAGEDOWN, Key::KEY_HOME, Key::KEY_END, Key::KEY_ENTER,
-                Key::KEY_ESC, Key::KEY_BACKSPACE, Key::KEY_SPACE
+                Key::KEY_ESC, Key::KEY_BACKSPACE, Key::KEY_SPACE, Key::KEY_DELETE
             ])))?
             .build()?;
         let dev_mouse = VirtualDeviceBuilder::new()?
@@ -162,6 +162,8 @@ impl Sdmapd {
         } else if evt_in.code() == Key::BTN_SELECT.0 {
             vec!(self.new_key(Key::KEY_TAB, evt_in.value()))
         } else if evt_in.code() == Key::BTN_START.0 {
+            vec!(self.new_key(Key::KEY_DELETE, evt_in.value()))
+        } else if evt_in.code() == Key::BTN_BASE.0 {
             vec!(self.new_key(Key::KEY_COMPOSE, evt_in.value()))
         } else if evt_in.code() == Abs::ABS_Y.0 {
             self.joy2keys(evt_in, Key::KEY_PAGEUP, Key::KEY_PAGEDOWN)
