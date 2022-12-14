@@ -19,7 +19,7 @@ struct Sdmapd {
     absinfos_in: [input_absinfo; 64],
     cache_in: DeviceState,
     dev_keyboard: VirtualDevice,
-    dev_mouse: VirtualDevice,
+    dev_trackpad: VirtualDevice,
     kbd_mode: bool,
     touch: bool
 }
@@ -41,8 +41,8 @@ impl Sdmapd {
                 Key::KEY_ESC, Key::KEY_BACKSPACE, Key::KEY_SPACE, Key::KEY_DELETE
             ])))?
             .build()?;
-        let dev_mouse = VirtualDeviceBuilder::new()?
-            .name("Steam Deck sdmapd mouse")
+        let dev_trackpad = VirtualDeviceBuilder::new()?
+            .name("Steam Deck sdmapd trackpad")
             .with_keys(&AttributeSet::from_iter([
                 Key::BTN_RIGHT, Key::BTN_LEFT, Key::BTN_MIDDLE,  Key::BTN_TOUCH,
                 Key::BTN_TOOL_FINGER
@@ -57,7 +57,7 @@ impl Sdmapd {
             cache_in: dev_in.cached_state().clone(),
             dev_in,
             dev_keyboard,
-            dev_mouse,
+            dev_trackpad,
             kbd_mode: true,
             touch: false,
         })
@@ -75,7 +75,7 @@ impl Sdmapd {
 
     // Map absolute events to trackpad events (ABS_X/Y).
     // ref: https://www.kernel.org/doc/Documentation/input/event-codes.txt
-    fn abs2trackpad(&mut self, evt_in: InputEvent, abs_out: Abs, factor: i32)
+    fn abs2trackpad(&mut self, evt_in: InputEvent, abs_out: Abs, coeff: i32)
     -> Vec<InputEvent> {
         let touched = if evt_in.value() == 0 { 0 }
                  else if !self.touch { 1 }
@@ -87,7 +87,7 @@ impl Sdmapd {
         } else {
             vec!()
         };
-        vec.push(Self::new_abs(abs_out, evt_in.value() * factor));
+        vec.push(Self::new_abs(abs_out, evt_in.value() * coeff));
         vec
     }
 
@@ -182,7 +182,7 @@ impl Sdmapd {
         }
     }
 
-    fn mouse_map(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
+    fn trackpad_map(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
         if evt_in.code() == Key::BTN_TL.0 {
             vec!(Self::new_key(Key::BTN_RIGHT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TR.0 {
@@ -217,10 +217,10 @@ impl Sdmapd {
                 .flat_map(|evt_in| self.kbd_map(evt_in))
                 .collect();
             self.dev_keyboard.emit(&events_kbd)?;
-            let events_mouse: Vec<InputEvent> = events_in.into_iter()
-                .flat_map(|evt_in| self.mouse_map(evt_in))
+            let events_trackpad: Vec<InputEvent> = events_in.into_iter()
+                .flat_map(|evt_in| self.trackpad_map(evt_in))
                 .collect();
-            self.dev_mouse.emit(&events_mouse)?;
+            self.dev_trackpad.emit(&events_trackpad)?;
         }
     }
 }
