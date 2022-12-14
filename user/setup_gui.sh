@@ -35,10 +35,6 @@ dotln "$sourcep/mpv" "$HOME/.config/"
 dconf reset -f '/org/gnome/terminal/'
 dconf load / < "$sourcep/gnome-terminal/dconf"
 
-# gedit
-dconf reset -f '/org/gnome/gedit/'
-dconf load / < "$sourcep/gedit/dconf"
-
 # desktop entries
 dotln "$sourcep/desktop" "$HOME/.local/share/applications"
 

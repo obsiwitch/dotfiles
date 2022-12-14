@@ -34,8 +34,6 @@ webp-pixbuf-loader
 
 # dev
 gnome-terminal
-gedit
-gedit-plugins
 libgit2-glib
 bless
 meld
