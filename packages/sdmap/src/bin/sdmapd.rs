@@ -140,6 +140,20 @@ impl Sdmapd {
         }
     }
 
+    fn meta_map(&mut self, evt_in: InputEvent) {
+        let key_vals = self.cache_in.key_vals().unwrap();
+
+        // switch between keyboard+mouse mode and gamepad mode
+        if evt_in.value() == 1 && key_vals.contains(Key::BTN_MODE) {
+            self.kbd_mode = !self.kbd_mode;
+            if self.kbd_mode {
+                self.dev_in.grab().unwrap();
+            } else {
+                self.dev_in.ungrab().unwrap();
+            }
+        }
+    }
+
     fn kbd_map(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
         if evt_in.code() == Key::BTN_TR2.0 {
             vec!(Self::new_key(Key::KEY_LEFTMETA, evt_in.value()))
@@ -201,22 +215,18 @@ impl Sdmapd {
     pub fn run(&mut self) -> std::io::Result<()> {
         loop {
             self.cache_in = self.dev_in.cached_state().clone();
-            if self.cache_in.key_vals().unwrap().iter()
-                   .eq([Key::BTN_BASE, Key::BTN_MODE])
-            {
-                self.kbd_mode = !self.kbd_mode;
-                if self.kbd_mode {
-                    self.dev_in.grab()?;
-                } else {
-                    self.dev_in.ungrab()?;
-                }
-            }
-
             let events_in: Vec<InputEvent> = self.dev_in.fetch_events()?.collect();
+
+            events_in.iter().cloned().for_each(|evt_in|
+                self.meta_map(evt_in)
+            );
+            if !self.kbd_mode { continue; }
+
             let events_kbd: Vec<InputEvent> = events_in.iter().cloned()
                 .flat_map(|evt_in| self.kbd_map(evt_in))
                 .collect();
             self.dev_keyboard.emit(&events_kbd)?;
+
             let events_trackpad: Vec<InputEvent> = events_in.into_iter()
                 .flat_map(|evt_in| self.trackpad_map(evt_in))
                 .collect();
