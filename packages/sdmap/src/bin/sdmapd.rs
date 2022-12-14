@@ -1,12 +1,16 @@
-use evdev::{*, AbsoluteAxisType as Abs, PropType as Prop};
+use evdev::{*, uinput::*, AbsoluteAxisType as Abs, PropType as Prop};
 use libc::input_absinfo;
 use sdmap::VKBD_LAYOUT;
 
-trait FromInputAbsinfo { fn from_libc(absinfo: input_absinfo) -> AbsInfo; }
-impl FromInputAbsinfo for AbsInfo {
-    fn from_libc(absinfo: input_absinfo) -> AbsInfo {
-        AbsInfo::new(absinfo.value, absinfo.minimum, absinfo.maximum,
-                     absinfo.fuzz, absinfo.flat, absinfo.resolution)
+trait WithAbs: Sized { fn with_abs(self, abs: Abs, absinfo: input_absinfo)
+                   -> std::io::Result<Self>; }
+impl WithAbs for VirtualDeviceBuilder<'_> {
+    fn with_abs(self, abs: Abs, absinfo: input_absinfo)
+    -> std::io::Result<Self> {
+        self.with_absolute_axis(&UinputAbsSetup::new(
+            abs, AbsInfo::new(absinfo.value, absinfo.minimum, absinfo.maximum,
+                              absinfo.fuzz, absinfo.flat, absinfo.resolution)
+        ))
     }
 }
 
@@ -14,8 +18,8 @@ struct Sdmapd {
     dev_in: Device,
     absinfos_in: [input_absinfo; 64],
     cache_in: DeviceState,
-    dev_keyboard: uinput::VirtualDevice,
-    dev_mouse: uinput::VirtualDevice,
+    dev_keyboard: VirtualDevice,
+    dev_mouse: VirtualDevice,
     kbd_mode: bool,
     touch: bool
 }
@@ -26,7 +30,7 @@ impl Sdmapd {
         dev_in.grab()?;
         let absinfos_in = dev_in.get_abs_state()?;
 
-        let dev_keyboard = uinput::VirtualDeviceBuilder::new()?
+        let dev_keyboard = VirtualDeviceBuilder::new()?
             .name("Steam Deck sdmapd keyboard")
             .with_keys(&AttributeSet::from_iter(
                 VKBD_LAYOUT.into_iter().flatten().flatten().chain([
@@ -37,20 +41,14 @@ impl Sdmapd {
                 Key::KEY_ESC, Key::KEY_BACKSPACE, Key::KEY_SPACE
             ])))?
             .build()?;
-        let dev_mouse = uinput::VirtualDeviceBuilder::new()?
+        let dev_mouse = VirtualDeviceBuilder::new()?
             .name("Steam Deck sdmapd mouse")
             .with_keys(&AttributeSet::from_iter([
                 Key::BTN_RIGHT, Key::BTN_LEFT, Key::BTN_MIDDLE,  Key::BTN_TOUCH,
                 Key::BTN_TOOL_FINGER
             ]))?
-            .with_absolute_axis(&UinputAbsSetup::new(
-                Abs::ABS_X,
-                AbsInfo::from_libc(absinfos_in[Abs::ABS_HAT1X.0 as usize])
-            ))?
-            .with_absolute_axis(&UinputAbsSetup::new(
-                Abs::ABS_Y,
-                AbsInfo::from_libc(absinfos_in[Abs::ABS_HAT1Y.0 as usize])
-            ))?
+            .with_abs(Abs::ABS_X, absinfos_in[Abs::ABS_HAT1X.0 as usize])?
+            .with_abs(Abs::ABS_Y, absinfos_in[Abs::ABS_HAT1Y.0 as usize])?
             .with_properties(&AttributeSet::from_iter([Prop::POINTER]))?
             .build()?;
 
@@ -125,6 +123,7 @@ impl Sdmapd {
 
     // Map a physical key to a key of the virtual keyboard depending on the current
     // value of ABS_HAT0{X,Y}. If ABS_HAT0{X,Y} == (0, 0), send the `fallback_key`.
+    // `ki` corresponds to the section of the virtual keyboard to use.
     fn key2vkbd(&self, evt_in: InputEvent, ki: usize, fallback_key: Key)
     -> Vec<InputEvent> {
         let absvals = self.cache_in.abs_vals().unwrap();
