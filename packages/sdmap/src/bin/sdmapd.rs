@@ -40,7 +40,16 @@ impl Sdmapd {
                 Key::KEY_PAGEDOWN, Key::KEY_HOME, Key::KEY_END, Key::KEY_ENTER,
                 Key::KEY_ESC, Key::KEY_BACKSPACE, Key::KEY_SPACE, Key::KEY_DELETE
             ])))?
+            .with_abs(Abs::ABS_HAT0X, input_absinfo{
+                value:0, minimum: 0, maximum:VKBD_LAYOUT[0].len() as i32,
+                fuzz:0, flat:0, resolution:0
+            })?
+            .with_abs(Abs::ABS_HAT0Y, input_absinfo{
+                value:0, minimum: 0, maximum:VKBD_LAYOUT.len() as i32,
+                fuzz:0, flat:0, resolution:0
+            })?
             .build()?;
+
         let dev_trackpad = VirtualDeviceBuilder::new()?
             .name("Steam Deck sdmapd trackpad")
             .with_keys(&AttributeSet::from_iter([
@@ -63,12 +72,11 @@ impl Sdmapd {
         })
     }
 
-    // Create a new Key event.
+    // Create a new Key event. (shortcut)
     fn new_key(key: Key, value: i32) -> InputEvent {
         InputEvent::new(EventType::KEY, key.0, value)
     }
-
-    // Create a new Abs event.
+    // Create a new Abs event. (shortcut)
     fn new_abs(abs: Abs, value: i32) -> InputEvent {
         InputEvent::new(EventType::ABSOLUTE, abs.0, value)
     }
@@ -107,32 +115,34 @@ impl Sdmapd {
         }
     }
 
-    fn vkbd_keypos(&self) -> (usize, usize) {
-        let absinfo = self.absinfos_in[Abs::ABS_HAT0X.0 as usize];
+    // Returns the position on the virtual keyboard based on the position of
+    // ABS_HAT0. Return None if ABS_HAT0 isn't used.
+    pub fn vkbd_keypos(&self, evt_in: InputEvent)
+    -> Option<(usize, usize)> {
         let absvals = self.cache_in.abs_vals().unwrap();
-        let y = (
-            (absvals[Abs::ABS_HAT0Y.0 as usize].value - absinfo.maximum).abs()
-            * VKBD_LAYOUT.len() as i32
-        ) / ((absinfo.maximum * 2) + 1);
-        let x = (
-            (absvals[Abs::ABS_HAT0X.0 as usize].value + absinfo.maximum)
-            * VKBD_LAYOUT[0].len() as i32
-        ) / ((absinfo.maximum * 2) + 1);
-        (x as usize, y as usize)
+        let absinfo = self.absinfos_in[Abs::ABS_HAT0X.0 as usize];
+
+        let absx = if evt_in.code() == Abs::ABS_HAT0X.0 { evt_in.value() }
+                   else { absvals[Abs::ABS_HAT0X.0 as usize].value };
+        let absy = if evt_in.code() == Abs::ABS_HAT0Y.0 { evt_in.value() }
+                   else { absvals[Abs::ABS_HAT0Y.0 as usize].value };
+        if absx == 0 && absy == 0 { return None; }
+
+        let vkbdy = (absy - absinfo.maximum).abs() * VKBD_LAYOUT.len() as i32
+                    / ((absinfo.maximum * 2) + 1);
+        let vkbdx = (absx + absinfo.maximum) * VKBD_LAYOUT[0].len() as i32
+                    / ((absinfo.maximum * 2) + 1);
+        Some((vkbdx as usize, vkbdy as usize))
     }
 
     // Map a physical key to a key of the virtual keyboard depending on the current
-    // value of ABS_HAT0{X,Y}. If ABS_HAT0{X,Y} == (0, 0), send the `fallback_key`.
+    // value of ABS_HAT0{X,Y}. If ABS_HAT0 isn't used send the `fallback_key`.
     // `ki` corresponds to the section of the virtual keyboard to use.
     fn key2vkbd(&self, evt_in: InputEvent, ki: usize, fallback_key: Key)
     -> Vec<InputEvent> {
-        let absvals = self.cache_in.abs_vals().unwrap();
         if evt_in.value() == 0 {
             vec!()
-        } else if absvals[Abs::ABS_HAT0X.0 as usize].value != 0
-               && absvals[Abs::ABS_HAT0Y.0 as usize].value != 0
-        {
-            let keypos = self.vkbd_keypos();
+        } else if let Some(keypos) = self.vkbd_keypos(evt_in) {
             let key = VKBD_LAYOUT[keypos.1][keypos.0][ki];
             vec!(Self::new_key(key, 1), Self::new_key(key, 0))
         } else {
@@ -191,7 +201,14 @@ impl Sdmapd {
             self.key2vkbd(evt_in, 2, Key::KEY_BACKSPACE)
         } else if evt_in.code() == Key::BTN_WEST.0 {
             self.key2vkbd(evt_in, 3, Key::KEY_SPACE)
-        } else {
+        } else if let Some(keypos) = self.vkbd_keypos(evt_in) {
+            // Reuse ABS_HAT0 as an output to inform sdmapui of the current
+            // virtual keyboard position. Events are only sent when the values
+            // change.
+            vec!(Self::new_abs(Abs::ABS_HAT0X, keypos.0 as i32),
+                 Self::new_abs(Abs::ABS_HAT0Y, keypos.1 as i32))
+        }
+        else {
             vec!()
         }
     }
