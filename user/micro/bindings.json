@@ -3,4 +3,5 @@
     "CtrlUnderscore": "lua:comment.comment",
     "Ctrl-Alt-Left": "PreviousTab",
     "Ctrl-Alt-Right": "NextTab",
+    "Ctrl-o": "lua:fzf.fzf",
 }
