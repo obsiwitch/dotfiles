@@ -38,16 +38,9 @@ impl Sdmapd {
                 Key::KEY_RIGHT, Key::KEY_LEFTSHIFT, Key::KEY_LEFTCTRL, Key::KEY_RIGHTALT,
                 Key::KEY_LEFTALT, Key::KEY_TAB, Key::KEY_COMPOSE, Key::KEY_PAGEUP,
                 Key::KEY_PAGEDOWN, Key::KEY_HOME, Key::KEY_END, Key::KEY_ENTER,
-                Key::KEY_ESC, Key::KEY_BACKSPACE, Key::KEY_SPACE, Key::KEY_DELETE
+                Key::KEY_ESC, Key::KEY_BACKSPACE, Key::KEY_SPACE, Key::KEY_DELETE,
+                Key::KEY_F1, Key::KEY_F2, Key::KEY_F3, Key::KEY_F4,
             ])))?
-            .with_abs(Abs::ABS_HAT0X, input_absinfo{
-                value:0, minimum: 0, maximum:VKBD_LAYOUT[0].len() as i32,
-                fuzz:0, flat:0, resolution:0
-            })?
-            .with_abs(Abs::ABS_HAT0Y, input_absinfo{
-                value:0, minimum: 0, maximum:VKBD_LAYOUT.len() as i32,
-                fuzz:0, flat:0, resolution:0
-            })?
             .build()?;
 
         let dev_trackpad = VirtualDeviceBuilder::new()?
@@ -185,30 +178,27 @@ impl Sdmapd {
             vec!(Self::new_key(Key::KEY_LEFTALT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_SELECT.0 {
             vec!(Self::new_key(Key::KEY_TAB, evt_in.value()))
-        } else if evt_in.code() == Key::BTN_START.0 {
-            vec!(Self::new_key(Key::KEY_DELETE, evt_in.value()))
-        } else if evt_in.code() == Key::BTN_BASE.0 {
-            vec!(Self::new_key(Key::KEY_COMPOSE, evt_in.value()))
         } else if evt_in.code() == Abs::ABS_Y.0 {
             self.joy2keys(evt_in, Key::KEY_PAGEUP, Key::KEY_PAGEDOWN)
         } else if evt_in.code() == Abs::ABS_X.0 {
             self.joy2keys(evt_in, Key::KEY_HOME, Key::KEY_END)
+        } else if evt_in.code() == Abs::ABS_RY.0 {
+            self.joy2keys(evt_in, Key::KEY_F3, Key::KEY_F1)
+        } else if evt_in.code() == Abs::ABS_RX.0 {
+            self.joy2keys(evt_in, Key::KEY_F4, Key::KEY_F2)
         } else if evt_in.code() == Key::BTN_SOUTH.0 {
             self.key2vkbd(evt_in, 0, Key::KEY_ENTER)
         } else if evt_in.code() == Key::BTN_EAST.0 {
             self.key2vkbd(evt_in, 1, Key::KEY_ESC)
         } else if evt_in.code() == Key::BTN_NORTH.0 {
-            self.key2vkbd(evt_in, 2, Key::KEY_BACKSPACE)
+            self.key2vkbd(evt_in, 3, Key::KEY_BACKSPACE)
         } else if evt_in.code() == Key::BTN_WEST.0 {
-            self.key2vkbd(evt_in, 3, Key::KEY_SPACE)
-        } else if let Some(keypos) = self.vkbd_keypos(evt_in) {
-            // Reuse ABS_HAT0 as an output to inform sdmapui of the current
-            // virtual keyboard position. Events are only sent when the values
-            // change.
-            vec!(Self::new_abs(Abs::ABS_HAT0X, keypos.0 as i32),
-                 Self::new_abs(Abs::ABS_HAT0Y, keypos.1 as i32))
-        }
-        else {
+            self.key2vkbd(evt_in, 2, Key::KEY_SPACE)
+        } else if evt_in.code() == Key::BTN_START.0 {
+            self.key2vkbd(evt_in, 4, Key::KEY_DELETE)
+        } else if evt_in.code() == Key::BTN_BASE.0 {
+            self.key2vkbd(evt_in, 5, Key::KEY_COMPOSE)
+        } else {
             vec!()
         }
     }
