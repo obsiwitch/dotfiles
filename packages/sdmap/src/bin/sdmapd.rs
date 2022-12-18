@@ -1,27 +1,13 @@
-use evdev::{*, uinput::*, AbsoluteAxisType as Abs, PropType as Prop};
+use evdev::{*, uinput::*, AbsoluteAxisType as Abs, RelativeAxisType as Rel};
 use libc::input_absinfo;
 use sdmap::VKBD_LAYOUT;
-
-trait WithAbs: Sized { fn with_abs(self, abs: Abs, absinfo: input_absinfo)
-                   -> std::io::Result<Self>; }
-impl WithAbs for VirtualDeviceBuilder<'_> {
-    fn with_abs(self, abs: Abs, absinfo: input_absinfo)
-    -> std::io::Result<Self> {
-        self.with_absolute_axis(&UinputAbsSetup::new(
-            abs, AbsInfo::new(absinfo.value, absinfo.minimum, absinfo.maximum,
-                              absinfo.fuzz, absinfo.flat, absinfo.resolution)
-        ))
-    }
-}
 
 struct Sdmapd {
     dev_in: Device,
     absinfos_in: [input_absinfo; 64],
     cache_in: DeviceState,
-    dev_keyboard: VirtualDevice,
-    dev_trackpad: VirtualDevice,
+    dev_out: VirtualDevice,
     kbd_mode: bool,
-    touch: bool
 }
 impl Sdmapd {
     pub fn new() -> std::io::Result<Self> {
@@ -30,8 +16,8 @@ impl Sdmapd {
         dev_in.grab()?;
         let absinfos_in = dev_in.get_abs_state()?;
 
-        let dev_keyboard = VirtualDeviceBuilder::new()?
-            .name("Steam Deck sdmapd keyboard")
+        let dev_out = VirtualDeviceBuilder::new()?
+            .name("Steam Deck sdmapd")
             .with_keys(&AttributeSet::from_iter(
                 VKBD_LAYOUT.into_iter().flatten().flatten().chain([
                 Key::KEY_LEFTMETA, Key::KEY_UP, Key::KEY_DOWN, Key::KEY_LEFT,
@@ -39,29 +25,18 @@ impl Sdmapd {
                 Key::KEY_LEFTALT, Key::KEY_TAB, Key::KEY_COMPOSE, Key::KEY_PAGEUP,
                 Key::KEY_PAGEDOWN, Key::KEY_HOME, Key::KEY_END, Key::KEY_ENTER,
                 Key::KEY_ESC, Key::KEY_BACKSPACE, Key::KEY_SPACE, Key::KEY_DELETE,
-                Key::KEY_F1, Key::KEY_F2, Key::KEY_F3, Key::KEY_F4,
+                Key::KEY_F1, Key::KEY_F2, Key::KEY_F3, Key::KEY_F4, Key::BTN_RIGHT,
+                Key::BTN_LEFT, Key::BTN_MIDDLE,
             ])))?
-            .build()?;
-
-        let dev_trackpad = VirtualDeviceBuilder::new()?
-            .name("Steam Deck sdmapd trackpad")
-            .with_keys(&AttributeSet::from_iter([
-                Key::BTN_RIGHT, Key::BTN_LEFT, Key::BTN_MIDDLE,  Key::BTN_TOUCH,
-                Key::BTN_TOOL_FINGER
-            ]))?
-            .with_abs(Abs::ABS_X, absinfos_in[Abs::ABS_HAT1X.0 as usize])?
-            .with_abs(Abs::ABS_Y, absinfos_in[Abs::ABS_HAT1Y.0 as usize])?
-            .with_properties(&AttributeSet::from_iter([Prop::POINTER]))?
+            .with_relative_axes(&AttributeSet::from_iter([Rel::REL_X, Rel::REL_Y]))?
             .build()?;
 
         Ok(Self {
             absinfos_in,
             cache_in: dev_in.cached_state().clone(),
             dev_in,
-            dev_keyboard,
-            dev_trackpad,
+            dev_out,
             kbd_mode: true,
-            touch: false,
         })
     }
 
@@ -69,27 +44,13 @@ impl Sdmapd {
     fn new_key(key: Key, value: i32) -> InputEvent {
         InputEvent::new(EventType::KEY, key.0, value)
     }
-    // Create a new Abs event. (shortcut)
-    fn new_abs(abs: Abs, value: i32) -> InputEvent {
-        InputEvent::new(EventType::ABSOLUTE, abs.0, value)
-    }
 
-    // Map absolute events to trackpad events (ABS_X/Y).
-    // ref: https://www.kernel.org/doc/Documentation/input/event-codes.txt
-    fn abs2trackpad(&mut self, evt_in: InputEvent, abs_out: Abs, coeff: i32)
-    -> Vec<InputEvent> {
-        let touched = if evt_in.value() == 0 { 0 }
-                 else if !self.touch { 1 }
-                 else { -1 };
-        let mut vec = if touched >= 0 {
-            self.touch = touched != 0;
-            vec!(Self::new_key(Key::BTN_TOUCH, touched),
-                 Self::new_key(Key::BTN_TOOL_FINGER, touched))
-        } else {
-            vec!()
-        };
-        vec.push(Self::new_abs(abs_out, evt_in.value() * coeff));
-        vec
+    // Map an absolute event to a relative one.
+    fn abs2rel(&self, evt_in: InputEvent, rel: Rel, coeff: f32) -> InputEvent {
+        let absval = self.cache_in.abs_vals().unwrap()[evt_in.code() as usize];
+        let delta = if evt_in.value() == 0 || absval.value == 0 { 0.0 }
+                   else { (evt_in.value() - absval.value) as f32 * coeff } as i32;
+        InputEvent::new(EventType::RELATIVE, rel.0, delta)
     }
 
     // Map the minimum and maximum values of a joystick axis to the `key_min` and
@@ -157,7 +118,7 @@ impl Sdmapd {
         }
     }
 
-    fn kbd_map(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
+    fn remap(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
         if evt_in.code() == Key::BTN_TR2.0 {
             vec!(Self::new_key(Key::KEY_LEFTMETA, evt_in.value()))
         } else if evt_in.code() == Key::BTN_DPAD_UP.0 {
@@ -198,22 +159,16 @@ impl Sdmapd {
             self.key2vkbd(evt_in, 4, Key::KEY_DELETE)
         } else if evt_in.code() == Key::BTN_BASE.0 {
             self.key2vkbd(evt_in, 5, Key::KEY_COMPOSE)
-        } else {
-            vec!()
-        }
-    }
-
-    fn trackpad_map(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
-        if evt_in.code() == Key::BTN_TL.0 {
+        } else if evt_in.code() == Key::BTN_TL.0 {
             vec!(Self::new_key(Key::BTN_RIGHT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TR.0 {
             vec!(Self::new_key(Key::BTN_LEFT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TL2.0 {
             vec!(Self::new_key(Key::BTN_MIDDLE, evt_in.value()))
         } else if evt_in.code() == Abs::ABS_HAT1X.0 {
-            self.abs2trackpad(evt_in, Abs::ABS_X, 1)
+            vec!(self.abs2rel(evt_in, Rel::REL_X, 0.01))
         } else if evt_in.code() == Abs::ABS_HAT1Y.0 {
-            self.abs2trackpad(evt_in, Abs::ABS_Y, -1)
+            vec!(self.abs2rel(evt_in, Rel::REL_Y, -0.01))
         } else {
             vec!()
         }
@@ -229,15 +184,10 @@ impl Sdmapd {
             );
             if !self.kbd_mode { continue; }
 
-            let events_kbd: Vec<InputEvent> = events_in.iter().cloned()
-                .flat_map(|evt_in| self.kbd_map(evt_in))
+            let events_out: Vec<InputEvent> = events_in.iter().cloned()
+                .flat_map(|evt_in| self.remap(evt_in))
                 .collect();
-            self.dev_keyboard.emit(&events_kbd)?;
-
-            let events_trackpad: Vec<InputEvent> = events_in.into_iter()
-                .flat_map(|evt_in| self.trackpad_map(evt_in))
-                .collect();
-            self.dev_trackpad.emit(&events_trackpad)?;
+            self.dev_out.emit(&events_out)?;
         }
     }
 }
