@@ -51,7 +51,7 @@ impl Sticker {
             <style type="text/css">
             body {{font-family:monospace; font-size:18px;}}
             table {{border-collapse: collapse; width:378px; height:378px;}}
-            td {{border:1px solid #DDD; text-align: center;}}
+            td {{border:1px solid #EEE; text-align: center;}}
             td.a {{border-width: 4px 1px 4px 4px; color:LimeGreen;}}
             td.b {{border-width: 4px 1px 4px 1px; color:Crimson;}}
             td.x {{border-width: 4px 1px 4px 1px; color:DodgerBlue;}}

@@ -2,14 +2,14 @@ use evdev::{*, uinput::*, AbsoluteAxisType as Abs, RelativeAxisType as Rel};
 use libc::input_absinfo;
 use sdmap::VKBD_LAYOUT;
 
-struct Sdmapd {
+struct Daemon {
     dev_in: Device,
     absinfos_in: [input_absinfo; 64],
     cache_in: DeviceState,
     dev_out: VirtualDevice,
     kbd_mode: bool,
 }
-impl Sdmapd {
+impl Daemon {
     pub fn new() -> std::io::Result<Self> {
         let path_in = "/dev/input/by-id/usb-Valve_Software_Steam_Controller_123456789ABCDEF-if02-event-joystick";
         let mut dev_in = Device::open(path_in)?;
@@ -193,7 +193,7 @@ impl Sdmapd {
 }
 
 fn main() -> std::io::Result<()> {
-    let mut sdmapd = Sdmapd::new()?;
-    sdmapd.run()?;
+    let mut daemon = Daemon::new()?;
+    daemon.run()?;
     Ok(())
 }
