@@ -1,0 +1,35 @@
+pkgname='sdmap'
+_pkgpath="dotfiles/packages/$pkgname"
+pkgver=0.2.0
+pkgrel=1
+pkgdesc='Steam Deck Controller custom mapping'
+arch=('x86_64')
+url='https://github.com/obsiwitch/dotfiles'
+
+makedepends=('rust')
+optdepends=('hid-steam-deck-dkms: Steam Deck Controller support for non-neptune kernel'
+            'linux-neptune: kernel with Steam Deck Controller support')
+
+source=("git+$url.git")
+sha256sums=('SKIP')
+
+prepare() {
+    cd "$_pkgpath"
+    cargo fetch --frozen --target "$CARCH-unknown-linux-gnu"
+}
+
+build() {
+    cd "$_pkgpath"
+    cargo build --release --frozen
+}
+
+check() {
+    cd "$_pkgpath"
+    cargo test --release --frozen
+}
+
+package() {
+    cd "$_pkgpath"
+    install -Dm 755 'target/release/sdmap-'{daemon,sticker} -t "$pkgdir/usr/bin"
+}
+
