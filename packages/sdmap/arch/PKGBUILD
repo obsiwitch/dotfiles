@@ -1,7 +1,7 @@
 pkgname='sdmap'
 _pkgpath="dotfiles/packages/$pkgname"
 pkgver=0.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Steam Deck Controller custom mapping'
 arch=('x86_64')
 url='https://github.com/obsiwitch/dotfiles'
@@ -15,7 +15,7 @@ sha256sums=('SKIP')
 
 prepare() {
     cd "$_pkgpath"
-    cargo fetch --frozen --target "$CARCH-unknown-linux-gnu"
+    cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
 }
 
 build() {
