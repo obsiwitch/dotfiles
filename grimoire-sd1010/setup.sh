@@ -5,17 +5,6 @@ set -o errexit -o nounset -o xtrace
 sourcep="$(realpath "${BASH_SOURCE%/*}")"
 dotfilesp="$(realpath "${BASH_SOURCE%/*}/..")"
 
-# Build a package ($1) in a temporary directory and install it.
-makepkgtmp() {
-    local buildp; buildp="$(mktemp -d)"
-    cp -r "$1/." -t "$buildp"
-    chown -R nobody:nobody "$buildp"
-    ( cd "$buildp"
-      su -s /bin/bash nobody -c 'makepkg'
-      pacman -U ./*.pkg.tar.zst; )
-    rm -r "$buildp"
-}
-
 setup.help() {
     set +o xtrace
     echo 'Arch install script'
@@ -97,7 +86,6 @@ setup.sys.conf() {
 
     # kernel modules
     cp -r "$sourcep/etc/modprobe.d" '/etc'
-    makepkgtmp "$dotfilesp/packages/hid-steam-deck-dkms"
 
     # initramfs (requires: /etc/vconsole.conf)
     cp {"$sourcep",}'/etc/mkinitcpio.conf'
@@ -120,6 +108,8 @@ setup.sys.conf() {
 
     useradd celestia --create-home || [[ "$?" -eq 9 ]]
     passwd --status celestia | awk '$2 != "P" {exit 1}' || passwd celestia
+
+    useradd build --create-home  || [[ "$?" -eq 9 ]]
 
     passwd --status root | awk '$2 != "P" {exit 1}' || passwd root
 
