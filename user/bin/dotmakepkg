@@ -7,7 +7,7 @@ set -o errexit -o nounset -o xtrace
 # have been used but it doesn't have a home, which prevents certain packages
 # from being built (e.g. rust packages).
 dotmakepkg() {
-    local buildp="/home/user/build/$RANDOM"
+    local buildp="/home/build/$RANDOM"
     mkdir -p "$buildp"
     cp -r "$1/." -t "$buildp"
     chown -R build:build "$buildp"
