@@ -122,6 +122,7 @@ setup.sys.conf() {
         systemctl enable --now NetworkManager.service
         systemctl enable --now nftables.service
         systemctl enable --now cups.service
+        systemctl enable --now sdmap.service || :
     fi
 
     # pacman
