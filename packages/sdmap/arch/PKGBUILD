@@ -1,7 +1,7 @@
 pkgname='sdmap'
 _pkgpath="dotfiles/packages/$pkgname"
-pkgver=0.2.0
-pkgrel=2
+pkgver=0.3.0
+pkgrel=1
 pkgdesc='Steam Deck Controller custom mapping'
 arch=('x86_64')
 url='https://github.com/obsiwitch/dotfiles'
@@ -31,5 +31,6 @@ check() {
 package() {
     cd "$_pkgpath"
     install -Dm 755 'target/release/sdmap-'{daemon,sticker} -t "$pkgdir/usr/bin"
+    install -Dm 644 'data/sdmap.service' -t "$pkgdir/usr/lib/systemd/system"
 }
 
