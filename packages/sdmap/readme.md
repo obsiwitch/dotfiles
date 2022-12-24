@@ -9,34 +9,34 @@ SD controller -> Sdmap -> ungrab -> gamepad (input dev) -> game
 
 ## Install
 
-A [PKGBUILD](arch/PKGBUILD) is provided to [build and install](https://wiki.archlinux.org/title/Arch_User_Repository#Installing_and_upgrading_packages) Sdmap on Arch Linux. Once installed, the `sdmap.service` systemd service can be enabled and started (`systemctl enable --now sdmap.service`). The daemon can also be tested outside the service by running (`sdmap-daemon`) (requires the service to be stopped).
+A [PKGBUILD](arch/PKGBUILD) is provided to [build and install](https://wiki.archlinux.org/title/Arch_User_Repository#Installing_and_upgrading_packages) Sdmap on Arch Linux. Once installed, the `sdmap.service` systemd service can be enabled and started (`systemctl enable --now sdmap.service`). The daemon can also be tested outside the service by running `sdmap-daemon`.
 
 ## Keybindings
 
-* STEAM + …: switch between gamepad and desktop mode
+* `BTN_MODE` + `BTN_BASE`: switch between gamepad and desktop mode
 * gamepad mode (ungrabbed input device)
 * desktop mode (grabbed input device & output to virtual device)
     * trackpad
-        * right trackpad: cursor
-        * left bumper: right click
-        * right bumper: left click
-        * left trigger: middle click
+        * `ABS_HAT1{X,Y}`: cursor
+        * `BTN_TR`: left click
+        * `BTN_TL`: right click
+        * `BTN_TL2`: middle click
         * (libinput) middle click + cursor: scroll
     * keyboard
-        * left trackpad + {A,B,X,Y,start,…}: virtual keyboard
-        * DPAD: arrow keys
-        * left stick: home, end, pageup, pagedown
-        * right stick: F1, F2, F3, F4
-        * select: tab
-        * start: delete
-        * back buttons: shift, ctrl, alt, altgr
-        * right trigger: super
-        * A: enter
-        * B: esc
-        * X: backspace
-        * Y: space
-        * …: compose
-    * unused: BTN_MODE, BTN_THUMBL, BTN_THUMBR, BTN_THUMB, BTN_THUMB2
+        * `ABS_HAT0{X,Y}` + `BTN_{SOUTH,EAST,NORTH,WEST,START,BASE}`: virtual keyboard
+        * `BTN_DPAD_{UP,DOWN,LEFT,RIGHT}`: arrow keys
+        * `ABS_{X,Y}`: home, end, pageup, pagedown
+        * `ABS_R{X,Y}`: F1, F2, F3, F4
+        * `BTN_SELECT`: tab
+        * `BTN_START`: delete
+        * `BTN_TRIGGER_HAPPY{1,3,4,2}`: shift, ctrl, alt, altgr
+        * `BTN_TR2`: super
+        * `BTN_SOUTH`: enter
+        * `BTN_EAST`: esc
+        * `BTN_NORTH`: backspace
+        * `BTN_WEST`: space
+        * `BTN_BASE`: compose
+    * unused: `BTN_MODE` alone, `BTN_THUMBL`, `BTN_THUMBR`, `BTN_THUMB`, `BTN_THUMB2`
 
 ## Virtual Keyboard Sticker
 
