@@ -6,6 +6,7 @@ struct Daemon {
     dev_in: Device,
     absinfos_in: [input_absinfo; 64],
     cache_in: DeviceState,
+    state_in: DeviceState,
     dev_out: VirtualDevice,
     kbd_mode: bool,
 }
@@ -34,6 +35,7 @@ impl Daemon {
         Ok(Self {
             absinfos_in,
             cache_in: dev_in.cached_state().clone(),
+            state_in: dev_in.cached_state().clone(),
             dev_in,
             dev_out,
             kbd_mode: true,
@@ -71,15 +73,13 @@ impl Daemon {
 
     // Returns the position on the virtual keyboard based on the position of
     // ABS_HAT0. Return None if ABS_HAT0 isn't used.
-    pub fn vkbd_keypos(&self, evt_in: InputEvent)
+    pub fn vkbd_keypos(&self)
     -> Option<(usize, usize)> {
-        let absvals = self.cache_in.abs_vals().unwrap();
+        let absvals = self.state_in.abs_vals().unwrap();
         let absinfo = self.absinfos_in[Abs::ABS_HAT0X.0 as usize];
 
-        let absx = if evt_in.code() == Abs::ABS_HAT0X.0 { evt_in.value() }
-                   else { absvals[Abs::ABS_HAT0X.0 as usize].value };
-        let absy = if evt_in.code() == Abs::ABS_HAT0Y.0 { evt_in.value() }
-                   else { absvals[Abs::ABS_HAT0Y.0 as usize].value };
+        let absx = absvals[Abs::ABS_HAT0X.0 as usize].value;
+        let absy = absvals[Abs::ABS_HAT0Y.0 as usize].value;
         if absx == 0 && absy == 0 { return None; }
 
         let vkbdy = (absy - absinfo.maximum).abs() * VKBD_LAYOUT.len() as i32
@@ -96,25 +96,11 @@ impl Daemon {
     -> Vec<InputEvent> {
         if evt_in.value() == 0 {
             vec!()
-        } else if let Some(keypos) = self.vkbd_keypos(evt_in) {
+        } else if let Some(keypos) = self.vkbd_keypos() {
             let key = VKBD_LAYOUT[keypos.1][keypos.0][ki];
             vec!(Self::new_key(key, 1), Self::new_key(key, 0))
         } else {
             vec!(Self::new_key(fallback_key, 1), Self::new_key(fallback_key, 0))
-        }
-    }
-
-    fn meta_map(&mut self, evt_in: InputEvent) {
-        let key_vals = self.cache_in.key_vals().unwrap();
-
-        // switch between keyboard+mouse mode and gamepad mode
-        if evt_in.value() == 1 && key_vals.contains(Key::BTN_MODE) {
-            self.kbd_mode = !self.kbd_mode;
-            if self.kbd_mode {
-                self.dev_in.grab().unwrap();
-            } else {
-                self.dev_in.ungrab().unwrap();
-            }
         }
     }
 
@@ -174,17 +160,30 @@ impl Daemon {
         }
     }
 
+    // switch between keyboard+mouse mode and gamepad mode if necessary.
+    fn switch_mode(&mut self, events_in: &[InputEvent]) {
+        if self.cache_in.key_vals().unwrap().contains(Key::BTN_MODE)
+            && events_in.iter().any(|e| e.code() == Key::BTN_BASE.0 && e.value() == 1)
+        {
+            self.kbd_mode = !self.kbd_mode;
+            if self.kbd_mode {
+                self.dev_in.grab().unwrap();
+            } else {
+                self.dev_in.ungrab().unwrap();
+            }
+        }
+    }
+
     pub fn run(&mut self) -> std::io::Result<()> {
         loop {
             self.cache_in = self.dev_in.cached_state().clone();
             let events_in: Vec<InputEvent> = self.dev_in.fetch_events()?.collect();
+            self.state_in = self.dev_in.cached_state().clone();
 
-            events_in.iter().cloned().for_each(|evt_in|
-                self.meta_map(evt_in)
-            );
+            self.switch_mode(&events_in);
             if !self.kbd_mode { continue; }
 
-            let events_out: Vec<InputEvent> = events_in.iter().cloned()
+            let events_out: Vec<InputEvent> = events_in.into_iter()
                 .flat_map(|evt_in| self.remap(evt_in))
                 .collect();
             self.dev_out.emit(&events_out)?;
