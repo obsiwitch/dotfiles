@@ -1,4 +1,6 @@
 ignore-empty-password
-no-unlock-indicator
+show-failed-attempts
+indicator-caps-lock
+
 image="$HOME/.config/sway/wallpaper"
 scaling=fill
