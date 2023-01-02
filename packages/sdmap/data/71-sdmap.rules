@@ -1,0 +1,4 @@
+# Remove Valve HID devices uaccess over USB hidraw to prevent the corresponding
+# evdev devices from disappearing when the hidraw interface is in use (e.g.
+# steam, chromium).
+KERNEL=="hidraw*", ATTRS{idVendor}=="28de", MODE="0600", TAG-="uaccess"

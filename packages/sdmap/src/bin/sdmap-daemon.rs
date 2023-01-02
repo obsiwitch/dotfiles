@@ -193,6 +193,5 @@ impl Daemon {
 
 fn main() -> std::io::Result<()> {
     let mut daemon = Daemon::new()?;
-    daemon.run()?;
-    Ok(())
+    daemon.run()
 }
