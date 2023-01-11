@@ -1,7 +1,7 @@
 pkgname=hid-steam-deck-dkms
 _pkgbase=hid-steam
 pkgver=4
-pkgrel=1
+pkgrel=2
 pkgdesc="hid-steam Steam Deck Controller support (DKMS)"
 arch=('x86_64')
 url='https://gitlab.com/evlaV/linux-integration'
@@ -15,7 +15,7 @@ source=("${_branchurl}/drivers/hid/hid-ids.h"
         'dkms.conf'
         'Kbuild'
         'ff.patch')
-sha256sums=('6959af584e1461d48685303c1346d273f9ba1b5dce0e3caba8ae5d463039d477'
+sha256sums=('96b46aca1f55a7fe1f1a167356c3e014199928c1735c25cc2194626646c1c7bd'
             '3c32d3eedef12a81372a40943511919378f219388a4e8d6420cf9ed47a596b62'
             '42fba70a3372c1723834d13f9b1e10daab2f9f4b0e9771fd3d2acad70467fd95'
             '9c08f39b3cd67ee688ea54d1e5cf913efbe366c506f0105065746131633ab454'
