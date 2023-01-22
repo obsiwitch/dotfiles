@@ -31,10 +31,6 @@ dotln "$sourcep/xdg/user-dirs.conf" "$HOME/.config/"
 # mpv
 dotln "$sourcep/mpv" "$HOME/.config/"
 
-# terminal
-dconf reset -f '/org/gnome/terminal/'
-dconf load / < "$sourcep/gnome-terminal/dconf"
-
 # desktop entries
 dotln "$sourcep/desktop" "$HOME/.local/share/applications"
 

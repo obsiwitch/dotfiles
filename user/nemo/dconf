@@ -1,5 +1,5 @@
 [org/cinnamon/desktop/applications/terminal]
-exec='gnome-terminal'
+exec='alacritty'
 exec-arg='-x'
 
 [org/nemo/icon-view]

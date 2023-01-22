@@ -36,7 +36,7 @@ exec_always 'killall dunst; dunst'
 bindsym $mod+Return exec bemenu-run
 
 # terminal
-bindsym $mod+Shift+Return exec gnome-terminal
+bindsym $mod+Shift+Return exec alacritty
 
 # file manager
 bindsym $mod+Ctrl+Return exec nemo

@@ -1,7 +1,7 @@
 [Nemo Action]
 Name=Extract
 Icon-Name=extract-archive
-Exec=gnome-terminal --working-directory=%P -- aunpack -eD %F
+Exec=alacritty --working-directory=%P -e aunpack -eD %F
 EscapeSpaces=true
 Selection=notnone
 Extensions=zip;rar;7z;001;tar;gz;xz;bz2;cbz;cbr;
