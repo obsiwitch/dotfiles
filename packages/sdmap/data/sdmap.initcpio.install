@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+build() {
+    add_binary sdmap-daemon
+    add_binary killall
+    add_runscript
+}
+
+help() {
+    cat <<HELPEOF
+The corresponding early running hook allows sdmap to be used to type the encryption
+passphrase.
+HELPEOF
+}

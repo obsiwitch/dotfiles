@@ -3,13 +3,23 @@
 Sdmap remaps the Steam Deck controller and provides a gamepad mode and a desktop mode without the need to launch Steam. You need a kernel with support for the controller ([linux-neptune](https://steamdeck-packages.steamos.cloud/archlinux-mirror/jupiter-main/os/x86_64/), or [hid-steam-deck-dkms](https://github.com/obsiwitch/dotfiles/tree/main/packages/hid-steam-deck-dkms), or the following patches applied [p1](https://gitlab.com/evlaV/linux-integration/-/commit/72ce570d0b3ae23aaf74ae604d58a2c819d1b4a8) [p2](https://gitlab.com/evlaV/linux-integration/-/commit/4196619768de19274fcdba116eba81e36f9436bf) [p3](https://gitlab.com/evlaV/linux-integration/-/commit/c616088b5ac4fe34faadc314d71dc14c2e7ebc8c)).
 
 ~~~
-SD controller -> Sdmap -> ungrab -> gamepad (input dev) -> game
+SD controller -> Sdmap -> ungrab -> game
 (input dev)            -> grab -> keyboard+trackpad (virtual dev) -> libinput -> wayland/xorg
 ~~~
 
 ## Install
 
 A [PKGBUILD](arch/PKGBUILD) is provided to [build and install](https://wiki.archlinux.org/title/Arch_User_Repository#Installing_and_upgrading_packages) Sdmap on Arch Linux. Once installed, the `sdmap.service` systemd service can be enabled and started (`systemctl enable --now sdmap.service`). The daemon can also be tested outside the service by running `sdmap-daemon`.
+
+# Initial ramdisk
+
+Sdmap can be used as a running hook of [mkinitcpio](https://wiki.archlinux.org/title/Mkinitcpio) during the initial ramdisk to be able to type the encryption passphrase with the left trackpad. The hook provided by this package needs to be manually added to your `/etc/mkinitcpio.conf` file. It should be placed in the `HOOKS` array after the `keyboard` and `keymap` hooks and before the `encrypt` hook.
+
+```sh
+...
+HOOKS=(base udev autodetect modconf kms keyboard keymap sdmap block encrypt filesystems resume fsck)
+...
+```
 
 ## Keybindings
 
