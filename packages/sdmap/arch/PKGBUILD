@@ -1,0 +1,31 @@
+pkgname='sdmap'
+pkgver=0.4.0
+pkgrel=1
+pkgdesc='Steam Deck Controller custom mapping'
+arch=('x86_64')
+url='https://github.com/obsiwitch/dotfiles'
+
+makedepends=('rust')
+optdepends=('hid-steam-deck-dkms: Steam Deck Controller support for non-neptune kernel'
+            'linux-neptune: kernel with Steam Deck Controller support')
+
+_prepare() {
+    cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
+}
+
+_build() {
+    cargo build --release --frozen
+}
+
+_check() {
+    cargo test --release --frozen
+}
+
+_package() {
+    install -Dm 755 'target/release/sdmap-'{daemon,sticker} -t "$pkgdir/usr/bin"
+    install -Dm 644 'data/sdmap.service' -t "$pkgdir/usr/lib/systemd/system"
+    install -Dm 644 'data/71-sdmap.rules' -t "$pkgdir/usr/lib/udev/rules.d"
+    install -Dm 644 'data/sdmap.initcpio.install' "$pkgdir/usr/lib/initcpio/install/sdmap"
+    install -Dm 644 'data/sdmap.initcpio.hook' "$pkgdir/usr/lib/initcpio/hooks/sdmap"
+}
+
