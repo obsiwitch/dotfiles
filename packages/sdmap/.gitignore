@@ -1,3 +1,5 @@
 target/
-arch/*
-!arch/PKGBUILD
+arch/local/*
+arch/remote/*
+!arch/local/PKGBUILD
+!arch/remote/PKGBUILD
