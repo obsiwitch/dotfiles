@@ -1,6 +1,6 @@
 [org/cinnamon/desktop/applications/terminal]
 exec='alacritty'
-exec-arg='-x'
+exec-arg='-e'
 
 [org/nemo/icon-view]
 default-zoom-level='larger'
