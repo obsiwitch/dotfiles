@@ -109,8 +109,6 @@ setup.sys.conf() {
     useradd celestia --create-home || [[ "$?" -eq 9 ]]
     passwd --status celestia | awk '$2 != "P" {exit 1}' || passwd celestia
 
-    useradd build --create-home  || [[ "$?" -eq 9 ]]
-
     passwd --status root | awk '$2 != "P" {exit 1}' || passwd root
 
     # systemd
