@@ -12,8 +12,9 @@ struct Daemon {
 }
 impl Daemon {
     pub fn new() -> std::io::Result<Self> {
-        let path_in = "/dev/input/by-id/usb-Valve_Software_Steam_Controller_123456789ABCDEF-if02-event-joystick";
-        let mut dev_in = Device::open(path_in)?;
+        let mut dev_in = evdev::enumerate()
+            .find(|(_, d)| d.name() == Some("Steam Deck"))
+            .unwrap().1;
         dev_in.grab()?;
         let absinfos_in = dev_in.get_abs_state()?;
 
