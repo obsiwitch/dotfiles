@@ -4,7 +4,6 @@ base-devel
 linux
 linux-firmware
 amd-ucode
-grub
 efibootmgr
 dkms
 linux-headers

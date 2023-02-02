@@ -14,19 +14,17 @@ setup.help() {
     echo '* https://wiki.archlinux.org/index.php/Dm-crypt'
     echo '* https://wiki.archlinux.org/index.php/Partitioning'
     echo
+    echo 'prepare:'
+    echo '> loadkeys fr'
+    echo '> iwctl station $iface connect $ssid'
+    echo '> pacman -Sy archlinux-keyring pacman-contrib git'
+    echo '> git clone https://github.com/obsiwitch/dotfiles.git'
+    echo '> dotfiles/user/bin/dotrankmirrors'
+    echo
     echo "usage: ${BASH_SOURCE##*/} <cmd>"
-    echo 'live:     live.conf'
     echo 'live:     sys.init <device>'
     echo 'chroot:   sys.conf'
     exit 1
-}
-
-setup.live.conf() {
-    # loadkeys fr
-    # iwctl station $iface connect $ssid
-    # pacman -Sy archlinux-keyring pacman-contrib git grub efibootmgr
-    # git clone https://github.com/obsiwitch/dotfiles.git
-    dotrankmirrors
 }
 
 setup.sys.init() {
@@ -36,7 +34,8 @@ setup.sys.init() {
     parted "$device" \
         mklabel gpt \
         mkpart 'ESP' fat32 1MiB 513MiB \
-        mkpart 'Arch' ext4 513MiB 100%
+        mkpart 'Arch' ext4 513MiB 100% \
+        set 1 esp on \
 
     # root partition: dm-crypt + LUKS, ext4
     cryptsetup --verify-passphrase luksFormat "${device}2"
@@ -44,7 +43,7 @@ setup.sys.init() {
     mkfs.ext4 '/dev/mapper/cryptroot'
     mount '/dev/mapper/cryptroot' '/mnt'
 
-    # boot partition
+    # boot/efi partition
     mkfs.fat -F32 "${device}1"
     mkdir '/mnt/boot'
     mount "${device}1" '/mnt/boot'
@@ -61,11 +60,6 @@ setup.sys.init() {
 
     # fstab
     genfstab -U '/mnt' > '/mnt/etc/fstab'
-
-    # bootloader
-    grub-install --target='x86_64-efi' \
-        --efi-directory='/mnt/boot' \
-        --boot-directory='/mnt/boot'
 
     # copy dotfiles
     cp -r "$dotfilesp" '/mnt/root/'
@@ -87,16 +81,21 @@ setup.sys.conf() {
     # kernel modules
     cp -r "$sourcep/etc/modprobe.d" '/etc'
 
-    # initramfs (requires: /etc/vconsole.conf)
+    # bootloader
+    bootctl install
+
+    # unified kernel image (requires: /etc/vconsole.conf)
+    local root_uuid crypt_uuid resume_offset
+    root_uuid="$(lsblk --nodeps --noheadings --output='UUID' '/dev/mapper/cryptroot')"
+    crypt_uuid="$(lsblk --nodeps --noheadings --output='UUID' '/dev/nvme0n1p2')"
+    resume_offset="$(filefrag -v '/swapfile' | awk '/^ *0:/ {print $4}')"
+    tee {"$sourcep",}'/etc/kernel/cmdline' \
+        <<< "root=UUID=${root_uuid} \
+             cryptdevice=UUID=${crypt_uuid}:cryptroot \
+             resume=/dev/mapper/cryptroot resume_offset=${resume_offset}"
+    cp {"$sourcep",}'/etc/mkinitcpio.d/linux.preset'
     cp {"$sourcep",}'/etc/mkinitcpio.conf'
     mkinitcpio --allpresets
-
-    # bootloader
-    crypt_uuid="$(lsblk --nodeps --noheadings --output='UUID' '/dev/nvme0n1p2')" \
-    resume_offset="$(filefrag -v '/swapfile' | awk '/^ *0:/ {print $4}')" \
-        envsubst < "$sourcep/etc/default/grub.tpl" \
-            | tee {"$sourcep",}'/etc/default/grub' > /dev/null
-    grub-mkconfig -o '/boot/grub/grub.cfg'
 
     # sudo
     sed -i '/^# %sudo\tALL/ s/^# //' '/etc/sudoers'
@@ -120,7 +119,7 @@ setup.sys.conf() {
         systemctl enable --now NetworkManager.service
         systemctl enable --now nftables.service
         systemctl enable --now cups.service
-        systemctl enable --now sdmap.service || :
+        systemctl enable --now sdmap.service || : WARNING
     fi
 
     # pacman
