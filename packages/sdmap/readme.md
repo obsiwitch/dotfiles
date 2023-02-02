@@ -11,16 +11,6 @@ SD controller -> Sdmap -> ungrab -> game
 
 A [PKGBUILD](arch/PKGBUILD) is provided to [build and install](https://wiki.archlinux.org/title/Arch_User_Repository#Installing_and_upgrading_packages) Sdmap on Arch Linux. Once installed, the `sdmap.service` systemd service can be enabled and started (`systemctl enable --now sdmap.service`). The daemon can also be tested outside the service by running `sdmap-daemon`.
 
-# Initial ramdisk
-
-Sdmap can be used as a running hook of [mkinitcpio](https://wiki.archlinux.org/title/Mkinitcpio) during the initial ramdisk to be able to type the encryption passphrase with the left trackpad. The hook provided by this package needs to be manually added to your `/etc/mkinitcpio.conf` file. It should be placed in the `HOOKS` array after the `keyboard` and `keymap` hooks and before the `encrypt` hook.
-
-```sh
-...
-HOOKS=(base udev autodetect modconf kms keyboard keymap sdmap block encrypt filesystems resume fsck)
-...
-```
-
 ## Keybindings
 
 * `BTN_MODE` + `BTN_BASE`: switch between gamepad and desktop mode
