@@ -1,3 +1,5 @@
+# Ref: https://github.com/systemd/systemd/issues/2824#issuecomment-285277313
+
 [Unit]
 Description=Steam Deck Controller custom mapping
 
@@ -5,4 +7,4 @@ Description=Steam Deck Controller custom mapping
 ExecStart=/usr/bin/sdmap-daemon
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=sys-subsystem-input-devices-steamdeck.device
