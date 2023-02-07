@@ -6,5 +6,5 @@ ALL_microcode=(/boot/*-ucode.img)
 
 PRESETS=('default')
 
-default_uki="/boot/EFI/Linux/archlinux-linux.efi"
+default_uki="/boot/EFI/BOOT/BOOTX64.efi"
 default_options=""

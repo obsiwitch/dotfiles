@@ -81,9 +81,6 @@ setup.sys.conf() {
     # kernel modules
     cp -r "$sourcep/etc/modprobe.d" '/etc'
 
-    # bootloader
-    bootctl install
-
     # unified kernel image (requires: /etc/vconsole.conf)
     local root_uuid crypt_uuid resume_offset
     root_uuid="$(lsblk --nodeps --noheadings --output='UUID' '/dev/mapper/cryptroot')"
@@ -95,6 +92,7 @@ setup.sys.conf() {
              resume=/dev/mapper/cryptroot resume_offset=${resume_offset}"
     cp {"$sourcep",}'/etc/mkinitcpio.d/linux.preset'
     cp {"$sourcep",}'/etc/mkinitcpio.conf'
+    mkdir -p '/boot/EFI/BOOT/'
     mkinitcpio --allpresets
 
     # sudo
