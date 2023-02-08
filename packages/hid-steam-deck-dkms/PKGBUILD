@@ -1,6 +1,6 @@
 pkgname=hid-steam-deck-dkms
 _pkgbase=hid-steam
-pkgver=4.2
+pkgver=4.3
 pkgrel=1
 pkgdesc="hid-steam Steam Deck Controller support (DKMS)"
 arch=('x86_64')
@@ -12,18 +12,15 @@ depends=('dkms')
 source=("${_commiturl}/drivers/hid/hid-ids.h"
         "${_commiturl}/drivers/hid/hid-steam.c"
         'Kbuild'
-        'dkms.conf'
-        'ff.patch')
+        'dkms.conf')
 sha256sums=('6959af584e1461d48685303c1346d273f9ba1b5dce0e3caba8ae5d463039d477'
             '3c32d3eedef12a81372a40943511919378f219388a4e8d6420cf9ed47a596b62'
-            '9ed2dcb2e909a7c410766ea9cbd1c8eaa1090c84050014a0d4e27db53749aa83'
-            '9c08f39b3cd67ee688ea54d1e5cf913efbe366c506f0105065746131633ab454'
-            'daff7ec7a3b95184c440d97ac530afd405e96a1db8cbcb49896791884d2600f8')
+            '82bd54d3f1953992c49d3862cdc7efa2801155ecb3e6b5562471d9cf998f69a4'
+            '9c08f39b3cd67ee688ea54d1e5cf913efbe366c506f0105065746131633ab454')
 
 package() {
     local dkmsdir="${pkgdir}/usr/src/${_pkgbase}-${pkgver}"
     install -Dm644 'hid-ids.h' 'hid-steam.c' 'Kbuild' 'dkms.conf' -t "${dkmsdir}"
-    patch -d "${dkmsdir}" -Np3 -i "${srcdir}/ff.patch"
     sed -e "s/@_PKGBASE@/${_pkgbase}/" \
         -e "s/@PKGVER@/${pkgver}/" \
         -i "${dkmsdir}/dkms.conf"
