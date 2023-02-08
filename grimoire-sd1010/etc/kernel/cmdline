@@ -1,1 +1,1 @@
-root=UUID=5b66996a-8d42-4d8d-a100-d79a2e440c04              cryptdevice=UUID=dde6d2a5-4320-4314-8269-a99bb2e4410f:cryptroot              resume=/dev/mapper/cryptroot resume_offset=4161536..
+         cryptdevice=/dev/nvme0n1p2:cryptroot         root=/dev/mapper/cryptroot         resume=/dev/mapper/cryptroot         resume_offset=4161536..

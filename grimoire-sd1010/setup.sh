@@ -35,7 +35,7 @@ setup.sys.init() {
         mklabel gpt \
         mkpart 'ESP' fat32 1MiB 513MiB \
         mkpart 'Arch' ext4 513MiB 100% \
-        set 1 esp on \
+        set 1 esp on
 
     # root partition: dm-crypt + LUKS, ext4
     cryptsetup --verify-passphrase luksFormat "${device}2"
@@ -82,14 +82,11 @@ setup.sys.conf() {
     cp -r "$sourcep/etc/modprobe.d" '/etc'
 
     # unified kernel image (requires: /etc/vconsole.conf)
-    local root_uuid crypt_uuid resume_offset
-    root_uuid="$(lsblk --nodeps --noheadings --output='UUID' '/dev/mapper/cryptroot')"
-    crypt_uuid="$(lsblk --nodeps --noheadings --output='UUID' '/dev/nvme0n1p2')"
-    resume_offset="$(filefrag -v '/swapfile' | awk '/^ *0:/ {print $4}')"
-    tee {"$sourcep",}'/etc/kernel/cmdline' \
-        <<< "root=UUID=${root_uuid} \
-             cryptdevice=UUID=${crypt_uuid}:cryptroot \
-             resume=/dev/mapper/cryptroot resume_offset=${resume_offset}"
+    tee {"$sourcep",}'/etc/kernel/cmdline' <<< " \
+        cryptdevice=/dev/nvme0n1p2:cryptroot \
+        root=/dev/mapper/cryptroot \
+        resume=/dev/mapper/cryptroot \
+        resume_offset=$(filefrag -v '/swapfile' | awk '/^ *0:/ {print $4}')"
     cp {"$sourcep",}'/etc/mkinitcpio.d/linux.preset'
     cp {"$sourcep",}'/etc/mkinitcpio.conf'
     mkdir -p '/boot/EFI/BOOT/'
