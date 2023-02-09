@@ -1,6 +1,6 @@
 pkgname=hid-steam-deck-dkms
 _pkgbase=hid-steam
-pkgver=4.3
+pkgver=4.4
 pkgrel=1
 pkgdesc="hid-steam Steam Deck Controller support (DKMS)"
 arch=('x86_64')
@@ -24,5 +24,10 @@ package() {
     sed -e "s/@_PKGBASE@/${_pkgbase}/" \
         -e "s/@PKGVER@/${pkgver}/" \
         -i "${dkmsdir}/dkms.conf"
+
+    # Add MODULE_VERSION() to avoid "Module version exactly matches what is already
+    # found in kernel" error on dkms install.
+    sed -e '/^MODULE_AUTHOR.*/a MODULE_VERSION("@PKGVER@");' -i "${dkmsdir}/hid-steam.c"
+    sed -e "s/@PKGVER@/${pkgver}/" -i "${dkmsdir}/hid-steam.c"
 }
 
