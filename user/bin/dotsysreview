@@ -19,7 +19,7 @@ packages_dotfiles() {
 # List explicitly installed packages and groups. Packages belonging to the
 # specified groups are hidden.
 packages_installed() {
-    local groups=(base-devel texlive-most)
+    local groups=(texlive-most)
     comm -23 \
         <({ pacman -Qq --explicit;
             tr ' ' '\n' <<< "${groups[@]}"; } | sort) \

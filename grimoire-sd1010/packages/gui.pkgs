@@ -56,7 +56,7 @@ noto-fonts-emoji
 libreoffice-fresh
 hunspell-en_us
 hunspell-fr
-pandoc
+pandoc-cli
 texlive-most
 mupdf
 evince
@@ -92,3 +92,8 @@ wine-mono
 winetricks
 vkd3d
 lib32-vkd3d
+retroarch
+retroarch-assets-ozone
+libretro-bsnes
+libretro-mesen
+libretro-mgba
