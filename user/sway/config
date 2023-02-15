@@ -6,10 +6,8 @@ set $mod Mod4
 
 # Devices · libinput -h, sway-output(5), sway-input(5) #########################
 
-output 'Chimei Innolux Corporation 0x14D4 0x00000000' position 1920 0
-output HDMI-A-1 position 0 0
-output 'Acer Netxus Inc ANX7530 U 0x00000001' position 0 1080 transform 90
-output DP-1 position 0 0
+output 'Acer Netxus Inc ANX7530 U 0x00000001' transform 90 position 0 1800
+output 'ASUSTek COMPUTER INC ASUS VG289Q1A 0x0000DB4B' position 0 0 scale 1.2
 output * bg wallpaper fill
 
 input type:keyboard {
