@@ -1,0 +1,28 @@
+* {
+    font-family: "font Source Code Pro";
+}
+
+window#waybar {
+    background: rgba(40,40,40,0.5);
+    color: #D6D6D6;
+}
+
+#scratchpad, #temperature, #cpu, #memory, #disk, #pulseaudio,
+#backlight, #battery, #clock, #tray {
+    padding: 0 8px;
+}
+
+#workspaces button {
+    padding: 0 4px;
+    border: none;
+    border-radius: 0;
+    color: #D6D6D6;
+}
+#workspaces button:hover,
+#workspaces button.focused {
+    background: rgba(40,40,40,0.75);
+}
+
+#disk, #pulseaudio.in, #battery, #clock {
+    border-right: 2px solid #D6D6D6;
+}

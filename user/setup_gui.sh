@@ -9,6 +9,7 @@ PATH="$sourcep/bin:$PATH"
 # sway
 dotln "$sourcep/sway" "$HOME/.config/"
 dotln "$sourcep/swaylock" "$HOME/.config/"
+dotln "$sourcep/waybar" "$HOME/.config/"
 
 # GTK
 dotln "$sourcep/gtk/gtk-3.0" "$HOME/.config/"

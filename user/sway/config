@@ -153,19 +153,7 @@ client.unfocused        #D6D6D6 #D6D6D6 #868686 #D6D6D6
 client.urgent           #E04B3E #E04B3E #D6D6D6 #E04B3E
 
 bar {
-    status_command i3blocks -c "$HOME/.config/sway/i3blocks.conf"
-    separator_symbol '| '
-
-    colors {
-        background #D6D6D6
-        statusline #282828
-
-        # class            border  bg      text
-        focused_workspace  #282828 #282828 #D6D6D6
-        active_workspace   #686868 #686868 #D6D6D6
-        inactive_workspace #D6D6D6 #D6D6D6 #282828
-        urgent_workspace   #E04B3E #E04B3E #D6D6D6
-    }
+    swaybar_command waybar
 }
 
 # Includes #####################################################################

@@ -1,6 +1,5 @@
 # desktop environment
 gnome-themes-extra
-i3blocks
 inotify-tools
 dunst
 network-manager-applet
@@ -14,6 +13,7 @@ dmenu
 bemenu
 wl-clipboard
 swaybg
+waybar
 
 # admin
 gparted

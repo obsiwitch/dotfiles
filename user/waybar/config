@@ -1,0 +1,65 @@
+{
+    // Bar
+    "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad"],
+    "modules-center": [],
+    "modules-right": ["temperature", "cpu", "memory#ram", "memory#swap", "disk",
+                      "pulseaudio#out", "pulseaudio#in", "backlight", "battery",
+                      "clock", "tray"],
+
+    // Modules
+    "sway/scratchpad": {
+        "format": " {count}",
+        "show-empty": true,
+    },
+
+    "temperature": {
+        "format": " {temperatureC}°C",
+    },
+    "cpu": {
+        "format": " {load}",
+    },
+    "memory#ram": {
+        "format": " {avail}GiB",
+    },
+    "memory#swap": {
+        "format": " {swapAvail}GiB",
+        "tooltip-format": "{swapUsed:0.1f}GiB used",
+    },
+    "disk": {
+        "format": " {free}",
+    },
+
+    "pulseaudio#out": {
+        "format": "  {volume}%",
+        "format-muted": "  {volume}%",
+        "on-click": "pamixer --toggle-mute",
+        "on-click-middle": "pavucontrol",
+        "scroll-step": 5.0,
+    },
+    "pulseaudio#in": {
+        "format": "{format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": " {volume}%",
+        "on-click": "pamixer --default-source --toggle-mute",
+        "on-click-middle": "pavucontrol",
+        "on-scroll-up": "pamixer --default-source --increase 5",
+        "on-scroll-down": "pamixer --default-source --decrease 5",
+    },
+
+    "backlight": {
+        "format": " {percent}%",
+        "on-scroll-up": "brightnessctl -q s +5%",
+        "on-scroll-down": "brightnessctl -q s 5%-",
+    },
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": "{capacity}%",
+        "tooltip-format": "{power}W {timeTo}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "clock": {
+        "format": "{: %Y/%m/%d/%a  %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    },
+}
