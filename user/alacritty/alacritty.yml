@@ -1,0 +1,6 @@
+# doc: https://github.com/alacritty/alacritty/blob/master/alacritty.yml
+
+key_bindings:
+  # spawn new instance in the same directory
+  - { key: N,   mods: Control|Shift, action: SpawnNewInstance }
+

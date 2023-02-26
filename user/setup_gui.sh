@@ -17,6 +17,9 @@ dotln "$sourcep/gtk/gtk-4.0" "$HOME/.config/"
 dconf reset -f '/org/gnome/desktop/interface/'
 dconf load / < "$sourcep/gtk/dconf"
 
+# terminal
+dotln "$sourcep/alacritty" "$HOME/.config/"
+
 # file manager
 dconf reset -f '/org/cinnamon/desktop/applications/terminal/'
 dconf reset -f '/org/nemo/'
