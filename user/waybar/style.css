@@ -20,7 +20,10 @@ window#waybar {
 }
 #workspaces button:hover,
 #workspaces button.focused {
-    background: rgba(40,40,40,0.75);
+    background: rgba(40,40,40,1);
+}
+#workspaces button.urgent {
+    background: rgba(224,75,62,1);
 }
 
 #disk, #pulseaudio.in, #battery, #clock {
