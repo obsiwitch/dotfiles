@@ -65,6 +65,7 @@ impl Sticker {
             println!("<tr>");
             for col in row {
                 for (i, key) in col.into_iter().enumerate() {
+                    if i >= BUTTONS.len() { break; }
                     let btn = BUTTONS[i];
                     // TODO vertically align text
                     let l0 = self.keystring(key, &[]);

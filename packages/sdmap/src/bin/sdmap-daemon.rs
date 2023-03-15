@@ -27,8 +27,9 @@ impl Daemon {
                 Key::KEY_LEFTALT, Key::KEY_TAB, Key::KEY_COMPOSE, Key::KEY_PAGEUP,
                 Key::KEY_PAGEDOWN, Key::KEY_HOME, Key::KEY_END, Key::KEY_ENTER,
                 Key::KEY_ESC, Key::KEY_BACKSPACE, Key::KEY_SPACE, Key::KEY_DELETE,
-                Key::KEY_F1, Key::KEY_F2, Key::KEY_F3, Key::KEY_F4, Key::BTN_RIGHT,
-                Key::BTN_LEFT, Key::BTN_MIDDLE,
+                Key::KEY_F1, Key::KEY_F2, Key::KEY_F3, Key::KEY_F4, Key::KEY_F5,
+                Key::KEY_F6, Key::KEY_F7, Key::KEY_F8, Key::BTN_RIGHT, Key::BTN_LEFT,
+                Key::BTN_MIDDLE,
             ])))?
             .with_relative_axes(&AttributeSet::from_iter([Rel::REL_X, Rel::REL_Y]))?
             .build()?;
@@ -130,10 +131,6 @@ impl Daemon {
             self.joy2keys(evt_in, Key::KEY_PAGEUP, Key::KEY_PAGEDOWN)
         } else if evt_in.code() == Abs::ABS_X.0 {
             self.joy2keys(evt_in, Key::KEY_HOME, Key::KEY_END)
-        } else if evt_in.code() == Abs::ABS_RY.0 {
-            self.joy2keys(evt_in, Key::KEY_F3, Key::KEY_F1)
-        } else if evt_in.code() == Abs::ABS_RX.0 {
-            self.joy2keys(evt_in, Key::KEY_F4, Key::KEY_F2)
         } else if evt_in.code() == Key::BTN_SOUTH.0 {
             self.key2vkbd(evt_in, 0, Key::KEY_ENTER)
         } else if evt_in.code() == Key::BTN_EAST.0 {
@@ -146,6 +143,8 @@ impl Daemon {
             self.key2vkbd(evt_in, 4, Key::KEY_DELETE)
         } else if evt_in.code() == Key::BTN_BASE.0 {
             self.key2vkbd(evt_in, 5, Key::KEY_COMPOSE)
+        } else if evt_in.code() == Key::BTN_THUMBR.0 {
+            self.key2vkbd(evt_in, 6, Key::KEY_UNKNOWN)
         } else if evt_in.code() == Key::BTN_TL.0 {
             vec!(Self::new_key(Key::BTN_RIGHT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TR.0 {

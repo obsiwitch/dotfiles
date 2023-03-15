@@ -27,10 +27,9 @@ A [PKGBUILD](arch/) is provided to [build and install](https://wiki.archlinux.or
         * `BTN_TL2`: middle click
         * (libinput) middle click + cursor: scroll
     * keyboard
-        * `ABS_HAT0{X,Y}` + `BTN_{SOUTH,EAST,NORTH,WEST,START,BASE}`: virtual keyboard
+        * `ABS_HAT0{X,Y}` + `BTN_{SOUTH,EAST,NORTH,WEST,START,BASE,THUMBR}`: virtual keyboard
         * `BTN_DPAD_{UP,DOWN,LEFT,RIGHT}`: arrow keys
         * `ABS_{X,Y}`: home, end, pageup, pagedown
-        * `ABS_R{X,Y}`: F1, F2, F3, F4
         * `BTN_SELECT`: tab
         * `BTN_START`: delete
         * `BTN_TRIGGER_HAPPY{1,3,4,2}`: shift, ctrl, alt, altgr
@@ -40,7 +39,7 @@ A [PKGBUILD](arch/) is provided to [build and install](https://wiki.archlinux.or
         * `BTN_NORTH`: backspace
         * `BTN_WEST`: space
         * `BTN_BASE`: compose
-    * unused: `BTN_MODE` alone, `BTN_THUMBL`, `BTN_THUMBR`, `BTN_THUMB`, `BTN_THUMB2`
+    * unused: `BTN_MODE` alone, `BTN_THUMBL`, `BTN_THUMB`, `BTN_THUMB2`
 
 ## Virtual Keyboard Sticker
 
