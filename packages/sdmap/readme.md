@@ -20,7 +20,7 @@ A [PKGBUILD](arch/) is provided to [build and install](https://wiki.archlinux.or
 * `BTN_MODE` + `BTN_BASE`: switch between gamepad and desktop mode
 * gamepad mode (ungrabbed input device)
 * desktop mode (grabbed input device & output to virtual device)
-    * trackpad
+    * pointer
         * `ABS_HAT1{X,Y}`: cursor
         * `BTN_TR`: left click
         * `BTN_TL`: right click

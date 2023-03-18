@@ -73,10 +73,9 @@ impl Daemon {
         }
     }
 
-    // Returns the position on the virtual keyboard based on the position of
+    // Return the position on the virtual keyboard based on the position of
     // ABS_HAT0. Return None if ABS_HAT0 isn't used.
-    pub fn vkbd_keypos(&self)
-    -> Option<(usize, usize)> {
+    pub fn vkbd_keypos(&self) -> Option<(usize, usize)> {
         let absvals = self.state_in.abs_vals().unwrap();
         let absinfo = self.absinfos_in[Abs::ABS_HAT0X.0 as usize];
 
@@ -93,7 +92,6 @@ impl Daemon {
 
     // Map a physical key to a key of the virtual keyboard depending on the current
     // value of ABS_HAT0{X,Y}. If ABS_HAT0 isn't used send the `fallback_key`.
-    // `ki` corresponds to the section of the virtual keyboard to use.
     fn key2vkbd(&self, evt_in: InputEvent, ki: usize, fallback_key: Key)
     -> Vec<InputEvent> {
         if evt_in.value() == 0 {
@@ -107,9 +105,7 @@ impl Daemon {
     }
 
     fn remap(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
-        if evt_in.code() == Key::BTN_TR2.0 {
-            vec!(Self::new_key(Key::KEY_LEFTMETA, evt_in.value()))
-        } else if evt_in.code() == Key::BTN_DPAD_UP.0 {
+        if evt_in.code() == Key::BTN_DPAD_UP.0 {
             vec!(Self::new_key(Key::KEY_UP, evt_in.value()))
         } else if evt_in.code() == Key::BTN_DPAD_DOWN.0 {
             vec!(Self::new_key(Key::KEY_DOWN, evt_in.value()))
@@ -117,6 +113,19 @@ impl Daemon {
             vec!(Self::new_key(Key::KEY_LEFT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_DPAD_RIGHT.0 {
             vec!(Self::new_key(Key::KEY_RIGHT, evt_in.value()))
+
+        } else if evt_in.code() == Key::BTN_SELECT.0 {
+            vec!(Self::new_key(Key::KEY_TAB, evt_in.value()))
+
+        } else if evt_in.code() == Key::BTN_TL.0 {
+            vec!(Self::new_key(Key::BTN_RIGHT, evt_in.value()))
+        } else if evt_in.code() == Key::BTN_TR.0 {
+            vec!(Self::new_key(Key::BTN_LEFT, evt_in.value()))
+        } else if evt_in.code() == Key::BTN_TL2.0 {
+            vec!(Self::new_key(Key::BTN_MIDDLE, evt_in.value()))
+        } else if evt_in.code() == Key::BTN_TR2.0 {
+            vec!(Self::new_key(Key::KEY_LEFTMETA, evt_in.value()))
+
         } else if evt_in.code() == Key::BTN_TRIGGER_HAPPY1.0 {
             vec!(Self::new_key(Key::KEY_LEFTSHIFT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TRIGGER_HAPPY3.0 {
@@ -125,12 +134,12 @@ impl Daemon {
             vec!(Self::new_key(Key::KEY_RIGHTALT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TRIGGER_HAPPY4.0 {
             vec!(Self::new_key(Key::KEY_LEFTALT, evt_in.value()))
-        } else if evt_in.code() == Key::BTN_SELECT.0 {
-            vec!(Self::new_key(Key::KEY_TAB, evt_in.value()))
+
         } else if evt_in.code() == Abs::ABS_Y.0 {
             self.joy2keys(evt_in, Key::KEY_PAGEUP, Key::KEY_PAGEDOWN)
         } else if evt_in.code() == Abs::ABS_X.0 {
             self.joy2keys(evt_in, Key::KEY_HOME, Key::KEY_END)
+
         } else if evt_in.code() == Key::BTN_SOUTH.0 {
             self.key2vkbd(evt_in, 0, Key::KEY_ENTER)
         } else if evt_in.code() == Key::BTN_EAST.0 {
@@ -145,12 +154,7 @@ impl Daemon {
             self.key2vkbd(evt_in, 5, Key::KEY_COMPOSE)
         } else if evt_in.code() == Key::BTN_THUMBR.0 {
             self.key2vkbd(evt_in, 6, Key::KEY_UNKNOWN)
-        } else if evt_in.code() == Key::BTN_TL.0 {
-            vec!(Self::new_key(Key::BTN_RIGHT, evt_in.value()))
-        } else if evt_in.code() == Key::BTN_TR.0 {
-            vec!(Self::new_key(Key::BTN_LEFT, evt_in.value()))
-        } else if evt_in.code() == Key::BTN_TL2.0 {
-            vec!(Self::new_key(Key::BTN_MIDDLE, evt_in.value()))
+
         } else if evt_in.code() == Abs::ABS_HAT1X.0 {
             vec!(self.abs2rel(evt_in, Rel::REL_X, 0.01))
         } else if evt_in.code() == Abs::ABS_HAT1Y.0 {
