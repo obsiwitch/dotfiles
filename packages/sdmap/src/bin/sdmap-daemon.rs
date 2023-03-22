@@ -162,13 +162,13 @@ impl Daemon {
         }
     }
 
-    // Switch between desktop mode and gamepad mode if `BTN_MODE` and `BTN_BASE`
-    // are pressed.
-    fn switch_mode(&mut self) {
-        // Ensures `BTN_MODE` and `BTN_BASE` are the only currently held button
-        // to avoid having buttons being kept pushed after the transition.
+    // Switch between desktop mode and gamepad mode if `BTN_THUMB` is pressed.
+    fn switch_mode(&mut self, events_in: &[InputEvent]) {
+        // Ensures `BTN_THUMB` has just been pushed (events_in) and that no other
+        // buttons are currently held (state_in).
         let state_in = self.dev_in.cached_state();
-        if state_in.key_vals().unwrap().iter().eq(vec![Key::BTN_BASE, Key::BTN_MODE]) {
+        if events_in.iter().any(|e| e.code() == Key::BTN_THUMB.0 && e.value() == 1)
+        && state_in.key_vals().unwrap().iter().eq(vec![Key::BTN_THUMB]) {
             self.kbd_mode = !self.kbd_mode;
             if self.kbd_mode {
                 self.dev_in.grab().unwrap();
@@ -183,7 +183,7 @@ impl Daemon {
             self.cache_in = self.dev_in.cached_state().clone();
             let events_in: Vec<InputEvent> = self.dev_in.fetch_events()?.collect();
 
-            self.switch_mode();
+            self.switch_mode(&events_in);
             if !self.kbd_mode { continue; }
 
             let events_out: Vec<InputEvent> = events_in.into_iter()

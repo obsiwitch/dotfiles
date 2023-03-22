@@ -17,7 +17,7 @@ A [PKGBUILD](arch/) is provided to [build and install](https://wiki.archlinux.or
 
 ## Keybindings
 
-* `BTN_MODE` + `BTN_BASE`: switch between gamepad and desktop mode
+* `BTN_THUMB`: switch between gamepad and desktop mode
 * gamepad mode (ungrabbed input device)
 * desktop mode (grabbed input device & output to virtual device)
     * pointer
@@ -39,7 +39,7 @@ A [PKGBUILD](arch/) is provided to [build and install](https://wiki.archlinux.or
         * `BTN_NORTH`: backspace
         * `BTN_WEST`: space
         * `BTN_BASE`: compose
-    * unused: `BTN_MODE` alone, `BTN_THUMBL`, `BTN_THUMB`, `BTN_THUMB2`
+    * unused: `BTN_MODE`, `BTN_BASE` alone, `BTN_THUMBL`, `BTN_THUMBR` alone, `BTN_THUMB2`, `ABS_R{X,Y}`, `ABS_HAT2{X,Y}`
 
 ## Virtual Keyboard Sticker
 

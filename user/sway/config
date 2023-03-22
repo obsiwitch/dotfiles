@@ -14,7 +14,6 @@ input type:keyboard {
     xkb_layout fr
     xkb_options compose:menu
 }
-input '6551:9318:Telink_Wireless_Receiver' xkb_layout it
 input type:touchpad {
     dwt enabled
     tap enabled
