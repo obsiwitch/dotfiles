@@ -6,7 +6,6 @@ struct Daemon {
     dev_in: Device,
     absinfos_in: [input_absinfo; 64],
     cache_in: DeviceState,
-    state_in: DeviceState,
     dev_out: VirtualDevice,
     kbd_mode: bool,
 }
@@ -16,7 +15,6 @@ impl Daemon {
             .find(|(_, d)| d.name() == Some("Steam Deck"))
             .unwrap().1;
         dev_in.grab()?;
-        let absinfos_in = dev_in.get_abs_state()?;
 
         let dev_out = VirtualDeviceBuilder::new()?
             .name("Steam Deck sdmapd")
@@ -35,9 +33,8 @@ impl Daemon {
             .build()?;
 
         Ok(Self {
-            absinfos_in,
+            absinfos_in: dev_in.get_abs_state()?,
             cache_in: dev_in.cached_state().clone(),
-            state_in: dev_in.cached_state().clone(),
             dev_in,
             dev_out,
             kbd_mode: true,
@@ -76,7 +73,8 @@ impl Daemon {
     // Return the position on the virtual keyboard based on the position of
     // ABS_HAT0. Return None if ABS_HAT0 isn't used.
     pub fn vkbd_keypos(&self) -> Option<(usize, usize)> {
-        let absvals = self.state_in.abs_vals().unwrap();
+        let state_in = self.dev_in.cached_state();
+        let absvals = state_in.abs_vals().unwrap();
         let absinfo = self.absinfos_in[Abs::ABS_HAT0X.0 as usize];
 
         let absx = absvals[Abs::ABS_HAT0X.0 as usize].value;
@@ -169,7 +167,8 @@ impl Daemon {
     fn switch_mode(&mut self) {
         // Ensures `BTN_MODE` and `BTN_BASE` are the only currently held button
         // to avoid having buttons being kept pushed after the transition.
-        if self.state_in.key_vals().unwrap().iter().eq(vec![Key::BTN_BASE, Key::BTN_MODE]) {
+        let state_in = self.dev_in.cached_state();
+        if state_in.key_vals().unwrap().iter().eq(vec![Key::BTN_BASE, Key::BTN_MODE]) {
             self.kbd_mode = !self.kbd_mode;
             if self.kbd_mode {
                 self.dev_in.grab().unwrap();
@@ -183,7 +182,6 @@ impl Daemon {
         loop {
             self.cache_in = self.dev_in.cached_state().clone();
             let events_in: Vec<InputEvent> = self.dev_in.fetch_events()?.collect();
-            self.state_in = self.dev_in.cached_state().clone();
 
             self.switch_mode();
             if !self.kbd_mode { continue; }
