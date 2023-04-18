@@ -51,13 +51,13 @@ impl Sticker {
             <style type="text/css">
             body {{font-family:monospace; font-size:18px;}}
             table {{border-collapse: collapse; width:378px; height:378px;}}
-            td {{border:1px solid #EEE; text-align: center;}}
-            td.a {{border-width: 4px 1px 4px 4px; color:LimeGreen;}}
-            td.b {{border-width: 4px 1px 4px 1px; color:Crimson;}}
-            td.x {{border-width: 4px 1px 4px 1px; color:DodgerBlue;}}
-            td.y {{border-width: 4px 1px 4px 1px; color:Orange;}}
-            td.s {{border-width: 4px 1px 4px 1px; color:MediumPurple;}}
-            td.d {{border-width: 4px 4px 4px 1px; color:SlateGray}}
+            td {{border:1px solid #DDD; text-align:center;}}
+            td.a {{border-width:2px 1px 2px 2px; color:LimeGreen;}}
+            td.b {{border-width:2px 1px 2px 1px; color:Crimson;}}
+            td.x {{border-width:2px 1px 2px 1px; color:DodgerBlue;}}
+            td.y {{border-width:2px 1px 2px 1px; color:Orange;}}
+            td.s {{border-width:2px 1px 2px 1px; color:MediumPurple;}}
+            td.d {{border-width:2px 2px 2px 1px; color:SlateGray}}
             span.l0 {{font-size:30px; font-weight:bold;}}
             </style>
             <table>"#);
@@ -67,15 +67,13 @@ impl Sticker {
                 for (i, key) in col.into_iter().enumerate() {
                     if i >= BUTTONS.len() { break; }
                     let btn = BUTTONS[i];
-                    // TODO vertically align text
                     let l0 = self.keystring(key, &[]);
                     let print_mods = !"abcdefghijklmnopqrstuvwxyz".contains(&l0);
                     let l1 = if print_mods { self.keystring(key, &[Key::KEY_LEFTSHIFT]) }
                            else { "".into() };
                     let l2 = if print_mods { self.keystring(key, &[Key::KEY_RIGHTALT]) }
                            else { "".into() };
-                    println!("<td class=\"{}\">{} <span class=\"l0\">{}</span> {}</td>",
-                         btn, l1, l0, l2);
+                    println!("<td class=\"{btn}\">{l1} <span class=\"l0\">{l0}</span> {l2}</td>");
                 }
             }
             println!("</tr>");
