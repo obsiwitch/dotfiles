@@ -5,17 +5,13 @@ linux
 linux-firmware
 amd-ucode
 efibootmgr
-dkms
-linux-headers
 
 # utils
-archiso
 pacman-contrib
 moreutils
 man-db
 man-pages
 arch-wiki-docs
-units
 evtest
 
 # files

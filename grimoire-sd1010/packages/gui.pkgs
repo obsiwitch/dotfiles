@@ -84,16 +84,13 @@ wf-recorder
 quodlibet
 soundconverter
 gnome-sound-recorder
+gst-plugins-bad
 
 # games
 steam-native-runtime
 wine
-wine-mono
 winetricks
 vkd3d
 lib32-vkd3d
-retroarch
-retroarch-assets-ozone
-libretro-bsnes
-libretro-mesen
-libretro-mgba
+vulkan-radeon
+lib32-vulkan-radeon
