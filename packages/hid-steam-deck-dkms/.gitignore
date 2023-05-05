@@ -1,7 +1,0 @@
-pkg/
-src/
-Kconfig
-hid-ids.h
-hid-steam.c
-*.orig
-*.tar.zst

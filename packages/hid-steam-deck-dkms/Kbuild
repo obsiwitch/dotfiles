@@ -1,2 +1,0 @@
-EXTRA_CFLAGS += -DCONFIG_STEAM_FF
-obj-m = hid-steam.o
