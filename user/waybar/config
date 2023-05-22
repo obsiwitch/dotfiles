@@ -42,8 +42,8 @@
         "format-source-muted": " {volume}%",
         "on-click": "pamixer --default-source --toggle-mute",
         "on-click-middle": "pavucontrol",
-        "on-scroll-up": "pamixer --default-source --increase 5",
-        "on-scroll-down": "pamixer --default-source --decrease 5",
+        "on-scroll-up": "pamixer --default-source --allow-boost --increase 5",
+        "on-scroll-down": "pamixer --default-source --allow-boost --decrease 5",
     },
 
     "backlight": {
