@@ -1,13 +1,13 @@
 #!/bin/bash
 
-set -o errexit -o nounset
+set -o errexit -o nounset -o xtrace
 
-setfacl -m "$1":r-x -- '/run/user/1000'
-setfacl -m "$1":rwx -- '/run/user/1000/wayland-1'
-setfacl -m "$1":rw- -- '/run/user/1000/wayland-1.lock'
+setfacl -m "$1":r-x -- "$XDG_RUNTIME_DIR"
+setfacl -m "$1":rwx -- "$XDG_RUNTIME_DIR/wayland-1"
+setfacl -m "$1":rw- -- "$XDG_RUNTIME_DIR/wayland-1.lock"
 xhost +si:localuser:"$1"
 
-su --login --whitelist-environment=DISPLAY,WAYLAND_DISPLAY,XDG_RUNTIME_DIR "$1"
+su --login --whitelist-environment='DISPLAY,WAYLAND_DISPLAY,XDG_RUNTIME_DIR' "$1" "${@:2}"
 
-setfacl -b '/run/user/1000' '/run/user/1000/wayland-1' '/run/user/1000/wayland-1.lock'
 xhost -si:localuser:"$1"
+setfacl --remove-all "$XDG_RUNTIME_DIR/"{'','wayland-1','wayland-1.lock'}
