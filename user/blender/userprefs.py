@@ -12,13 +12,14 @@ bpy.ops.script.execute_preset(
     menu_idname="USERPREF_MT_interface_theme_presets"
 ) # default: Blender_Dark.xml
 BCP = bpy.context.preferences
-BCP.view.ui_scale = 1.2 # default: 1.0
+BCP.view.ui_scale = 1.7 # default: 1.0
 BCP.view.show_splash = False
 BCP.view.show_tooltips_python = True
 BCP.view.show_developer_ui = True
 BCP.view.show_statusbar_memory = True
 BCP.view.show_statusbar_stats = True
 BCP.inputs.use_auto_perspective = False
+BCP.inputs.use_emulate_numpad = True
 BCP.filepaths.save_version = 0 # default: 1
 BCP.edit.undo_steps = 256 # default: 32
 BCP.filepaths.use_load_ui = False
