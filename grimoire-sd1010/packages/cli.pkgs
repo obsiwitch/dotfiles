@@ -77,6 +77,8 @@ traceroute
 whois
 speedtest-cli
 yt-dlp
+bluez
+bluez-utils
 
 # media
 pipewire

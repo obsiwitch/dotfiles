@@ -26,6 +26,7 @@ input type:touch map_to_output eDP-1
 
 exec_always 'killall nm-applet; nm-applet --indicator'
 exec_always 'killall dunst; dunst'
+exec_always 'killall blueman-applet; blueman-applet'
 
 # Application keybindings ######################################################
 
