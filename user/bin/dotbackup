@@ -34,36 +34,25 @@ backup_extdrive() {
     # after SIGINT even though it shouldn't.
     trap '' INT # disable SIGINT
     test -d "$out" || gio mount --device="$uuid_crypt"
-    trap '-' INT # restore SIGINT's default behaviour
-    rsync --archive --delete --protect-args --progress "$HOME" "$out"
+    trap '-' INT # restore SIGINT default behaviour
+    rsync --archive --delete --secluded-args --progress --stats "$HOME" "$out"
     gio mount --unmount "$out"
 }
 
-# Phone SD card:
-# * v1 private 25%: extension to the internal storage
-# * v2 public 75%: entertainment & gocryptfs -reverse snapshots
-# ```sh
-# adb$ sm list-disks
-# disk:179,96
-# adb$ sm partition disk:179,96 mixed 75
-# adb$ reboot
-# ```
+# Phone: SD card: entertainment & snapshots
 backup_phone() {
-    local device='HMD_Global_Nokia_2.2_HZAL1670CAJ60412338'
-    local out="/run/user/$UID/gvfs/mtp:host=$device/SanDisk SD card/"
-    test -d "$out" || gio mount "mtp://$device"
-    ( cd "$out" ) # access mount to avoid Input/output error
+    local out="/storage/4EDB-B4B2/"
 
     snapshots_mount
-    rsync --recursive --delete --protect-args --progress --size-only --inplace \
-       "$HOME/Downloads/Books" "$HOME/Downloads/Videos" "$HOME/Music" \
-       "$SNAPSHOTS_CRYPT" "$out"
+    adb start-server
+    adb push --sync \
+        "$HOME/Downloads/Books" "$HOME/Downloads/Videos" "$HOME/Music" \
+        "$SNAPSHOTS_CRYPT" "$out"
+    adb kill-server
     snapshots_unmount
-
-    gio mount --unmount "mtp://$device"
 }
 
-# Remote: gocryptfs -reverse: borg snapshots
+# Remote: snapshots
 backup_remote() {
     snapshots_mount
     rclone sync --progress "$SNAPSHOTS_CRYPT" 'remote:snapshots_crypt'
