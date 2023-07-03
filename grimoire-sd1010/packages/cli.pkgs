@@ -35,7 +35,6 @@ python-llfuse
 lsof
 tree
 fdupes
-gocryptfs
 smartmontools
 
 # monitoring

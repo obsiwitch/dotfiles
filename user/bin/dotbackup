@@ -3,24 +3,6 @@
 set -o errexit -o nounset -o xtrace
 
 MEDIADIR="/run/media/$USER"
-RUNTIMEDIR="/run/user/$UID"
-
-SNAPSHOTS_PLAIN="$HOME/Snapshots"
-SNAPSHOTS_CRYPT="$RUNTIMEDIR/gocryptfs/Snapshots"
-
-# Mount encrypted view of $SNAPSHOTS_PLAIN to $SNAPSHOTS_CRYPT.
-snapshots_mount() {
-    rmdir "$SNAPSHOTS_CRYPT" || : # preventively remove empty directory to avoid syncing it
-    test -d "$SNAPSHOTS_CRYPT" || {
-        mkdir -p "$SNAPSHOTS_CRYPT"
-        gocryptfs -reverse "$SNAPSHOTS_PLAIN" "$SNAPSHOTS_CRYPT"
-    }
-}
-# Unmount $SNAPSHOTS_CRYPT and remove empty mountpoint.
-snapshots_unmount() {
-    fusermount -u "$SNAPSHOTS_CRYPT"
-    rmdir "$SNAPSHOTS_CRYPT"
-}
 
 # External drive: p1 ext4 100%: dm-crypt w/ LUKS: home
 backup_extdrive() {
@@ -43,20 +25,16 @@ backup_extdrive() {
 backup_phone() {
     local out="/storage/4EDB-B4B2/"
 
-    snapshots_mount
     adb start-server
     adb push --sync \
         "$HOME/Downloads/Books" "$HOME/Downloads/Videos" "$HOME/Music" \
-        "$SNAPSHOTS_CRYPT" "$out"
+        "$HOME/Snapshots" "$out"
     adb kill-server
-    snapshots_unmount
 }
 
 # Remote: snapshots
 backup_remote() {
-    snapshots_mount
-    rclone sync --progress "$SNAPSHOTS_CRYPT" 'remote:snapshots_crypt'
-    snapshots_unmount
+    rclone sync --progress "$HOME/Snapshots" 'remote:snapshots_crypt'
 }
 
 help() {

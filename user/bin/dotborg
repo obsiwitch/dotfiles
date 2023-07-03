@@ -2,7 +2,7 @@
 
 set -o errexit -o nounset
 
-export BORG_REPO="$HOME/Snapshots" # encryption=none
+export BORG_REPO="$HOME/Snapshots" # encryption=repokey
 
 if [[ -z "${1:-}" ]]; then
     borg
@@ -19,10 +19,10 @@ elif [[ "$1" == 'snapshot' ]]; then
         "$HOME/.dotprivate" \
         "$HOME/Documents"
 
-    borg prune --keep-weekly=4 --keep-monthly=12 --keep-yearly=-1 --list --progress
+    borg prune --keep-monthly=12 --keep-yearly=-1 --list --progress
 elif [[ "$1" == 'head' ]]; then
     borg list --last=1 --format='{archive}' "${@:2}"
-elif [[ "$1" == 'list' && "$*" != *'::'* ]]; then
+elif [[ "$*" == 'list' ]]; then
     borg list --format='* {archive} · {comment}{NL}' "${@:2}"
 else
     borg "$@"
