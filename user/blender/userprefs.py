@@ -12,7 +12,7 @@ bpy.ops.script.execute_preset(
     menu_idname="USERPREF_MT_interface_theme_presets"
 ) # default: Blender_Dark.xml
 BCP = bpy.context.preferences
-BCP.view.ui_scale = 1.7 # default: 1.0
+BCP.view.ui_scale = 1.2 # default: 1.0
 BCP.view.show_splash = False
 BCP.view.show_tooltips_python = True
 BCP.view.show_developer_ui = True
