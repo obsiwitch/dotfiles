@@ -1,5 +1,5 @@
 pkgname='sdmap'
-pkgver=0.4.5
+pkgver=0.4.6
 pkgrel=2
 pkgdesc='Steam Deck Controller custom mapping'
 arch=('x86_64')

@@ -29,7 +29,7 @@ A [PKGBUILD](arch/) is provided to [build and install](https://wiki.archlinux.or
     * keyboard
         * `ABS_HAT0{X,Y}` + `BTN_{SOUTH,EAST,NORTH,WEST,START,BASE,THUMBR}`: virtual keyboard
         * `BTN_DPAD_{UP,DOWN,LEFT,RIGHT}`: arrow keys
-        * `ABS_{X,Y}`: home, end, pageup, pagedown
+        * `BTN_TRIGGER_HAPPY2 + BTN_DPAD_{UP,DOWN,LEFT,RIGHT}`: pageup, pagedown, home, end
         * `BTN_SELECT`: tab
         * `BTN_START`: delete
         * `BTN_TRIGGER_HAPPY{1,3,4,2}`: shift, ctrl, alt, altgr

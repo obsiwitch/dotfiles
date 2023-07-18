@@ -46,28 +46,22 @@ impl Daemon {
         InputEvent::new(EventType::KEY, key.0, value)
     }
 
+    // Create new Key events depending on the state of a key and a modifier.
+    fn new_keymod(evt_in: InputEvent, modifier: bool, out_base: Key, out_mod: Key)
+    -> Vec<InputEvent> {
+        if evt_in.value() == 1 {
+            vec!(Self::new_key(if modifier { out_mod } else { out_base }, 1))
+        } else {
+            vec!(Self::new_key(out_mod, 0), Self::new_key(out_base, 0))
+        }
+    }
+
     // Map an absolute event to a relative one.
     fn abs2rel(&self, evt_in: InputEvent, rel: Rel, coeff: f32) -> InputEvent {
         let absval = self.cache_in.abs_vals().unwrap()[evt_in.code() as usize];
         let delta = if evt_in.value() == 0 || absval.value == 0 { 0.0 }
                    else { (evt_in.value() - absval.value) as f32 * coeff } as i32;
         InputEvent::new(EventType::RELATIVE, rel.0, delta)
-    }
-
-    // Map the minimum and maximum values of a joystick axis to the `key_min` and
-    // `key_max` key events.
-    fn joy2keys(&self, evt_in: InputEvent, key_min: Key, key_max: Key)
-    -> Vec<InputEvent> {
-        let absinfo = self.absinfos_in[evt_in.code() as usize];
-        if evt_in.value().abs() <= absinfo.resolution {
-            vec!(Self::new_key(key_min, 0), Self::new_key(key_max, 0))
-        } else if evt_in.value() == absinfo.minimum {
-            vec!(Self::new_key(key_min, 1))
-        } else if evt_in.value() == absinfo.maximum {
-            vec!(Self::new_key(key_max, 1))
-        } else {
-            vec!()
-        }
     }
 
     // Return the position on the virtual keyboard based on the position of
@@ -103,14 +97,18 @@ impl Daemon {
     }
 
     fn remap(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
+        let state_in = self.dev_in.cached_state();
+        let keyvals = state_in.key_vals().unwrap();
+        let mod_th2 = keyvals.contains(Key::BTN_TRIGGER_HAPPY2);
+
         if evt_in.code() == Key::BTN_DPAD_UP.0 {
-            vec!(Self::new_key(Key::KEY_UP, evt_in.value()))
+            Self::new_keymod(evt_in, mod_th2, Key::KEY_UP, Key::KEY_PAGEUP)
         } else if evt_in.code() == Key::BTN_DPAD_DOWN.0 {
-            vec!(Self::new_key(Key::KEY_DOWN, evt_in.value()))
+            Self::new_keymod(evt_in, mod_th2, Key::KEY_DOWN, Key::KEY_PAGEDOWN)
         } else if evt_in.code() == Key::BTN_DPAD_LEFT.0 {
-            vec!(Self::new_key(Key::KEY_LEFT, evt_in.value()))
+            Self::new_keymod(evt_in, mod_th2, Key::KEY_LEFT, Key::KEY_HOME)
         } else if evt_in.code() == Key::BTN_DPAD_RIGHT.0 {
-            vec!(Self::new_key(Key::KEY_RIGHT, evt_in.value()))
+            Self::new_keymod(evt_in, mod_th2, Key::KEY_RIGHT, Key::KEY_END)
 
         } else if evt_in.code() == Key::BTN_SELECT.0 {
             vec!(Self::new_key(Key::KEY_TAB, evt_in.value()))
@@ -132,11 +130,6 @@ impl Daemon {
             vec!(Self::new_key(Key::KEY_RIGHTALT, evt_in.value()))
         } else if evt_in.code() == Key::BTN_TRIGGER_HAPPY4.0 {
             vec!(Self::new_key(Key::KEY_LEFTALT, evt_in.value()))
-
-        } else if evt_in.code() == Abs::ABS_Y.0 {
-            self.joy2keys(evt_in, Key::KEY_PAGEUP, Key::KEY_PAGEDOWN)
-        } else if evt_in.code() == Abs::ABS_X.0 {
-            self.joy2keys(evt_in, Key::KEY_HOME, Key::KEY_END)
 
         } else if evt_in.code() == Key::BTN_SOUTH.0 {
             self.key2vkbd(evt_in, 0, Key::KEY_ENTER)
