@@ -3,8 +3,8 @@
 set -o errexit -o nounset -o xtrace
 
 # wine
-wine reg add 'HKEY_CURRENT_USER\Software\Wine\FileOpenAssociations' /v 'Enable' /d 'N' /f
-wine reg add 'HKEY_CURRENT_USER\Software\Wine\X11 Driver' /v 'UseTakeFocus' /d 'N' /f
-winetricks isolate_home
+winetricks settings mimeassoc=off # disable exporting MIME-type file associations to the native desktop
+winetricks settings isolate_home # remove links to home
 winetricks dlls dxvk
 winetricks dlls corefonts
+winetricks settings alldlls=default # remove all DLL overrides
