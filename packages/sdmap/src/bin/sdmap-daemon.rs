@@ -29,7 +29,9 @@ impl Daemon {
                 Key::KEY_F6, Key::KEY_F7, Key::KEY_F8, Key::BTN_RIGHT, Key::BTN_LEFT,
                 Key::BTN_MIDDLE,
             ])))?
-            .with_relative_axes(&AttributeSet::from_iter([Rel::REL_X, Rel::REL_Y]))?
+            .with_relative_axes(&AttributeSet::from_iter(
+                [Rel::REL_X, Rel::REL_Y, Rel::REL_WHEEL, Rel::REL_HWHEEL]
+            ))?
             .build()?;
 
         Ok(Self {
@@ -96,6 +98,17 @@ impl Daemon {
         }
     }
 
+    fn joy2scroll(&self, evt_in: InputEvent, wheel: Rel) -> Vec<InputEvent> {
+        let absinfo = self.absinfos_in[evt_in.code() as usize];
+        if evt_in.value() == absinfo.minimum {
+            vec!(InputEvent::new(EventType::RELATIVE, wheel.0, 1))
+        } else if evt_in.value() == absinfo.maximum {
+            vec!(InputEvent::new(EventType::RELATIVE, wheel.0, -1))
+        } else {
+            vec!()
+        }
+    }
+
     fn remap(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
         let state_in = self.dev_in.cached_state();
         let keyvals = state_in.key_vals().unwrap();
@@ -150,6 +163,12 @@ impl Daemon {
             vec!(self.abs2rel(evt_in, Rel::REL_X, 0.01))
         } else if evt_in.code() == Abs::ABS_HAT1Y.0 {
             vec!(self.abs2rel(evt_in, Rel::REL_Y, -0.01))
+
+        } else if evt_in.code() == Abs::ABS_Y.0 {
+            self.joy2scroll(evt_in, Rel::REL_WHEEL)
+        } else if evt_in.code() == Abs::ABS_X.0 {
+            self.joy2scroll(evt_in, Rel::REL_HWHEEL)
+
         } else {
             vec!()
         }
