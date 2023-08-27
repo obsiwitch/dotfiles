@@ -78,16 +78,13 @@ setup.sys.conf() {
     # network
     echo 'grimoire-sd1010' > /etc/hostname
 
-    # kernel modules
-    cp -r "$sourcep/etc/modprobe.d" '/etc'
-
     # unified kernel image (requires: /etc/vconsole.conf)
     tee {"$sourcep",}'/etc/kernel/cmdline' <<< " \
         cryptdevice=/dev/nvme0n1p2:cryptroot \
         root=/dev/mapper/cryptroot \
         resume=/dev/mapper/cryptroot \
         resume_offset=$(filefrag -v '/swapfile' | awk '/^ *0:/ {print $4}')"
-    cp {"$sourcep",}'/etc/mkinitcpio.d/linux.preset'
+    cp -r "$sourcep/etc/mkinitcpio.d" '/etc'
     cp {"$sourcep",}'/etc/mkinitcpio.conf'
     mkdir -p '/boot/EFI/BOOT/'
     mkinitcpio --allpresets

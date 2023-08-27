@@ -18,6 +18,7 @@ evtest
 dosfstools
 ntfs-3g
 fuseiso
+exfatprogs
 less
 fd
 fzf
@@ -39,10 +40,8 @@ smartmontools
 
 # monitoring
 htop
-glances
 lshw
 usbutils
-iotop
 
 # dev
 bash-completion

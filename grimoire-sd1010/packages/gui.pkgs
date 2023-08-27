@@ -92,6 +92,7 @@ gst-plugins-bad
 steam-native-runtime
 gamescope
 retroarch
+retroarch-assets-ozone
 wine
 wine-gecko
 wine-mono
