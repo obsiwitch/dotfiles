@@ -17,6 +17,7 @@ elif [[ "$1" == 'snapshot' ]]; then
         '::{now:%Y-%m-%d-%H-%M-%S}'  \
         "$HOME/.dotfiles" \
         "$HOME/.dotprivate" \
+        "$HOME/.mozilla/firefox/"*.default/{key4.db,logins.json} \
         "$HOME/Documents"
 
     borg prune --keep-monthly=12 --keep-yearly=-1 --list --progress
