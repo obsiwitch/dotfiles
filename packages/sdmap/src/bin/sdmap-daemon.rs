@@ -1,3 +1,4 @@
+use std::{time, thread, sync::Arc, sync::Mutex};
 use evdev::{*, uinput::*, AbsoluteAxisType as Abs, RelativeAxisType as Rel};
 use libc::input_absinfo;
 use sdmap::VKBD_LAYOUT;
@@ -6,8 +7,11 @@ struct Daemon {
     dev_in: Device,
     absinfos_in: [input_absinfo; 64],
     cache_in: DeviceState,
+
     dev_out: VirtualDevice,
     kbd_mode: bool,
+
+    scroll_daemon: ScrollDaemon,
 }
 impl Daemon {
     pub fn new() -> std::io::Result<Self> {
@@ -15,9 +19,10 @@ impl Daemon {
             .find(|(_, d)| d.name() == Some("Steam Deck"))
             .unwrap().1;
         dev_in.grab()?;
+        let absinfos_in = dev_in.get_abs_state()?;
 
         let dev_out = VirtualDeviceBuilder::new()?
-            .name("Steam Deck sdmapd")
+            .name("Steam Deck sdmapd main")
             .with_keys(&AttributeSet::from_iter(
                 VKBD_LAYOUT.into_iter().flatten().flatten().chain([
                 Key::KEY_LEFTMETA, Key::KEY_UP, Key::KEY_DOWN, Key::KEY_LEFT,
@@ -29,17 +34,16 @@ impl Daemon {
                 Key::KEY_F6, Key::KEY_F7, Key::KEY_F8, Key::BTN_RIGHT, Key::BTN_LEFT,
                 Key::BTN_MIDDLE,
             ])))?
-            .with_relative_axes(&AttributeSet::from_iter(
-                [Rel::REL_X, Rel::REL_Y, Rel::REL_WHEEL, Rel::REL_HWHEEL]
-            ))?
+            .with_relative_axes(&AttributeSet::from_iter([Rel::REL_X, Rel::REL_Y]))?
             .build()?;
 
         Ok(Self {
-            absinfos_in: dev_in.get_abs_state()?,
+            absinfos_in,
             cache_in: dev_in.cached_state().clone(),
             dev_in,
             dev_out,
             kbd_mode: true,
+            scroll_daemon: ScrollDaemon::new(absinfos_in[Abs::ABS_X.0 as usize].resolution)?,
         })
     }
 
@@ -98,20 +102,10 @@ impl Daemon {
         }
     }
 
-    fn joy2scroll(&self, evt_in: InputEvent, wheel: Rel) -> Vec<InputEvent> {
-        let absinfo = self.absinfos_in[evt_in.code() as usize];
-        if evt_in.value() == absinfo.minimum {
-            vec!(InputEvent::new(EventType::RELATIVE, wheel.0, 1))
-        } else if evt_in.value() == absinfo.maximum {
-            vec!(InputEvent::new(EventType::RELATIVE, wheel.0, -1))
-        } else {
-            vec!()
-        }
-    }
-
     fn remap(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
         let state_in = self.dev_in.cached_state();
         let keyvals = state_in.key_vals().unwrap();
+        let absvals = state_in.abs_vals().unwrap();
         let mod_th2 = keyvals.contains(Key::BTN_TRIGGER_HAPPY2);
 
         if evt_in.code() == Key::BTN_DPAD_UP.0 {
@@ -164,10 +158,11 @@ impl Daemon {
         } else if evt_in.code() == Abs::ABS_HAT1Y.0 {
             vec!(self.abs2rel(evt_in, Rel::REL_Y, -0.01))
 
-        } else if evt_in.code() == Abs::ABS_Y.0 {
-            self.joy2scroll(evt_in, Rel::REL_WHEEL)
-        } else if evt_in.code() == Abs::ABS_X.0 {
-            self.joy2scroll(evt_in, Rel::REL_HWHEEL)
+        } else if evt_in.code() == Abs::ABS_X.0 || evt_in.code() == Abs::ABS_Y.0 {
+            let absx = absvals[Abs::ABS_X.0 as usize].value;
+            let absy = absvals[Abs::ABS_Y.0 as usize].value;
+            self.scroll_daemon.scroll(absx, absy);
+            vec!()
 
         } else {
             vec!()
@@ -185,6 +180,7 @@ impl Daemon {
             if self.kbd_mode {
                 self.dev_in.grab().unwrap();
             } else {
+                self.scroll_daemon.scroll(0, 0);
                 self.dev_in.ungrab().unwrap();
             }
         }
@@ -203,6 +199,56 @@ impl Daemon {
                 .collect();
             self.dev_out.emit(&events_out)?;
         }
+    }
+}
+
+struct ScrollDaemon {
+    scroll_thread: thread::JoinHandle<()>,
+    scroll_xy: Arc<Mutex<(i32, i32)>>,
+}
+impl ScrollDaemon {
+    pub fn new(resolution: i32) -> std::io::Result<Self> {
+        let scroll_xy1 = Arc::new(Mutex::new((0, 0)));
+        let scroll_xy2 = Arc::clone(&scroll_xy1);
+
+        let mut dev_out = VirtualDeviceBuilder::new()?
+            .name("Steam Deck sdmapd scroll")
+            .with_relative_axes(&AttributeSet::from_iter(
+                [Rel::REL_WHEEL, Rel::REL_HWHEEL]
+            ))?
+            .build()?;
+
+        let scroll_thread = thread::spawn(move || {
+            let scroll_xy = scroll_xy2;
+
+            loop {
+                let tmp_xy: (i32, i32) = *scroll_xy.lock().unwrap();
+                if tmp_xy.0.abs() < resolution && tmp_xy.1.abs() < resolution {
+                    thread::park();
+                } else {
+                    if tmp_xy.0.abs() >= resolution {
+                        let val = if tmp_xy.0 > 0 { 1 } else { -1 };
+                        let evt = InputEvent::new(EventType::RELATIVE, Rel::REL_HWHEEL.0, val);
+                        dev_out.emit(&[evt]).unwrap();
+                    }
+
+                    if tmp_xy.1.abs() >= resolution {
+                        let val = if tmp_xy.1 > 0 { -1 } else { 1 };
+                        let evt = InputEvent::new(EventType::RELATIVE, Rel::REL_WHEEL.0, val);
+                        dev_out.emit(&[evt]).unwrap();
+                    }
+                }
+
+                thread::sleep(time::Duration::from_millis(100));
+            }
+        });
+
+        Ok(Self { scroll_thread, scroll_xy: scroll_xy1 })
+    }
+
+    pub fn scroll(&self, x: i32, y: i32) {
+        *self.scroll_xy.lock().unwrap() = (x, y);
+        self.scroll_thread.thread().unpark();
     }
 }
 
