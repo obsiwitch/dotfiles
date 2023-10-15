@@ -15,6 +15,8 @@ SD controller -> Sdmap -> ungrab -> game
 
 A [PKGBUILD](arch/) is provided to [build and install](https://wiki.archlinux.org/title/Arch_User_Repository#Installing_and_upgrading_packages) Sdmap on Arch Linux. Once installed, the `sdmap.service` systemd service can be enabled and started (`systemctl enable --now sdmap.service`). The daemon can also be tested outside the service by running `sdmap-daemon`.
 
+You might also want to use sdmap during early userspace to be able to type your encryption passphrase without an external keyboard. To do so, add the `sdmap` hook before `encrypt` in the `HOOKS` array of `/etc/mkinitcpio.conf`.
+
 ## Keybindings
 
 * `BTN_THUMB`: switch between gamepad and desktop mode
