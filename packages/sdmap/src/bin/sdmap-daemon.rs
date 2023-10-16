@@ -52,6 +52,11 @@ impl Daemon {
         InputEvent::new(EventType::KEY, key.0, value)
     }
 
+    // Get current state of the input device. (shortcut)
+    fn state_in(&self) -> &DeviceState {
+        self.dev_in.cached_state()
+    }
+
     // Create new Key events depending on the state of a key and a modifier.
     fn new_keymod(evt_in: InputEvent, modifier: bool, out_base: Key, out_mod: Key)
     -> Vec<InputEvent> {
@@ -73,8 +78,7 @@ impl Daemon {
     // Return the position on the virtual keyboard based on the position of
     // ABS_HAT0. Return None if ABS_HAT0 isn't used.
     pub fn vkbd_keypos(&self) -> Option<(usize, usize)> {
-        let state_in = self.dev_in.cached_state();
-        let absvals = state_in.abs_vals().unwrap();
+        let absvals = self.state_in().abs_vals().unwrap();
         let absinfo = self.absinfos_in[Abs::ABS_HAT0X.0 as usize];
 
         let absx = absvals[Abs::ABS_HAT0X.0 as usize].value;
@@ -103,9 +107,8 @@ impl Daemon {
     }
 
     fn remap(&mut self, evt_in: InputEvent) -> Vec<InputEvent> {
-        let state_in = self.dev_in.cached_state();
-        let keyvals = state_in.key_vals().unwrap();
-        let absvals = state_in.abs_vals().unwrap();
+        let keyvals = self.state_in().key_vals().unwrap();
+        let absvals = self.state_in().abs_vals().unwrap();
         let mod_th2 = keyvals.contains(Key::BTN_TRIGGER_HAPPY2);
 
         if evt_in.code() == Key::BTN_DPAD_UP.0 {
@@ -173,9 +176,8 @@ impl Daemon {
     fn switch_mode(&mut self, events_in: &[InputEvent]) {
         // Ensures `BTN_THUMB` has just been pushed (events_in) and that no other
         // buttons are currently held (state_in).
-        let state_in = self.dev_in.cached_state();
         if events_in.iter().any(|e| e.code() == Key::BTN_THUMB.0 && e.value() == 1)
-        && state_in.key_vals().unwrap().iter().eq(vec![Key::BTN_THUMB]) {
+        && self.state_in().key_vals().unwrap().iter().eq(vec![Key::BTN_THUMB]) {
             self.kbd_mode = !self.kbd_mode;
             if self.kbd_mode {
                 self.dev_in.grab().unwrap();
