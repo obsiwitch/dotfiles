@@ -94,10 +94,16 @@ bindsym $mod+Shift+Tab layout toggle stacking tabbed split
 bindsym $mod+Ctrl+Tab fullscreen toggle
 
 # resize container
-bindsym $mod+Home  resize shrink width
-bindsym $mod+End   resize grow   width
-bindsym $mod+Prior resize shrink height
-bindsym $mod+Next  resize grow   height
+bindsym $mod+r mode "resize"
+mode "resize" {
+    bindsym Left  resize shrink width
+    bindsym Right resize grow width
+    bindsym Down  resize shrink height
+    bindsym Up    resize grow height
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 # floating windows
 floating_modifier $mod
