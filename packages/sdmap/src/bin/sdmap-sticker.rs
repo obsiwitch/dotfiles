@@ -51,13 +51,14 @@ impl Sticker {
             <style type="text/css">
             body {{font-family:monospace; font-size:18px;}}
             table {{border-collapse: collapse; width:378px; height:378px;}}
-            td {{border:1px solid #DDD; text-align:center;}}
-            td.a {{border-width:2px 1px 2px 2px; color:LimeGreen;}}
-            td.b {{border-width:2px 1px 2px 1px; color:Crimson;}}
-            td.x {{border-width:2px 1px 2px 1px; color:DodgerBlue;}}
-            td.y {{border-width:2px 1px 2px 1px; color:Orange;}}
-            td.s {{border-width:2px 1px 2px 1px; color:MediumPurple;}}
-            td.d {{border-width:2px 2px 2px 1px; color:SlateGray}}
+            tr {{border:1px solid black;}}
+            td {{text-align:center;}}
+            td.a {{color:LimeGreen;}}
+            td.b {{color:Crimson;}}
+            td.x {{color:DodgerBlue;}}
+            td.y {{color:Orange;}}
+            td.s {{color:MediumPurple;}}
+            td.d {{color:SlateGray; border-right:1px solid black;}}
             span.l0 {{font-size:30px; font-weight:bold;}}
             </style>
             <table>"#);
