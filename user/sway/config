@@ -52,8 +52,8 @@ bindsym $mod+Shift+Backspace exec dunstctl close
 bindsym Print exec GRIM_DEFAULT_DIR="$HOME/Downloads" grim
 
 # brightness
-bindsym XF86MonBrightnessDown exec brightnessctl -q s 5%- && pkill -RTMIN+15 i3blocks
-bindsym XF86MonBrightnessUp exec brightnessctl -q s 5%+ && pkill -RTMIN+15 i3blocks
+bindsym XF86MonBrightnessDown exec brightnessctl -q s 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl -q s 5%+
 
 # audio: output
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
