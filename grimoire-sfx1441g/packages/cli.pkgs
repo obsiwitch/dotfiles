@@ -1,0 +1,72 @@
+# utils
+pacman-contrib
+moreutils
+man-db
+man-pages
+arch-wiki-docs
+evtest
+
+# files
+fuseiso
+less
+fd
+fzf
+ncdu
+ranger
+trash-cli
+atool
+    p7zip
+    unrar
+    unzip
+    zip
+borg
+    python-llfuse
+lsof
+tree
+fdupes
+smartmontools
+
+# monitoring
+htop
+lshw
+usbutils
+
+# dev
+bash-completion
+shellcheck
+python
+    python-pip
+mypy
+flake8
+python-matplotlib
+python-scipy
+tk
+git
+micro
+android-tools
+valgrind
+parallel
+rust
+jq
+
+# network
+curl
+wget
+openssh
+rsync
+rclone
+links
+nmap
+traceroute
+whois
+speedtest-cli
+yt-dlp
+
+# audio
+alsa-utils
+pamixer
+
+# printing
+cups
+hplip
+sane

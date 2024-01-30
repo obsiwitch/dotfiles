@@ -1,0 +1,102 @@
+# desktop environment
+gnome-themes-extra
+inotify-tools
+dunst
+network-manager-applet
+pavucontrol
+brightnessctl
+sway
+xorg-xwayland
+xorg-xhost
+swaylock
+dmenu
+bemenu
+wl-clipboard
+swaybg
+waybar
+blueman
+xdg-desktop-portal-wlr
+xdg-desktop-portal-gtk
+
+# admin
+gparted
+system-config-printer
+dconf-editor
+
+# utils
+gnome-clocks
+
+# files
+nemo
+thunar
+file-roller
+gvfs
+gvfs-mtp
+ffmpegthumbnailer
+webp-pixbuf-loader
+
+# dev
+alacritty
+libgit2-glib
+bless
+meld
+
+# sci
+galculator
+
+# network
+firefox
+transmission-gtk
+
+# media-fonts
+ttf-dejavu
+otf-font-awesome
+adobe-source-han-sans-jp-fonts
+noto-fonts-emoji
+
+# media-text
+libreoffice-fresh
+hunspell-en_us
+hunspell-fr
+pandoc-cli
+evince
+foliate
+
+# media-images
+simple-scan
+feh
+eom
+grim
+imagemagick
+gimp
+img2pdf
+
+# media-video
+mpv
+wf-recorder
+mkvtoolnix-cli
+
+# media-gfx
+openscad
+blender
+    libdecor
+
+# media-sound
+quodlibet
+soundconverter
+gnome-sound-recorder
+gst-plugins-bad
+
+# games
+steam-native-runtime
+lutris
+gamescope
+retroarch-assets-ozone
+wine
+wine-gecko
+wine-mono
+winetricks
+vkd3d
+lib32-vkd3d
+lib32-gst-plugins-good
+lib32-ocl-icd

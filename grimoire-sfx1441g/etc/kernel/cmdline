@@ -1,0 +1,1 @@
+         cryptdevice=/dev/nvme0n1p2:cryptroot         root=/dev/mapper/cryptroot         resume=/dev/mapper/cryptroot         resume_offset=41910272..
