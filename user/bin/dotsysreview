@@ -11,7 +11,7 @@ heading() { echo "$(tput smso)$*$(tput rmso)"; }
 
 # List packages from dotfiles.
 packages_dotfiles() {
-    sed -e '/^#.*/d' -e '/^$/d' \
+    sed -e '/^#.*/d' -e '/^$/d' -e 's/^[ \t]*//' \
         "${BASH_SOURCE%/*}/../../$HOSTNAME/packages/"*.pkgs \
         | sort
 }
