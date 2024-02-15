@@ -30,8 +30,9 @@ class ScriptReloadRun(bpy.types.Operator):
                                 if area.type == 'TEXT_EDITOR')
         override['region'] = next(region for region in override['area'].regions
                                   if region.type == 'WINDOW')
-        bpy.ops.text.reload(override)
-        bpy.ops.text.run_script(override)
+        with context.temp_override(**override):
+            bpy.ops.text.reload()
+            bpy.ops.text.run_script()
         return {"FINISHED"}
 
 # Print content of bpy.context to stdout.
