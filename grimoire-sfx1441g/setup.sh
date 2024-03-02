@@ -16,7 +16,7 @@ setup.help() {
     echo
     echo 'prepare:'
     echo '> loadkeys fr'
-    echo '> iwctl station $iface connect $ssid'
+    echo '> iwctl station <interface> connect <ssid>'
     echo '> pacman -Sy archlinux-keyring pacman-contrib git'
     echo '> git clone https://github.com/obsiwitch/dotfiles.git'
     echo '> dotfiles/user/bin/dotrankmirrors'
@@ -29,14 +29,15 @@ setup.help() {
 
 setup.sys.init() {
     # partitioning
-    local devices=("$1"*)
+    local device="$1"
 
-    wipefs --all "${devices[0]}"
-    parted "${devices[0]}" \
+    wipefs --all "$device"
+    parted "$device" \
         mklabel gpt \
         mkpart 'ESP' fat32 1MiB 513MiB \
         mkpart 'Arch' ext4 513MiB 100% \
         set 1 esp on
+    local devices=("$1"*)
 
     # root partition: dm-crypt + LUKS, ext4
     cryptsetup --verify-passphrase luksFormat "${devices[2]}"
@@ -103,7 +104,8 @@ setup.sys.conf() {
 
     passwd --status root | awk '$2 != "P" {exit 1}' || passwd root
 
-    mkdir --mode=777 -p '/home/shared'
+    mkdir -p '/home/shared'
+    chmod 777 '/home/shared'
 
     # systemd
     cp -r "$sourcep/etc/systemd" '/etc'
