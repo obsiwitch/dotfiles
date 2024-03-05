@@ -1,11 +1,3 @@
-# core
-base
-base-devel
-linux
-linux-firmware
-amd-ucode
-efibootmgr
-
 # utils
 pacman-contrib
 moreutils
@@ -15,10 +7,7 @@ arch-wiki-docs
 evtest
 
 # files
-dosfstools
-ntfs-3g
 fuseiso
-exfatprogs
 less
 fd
 fzf
@@ -26,13 +15,12 @@ ncdu
 ranger
 trash-cli
 atool
-p7zip
-unrar
-unzip
-zip
-dpkg
+    p7zip
+    unrar
+    unzip
+    zip
 borg
-python-llfuse
+    python-llfuse
 lsof
 tree
 fdupes
@@ -47,7 +35,7 @@ usbutils
 bash-completion
 shellcheck
 python
-python-pip
+    python-pip
 mypy
 flake8
 python-matplotlib
@@ -62,8 +50,6 @@ rust
 jq
 
 # network
-networkmanager
-nftables
 curl
 wget
 openssh
@@ -75,20 +61,7 @@ traceroute
 whois
 speedtest-cli
 yt-dlp
-bluez
-bluez-utils
 
 # media
-pipewire
-pipewire-alsa
-pipewire-pulse
 alsa-utils
 pamixer
-cups
-hplip
-sane
-libva-mesa-driver
-lib32-libva-mesa-driver
-mesa-vdpau
-lib32-mesa-vdpau
-mkvtoolnix-cli

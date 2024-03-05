@@ -20,7 +20,6 @@ xdg-desktop-portal-gtk
 
 # admin
 gparted
-system-config-printer
 dconf-editor
 
 # utils
@@ -55,28 +54,16 @@ adobe-source-han-sans-jp-fonts
 noto-fonts-emoji
 
 # media-text
-libreoffice-fresh
-hunspell-en_us
-hunspell-fr
-pandoc-cli
-texlive-most
-mupdf
 evince
 foliate
 
 # media-gfx
-simple-scan
 feh
 eom
 grim
 imagemagick
 gimp
 img2pdf
-
-# media-3D
-openscad
-blender
-libdecor
 
 # media-video
 mpv
@@ -91,7 +78,6 @@ gst-plugins-bad
 # games
 steam-native-runtime
 gamescope
-retroarch
 retroarch-assets-ozone
 wine
 wine-gecko
@@ -99,7 +85,5 @@ wine-mono
 winetricks
 vkd3d
 lib32-vkd3d
-vulkan-radeon
-lib32-vulkan-radeon
 lib32-gst-plugins-good
 lib32-ocl-icd

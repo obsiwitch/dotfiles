@@ -1,0 +1,36 @@
+# core-kernel
+base
+base-devel
+linux
+linux-firmware
+amd-ucode
+efibootmgr
+
+# core-fs
+dosfstools
+exfatprogs
+ntfs-3g
+
+# core-network
+networkmanager
+nftables
+bluez
+bluez-utils
+
+# core-audio
+pipewire
+pipewire-alsa
+pipewire-pulse
+pipewire-jack
+
+# core-gfx-amd
+mesa
+lib32-mesa
+mesa-utils
+lib32-mesa-utils
+libva-mesa-driver
+lib32-libva-mesa-driver
+mesa-vdpau
+lib32-mesa-vdpau
+vulkan-radeon
+lib32-vulkan-radeon
