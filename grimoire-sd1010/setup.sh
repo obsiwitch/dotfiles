@@ -53,7 +53,8 @@ setup.sys.init() {
     swapon '/mnt/swapfile'
 
     # packages
-    sed -e '/^#.*/d' -e '/^$/d' "$sourcep/packages/"{cli,gui}.pkgs \
+    sed -e '/^#.*/d' -e '/^$/d' -e 's/^[ \t]*//' \
+        "$sourcep/packages/"{core,cli,gui}.pkgs \
         | pacstrap -i '/mnt' -
 
     # fstab
