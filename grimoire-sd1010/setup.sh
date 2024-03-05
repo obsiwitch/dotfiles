@@ -78,6 +78,7 @@ setup.sys.conf() {
     echo 'grimoire-sd1010' > /etc/hostname
 
     # unified kernel image
+    cp {"$sourcep",}'/etc/kernel/cmdline'
     cp -r "$sourcep/etc/mkinitcpio.d" '/etc'
     mkdir -p '/boot/EFI/BOOT/'
     mkinitcpio --allpresets
