@@ -24,6 +24,7 @@ You might also want to use sdmap during early userspace to be able to type your 
 * desktop mode (grabbed input device & output to virtual device)
     * pointer
         * `ABS_HAT1{X,Y}`: cursor
+        * `ABS_{X,Y}`: scroll
         * `BTN_TR`: left click
         * `BTN_TL`: right click
         * `BTN_TL2`: middle click
@@ -41,7 +42,7 @@ You might also want to use sdmap during early userspace to be able to type your 
         * `BTN_NORTH`: backspace
         * `BTN_WEST`: space
         * `BTN_BASE`: compose
-    * unused: `BTN_MODE`, `BTN_BASE` alone, `BTN_THUMBL`, `BTN_THUMBR` alone, `BTN_THUMB2`, `ABS_R{X,Y}`, `ABS_HAT2{X,Y}`
+    * unused: `BTN_MODE`, `BTN_THUMBL`, `BTN_THUMBR` alone, `BTN_THUMB2`, `ABS_R{X,Y}`, `ABS_HAT2{X,Y}`
 
 ## Virtual Keyboard Sticker
 
