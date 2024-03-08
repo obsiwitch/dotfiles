@@ -17,8 +17,8 @@ setup_settings() {
         ['secure:lock_screen_allow_private_notifications']=0
         ['secure:lock_screen_lock_after_timeout']=5000
         ['secure:lock_screen_show_notifications']=1
-        ['secure:navigation_mode']=0
-        ['secure:refresh_rate_mode']=0
+        ['secure:navigation_mode']=0 # 3-button navigation
+        ['secure:refresh_rate_mode']=0 # 60Hz (default: 2 # 120Hz)
         ['secure:screensaver_enabled']=0
         ['secure:sysui_qs_tiles']='Wifi,MobileData,Bluetooth,Location,AirplaneMode,SoundMode,RotationLock,Flashlight'
         ['secure:charging_sounds_enabled']=0
