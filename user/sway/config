@@ -6,7 +6,7 @@ set $mod Mod4
 
 # Devices · libinput -h, sway-output(5), sway-input(5) #########################
 
-output 'Acer Netxus Inc ANX7530 U 0x00000001' transform 90
+output 'Valve Corporation ANX7530 U 0x00000001' transform 90
 output 'ASUSTek COMPUTER INC ASUS VG289Q1A 0x0003DB4B' scale 1.2
 output * bg wallpaper fill #000000
 
