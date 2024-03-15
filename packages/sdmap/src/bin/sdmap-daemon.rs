@@ -7,6 +7,7 @@ struct Daemon {
     dev_in: Device,
     absinfos_in: [input_absinfo; 64],
     cache_in: DeviceState,
+    _devs_lizard: Vec<Device>,
 
     dev_out: VirtualDevice,
     kbd_mode: bool,
@@ -20,6 +21,13 @@ impl Daemon {
             .unwrap().1;
         dev_in.grab()?;
         let absinfos_in = dev_in.get_abs_state()?;
+
+        // grab lizard mode devices to make sure no events get through (e.g.
+        // scroll events on left trackpad)
+        let _devs_lizard: Vec<Device> = evdev::enumerate()
+            .filter(|(_, d)|  d.name() == Some("Valve Software Steam Controller"))
+            .map(|(_, mut d)| { d.grab().unwrap(); d })
+            .collect();
 
         let dev_out = VirtualDeviceBuilder::new()?
             .name("Steam Deck sdmapd main")
@@ -41,6 +49,7 @@ impl Daemon {
             absinfos_in,
             cache_in: dev_in.cached_state().clone(),
             dev_in,
+            _devs_lizard,
             dev_out,
             kbd_mode: true,
             scroll_daemon: ScrollDaemon::new(absinfos_in[Abs::ABS_X.0 as usize].resolution)?,
