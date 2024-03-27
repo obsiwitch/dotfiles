@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo modprobe -r nvidia-uvm nvidia-drm nvidia-modeset nvidia
+sway
