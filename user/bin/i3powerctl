@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -o errexit -o nounset
+
+choice=${1:-}
+if [[ -z "$choice" ]]; then
+    choice=$(echo 'reload - lock suspend hibernate - logout reboot poweroff' \
+             | tr ' ' '\n' | dmenu)
+fi
+case "$choice" in
+    reload)    i3-msg restart;;
+    lock)      i3lock;;
+    suspend)   i3lock; systemctl suspend -i;;
+    hibernate) systemctl hibernate -i;;
+    logout)    i3-msg exit;;
+    reboot)    systemctl reboot -i;;
+    poweroff)  systemctl poweroff -i;;
+esac

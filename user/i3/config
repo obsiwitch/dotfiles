@@ -1,0 +1,184 @@
+# i3 configuration (http://i3wm.org/docs/userguide.html)
+
+# Variables ####################################################################
+
+set $i3dir "$HOME/.config/i3/"
+set $mod Mod4
+set $exec exec --no-startup-id
+set $exec_always exec_always --no-startup-id
+
+# Theme ########################################################################
+
+font pango:Source Code Pro 11
+
+## class                border  bg      text    indicator
+client.focused          #282828 #282828 #D6D6D6 #4777D7
+client.focused_inactive #686868 #686868 #D6D6D6 #686868
+client.unfocused        #D6D6D6 #D6D6D6 #868686 #D6D6D6
+client.urgent           #E04B3E #E04B3E #D6D6D6 #E04B3E
+
+## force titlebar and borders on all windows (avoid gtk3 csd borderless)
+for_window [class=".*"] border normal
+
+bar {
+    status_command i3blocks -c "$i3dir/i3blocks.conf"
+    tray_output primary
+    position top
+
+    colors {
+        background #D6D6D6
+        statusline #282828
+
+        # class            border  bg      text
+        focused_workspace  #282828 #282828 #D6D6D6
+        active_workspace   #686868 #686868 #D6D6D6
+        inactive_workspace #D6D6D6 #D6D6D6 #282828
+        urgent_workspace   #E04B3E #E04B3E #D6D6D6
+    }
+}
+
+# Autostart ####################################################################
+
+## keyboard
+$exec_always setxkbmap fr
+
+## touchpad
+$exec_always xinput set-prop 'ELAN050B:00 04F3:31C3 Touchpad' 348 1 # tapping
+$exec_always xinput set-prop 'ELAN050B:00 04F3:31C3 Touchpad' 352 1 # tapping drag lock
+
+## screens
+$exec_always xrandr --auto
+$exec_always xrandr --output HDMI-1 --mode 3200x1800
+$exec_always feh --no-fehbg --bg-fill "$i3dir/wallpaper"
+$exec_always xset s 0 0
+$exec_always xset dpms 0 0 0
+
+## daemons
+$exec_always "killall nm-applet; nm-applet"
+$exec_always "killall dunst; dunst"
+$exec_always "killall blueman-applet; blueman-applet"
+
+# Applications keybindings #####################################################
+
+## launcher
+bindsym $mod+Return $exec dmenu_run
+
+## terminal
+bindsym $mod+Shift+Return $exec alacritty
+
+## file manager
+bindsym $mod+Ctrl+Return $exec nemo
+
+## power
+bindsym $mod+BackSpace $exec i3powerctl
+bindsym --release $mod+l $exec i3powerctl lock
+bindsym --release $mod+Shift+l $exec i3powerctl suspend
+bindsym --release $mod+Ctrl+l $exec i3powerctl hibernate
+
+## screenshots
+bindsym Print $exec xfce4-screenshooter
+
+## brightness
+bindsym XF86MonBrightnessDown $exec brightnessctl -q s 5%- \
+    && pkill -RTMIN+15 i3blocks
+bindsym XF86MonBrightnessUp $exec brightnessctl -q s +5% \
+    && pkill -RTMIN+15 i3blocks
+
+## audio: output
+bindsym XF86AudioMute $exec pamixer --toggle-mute \
+    && pkill -RTMIN+14 i3blocks
+bindsym XF86AudioLowerVolume $exec pamixer --decrease 5 \
+    && pkill -RTMIN+14 i3blocks
+bindsym XF86AudioRaiseVolume $exec pamixer --increase 5 \
+    && pkill -RTMIN+14 i3blocks
+
+## audio: input
+bindsym Mod1+F9 $exec pamixer --default-source --toggle-mute \
+    && pkill -RTMIN+14 i3blocks
+bindsym Mod1+F10 $exec pamixer --default-source --decrease 5 \
+    && pkill -RTMIN+14 i3blocks
+bindsym Mod1+F11 $exec pamixer --default-source --increase 5 \
+    && pkill -RTMIN+14 i3blocks
+
+## audio: music
+bindsym Control+F9  $exec quodlibet --play-pause
+bindsym Control+F10 $exec quodlibet --previous
+bindsym Control+F11 $exec quodlibet --next
+
+# WM keybindings ###############################################################
+
+## focus window
+bindsym $mod+Left  focus left
+bindsym $mod+Right focus right
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+
+## move focused window
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Right move right
+
+## kill focused window
+bindsym $mod+Escape kill
+
+## manipulate container layout
+bindsym $mod+Tab split toggle
+bindsym $mod+Shift+Tab layout toggle stacking tabbed split
+bindsym $mod+Ctrl+Tab fullscreen toggle
+
+## resize container
+bindsym $mod+r mode "resize"
+mode "resize" {
+    bindsym Left  resize shrink width 10 px or 10 ppt
+    bindsym Right resize grow   width 10 px or 10 ppt
+    bindsym Down  resize shrink height 10 px or 10 ppt
+    bindsym Up    resize grow   height 10 px or 10 ppt
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+
+## floating windows
+floating_modifier $mod
+bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+space floating toggle
+
+## scratchpad
+bindsym $mod+twosuperior scratchpad show
+bindsym $mod+Shift+twosuperior move scratchpad
+
+## assign workspaces to outputs
+workspace 1  output primary
+workspace 2  output primary
+workspace 3  output primary
+workspace 4  output primary
+workspace 5  output primary
+workspace 6  output HDMI-1
+workspace 7  output HDMI-1
+workspace 8  output HDMI-1
+workspace 9  output HDMI-1
+workspace 10 output HDMI-1
+
+# focus workspace
+bindsym $mod+ampersand  workspace 1
+bindsym $mod+eacute     workspace 2
+bindsym $mod+quotedbl   workspace 3
+bindsym $mod+apostrophe workspace 4
+bindsym $mod+parenleft  workspace 5
+bindsym $mod+minus      workspace 6
+bindsym $mod+egrave     workspace 7
+bindsym $mod+underscore workspace 8
+bindsym $mod+ccedilla   workspace 9
+bindsym $mod+agrave     workspace 10
+
+# move container to workspace
+bindsym $mod+Shift+ampersand  move container to workspace 1
+bindsym $mod+Shift+eacute     move container to workspace 2
+bindsym $mod+Shift+quotedbl   move container to workspace 3
+bindsym $mod+Shift+apostrophe move container to workspace 4
+bindsym $mod+Shift+parenleft  move container to workspace 5
+bindsym $mod+Shift+minus      move container to workspace 6
+bindsym $mod+Shift+egrave     move container to workspace 7
+bindsym $mod+Shift+underscore move container to workspace 8
+bindsym $mod+Shift+ccedilla   move container to workspace 9
+bindsym $mod+Shift+agrave     move container to workspace 10

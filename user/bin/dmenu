@@ -1,0 +1,6 @@
+#!/bin/bash
+
+/bin/dmenu -nb '#282828' -nf '#D6D6D6' \
+           -sb '#D6D6D6' -sf '#282828' \
+           -fn 'DejaVu Sans Mono-11' \
+           -i "$@"

@@ -1,0 +1,48 @@
+#!/bin/bash
+
+set -o errexit -o nounset
+
+block_audio_in() {
+    case "${button:-}" in
+        1) pamixer --default-source --toggle-mute;;
+        3) i3-msg -q exec pavucontrol;;
+        4) pamixer --default-source --increase 5;;
+        5) pamixer --default-source --decrease 5;;
+    esac
+    echo "$(pamixer --default-source --get-mute --get-volume \
+            | sed -e 's/false//' -e 's/true//')%"
+}
+
+block_audio_out() {
+    case "${button:-}" in
+        1) pamixer --toggle-mute;;
+        3) i3-msg -q exec pavucontrol;;
+        4) pamixer --increase 5;;
+        5) pamixer --decrease 5;;
+    esac
+    echo "$(pamixer --get-mute --get-volume \
+            | sed -e 's/false//' -e 's/true//')%"
+}
+
+block_brightness() {
+    case "${button:-}" in
+        4) brightnessctl -q s +5%;;
+        5) brightnessctl -q s 5%-;;
+    esac
+    echo " $(brightnessctl -m | cut -d',' -f4)"
+}
+
+block_power() {
+    local plugged capacity icon
+    plugged=$(cat /sys/class/power_supply/A*/online)
+    capacity=$(cat /sys/class/power_supply/BAT*/capacity)
+    if [[ "$plugged" -eq 1 ]]; then icon=''; else icon=''; fi
+    echo "$icon $capacity%"
+
+    # low power: set urgent (https://github.com/vivien/i3blocks#command)
+    if [[ "$plugged" -eq 0 && "$capacity" -le 10 ]]; then
+        exit 33
+    fi
+}
+
+"$@"
