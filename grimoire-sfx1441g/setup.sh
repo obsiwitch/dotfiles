@@ -86,7 +86,7 @@ setup.sys.conf() {
         cryptdevice=/dev/nvme0n1p2:cryptroot \
         root=/dev/mapper/cryptroot \
         resume=/dev/mapper/cryptroot \
-        resume_offset=$(filefrag -v '/swapfile' | awk '/^ *0:/ {print $4}')"
+        resume_offset=$(filefrag -v '/swapfile' | awk '/^ *0:/ {print substr($4, 1, length($4)-2)}')"
     cp -r "$sourcep/etc/mkinitcpio.d" '/etc'
     cp {"$sourcep",}'/etc/mkinitcpio.conf'
     mkdir -p '/boot/EFI/BOOT/'
