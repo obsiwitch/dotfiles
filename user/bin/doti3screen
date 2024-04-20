@@ -8,3 +8,4 @@ if xrandr | grep 'HDMI-1 disconnected'; then
 else
     xrandr --output HDMI-1 --mode 3200x1800 --above eDP-1
 fi
+feh --no-fehbg --bg-fill "$HOME/.config/i3/wallpaper"
