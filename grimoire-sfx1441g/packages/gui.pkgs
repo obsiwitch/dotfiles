@@ -1,22 +1,26 @@
 # desktop environment
 gnome-themes-extra
-inotify-tools
-dunst
 network-manager-applet
+blueman
 pavucontrol
 brightnessctl
+dunst
 sway
-xorg-xwayland
-xorg-xhost
-swaylock
-dmenu
-bemenu
-wl-clipboard
-swaybg
-waybar
-blueman
-xdg-desktop-portal-wlr
-xdg-desktop-portal-gtk
+    dmenu
+    bemenu
+    swaybg
+    swaylock
+    waybar
+    xorg-xwayland
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-wlr
+i3-wm
+    i3blocks
+    i3lock
+    arandr
+    xorg-server
+    xorg-xinit
+    xorg-xinput
 
 # admin
 gparted
@@ -58,7 +62,6 @@ noto-fonts-emoji
 libreoffice-fresh
 hunspell-en_us
 hunspell-fr
-pandoc-cli
 evince
 foliate
 
@@ -70,6 +73,7 @@ grim
 imagemagick
 gimp
 img2pdf
+xfce4-screenshooter
 
 # media-video
 mpv

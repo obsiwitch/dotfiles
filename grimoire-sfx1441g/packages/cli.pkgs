@@ -25,6 +25,7 @@ lsof
 tree
 fdupes
 smartmontools
+inotify-tools
 
 # monitoring
 htop
@@ -43,6 +44,8 @@ python-scipy
 tk
 git
 micro
+    wl-clipboard
+    xclip
 android-tools
 valgrind
 parallel
