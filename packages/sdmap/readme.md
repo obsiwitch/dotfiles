@@ -11,6 +11,8 @@ SD controller -> Sdmap -> ungrab -> game
 (input dev)            -> grab -> keyboard+trackpad (virtual dev) -> libinput -> wayland/xorg
 ~~~
 
+**Please note that since [linux 6.8](https://github.com/torvalds/linux/commit/cd438e57dd05b077f4e87c1567beafb2377b6d6b) the controller starts in a mode in which sdmap doesn't work. To fix this, long press the start button.**
+
 ## Install
 
 A [PKGBUILD](arch/) is provided to [build and install](https://wiki.archlinux.org/title/Arch_User_Repository#Installing_and_upgrading_packages) Sdmap on Arch Linux. Once installed, the `sdmap.service` systemd service can be enabled and started (`systemctl enable --now sdmap.service`). The daemon can also be tested outside the service by running `sdmap-daemon`.
