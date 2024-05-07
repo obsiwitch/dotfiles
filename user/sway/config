@@ -96,16 +96,10 @@ bindsym $mod+Shift+Tab layout toggle stacking tabbed split
 bindsym $mod+Ctrl+Tab fullscreen toggle
 
 # resize container
-bindsym $mod+r mode "resize"
-mode "resize" {
-    bindsym Left  resize shrink width
-    bindsym Right resize grow width
-    bindsym Down  resize shrink height
-    bindsym Up    resize grow height
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
+bindsym $mod+Ctrl+Left  resize shrink width
+bindsym $mod+Ctrl+Right resize grow   width
+bindsym $mod+Ctrl+Down  resize shrink height
+bindsym $mod+Ctrl+Up    resize grow   height
 
 # floating windows
 floating_modifier $mod
@@ -127,8 +121,6 @@ bindsym $mod+egrave     workspace 7
 bindsym $mod+underscore workspace 8
 bindsym $mod+ccedilla   workspace 9
 bindsym $mod+agrave     workspace 10
-bindsym $mod+Alt+Left  workspace prev_on_output
-bindsym $mod+Alt+Right workspace next_on_output
 
 # move container to workspace
 bindsym $mod+Shift+ampersand  move container to workspace 1
@@ -141,14 +133,6 @@ bindsym $mod+Shift+egrave     move container to workspace 7
 bindsym $mod+Shift+underscore move container to workspace 8
 bindsym $mod+Shift+ccedilla   move container to workspace 9
 bindsym $mod+Shift+agrave     move container to workspace 10
-bindsym $mod+Ctrl+Shift+Left  move container to workspace prev_on_output
-bindsym $mod+Ctrl+Shift+Right move container to workspace next_on_output
-
-# move workspace to output
-bindsym $mod+Alt+Shift+Left  move workspace to output left
-bindsym $mod+Alt+Shift+Right move workspace to output right
-bindsym $mod+Alt+Shift+Up    move workspace to output up
-bindsym $mod+Alt+Shift+Down  move workspace to output down
 
 # assign workspaces to outputs
 workspace 1 output eDP-1
