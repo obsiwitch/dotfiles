@@ -4,11 +4,10 @@ set -o errexit -o nounset -o xtrace
 
 MEDIADIR="/run/media/$USER"
 
-# External drive: p1 ext4 100%: dm-crypt w/ LUKS: home
+# External drive: p1 ext4: dm-crypt w/ LUKS: home
 backup_extdrive() {
-    local uuid_crypt='5c38e9ec-be27-410c-b0ab-7e9efac8d37e'
-    local uuid_plain='d51b9763-ba6a-4948-baba-b0e78cd5c28c'
-    local out="$MEDIADIR/$uuid_plain"
+    local uuid_crypt='9e131841-cfbe-416d-93cf-79195c2cd42e'
+    local out="$MEDIADIR/wdebackup"
 
     # rsync home
     # SIGINT (^C) is disabled as a workaround to avoid problems during passphrase
