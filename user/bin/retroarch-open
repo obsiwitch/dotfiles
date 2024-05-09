@@ -5,11 +5,16 @@ set -o errexit -o nounset -o xtrace
 libretro_core=$(case "$1" in
     *.nes*) echo mesen;;
     *.sfc*) echo bsnes;;
-    *.z64*) echo mupen64plus-next;;
+    *.z64*) echo mupen64plus_next;;
     *.gb*) echo mgba;;
     *.nds*) echo melonds;;
     *.3ds*) echo citra;;
-    *.gg*|*.sms*|*.md*) echo picodrive;;
+    *.sms*|*.md*) echo picodrive;;
+    *.ps1*) echo mednafen_psx_hw;;
+    *.ps2*) echo pcsx2;;
+    *.psp*) echo ppsspp;;
+    *.pce*) echo mednafen_pce_fast;;
+    *.gc*|*.wii*) echo dolphin;;
     *) false "$1 is not associated to any emulator"
 esac)
 retroarch --libretro="$libretro_core" "$1"
