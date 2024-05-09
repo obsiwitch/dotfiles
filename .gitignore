@@ -7,3 +7,5 @@ user/sway/wallpaper
 user/git/gitk
 user/gtk/gtk-3.0/bookmarks
 user/retroarch/*.lpl
+user/retroarch/autoconfig/**/*.cfg
+!user/retroarch/autoconfig/udev/Steam Deck.cfg
