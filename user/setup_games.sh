@@ -8,3 +8,6 @@ winetricks settings isolate_home # remove links to home
 winetricks dlls dxvk
 winetricks dlls corefonts
 winetricks settings alldlls=default # remove all DLL overrides
+
+# retroarch
+dotln "$sourcep/retroarch" "$HOME/.config/"

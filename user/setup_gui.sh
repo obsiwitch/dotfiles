@@ -50,6 +50,3 @@ if  [[ -v DISPLAY ]]; then
           "$HOME/.config/blender/$blender_version/"
     "$sourcep/blender/userprefs.py"
 fi
-
-# retroarch
-dotln "$sourcep/retroarch" "$HOME/.config/"
