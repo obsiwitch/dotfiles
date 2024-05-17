@@ -18,27 +18,29 @@ else:
     for f in sys.argv[sys.argv.index('--') + 1:]:
         f = Path(f)
         assert f.exists()
-        suffix_lower = f.suffix.lower()
-        if suffix_lower == '.dae':
-            bpy.ops.wm.collada_import(filepath = str(f))
-        elif suffix_lower == '.svg':
-            bpy.ops.import_curve.svg(filepath = str(f))
-        elif suffix_lower == '.stl':
-            bpy.ops.import_mesh.stl(filepath = str(f))
-        elif suffix_lower == '.fbx':
-            bpy.ops.import_scene.fbx(filepath = str(f))
-        elif suffix_lower == '.gltf' or suffix_lower == '.glb':
-            bpy.ops.import_scene.gltf(filepath = str(f))
-        elif suffix_lower == '.obj':
-            bpy.ops.import_scene.obj(filepath = str(f))
-        elif suffix_lower == '.py':
-            # ref: https://blender.stackexchange.com/q/8435
-            # switch to scripting workspace
-            bpy.context.window.workspace = bpy.data.workspaces['Scripting']
+        match f.suffix.lower():
+            case '.dae':
+                bpy.ops.wm.collada_import(filepath = str(f))
+            case '.svg':
+                bpy.ops.import_curve.svg(filepath = str(f))
+            case '.stl':
+                bpy.ops.import_mesh.stl(filepath = str(f))
+            case '.fbx':
+                bpy.ops.import_scene.fbx(filepath = str(f))
+            case '.gltf' | '.glb':
+                bpy.ops.import_scene.gltf(filepath = str(f))
+            case '.obj':
+                bpy.ops.import_scene.obj(filepath = str(f))
+            case '.usd' | '.usda' | '.usdc' | '.usdz':
+                bpy.ops.wm.usd_import(filepath = str(f))
+            case '.py':
+                # ref: https://blender.stackexchange.com/q/8435
+                # switch to scripting workspace
+                bpy.context.window.workspace = bpy.data.workspaces['Scripting']
 
-            # load and display file in text editor
-            text_editor = next(area for area in bpy.data.screens['Scripting'].areas
-                                    if area.type == 'TEXT_EDITOR')
-            text_editor.spaces[0].text = bpy.data.texts.load(str(f))
-        else:
-            raise RuntimeError(f'No importer associated with {f.suffix}')
+                # load and display file in text editor
+                text_editor = next(area for area in bpy.data.screens['Scripting'].areas
+                                        if area.type == 'TEXT_EDITOR')
+                text_editor.spaces[0].text = bpy.data.texts.load(str(f))
+            case _:
+                raise RuntimeError(f'No importer associated with {f.suffix}')
