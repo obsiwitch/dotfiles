@@ -17,8 +17,3 @@ _fzf_select() {
 }
 bind -x '"\C-f": _fzf_select "$PWD"'
 bind -x '"\C-g": _fzf_select "$HOME"'
-
-# Completion fallback for commands handled by bash-completion _longopt and _cd.
-# Restore glob completion. See unmerged pull-request [Handle ambiguous globs
-# gracefully #77](https://github.com/scop/bash-completion/pull/77).
-compopt -o bashdefault ls cd
