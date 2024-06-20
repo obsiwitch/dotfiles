@@ -43,8 +43,8 @@ bar {
 $exec_always setxkbmap fr
 
 # touchpad
-$exec_always xinput set-prop 'ELAN050B:00 04F3:31C3 Touchpad' 348 1 # tapping
-$exec_always xinput set-prop 'ELAN050B:00 04F3:31C3 Touchpad' 352 1 # tapping drag lock
+$exec_always xinput set-prop 'ELAN050B:00 04F3:31C3 Touchpad' 'libinput Tapping Enabled' 1
+$exec_always xinput set-prop 'ELAN050B:00 04F3:31C3 Touchpad' 'libinput Tapping Drag Lock Enabled' 1
 
 # screens
 $exec_always doti3screen
