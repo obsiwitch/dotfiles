@@ -30,6 +30,7 @@ BCWMKC.preferences.use_select_all_toggle = True
 
 # Enable addons
 BOP = bpy.ops.preferences
+BOP.addon_enable(module = 'add_mesh_extra_objects')
 BOP.addon_enable(module = 'mesh_f2')
 BOP.addon_enable(module = 'mesh_looptools')
 BOP.addon_enable(module = 'measureit')
