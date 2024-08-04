@@ -19,3 +19,6 @@
 	dotstatus = true
 [init]
 	defaultBranch = main
+
+[diff "blend"]
+    textconv = blendtxt
