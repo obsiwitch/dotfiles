@@ -46,7 +46,7 @@ dotln "$sourcep/desktop" "$HOME/.local/share/applications"
 if  [[ -v DISPLAY ]]; then
     blender_version="$(blender -v | awk 'NR==1 {print $2}')"
     blender_version="${blender_version%.*}"
-    dotln "$sourcep/blender/scripts" \
-          "$HOME/.config/blender/$blender_version/"
+    dotln "$sourcep/blender/obsi_script_utils.py" \
+          "$HOME/.config/blender/$blender_version/scripts/addons/"
     "$sourcep/blender/userprefs.py"
 fi

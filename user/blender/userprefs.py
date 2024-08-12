@@ -28,12 +28,15 @@ BCP.filepaths.use_load_ui = False
 BCWMKC = bpy.context.window_manager.keyconfigs[0]
 BCWMKC.preferences.use_select_all_toggle = True
 
-# Enable addons
+# Install/Enable addons
+BOE = bpy.ops.extensions
+BOE.userpref_allow_online()
+BOE.package_install(repo_index=0, pkg_id="extra_mesh_objects")
+BOE.package_install(repo_index=0, pkg_id="f2")
+BOE.package_install(repo_index=0, pkg_id="looptools")
+BOE.package_install(repo_index=0, pkg_id="measureit")
+
 BOP = bpy.ops.preferences
-BOP.addon_enable(module = 'add_mesh_extra_objects')
-BOP.addon_enable(module = 'mesh_f2')
-BOP.addon_enable(module = 'mesh_looptools')
-BOP.addon_enable(module = 'measureit')
 BOP.addon_enable(module = 'obsi_script_utils')
 
 # Save preferences (userpref.blend)
