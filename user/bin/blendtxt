@@ -7,12 +7,32 @@ if 'bpy' not in sys.modules:
     os.execlp('blender', 'blender', '--background', sys.argv[1], '--python', sys.argv[0])
 else:
     import tempfile, contextlib
+    from pxr import Usd
     import bpy
 
-    with tempfile.TemporaryDirectory() as dirpath:
-        filepath = f'{dirpath}/scene.usda'
-        with contextlib.redirect_stdout(None): # hide operator output
-            bpy.ops.wm.usd_export(filepath=filepath)
+    def metadata(usdobject, indent=''):
+        for k, v in usdobject.GetAllAuthoredMetadata().items():
+            if k in ('specifier', 'typeName', 'custom', 'variability'): continue
+            print(f'{indent}|{k}={v}')
 
-        with open(filepath) as fp:
-            print(fp.read())
+    with tempfile.TemporaryDirectory() as dirpath:
+        filepath = f'{dirpath}/out.usd'
+        with contextlib.redirect_stdout(sys.stderr):
+            bpy.ops.wm.usd_export(filepath=filepath, export_textures=False)
+
+        scene = Usd.Stage.Open(filepath)
+        nodes = [scene.GetPseudoRoot()] + list(scene.Traverse())
+        nodes = sorted(nodes, key=lambda n: n.GetPath())
+        for node in nodes:
+            print(f'{node.GetPath()}: {node.GetTypeName()}')
+            metadata(node, '  ')
+
+            for p in node.GetAuthoredProperties():
+                metadata(p, '    ')
+                if isinstance(p, Usd.Relationship):
+                    print(f'  {p.GetBaseName()}={p.GetTargets()}')
+                elif isinstance(p, Usd.Attribute):
+                    print(f'  {p.GetBaseName()}={p.Get()}')
+                else:
+                    raise NotImplementedError(p)
+            print()
