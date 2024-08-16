@@ -32,6 +32,7 @@ gnome-clocks
 
 # files
 nemo
+    nemo-fileroller
 thunar
 file-roller
 gvfs

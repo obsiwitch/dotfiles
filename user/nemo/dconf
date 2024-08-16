@@ -10,7 +10,7 @@ default-visible-columns=['name', 'size', 'date_modified']
 search-visible-columns=['name', 'size', 'where']
 
 [org/nemo/plugins]
-disabled-actions=['new-launcher.nemo_action', 'send-by-mail.nemo_action', 'mount-archive.nemo_action', 'set-as-background.nemo_action', 'add-desklets.nemo_action', 'change-background.nemo_action']
+disabled-actions=['set-resolution.nemo_action', 'add-desklets.nemo_action', '90_new-launcher.nemo_action', 'set-as-background.nemo_action', 'change-background.nemo_action']
 
 [org/nemo/preferences]
 bulk-rename-tool=b'thunar --bulk-rename'
