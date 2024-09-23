@@ -7,8 +7,7 @@ set $mod Mod4
 # Devices · libinput -h, sway-output(5), sway-input(5) #########################
 
 output 'Valve Corporation ANX7530 U 0x00000001' transform 90
-output 'ASUSTek COMPUTER INC ASUS VG289Q1A 0x0003DB4B' scale 1.2 position 0 0
-output 'Chimei Innolux Corporation 0x1408 Unknown' position 0 1800
+output 'ASUSTek COMPUTER INC ASUS VG289Q1A 0x0003DB4B' scale 1.2
 output * bg wallpaper fill #000000
 
 input type:keyboard {
