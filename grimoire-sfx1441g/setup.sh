@@ -97,16 +97,18 @@ setup.sys.conf() {
     groupadd -f sudo
 
     # users
-    useradd luna --create-home --groups sudo || [[ "$?" -eq 9 ]]
+    useradd luna --create-home --groups sudo,users || [[ "$?" -eq 9 ]]
     passwd --status luna | awk '$2 != "P" {exit 1}' || passwd luna
 
-    useradd celestia --create-home --groups sudo || [[ "$?" -eq 9 ]]
+    useradd celestia --create-home --groups sudo,users || [[ "$?" -eq 9 ]]
     passwd --status celestia | awk '$2 != "P" {exit 1}' || passwd celestia
 
     passwd --status root | awk '$2 != "P" {exit 1}' || passwd root
 
     mkdir -p '/home/shared'
-    chmod 777 '/home/shared'
+    chown luna:users '/home/shared'
+    chmod 770 '/home/shared'
+    chmod g+s '/home/shared'
 
     # systemd
     cp -r "$sourcep/etc/systemd" '/etc'
