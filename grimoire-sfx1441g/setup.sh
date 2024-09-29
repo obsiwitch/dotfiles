@@ -100,7 +100,7 @@ setup.sys.conf() {
     useradd luna --create-home --groups sudo || [[ "$?" -eq 9 ]]
     passwd --status luna | awk '$2 != "P" {exit 1}' || passwd luna
 
-    useradd celestia --create-home || [[ "$?" -eq 9 ]]
+    useradd celestia --create-home --groups sudo || [[ "$?" -eq 9 ]]
     passwd --status celestia | awk '$2 != "P" {exit 1}' || passwd celestia
 
     passwd --status root | awk '$2 != "P" {exit 1}' || passwd root
