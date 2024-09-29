@@ -4,6 +4,7 @@ set -o errexit -o nounset -o xtrace
 
 sourcep="$(realpath "${BASH_SOURCE%/*}")"
 dotfilesp="$(realpath "${BASH_SOURCE%/*}/..")"
+sfx1441gp="$dotfilesp/grimoire-sfx1441g"
 
 setup.help() {
     set +o xtrace
@@ -78,7 +79,7 @@ setup.sys.conf() {
     echo 'grimoire-sd1010' > /etc/hostname
 
     # unified kernel image
-    cp -r "$sourcep/etc/mkinitcpio.d" '/etc'
+    cp -r "$sfx1441gp/etc/mkinitcpio.d" '/etc'
     mkdir -p '/boot/EFI/BOOT/'
     mkinitcpio --allpresets
 
@@ -103,7 +104,7 @@ setup.sys.conf() {
     fi
 
     # pacman
-    cp {"$sourcep",}'/etc/pacman.conf'
+    cp {"$sfx1441gp",}'/etc/pacman.conf'
 }
 
 if [[ "$(type -t "setup.${1:-}")" == 'function' ]]; then
