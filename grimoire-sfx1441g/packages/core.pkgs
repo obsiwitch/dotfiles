@@ -24,8 +24,7 @@ pipewire-pulse
 pipewire-jack
 
 # core-gfx-nvidia
-nvidia
-nvidia-utils
+nvidia-open
 nvidia-prime
 
 # core-gfx-amd
