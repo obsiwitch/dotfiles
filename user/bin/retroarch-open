@@ -9,7 +9,7 @@ libretro_core=$(case "$1" in
     *.gb*) echo mgba;;
     *.nds*) echo melonds;;
     *.3ds*) echo citra;;
-    *.sms*|*.md*) echo picodrive;;
+    *.sms*|*.md*|*.gg*) echo picodrive;;
     *.ps1*) echo mednafen_psx_hw;;
     *.ps2*) echo pcsx2;;
     *.psp*) echo ppsspp;;
