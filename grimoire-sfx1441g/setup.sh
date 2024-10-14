@@ -93,7 +93,7 @@ setup.sys.conf() {
     mkinitcpio --allpresets
 
     # sudo
-    sed -i '/^# %sudo\tALL/ s/^# //' '/etc/sudoers'
+    cp "$sourcep/etc/sudoers.d/override" '/etc/sudoers.d/override'
     groupadd -f sudo
 
     # users
