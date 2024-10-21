@@ -6,16 +6,3 @@ user/i3/lockbg
 user/sway/wallpaper
 user/git/gitk
 user/gtk/gtk-3.0/bookmarks
-user/retroarch/*.lpl
-user/retroarch/assets
-user/retroarch/cheats
-user/retroarch/cores
-user/retroarch/database
-user/retroarch/overlays
-user/retroarch/playlists
-user/retroarch/saves
-user/retroarch/shaders
-user/retroarch/states
-user/retroarch/system
-user/retroarch/autoconfig/**/*.cfg
-!user/retroarch/autoconfig/udev/Steam Deck.cfg
