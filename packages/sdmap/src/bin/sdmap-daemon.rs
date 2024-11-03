@@ -1,6 +1,10 @@
-use std::{time, thread, sync::Arc, sync::Mutex};
+use std::{time, thread};
+use std::sync::{Arc, Mutex};
+use std::{fs::File, io::Write, io::Seek};
 use evdev::{*, uinput::*, AbsoluteAxisType as Abs, RelativeAxisType as Rel};
 use libc::input_absinfo;
+use anyhow::Result;
+
 use sdmap::VKBD_LAYOUT;
 
 struct Daemon {
@@ -13,9 +17,11 @@ struct Daemon {
     kbd_mode: bool,
 
     scroll_daemon: ScrollDaemon,
+
+    ipc: File,
 }
 impl Daemon {
-    pub fn new() -> std::io::Result<Self> {
+    pub fn new() -> Result<Self> {
         let mut dev_in = evdev::enumerate()
             .find(|(_, d)| d.name() == Some("Steam Deck"))
             .unwrap().1;
@@ -53,6 +59,7 @@ impl Daemon {
             dev_out,
             kbd_mode: true,
             scroll_daemon: ScrollDaemon::new(absinfos_in[Abs::ABS_X.0 as usize].resolution)?,
+            ipc: File::create("/run/sdmap")?,
         })
     }
 
@@ -84,30 +91,49 @@ impl Daemon {
         InputEvent::new(EventType::RELATIVE, rel.0, delta)
     }
 
-    // Return the position on the virtual keyboard based on the position of
+    // Return the position on the trackpad keyboard based on the position of
     // ABS_HAT0. Return None if ABS_HAT0 isn't used.
-    pub fn vkbd_keypos(&self) -> Option<(usize, usize)> {
-        let absvals = self.state_in().abs_vals().unwrap();
+    pub fn vkbd_xy(&self, old: bool) -> (usize, usize) {
+        let absvals = if old {
+            self.cache_in.abs_vals().unwrap()
+        } else {
+            self.state_in().abs_vals().unwrap()
+        };
         let absinfo = self.absinfos_in[Abs::ABS_HAT0X.0 as usize];
 
         let absx = absvals[Abs::ABS_HAT0X.0 as usize].value;
         let absy = absvals[Abs::ABS_HAT0Y.0 as usize].value;
-        if absx == 0 && absy == 0 { return None; }
-
-        let vkbdy = (absy - absinfo.maximum).abs() * VKBD_LAYOUT.len() as i32
-                    / ((absinfo.maximum * 2) + 1);
-        let vkbdx = (absx + absinfo.maximum) * VKBD_LAYOUT[0].len() as i32
-                    / ((absinfo.maximum * 2) + 1);
-        Some((vkbdx as usize, vkbdy as usize))
+        if absx == 0 && absy == 0 {
+            (usize::MAX, usize::MAX)
+        } else {
+            let vkbdy = (absy - absinfo.maximum).abs() * VKBD_LAYOUT.len() as i32
+                        / ((absinfo.maximum * 2) + 1);
+            let vkbdx = (absx + absinfo.maximum) * VKBD_LAYOUT[0].len() as i32
+                        / ((absinfo.maximum * 2) + 1);
+            (vkbdx as usize, vkbdy as usize)
+        }
     }
 
-    // Map a physical key to a key of the virtual keyboard depending on the current
+    // Send the current trackpad keyboard position over the socket.
+    pub fn vkbd_send(&mut self) -> Result<()> {
+        let old_keypos = self.vkbd_xy(true);
+        let new_keypos = self.vkbd_xy(false);
+        if old_keypos != new_keypos {
+            self.ipc.rewind()?;
+            self.ipc.set_len(0)?;
+            self.ipc.write_all(format!("{} {}", new_keypos.0, new_keypos.1).as_bytes())?;
+        }
+        Ok(())
+    }
+
+    // Map a physical key to a key of the trackpad keyboard depending on the current
     // value of ABS_HAT0{X,Y}. If ABS_HAT0 isn't used send the `fallback_key`.
     fn key2vkbd(&self, evt_in: InputEvent, ki: usize, fallback_key: Key)
     -> Vec<InputEvent> {
+        let keypos = self.vkbd_xy(false);
         if evt_in.value() == 0 {
             vec!()
-        } else if let Some(keypos) = self.vkbd_keypos() {
+        } else if self.vkbd_xy(false) != (usize::MAX, usize::MAX) {
             let key = VKBD_LAYOUT[keypos.1][keypos.0][ki];
             vec!(Self::new_key(key, 1), Self::new_key(key, 0))
         } else {
@@ -197,7 +223,7 @@ impl Daemon {
         }
     }
 
-    pub fn run(&mut self) -> std::io::Result<()> {
+    pub fn run(&mut self) -> Result<()> {
         loop {
             self.cache_in = self.dev_in.cached_state().clone();
             let events_in: Vec<InputEvent> = self.dev_in.fetch_events()?.collect();
@@ -209,6 +235,7 @@ impl Daemon {
                 .flat_map(|evt_in| self.remap(evt_in))
                 .collect();
             self.dev_out.emit(&events_out)?;
+            self.vkbd_send()?;
         }
     }
 }
@@ -218,7 +245,7 @@ struct ScrollDaemon {
     scroll_xy: Arc<Mutex<(i32, i32)>>,
 }
 impl ScrollDaemon {
-    pub fn new(resolution: i32) -> std::io::Result<Self> {
+    pub fn new(resolution: i32) -> Result<Self> {
         let scroll_xy1 = Arc::new(Mutex::new((0, 0)));
         let scroll_xy2 = Arc::clone(&scroll_xy1);
 
@@ -263,7 +290,7 @@ impl ScrollDaemon {
     }
 }
 
-fn main() -> std::io::Result<()> {
+fn main() -> Result<()> {
     let mut daemon = Daemon::new()?;
     daemon.run()
 }

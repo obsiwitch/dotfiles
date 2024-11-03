@@ -1,9 +1,7 @@
-use sdmap::keysyms_layout;
-
 const BUTTONS: [char; 6] = ['a', 'b', 'y', 'x', 's', 'd'];
 
 fn main() {
-    let layout = keysyms_layout();
+    let layout = sdmap::keysyms_layout();
 
     println!(r#"<!DOCTYPE html><html><body>
         <style type="text/css">
@@ -23,7 +21,7 @@ fn main() {
     for row in layout {
         println!("<tr>");
         for col in row {
-            for (i, key) in col.into_iter().enumerate() {
+            for (i, key) in col.iter().enumerate() {
                 if i >= BUTTONS.len() { break; }
                 let btn = BUTTONS[i];
                 let l0 = key[0].clone();
