@@ -1,7 +1,7 @@
 use evdev::Key;
 use xkbcommon::xkb;
 
-// Virtual keyboard layout. Unused key slots should be mapped to KEY_UNKNOWN.
+// Trackpad keyboard layout. Unused key slots should be mapped to KEY_UNKNOWN.
 pub const VKBD_LAYOUT: [[[Key; 7]; 2]; 4] = [
     [[Key::KEY_1, Key::KEY_2, Key::KEY_3, Key::KEY_4, Key::KEY_5, Key::KEY_MINUS, Key::KEY_F1],
      [Key::KEY_6, Key::KEY_7, Key::KEY_8, Key::KEY_9, Key::KEY_0, Key::KEY_EQUAL, Key::KEY_F2]],
@@ -17,6 +17,7 @@ pub const VKBD_LAYOUT: [[[Key; 7]; 2]; 4] = [
 
 const EVDEV_OFFSET: u32 = 8;
 
+// Change the xkb state by pushing/releasing key modifiers.
 fn xkb_mods(state: &mut xkb::State, mods: &[Key], enable: bool) {
     for keymod in mods {
         state.update_key(
@@ -27,6 +28,7 @@ fn xkb_mods(state: &mut xkb::State, mods: &[Key], enable: bool) {
     }
 }
 
+// Get a string representation (character/symbol) of a keyboard key.
 fn xkb_keysym(state: &mut xkb::State, evkey: Key, mods: &[Key]) -> String {
     if evkey == Key::KEY_UNKNOWN {
         return "".into();
@@ -50,6 +52,7 @@ fn xkb_keysym(state: &mut xkb::State, evkey: Key, mods: &[Key]) -> String {
     }.into()
 }
 
+// Get the trackpad keyboard layout (VKBD_LAYOUT) as a nested array of strings.
 pub fn keysyms_layout() -> [[[[String; 3]; 7]; 2]; 4] {
     let ctx = xkb::Context::new(0);
     let keymap = xkb::Keymap::new_from_names(&ctx, "", "", "fr", "", None, 0).unwrap();

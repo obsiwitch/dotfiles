@@ -29,7 +29,7 @@ impl Daemon {
         let absinfos_in = dev_in.get_abs_state()?;
 
         // grab lizard mode devices to make sure no events get through (e.g.
-        // scroll events on left trackpad)
+        // scroll events on left trackpad after waking steam deck from suspend)
         let _devs_lizard: Vec<Device> = evdev::enumerate()
             .filter(|(_, d)|  d.name() == Some("Valve Software Steam Controller"))
             .map(|(_, mut d)| { d.grab().unwrap(); d })
@@ -114,7 +114,7 @@ impl Daemon {
         }
     }
 
-    // Send the current trackpad keyboard position over the socket.
+    // Write the current trackpad keyboard position in the shared file.
     pub fn vkbd_send(&mut self) -> Result<()> {
         let old_keypos = self.vkbd_xy(true);
         let new_keypos = self.vkbd_xy(false);
