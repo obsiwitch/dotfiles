@@ -4,7 +4,7 @@
 [global]
     # display & geometry
     follow = mouse
-    width = 400
+    width = (0, 400)
     offset = 10x10
     frame_width = 2
     frame_color = "#D6D6D6"
@@ -33,3 +33,7 @@
     background = "#E04B3E"
     foreground = "#D6D6D6"
     timeout = 0
+
+[sdmap]
+    appname = "sdmap-gui"
+    timeout = 1
