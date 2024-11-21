@@ -32,9 +32,5 @@ mesa
 lib32-mesa
 mesa-utils
 lib32-mesa-utils
-libva-mesa-driver
-lib32-libva-mesa-driver
-mesa-vdpau
-lib32-mesa-vdpau
 vulkan-radeon
 lib32-vulkan-radeon
