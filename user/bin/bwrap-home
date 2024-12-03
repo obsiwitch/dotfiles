@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -o errexit -o nounset -o xtrace
+
+SANDBOX_HOME="$HOME/Sandbox"
+
+exec bwrap \
+    --dev-bind '/' '/' \
+    --bind "$SANDBOX_HOME" "$HOME" \
+    --bind "$HOME/.dotfiles" "$HOME/.dotfiles" \
+    --bind "$HOME/.Xauthority" "$HOME/.Xauthority" \
+    "$@"

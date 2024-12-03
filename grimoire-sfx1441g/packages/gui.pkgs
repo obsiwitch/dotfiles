@@ -95,13 +95,6 @@ gst-plugins-bad
 # games
 steam-native-runtime
 lutris
-gamescope
-retroarch-assets-ozone
+retroarch
 wine
-wine-gecko
-wine-mono
 winetricks
-vkd3d
-lib32-vkd3d
-lib32-gst-plugins-good
-lib32-ocl-icd

@@ -26,11 +26,8 @@ pipewire-jack
 # core-gfx-nvidia
 nvidia-open
 nvidia-prime
+lib32-nvidia-utils
 
 # core-gfx-amd
-mesa
-lib32-mesa
-mesa-utils
-lib32-mesa-utils
 vulkan-radeon
 lib32-vulkan-radeon
