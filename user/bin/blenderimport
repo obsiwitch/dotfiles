@@ -24,7 +24,7 @@ else:
             case '.svg':
                 bpy.ops.import_curve.svg(filepath = str(f))
             case '.stl':
-                bpy.ops.import_mesh.stl(filepath = str(f))
+                bpy.ops.wm.stl_import(filepath = str(f))
             case '.fbx':
                 bpy.ops.import_scene.fbx(filepath = str(f))
             case '.gltf' | '.glb':
