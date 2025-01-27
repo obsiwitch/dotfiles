@@ -16,7 +16,9 @@ backup_extdrive() {
     trap '' INT # disable SIGINT
     test -d "$out" || gio mount --device="$uuid_crypt"
     trap '-' INT # restore SIGINT default behaviour
-    rsync --archive --delete --secluded-args --progress --stats "$HOME" "$out"
+    rsync --archive --delete --secluded-args --progress --stats \
+        --exclude='.cache' --exclude='Sandbox' \
+        "$HOME" "$out"
     gio mount --unmount "$out"
 }
 
