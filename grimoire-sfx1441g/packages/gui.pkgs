@@ -35,6 +35,7 @@ nemo
     nemo-fileroller
 thunar
 file-roller
+    cdrtools
 gvfs
 gvfs-mtp
 ffmpegthumbnailer

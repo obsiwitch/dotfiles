@@ -94,6 +94,7 @@ setup.sys.conf() {
     passwd --status root | awk '$2 != "P" {exit 1}' || passwd root
 
     # systemd
+    cp -r "$sfx1441gp/etc/systemd" '/etc'
     if timedatectl > /dev/null; then
         timedatectl set-ntp true
         timedatectl set-local-rtc false
