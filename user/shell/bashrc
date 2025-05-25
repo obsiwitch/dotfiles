@@ -1,9 +1,9 @@
 # Paths
-export PATH="$HOME/.local/dotbin:$PATH"
+if [[ -z "$SYSPATH" ]]; then export SYSPATH="$PATH"; fi
+export PATH="$HOME/.local/dotbin:$SYSPATH"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/Applications"
-export PATH="$(dotuniq ':' "$PATH")"
 
 # Interactive shell only
 [[ $- == *i* ]] && {
