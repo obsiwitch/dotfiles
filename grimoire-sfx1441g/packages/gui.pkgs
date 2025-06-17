@@ -46,6 +46,7 @@ alacritty
 libgit2-glib
 bless
 meld
+gedit
 
 # sci
 galculator
@@ -94,8 +95,10 @@ gnome-sound-recorder
 gst-plugins-bad
 
 # games
-steam-native-runtime
+steam
 lutris
+    vulkan-tools
 retroarch
+    retroarch-assets-ozone
 wine
-winetricks
+    winetricks

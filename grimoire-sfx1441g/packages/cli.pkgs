@@ -37,11 +37,11 @@ bash-completion
 shellcheck
 python
     python-pip
-mypy
-flake8
-python-matplotlib
-python-scipy
-tk
+    mypy
+    python-flake8
+    python-matplotlib
+    python-scipy
+    tk
 git
 micro
     wl-clipboard
@@ -64,6 +64,7 @@ traceroute
 whois
 speedtest-cli
 yt-dlp
+net-tools
 
 # audio
 alsa-utils
