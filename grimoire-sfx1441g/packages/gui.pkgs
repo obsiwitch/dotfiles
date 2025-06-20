@@ -98,7 +98,6 @@ gst-plugins-bad
 steam
 lutris
     vulkan-tools
+    umu-launcher
 retroarch
     retroarch-assets-ozone
-wine
-    winetricks
