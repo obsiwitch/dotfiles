@@ -38,6 +38,9 @@ dotln "$sourcep/mpv" "$HOME/.config/"
 # desktop entries
 dotln "$sourcep/desktop" "$HOME/.local/share/applications"
 
+# retroarch
+cp -r "$sourcep/retroarch" "$HOME/.config/"
+
 # blender
 if  [[ -v DISPLAY ]]; then
     blender_version="$(blender -v | awk 'NR==1 {print $2}')"
