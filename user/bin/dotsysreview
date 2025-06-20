@@ -37,7 +37,4 @@ packages_installed() {
 
     echo; heading '# Services: user'
     systemctl --type=service --user || :;
-
-    echo; heading '# Packages: logs from last full upgrade'
-    tac /var/log/pacman.log | sed '/-S -u -y/q' | tac
 } | less
