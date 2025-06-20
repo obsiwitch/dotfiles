@@ -6,10 +6,6 @@ sourcep="$(realpath "${BASH_SOURCE%/*}")"
 dotfilesp="$(realpath "${BASH_SOURCE%/*}/..")"
 PATH="$sourcep/bin:$PATH"
 
-# i3
-dotln "$sourcep/i3" "$HOME/.config/"
-dotln "$sourcep/i3/xinitrc" "$HOME/.xinitrc"
-
 # sway
 dotln "$sourcep/sway" "$HOME/.config/"
 dotln "$sourcep/swaylock" "$HOME/.config/"

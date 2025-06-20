@@ -45,7 +45,6 @@ python
 git
 micro
     wl-clipboard
-    xclip
 android-tools
 valgrind
 parallel

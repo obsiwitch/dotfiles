@@ -14,13 +14,6 @@ sway
     xorg-xwayland
     xdg-desktop-portal-gtk
     xdg-desktop-portal-wlr
-i3-wm
-    i3blocks
-    i3lock
-    arandr
-    xorg-server
-    xorg-xinit
-    xorg-xinput
 
 # admin
 gparted
@@ -76,7 +69,6 @@ grim
 imagemagick
 gimp
 img2pdf
-xfce4-screenshooter
 
 # media-video
 mpv

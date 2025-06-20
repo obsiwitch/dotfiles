@@ -1,9 +1,0 @@
-#!/bin/bash
-
-for f in /etc/X11/xinit/xinitrc.d/*.sh ; do
-    . "$f"
-done
-unset f
-
-xrdb <<< 'Xcursor.size: 32' # default: 64
-exec i3

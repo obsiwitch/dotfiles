@@ -1,7 +1,0 @@
-#!/bin/bash
-
-/bin/i3lock \
-    --color='111111' \
-    --ignore-empty-password \
-    --show-failed-attempts \
-    "$@"
