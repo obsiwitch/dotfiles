@@ -31,17 +31,11 @@ backup_phone() {
     adb kill-server
 }
 
-# Remote: snapshots
-backup_remote() {
-    rclone sync --progress "$HOME/Snapshots" 'remote:snapshots_crypt'
-}
-
 help() {
     set +o xtrace
     echo 'usage: dotbackup snapshot'
     echo '       dotbackup extdrive'
     echo '       dotbackup phone'
-    echo '       dotbackup remote'
     exit 1
 }
 
@@ -49,6 +43,5 @@ case ${1:-} in
     snapshot) dotborg snapshot --comment='dotbackup';;
     extdrive) backup_extdrive;;
     phone) backup_phone;;
-    remote) backup_remote;;
     *) help;;
 esac

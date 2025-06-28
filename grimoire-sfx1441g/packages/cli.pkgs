@@ -56,7 +56,6 @@ curl
 wget
 openssh
 rsync
-rclone
 links
 nmap
 traceroute
