@@ -22,6 +22,9 @@ window#waybar {
 #workspaces button.focused {
     background: rgba(40,40,40,1);
 }
+#workspaces button.visible:not(.focused) {
+    background: #686868;
+}
 #workspaces button.urgent, #mode {
     background: rgba(224,75,62,1);
 }
