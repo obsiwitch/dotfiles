@@ -4,7 +4,9 @@ set -o errexit -o nounset -o xtrace
 
 SANDBOX_HOME="$HOME/Sandbox"
 
+mkdir -p "$SANDBOX_HOME"
 exec bwrap \
+    --die-with-parent \
     --dev-bind '/' '/' \
     --bind "$SANDBOX_HOME" "$HOME" \
     --bind "$HOME/.dotfiles" "$HOME/.dotfiles" \
