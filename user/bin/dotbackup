@@ -27,7 +27,7 @@ backup_phone() {
     local out="/storage/4EDB-B4B2/"
 
     adb start-server
-    adb push --sync "$HOME/Downloads" "$HOME/Music" "$HOME/Snapshots" "$out"
+    adb push --sync "$HOME/Music" "$HOME/Snapshots" "$out"
     adb kill-server
 }
 
