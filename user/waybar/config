@@ -34,6 +34,7 @@
         "format-muted": "  {volume}%",
         "on-click": "pamixer --toggle-mute",
         "on-click-middle": "pavucontrol",
+        "on-click-right": "pavucontrol",
         "scroll-step": 5.0,
     },
     "pulseaudio#in": {
@@ -42,6 +43,7 @@
         "format-source-muted": " {volume}%",
         "on-click": "pamixer --default-source --toggle-mute",
         "on-click-middle": "pavucontrol",
+        "on-click-right": "pavucontrol",
         "on-scroll-up": "pamixer --default-source --allow-boost --increase 5",
         "on-scroll-down": "pamixer --default-source --allow-boost --decrease 5",
     },
