@@ -6,16 +6,19 @@ sourcep="$(realpath "${BASH_SOURCE%/*}")"
 dotfilesp="$(realpath "${BASH_SOURCE%/*}/..")"
 PATH="$sourcep/bin:$PATH"
 
-# sway
-dotln "$sourcep/sway" "$HOME/.config/"
-dotln "$sourcep/swaylock" "$HOME/.config/"
-dotln "$sourcep/waybar" "$HOME/.config/"
-
 # GTK
 dotln "$sourcep/gtk/gtk-3.0" "$HOME/.config/"
 dotln "$sourcep/gtk/gtk-4.0" "$HOME/.config/"
 dconf reset -f '/org/gnome/desktop/interface/'
 dconf load / < "$sourcep/gtk/dconf"
+
+# sway
+dotln "$sourcep/sway" "$HOME/.config/"
+dotln "$sourcep/swaylock" "$HOME/.config/"
+dotln "$sourcep/waybar" "$HOME/.config/"
+
+# launcher
+dotln "$sourcep/fuzzel" "$HOME/.config/"
 
 # terminal
 dotln "$sourcep/alacritty" "$HOME/.config/"

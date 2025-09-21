@@ -33,7 +33,7 @@ exec_always 'killall blueman-applet; blueman-applet'
 # Application keybindings ######################################################
 
 # launcher
-bindsym $mod+Return exec bemenu-run
+bindsym $mod+Return exec fuzzel
 
 # terminal
 bindsym $mod+Shift+Return exec alacritty

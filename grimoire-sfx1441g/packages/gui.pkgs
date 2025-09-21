@@ -6,8 +6,7 @@ pavucontrol
 brightnessctl
 dunst
 sway
-    dmenu
-    bemenu
+    fuzzel
     swaybg
     swaylock
     waybar

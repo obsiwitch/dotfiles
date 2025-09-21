@@ -5,7 +5,7 @@ set -o errexit -o nounset
 choice=${1:-}
 if [[ -z "$choice" ]]; then
     choice=$(echo 'reload - lock suspend hibernate - logout reboot poweroff' \
-             | tr ' ' '\n' | bemenu)
+             | tr ' ' '\n' | fuzzel --dmenu)
 fi
 case "$choice" in
     reload)    swaymsg reload;;
