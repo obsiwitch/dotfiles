@@ -4,4 +4,5 @@
     "Ctrl-Alt-Left": "PreviousTab",
     "Ctrl-Alt-Right": "NextTab",
     "Ctrl-Alt-o": "lua:fzf.fzf",
+    "Ctrl-o": "lua:filemanager.toggle_tree",
 }
