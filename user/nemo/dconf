@@ -7,7 +7,7 @@ default-zoom-level='larger'
 
 [org/nemo/list-view]
 default-visible-columns=['name', 'size', 'date_modified']
-search-visible-columns=['name', 'size', 'where']
+enable-folder-expansion=true
 
 [org/nemo/plugins]
 disabled-actions=['set-resolution.nemo_action', 'add-desklets.nemo_action', '90_new-launcher.nemo_action', 'set-as-background.nemo_action', 'change-background.nemo_action']
