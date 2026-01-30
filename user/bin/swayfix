@@ -1,10 +1,11 @@
 #!/bin/bash
 
 flags=()
-if [[ -e /dev/nvidia0 ]]; then
+if lsmod | grep -q nvidia; then
     flags+=('--unsupported-gpu')
 
     # disable explicit sync to fix stuttering/flickering in games
     # ref: https://github.com/swaywm/sway/issues/8755
-    exec /usr/bin/sway "${flags[@]}" "$@"
+    export WLR_RENDER_NO_EXPLICIT_SYNC=1
 fi
+exec /usr/bin/sway "${flags[@]}" "$@"
